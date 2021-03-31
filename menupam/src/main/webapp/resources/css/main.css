@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.wrapper{
+    max-width: 375px;
+    margin: 0 auto;
+    width: 375px;
+    position: relative;
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+}
+.header{
+    position: fixed;
+    height: 48px;
+    width: 375px;
+    display:flex;
+    justify-content : flex-end;
+    opacity: 0.7;
+}
+.search, .notice{
+    width: 15%;
+    display: flex;
+}
+.search > i, .notice > i{
+    margin: auto;
+    font-size: 1.2em;
+    color: black;
+}
+.main{
+    background-color: white;
+    height: 1000px;
+}
+.footer{
+    height : 48px;
+	width : 375px;
+	position: fixed;
+	bottom: 0;
+    display: flex;
+    background-color: whitesmoke;
+}
+.footer > div{
+    width: 20%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+    display: flex;
+}
+.footer i {
+    margin: auto;
+    font-size: 1.3em;
+}
+.banner{
+    width: 100%;
+    height: 300px;
+}
+.banner > img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.btnBox{
+    padding-top: 48px;
+    margin: auto;
+}
+.btnLarge{
+    width: 300px;
+    height: 40px;
+    color: white;
+    font-weight: 300;
+    background-color: #F2BB13;
+    border-style: none;
+    border-radius: 6px;
+}
+.btnMedium{
+    width: 200px;
+    height: 40px;
+    color: white;
+    font-weight: 200;
+    background-color: #F2BB13;
+    border-style: none;
+    border-radius: 6px;
+}
+.btnSmall{
+    width: 100px;
+    height: 40px;
+    color: white;
+    font-weight: 200;
+    background-color: #F2BB13;
+    border-style: none;
+    border-radius: 6px;
+}
+.fontLarge{
+    font-size: 40px;
+}
+.fontMedium{
+    font-size: 30px;
+}
+.fontSmall{
+    font-size: 20px;
+}
+.fontXSmall{
+    font-size: 15px;
+}
+
+.imgLarge{
+    border-radius: 10px;
+    width: 180px;
+    height: 180px;
+}
+.imgMedium{
+    width: 100px;
+    height: 100px;
+}
+.imgSmall{
+    width: 50px;
+    height: 50px;
+}
+.imgLarge > img {
+    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.imgMedium > img {
+    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.imgSmall > img {
+    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.imgLarge:hover{
+    opacity: 0.9;
+}
+.imgMedium:hover{
+    opacity: 0.9;
+}
+.imgSmall:hover{
+    opacity: 0.9;
+}
