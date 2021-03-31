@@ -13,7 +13,7 @@ import com.kh.toy.member.model.vo.Member;
 @Mapper
 public interface MybatisRepository {
 	
-	@Select("select * from tb_member where user_id = #{userId}")
+	@Select("select * from tb_user where user_id = #{userId}")
 	Member selectOne(String userId);
 	
 	List<Map<String,Object>> selectListReturnedAsMap(String userId);

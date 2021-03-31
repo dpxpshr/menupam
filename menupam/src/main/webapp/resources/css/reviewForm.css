@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.btnLarge{
+	position:relative;
+	
+	left:35px;
+}
+
+.review_content textarea{
+	width:96%;
+	height: 300px;
+	
+}
+
