@@ -6,11 +6,11 @@
 					http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="bm"/>
-		<property name="password" value="USER11"/>
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">	
+		<property name="url" value="jdbc:oracle:thin:@everybb_high?TNS_ADMIN=C:/CODE/G_SPRING/Wallet_MenuPam"/>
+		<property name="username" value="admin"/>
+		<property name="password" value="Finalproject11"/>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	</bean>	
 	
 	<!-- mybatis/config 에서 설정정보를 읽어 factory 생성-->
