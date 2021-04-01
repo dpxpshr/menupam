@@ -18,5 +18,5 @@ public class ShopController {
 	
 	@GetMapping("shopRegister")
 	public void shopRegister() {}
-	
+	//테스트
 }
