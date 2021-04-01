@@ -16,12 +16,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
-//가상으로 만들어지는 web.xml을 사용해 테스트환경을 구축
+//媛��긽�쑝濡� 留뚮뱾�뼱吏��뒗 web.xml�쓣 �궗�슜�빐 �뀒�뒪�듃�솚寃쎌쓣 援ъ텞
 @WebAppConfiguration
-//Junit의 실행 방법을 지정
-//테스트 때 사용할 가상의 applicationContext를 생성하고 관리해준다.
+//Junit�쓽 �떎�뻾 諛⑸쾿�쓣 吏��젙
+//�뀒�뒪�듃 �븣 �궗�슜�븷 媛��긽�쓽 applicationContext瑜� �깮�꽦�븯怨� 愿�由ы빐以��떎.
 @RunWith(SpringJUnit4ClassRunner.class)
-//가상 applicationContext를 생성할 때 사용할 Spring bean 설정파일의 위치를 지정
+//媛��긽 applicationContext瑜� �깮�꽦�븷 �븣 �궗�슜�븷 Spring bean �꽕�젙�뙆�씪�쓽 �쐞移섎�� 吏��젙
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*-context.xml"})
 
 public class MemberControllerTest {
@@ -31,7 +31,7 @@ public class MemberControllerTest {
 	
 	 private MockMvc mockMvc;
 	 
-	 //테스트를 수행하기 전에 실행할 메서드
+	 //�뀒�뒪�듃瑜� �닔�뻾�븯湲� �쟾�뿉 �떎�뻾�븷 硫붿꽌�뱶
 	 @Before
 	 public void setup() {
 		 this.mockMvc = webAppContextSetup(context).build();
@@ -48,7 +48,7 @@ public class MemberControllerTest {
 	 public void idCheckTest() throws Exception {
 		 mockMvc
 		 .perform(get("/member/idcheck")
-				 .param("userId", "testUser"))
+				 .param("MemberId", "kim1"))
 		 .andDo(print());
 	 }
 	
@@ -57,17 +57,19 @@ public class MemberControllerTest {
 	 public void authenticateEmailTest() throws Exception {
 		
 		Member member = new Member();
-		member.setEmail("azimemory@gmail.com");
-		member.setUserId("testUser");
-		member.setPassword("1234");
-		member.setTell("010-0112-0119");
+		member.setMemberEmail("ajxjfehtkd@nate.com");
+		member.setMemberId("testUser");
+		member.setMemberPw("1234");
+		member.setMemberName("김승현");
+		member.setMemberPhone("010-0112-0119");
 		
 		 mockMvc
 		 .perform(post("/member/mailauth")
-				 .param("userId", "testUser")
-				 .param("password", "1234")
-				 .param("email", "azimemory@gmail.com")
-				 .param("tell","010-0112-0119")
+				 .param("memberId", "testUser")
+				 .param("memberPw", "1234")
+				 .param("memberEmail", "ajxjfehtkd@nate.com")
+				 .param("memberName", "김승현")
+				 .param("memberPhone","010-0112-0119")
 				 )
 		 .andDo(print());
 		 

@@ -35,11 +35,11 @@
 	        
 	          <div class="field">
 	            <span class="fa fa-user"></span>
-	            <input type="text" class="id" id="id" name="id" required placeholder="아이디">
+	            <input type="text" class="id" id="id" name="memberId" required placeholder="아이디">
 	          </div>
 		<div class="field space">
 	            <span class="fa fa-lock"></span>
-	            <input type="password" class="pass-key" id="pw" name="pw" required placeholder="비밀번호">
+	            <input type="password" class="pass-key" id="pw" name="memberPw" required placeholder="비밀번호">
 	            <span class="show">SHOW</span>
 	             
 	          </div>
@@ -78,5 +78,62 @@
         </div> 
     </div> 
 
+<script type="text/javascript">
+	
+	let login = () => {
+		
+		const url = '/member/loginimpl';
+		let params = {};
+		params.memberId = id.value;
+		params.memberPw = pw.value;
+
+		//post방식으로 진행
+		//헤더 설정
+		let headerObj = new Headers();
+		//form태그의 기본 content 타입인 application/x-www-form-urlencoded 로
+		//content-type을 맞춰야 서버에서 편하게 getParameter로 사용 할 수 있다.
+		//name=value&name=value
+		headerObj.append("content-type","application/json");
+		
+		fetch(url,{
+			method:"post",
+			headers:headerObj,
+			body:JSON.stringify(params)
+		})
+		.then(response => {
+			//200번대 응답코드라면
+			if(response.ok){
+				return response.text();
+			}else{
+				throw new AsyncResponseError(response.text());
+			}
+		})
+		.then(text => {
+			if(text == 'fail'){
+				document.querySelector('.valid_info').innerHTML = '아이디나 비밀번호를 확인하세요.';
+				
+				}else if(text == 'success'){
+					location.href = "/index";
+			}
+		}).catch((error)=>{
+			error.alertMessage();
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>	
+		
 </body>
 </html>

@@ -13,7 +13,7 @@ import com.kh.toy.member.model.vo.Member;
 @Mapper
 public interface MybatisRepository {
 	
-	@Select("select * from tb_member where member_id = #{userId}")
+	@Select("select * from tb_member where member_id = #{memberId}")
 	Member selectOne(String userId);
 	
 	List<Map<String,Object>> selectListReturnedAsMap(String userId);
@@ -23,15 +23,15 @@ public interface MybatisRepository {
 	@Select("select * from tb_member")
 	List<Member> selectList();
 	
-	@Insert("insert into tb_member(user_id,password,tell,email)"
-			+ "	values(#{userId},#{password},#{tell},#{email})")
+	@Insert("insert into tb_member(member_id,member_Pw,member_name,member_phone,member_email)"
+			+ "	values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertWithVo(Member member);
 	
 	@Insert("insert into tb_rent_master(rm_idx,user_id,title,rent_book_cnt)"
 			+ "		values(sc_rm_idx.nextval,#{member.userId},#{title},#{rentBookCnt})")
 	int insertWithMap(Map<String,Object> commandMap);
 	
-	@Update("update tb_member set password = #{password} where user_id = #{userId}")
+	@Update("update tb_member set member_Pw = #{memberPw} where member_id = #{memberId}")
 	int update(Member member);
 	
 	void procedure(String bIdx);

@@ -84,8 +84,8 @@ public class MemberController {
 	
 	@GetMapping("idcheck")
 	@ResponseBody
-	public String idcheck(String userId) {
-		if(memberService.selectMemberById(userId) != null) {
+	public String idcheck(String memberId) {
+		if(memberService.selectMemberById(memberId) != null) {
 			return "fail";
 		}
 		
