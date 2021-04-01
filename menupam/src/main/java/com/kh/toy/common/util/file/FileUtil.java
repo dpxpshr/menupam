@@ -21,17 +21,34 @@ public class FileUtil {
 			for (MultipartFile multipartFile : files) {
 				//저장될 파일명
 				FileVo fileVo = new FileVo();
-				fileVo.setOriginFileName(multipartFile.getOriginalFilename());
-				fileVo.setRenameFileName(UUID.randomUUID().toString());
-				fileVo.setSavePath(savePath);
-				
+				fileVo.setFileOriginName(multipartFile.getOriginalFilename());
+				fileVo.setFileRename(UUID.randomUUID().toString());
+				fileVo.setFileSavePath(savePath);
 				fileList.add(fileVo);
 				saveFile(fileVo,multipartFile);
 			}
 		}
-		
 		return fileList;
 	}
+	
+	public FileVo fileUpload(MultipartFile file) throws IllegalStateException, IOException{
+		
+		//파일정보를 가지고 반환될 list
+		List<FileVo> fileList = new ArrayList<FileVo>();
+		String savePath = getSavePath(); //파일 저장경로
+		FileVo fileVo = new FileVo();
+		
+		if(!file.getOriginalFilename().equals("")) {	
+			fileVo.setFileOriginName(file.getOriginalFilename());
+			fileVo.setFileRename(UUID.randomUUID().toString());
+			fileVo.setFileSavePath(savePath);
+			fileList.add(fileVo);
+			saveFile(fileVo,file);
+		}
+		
+		return fileVo;
+	}
+	
 	
 	private String getSavePath() {
 		Calendar cal = Calendar.getInstance();
@@ -41,7 +58,7 @@ public class FileUtil {
 	}
 	
 	private void saveFile(FileVo fileVo, MultipartFile multipartFile) throws IllegalStateException, IOException {
-		File dest = new File(fileVo.getFullPath() + fileVo.getRenameFileName());
+		File dest = new File(fileVo.getFullPath() + fileVo.getFileRename());
 		
 		if(!dest.exists()) {
 			new File(fileVo.getFullPath()).mkdirs();

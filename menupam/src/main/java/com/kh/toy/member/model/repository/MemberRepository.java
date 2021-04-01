@@ -9,19 +9,19 @@ import com.kh.toy.member.model.vo.Member;
 @Mapper
 public interface MemberRepository {
 	
-	@Select("select * from tb_member where user_id = #{userId}")
-	Member selectMemberById(String userId);
+	@Select("select * from tb_member where member_id = #{memberId}")
+	Member selectMemberById(String memberId);
+	//@Select("select * from tb_member where member_id = #{memberId}") 뒤 and member_leave_date = null
+	@Select("select * from tb_member where member_id = #{memberId}")
+	Member selectMemberForAuth(String memberId);
 	
-	@Select("select * from tb_member where user_id = #{userId} and is_leave = 0")
-	Member selectMemberForAuth(String userId);
+	@Select("select count(*) from tb_member where member_email = #{memberEmail}")
+	int selectMemberByEmail(String memberEmail);
 	
-	@Select("select count(*) from tb_member where email = #{email}")
-	int selectMemberByEmail(String email);
+	@Select("select count(*) from tb_member where member_phone = #{memberPhone}")
+	int selectMemberByTell(String memberPhone);
 	
-	@Select("select count(*) from tb_member where tell = #{tell}")
-	int selectMemberByTell(String tell);
-	
-	@Insert("insert into tb_member(user_id,password,email,tell)"
-			+ " values(#{userId},#{password},#{email},#{tell})")
+	@Insert("insert into tb_member(member_id,member_pw,member_name,member_phone,member_email)"
+			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertMember(Member member);
 }

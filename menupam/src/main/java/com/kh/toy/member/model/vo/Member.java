@@ -2,127 +2,103 @@ package com.kh.toy.member.model.vo;
 
 import java.sql.Date;
 
-//TB_MEMBER í…Œì´ë¸”ì˜ ROW ì •ë³´ë¥¼ ë‹´ì„ í´ëž˜ìŠ¤
+//TB_MEMBER Å×ÀÌºíÀÇ ROW Á¤º¸¸¦ ´ãÀ» Å¬·¡½º
 public class Member {
 	
-	//MVC2 íŒ¨í„´ì—ì„œ Mì€ MODELì„ ì˜ë¯¸í•¨
-	//MODELì€ ë„ë©”ì¸ ê°ì²´, ë¹„ì§€ë‹ˆìŠ¤ ë¡œì§ì„ ë‹´ë‹¹í•˜ëŠ” SERVICE ê°ì²´
-	//DBMSì— ì ‘ê·¼í•´ ë°ì´í„°ë¥¼ ì¡°íšŒ, ìˆ˜ì •, ì‚½ìž…, ì‚­ì œí•˜ëŠ” DAO ê°ì²´
+	//MVC2 ÆÐÅÏ¿¡¼­ MÀº MODELÀ» ÀÇ¹ÌÇÔ
+	//MODELÀº µµ¸ÞÀÎ °´Ã¼, ºñÁö´Ï½º ·ÎÁ÷À» ´ã´çÇÏ´Â SERVICE °´Ã¼
+	//DBMS¿¡ Á¢±ÙÇØ µ¥ÀÌÅÍ¸¦ Á¶È¸, ¼öÁ¤, »ðÀÔ, »èÁ¦ÇÏ´Â DAO °´Ã¼
 	
-	//ë„ë©”ì¸ ê°ì²´ : ë°ì´í„°ë² ì´ìŠ¤ í…Œì´ë¸”ì—ì„œ ì¡°íšŒ í•´ì˜¨ í•œ í–‰(ROW)ì˜ 
-	//ê°’ì„ ì €ìž¥í•˜ëŠ” ìš©ë„ë¡œ ì‚¬ìš©í•˜ëŠ” ê°ì²´
+	//µµ¸ÞÀÎ °´Ã¼ : µ¥ÀÌÅÍº£ÀÌ½º Å×ÀÌºí¿¡¼­ Á¶È¸ ÇØ¿Â ÇÑ Çà(ROW)ÀÇ 
+	//°ªÀ» ÀúÀåÇÏ´Â ¿ëµµ·Î »ç¿ëÇÏ´Â °´Ã¼
 	//DOMAIN OBJECT, VALUE OBJECT(VO), DATA TRANSFER OBJECT(DTO)
 	//ENTITY, BEAN
 	
-	//VOê°€ ë˜ê¸° ìœ„í•œ ì¡°ê±´(JAVA BEAN ê·œì•½)
-	//1. ëª¨ë“  í•„ë“œë³€ìˆ˜ëŠ” PRIVATEì¼ ê²ƒ.(ìº¡ìŠí™”)
-	//2. ë°˜ë“œì‹œ ê¸°ë³¸ìƒì„±ìžê°€ ì¡´ìž¬í•´ì•¼ í•œë‹¤.
-	//3. ëª¨ë“  í•„ë“œë³€ìˆ˜ëŠ” GETTER/SETTER ë©”ì„œë“œë¥¼ ê°€ì ¸ì•¼ í•œë‹¤.
+	//VO°¡ µÇ±â À§ÇÑ Á¶°Ç(JAVA BEAN ±Ô¾à)
+	//1. ¸ðµç ÇÊµåº¯¼ö´Â PRIVATEÀÏ °Í.(Ä¸½¶È­)
+	//2. ¹Ýµå½Ã ±âº»»ý¼ºÀÚ°¡ Á¸ÀçÇØ¾ß ÇÑ´Ù.
+	//3. ¸ðµç ÇÊµåº¯¼ö´Â GETTER/SETTER ¸Þ¼­µå¸¦ °¡Á®¾ß ÇÑ´Ù.
 	
-	//ì˜¤ë¼í´ê³¼ ìžë°”ì˜ íƒ€ìž… ë§¤í•‘
+	//¿À¶óÅ¬°ú ÀÚ¹ÙÀÇ Å¸ÀÔ ¸ÅÇÎ
 	//char, vachar2 -> String
 	//date -> java.util.date, java.sql.date
 	//number -> int, double
 	
-	/*   TB_MEMBER ì»¬ëŸ¼ëª…
+	/*   TB_MEMBER ÄÃ·³¸í
 	 *   USER_ID, PASSWORD, EMAIL, GRADE, TELL, REG_DATE
 	 * , RENTABLE_DATE, IS_LEAVE
 	 */
 	
-	private String userId;
-	private String password;
-	private String email;
-	private String grade;
-	private String tell;
-	private Date regDate;
-	private Date rentableDate;
-	private int isLeave;
+	private String memberId;
+	private String memberPw;
+	private String memberName;
+	private String memberType;
+	private String memberPhone;
+	private String memberEmail;
+	private Date memberRegDate;
+	private Date memberLeaveDate;
+	
+	
+	
 	
 	public Member() {
-		
+	
 	}
-
-	public String getUserId() {
-		return userId;
+	public String getMemberId() {
+		return memberId;
 	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-
-	public String getPassword() {
-		return password;
+	public String getMemberPw() {
+		return memberPw;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMemberPw(String memberPw) {
+		this.memberPw = memberPw;
 	}
-
-	public String getEmail() {
-		return email;
+	public String getMemberName() {
+		return memberName;
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
-
-	public String getGrade() {
-		return grade;
+	public String getMemberType() {
+		return memberType;
 	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
 	}
-
-	public String getTell() {
-		return tell;
+	public String getMemberPhone() {
+		return memberPhone;
 	}
-
-	public void setTell(String tell) {
-		this.tell = tell;
+	public void setMemberPhone(String memberPhone) {
+		this.memberPhone = memberPhone;
 	}
-
-	public Date getRegDate() {
-		return regDate;
+	public String getMemberEmail() {
+		return memberEmail;
 	}
-
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
 	}
-
-	public Date getRentableDate() {
-		return rentableDate;
+	public Date getMemberLeaveDate() {
+		return memberLeaveDate;
 	}
-
-	public void setRentableDate(Date rentableDate) {
-		this.rentableDate = rentableDate;
+	public void setMemberLeaveDate(Date memberLeaveDate) {
+		this.memberLeaveDate = memberLeaveDate;
 	}
-
-	public int getIsLeave() {
-		return isLeave;
+	public Date getMemberRegDate() {
+		return memberRegDate;
 	}
-
-	public void setIsLeave(int isLeave) {
-		this.isLeave = isLeave;
+	public void setMemberRegDate(Date memberRegDate) {
+		this.memberRegDate = memberRegDate;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Member [userId=" + userId + ", password=" + password + ", email=" + email + ", grade=" + grade
-				+ ", tell=" + tell + ", regDate=" + regDate + ", rentableDate=" + rentableDate + ", isLeave=" + isLeave
-				+ "]";
+		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
+				+ ", memberType=" + memberType + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
+				+ ", memberLeaveDate=" + memberLeaveDate + ", memberRegDate=" + memberRegDate + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

@@ -36,14 +36,14 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member selectMemberById(String userId) {
-		return memberRepository.selectMemberById(userId);
+	public Member selectMemberById(String memberId) {
+		return memberRepository.selectMemberById(memberId);
 	}
 	
 	public void authenticateEmail(Member persistUser, String authPath) {
 		
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
-		body.add("userId",persistUser.getUserId());
+		body.add("memberId",persistUser.getMemberId());
 		body.add("mail-template","temp_join");
 		body.add("authPath", authPath);
 		
@@ -56,21 +56,22 @@ public class MemberServiceImpl implements MemberService{
 		ResponseEntity<String> response =
 				http.exchange(request, String.class);
 		
-		mailSender.send(persistUser.getEmail(), "회원 가입을 축하합니다.", response.getBody());
+		mailSender.send(persistUser.getMemberEmail(), "회원 가입을 축하합니다.", response.getBody());
 	}
 
 	@Override
 	public int insertMember(Member member) {
-		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
 		return memberRepository.insertMember(member);
 	}
 
 	@Override
 	public Member authenticateUser(Member member) {
 		
-		Member userInfo = memberRepository.selectMemberForAuth(member.getUserId());
-		if(userInfo == null ||
-				!passwordEncoder.matches(member.getPassword(), userInfo.getPassword())) {
+		Member userInfo = memberRepository.selectMemberForAuth(member.getMemberId());
+		//|| -> && 변경
+		if(userInfo == null &&
+				!passwordEncoder.matches(member.getMemberPw(), userInfo.getMemberPw())) {
 			return null;
 		}
 		

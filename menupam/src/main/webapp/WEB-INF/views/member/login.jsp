@@ -7,146 +7,12 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/login.css'>
     <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
-    <style type="text/css">
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
-}
 
-.body{
-	padding-top: 48px;
-}
-    
-.content{
-  position: relative;
-  top: 50%;
-  left: 50%;
-  z-index: 999;
-  text-align: center;
-  padding: 100px 32px;
-  width: 370px;
-  transform: translate(-50%,0%);
-  background: rgba(255,255,255,0.04);
-}
-.content header{
-  color: #F2BB13;
-  font-size: 33px;
-  font-weight: 600;
-  margin: 0 0 35px 0;
-}
-.field{
-  position: relative;
-  height: 45px;
-  width: 100%;
-  display: flex;
-  background: rgba(255,255,255,0.94);
-}
-
-#id, #pw{
-	 border-bottom: solid 1px;
-  border-bottom-color: black; 
-}
-
-.field span{
-  color: #222;
-  width: 40px;
-  line-height: 45px;
-}
-.field input{
-  height: 100%;
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #222;
-  font-size: 16px;
-	
-}
-.space{
-  margin-top: 16px;
-}
-.show{
-  position: absolute;
-  right: 13px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #222;
-  display: none;
-  cursor: pointer;
-}
-.pass-key:valid ~ .show{
-  display: block;
-}
-.pass{
-  text-align: left;
-  margin: 10px 0;
-}
-.pass a{
-  color: black;
-  text-decoration: none;
-}
-.pass:hover a{
-  text-decoration: underline;
-}
-.field input[type="submit"]{
-  width:250px;
-  background: #F2BB13;
-  color: white;
-  font-size: 18px;
-  letter-spacing: 1px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.field input[type="submit"]:hover{
-  background: #FFa500;
-}
-
-#login_wrapper{
-	display: block;
-}
-
-.login{
-  color: black;
-  margin: 20px 0;
-}
-.links{
-  display: flex;
-  cursor: pointer;
-  color: white;
-  margin: 0 0 20px 0;
-}
-
-
-.links i{
-  font-size: 17px;
-}
-i span{
-  margin-left: 8px;
-  margin-right: 8px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  font-size: 16px;
-  color: black;
-}
-.signup{
-	margin-top : 30px;
-	font-size: 15px;
-	color: black;
-}
-.signup a{
-  color: block;
-  text-decoration: none;
-}
-.signup a:hover{
-  text-decoration: underline;
-}
-    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -169,11 +35,11 @@ i span{
 	        
 	          <div class="field">
 	            <span class="fa fa-user"></span>
-	            <input type="text" class="id" id="id" name="id" required placeholder="아이디">
+	            <input type="text" class="id" id="id" name="memberId" required placeholder="아이디">
 	          </div>
 		<div class="field space">
 	            <span class="fa fa-lock"></span>
-	            <input type="password" class="pass-key" id="pw" name="pw" required placeholder="비밀번호">
+	            <input type="password" class="pass-key" id="pw" name="memberPw" required placeholder="비밀번호">
 	            <span class="show">SHOW</span>
 	             
 	          </div>
@@ -212,5 +78,62 @@ i span{
         </div> 
     </div> 
 
+<script type="text/javascript">
+	
+	let login = () => {
+		
+		const url = '/member/loginimpl';
+		let params = {};
+		params.memberId = id.value;
+		params.memberPw = pw.value;
+
+		//post방식으로 진행
+		//헤더 설정
+		let headerObj = new Headers();
+		//form태그의 기본 content 타입인 application/x-www-form-urlencoded 로
+		//content-type을 맞춰야 서버에서 편하게 getParameter로 사용 할 수 있다.
+		//name=value&name=value
+		headerObj.append("content-type","application/json");
+		
+		fetch(url,{
+			method:"post",
+			headers:headerObj,
+			body:JSON.stringify(params)
+		})
+		.then(response => {
+			//200번대 응답코드라면
+			if(response.ok){
+				return response.text();
+			}else{
+				throw new AsyncResponseError(response.text());
+			}
+		})
+		.then(text => {
+			if(text == 'fail'){
+				document.querySelector('.valid_info').innerHTML = '아이디나 비밀번호를 확인하세요.';
+				
+				}else if(text == 'success'){
+					location.href = "/index";
+			}
+		}).catch((error)=>{
+			error.alertMessage();
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>	
+		
 </body>
 </html>

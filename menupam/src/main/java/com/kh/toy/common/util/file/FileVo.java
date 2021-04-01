@@ -5,73 +5,97 @@ import java.sql.Date;
 import com.kh.toy.common.code.Code;
 
 public class FileVo {
-	private int fIdx;
-	private String typeIdx;
-	private String originFileName;
-	private String renameFileName;
-	private String savePath;
-	private Date regDate;
-	private int isDel;
+	
+	//메뉴팜 DB에 맞는 파일VO 입니다.
+	private String fileIdx;
+	private String fileOriginName;
+	private String fileRename;
+	private String fileType;
+	private Date fileRegDate;
+	private String fileSavePath;
+	private int fileIsDel;
+	
 	
 	public String getFullPath() {
-		return Code.UPLOAD + savePath;
+		return Code.UPLOAD + fileSavePath;
 	}
-	
-	public int getfIdx() {
-		return fIdx;
+
+
+	public String getFileIdx() {
+		return fileIdx;
 	}
-	
-	public void setfIdx(int fIdx) {
-		this.fIdx = fIdx;
+
+
+	public void setFileIdx(String fileIdx) {
+		this.fileIdx = fileIdx;
 	}
-	
-	public String getTypeIdx() {
-		return typeIdx;
+
+
+	public String getFileOriginName() {
+		return fileOriginName;
 	}
-	
-	public void setTypeIdx(String typeIdx) {
-		this.typeIdx = typeIdx;
+
+
+	public void setFileOriginName(String fileOriginName) {
+		this.fileOriginName = fileOriginName;
 	}
-	
-	public String getOriginFileName() {
-		return originFileName;
+
+
+	public String getFileRename() {
+		return fileRename;
 	}
-	
-	public void setOriginFileName(String originFileName) {
-		this.originFileName = originFileName;
+
+
+	public void setFileRename(String fileRename) {
+		this.fileRename = fileRename;
 	}
-	
-	public String getRenameFileName() {
-		return renameFileName;
+
+
+	public String getFileType() {
+		return fileType;
 	}
-	
-	public void setRenameFileName(String renameFileName) {
-		this.renameFileName = renameFileName;
+
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
 	}
-	
-	public String getSavePath() {
-		return savePath;
+
+
+	public Date getFileRegDate() {
+		return fileRegDate;
 	}
-	public void setSavePath(String savePath) {
-		this.savePath = savePath;
+
+
+	public void setFileRegDate(Date fileRegDate) {
+		this.fileRegDate = fileRegDate;
 	}
-	public Date getRegDate() {
-		return regDate;
+
+
+	public String getFileSavePath() {
+		return fileSavePath;
 	}
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+
+
+	public void setFileSavePath(String fileSavePath) {
+		this.fileSavePath = fileSavePath;
 	}
-	public int getIsDel() {
-		return isDel;
+
+
+	public int getFileIsDel() {
+		return fileIsDel;
 	}
-	public void setIsDel(int isDel) {
-		this.isDel = isDel;
+
+
+	public void setFileIsDel(int fileIsDel) {
+		this.fileIsDel = fileIsDel;
 	}
+
+
 	@Override
 	public String toString() {
-		return "FileVo [fIdx=" + fIdx + ", typeIdx=" + typeIdx + ", originFileName=" + originFileName
-				+ ", renameFileName=" + renameFileName + ", savePath=" + savePath + ", regDate=" + regDate + ", isDel="
-				+ isDel + "]";
+		return "File [fileIdx=" + fileIdx + ", fileOriginName=" + fileOriginName + ", fileRename=" + fileRename
+				+ ", fileType=" + fileType + ", fileRegDate=" + fileRegDate + ", fileSavePath=" + fileSavePath
+				+ ", fileIsDel=" + fileIsDel + "]";
 	}
 	
 	

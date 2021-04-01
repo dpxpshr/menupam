@@ -56,7 +56,7 @@ public class BoardController {
 			, Board board) {
 		
 		//로그인 여부에 따른 예외처리
-		String userId = member == null?"guest":member.getUserId();
+		String userId = member == null?"guest":member.getMemberId();
 		board.setUserId(userId);
 		boardService.insertBoard(board, files);
 		return "redirect:/board/list";
@@ -68,38 +68,17 @@ public class BoardController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition
 				.builder("attachment")
-				.filename(file.getOriginFileName(), Charset.forName("utf-8"))
+				.filename(file.getFileOriginName(), Charset.forName("utf-8"))
 				.build());
 		
 		//FileSystemResource의 생성자에 Path 객체를 던져, NIO.2로 파일다운로드 진행
 		FileSystemResource resource = new FileSystemResource( 
 				FileSystems
 				.getDefault()
-				.getPath(file.getFullPath(), file.getRenameFileName()));
+				.getPath(file.getFullPath(), file.getFileRename()));
 		
 		return ResponseEntity.ok().headers(headers).body(resource);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
