@@ -20,7 +20,7 @@ public class MybatisTest {
 	
 	@Autowired
 	MybatisRepository mybatisRepository;
-	private String userId = "test";
+	private String userId = "lee5031207";
 	
 	@Test
 	public void selectOneTest() {
