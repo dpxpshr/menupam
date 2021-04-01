@@ -9,94 +9,10 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/join.css'>
     <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
-    
-    <style type="text/css">
-  *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
-}
 
-.body{
-	padding-top: 48px;
-}
-    
-.content{
-  position: relative;
-  top: 50%;
-  left: 50%;
-  z-index: 999;
-  text-align: center;
-  padding: 100px 32px;
-  width: 370px;
-  transform: translate(-50%,0%);
-  background: rgba(255,255,255,0.04);
-}
-.content header{
-  color: #F2BB13;
-  font-size: 33px;
-  font-weight: 600;
-  margin: 0 0 35px 0;
-}
-.field{
-  position: relative;
-  height: 45px;
-  width: 100%;
-  display: flex;
-  background: rgba(255,255,255,0.94);
-  
-}
-
-.field span{
-  color: #222;
-  width: 40px;
-  line-height: 45px;
-}
-.field input{
-  height: 100%;
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #222;
-  font-size: 16px;
-  border-bottom: solid 1px;
-  border-bottom-color: black; 
-	
-}
-
-#id{
-	width: 85%;
-}
-#id_btn{
-	width: 15%;
-}
-
-.space{
-  margin-top: 10px;
-}
-
-.field input[type="submit"]{
-  width:250px;
-  background: #F2BB13;
-  color: white;
-  font-size: 18px;
-  letter-spacing: 1px;
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: none;
-}
-.field input[type="submit"]:hover{
-  background: #FFa500;
-}
-
-#login_wrapper{
-	display: block;
-}
-    </style>
     
 </head>
 <body>
