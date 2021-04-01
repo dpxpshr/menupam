@@ -4,8 +4,8 @@ import java.sql.Date;
 
 import com.kh.toy.common.code.Code;
 
-public class FileVo {
-	
+public class File {
+
 	//메뉴팜 DB에 맞는 파일VO 입니다.
 	private String fileIdx;
 	private String fileOriginName;
@@ -97,8 +97,7 @@ public class FileVo {
 				+ ", fileType=" + fileType + ", fileRegDate=" + fileRegDate + ", fileSavePath=" + fileSavePath
 				+ ", fileIsDel=" + fileIsDel + "]";
 	}
-	
-	
-	
+
+
 	
 }
