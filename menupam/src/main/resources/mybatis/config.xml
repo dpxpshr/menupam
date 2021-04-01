@@ -9,6 +9,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.kh.toy.board.model.vo.Board" alias="board"/>
+		<typeAlias type="com.kh.toy.shop.model.vo.Shop" alias="shop"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/boardMapper.xml"/>

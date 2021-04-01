@@ -6,10 +6,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/shopRegister.css'>
-    <script src='main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/shopRegister.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -37,8 +36,10 @@
                     <input type="text" class="inputLarge" placeholder="  사업자 등록 번호를 입력해주세요">
                     <br><br>
                     <p class="fontSmall">매장 위치</p><br>
-                    <div class="map"></div><br>
-                    <input type="text" class="inputLarge" placeholder="  검색하기"><br><br>
+                    <input type="text" id="inputPost">
+                    <button class="addressSearch" onclick="kakaoAddress()">주소 찾기</button><br><br>
+                   	<input type="text" id="inputAddress"><br><br>
+                    <input type="text" id="inputAddressDetail" placeholder="상세 주소를 입력해 주세요"><br><br>
                     <p class="fontSmall">매장 전화 번호</p><br>
                     <input type="text" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)"><br><br>
                     <p class="fontSmall">업종</p><br>
@@ -92,9 +93,13 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+    
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/resources/js/shop/kakaoAddress.js"></script>
+    
 </body>
 </html>
