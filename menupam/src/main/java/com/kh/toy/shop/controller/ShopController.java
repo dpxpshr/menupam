@@ -32,7 +32,7 @@ public class ShopController {
 						,HttpSession sessionn
 						,Model model) {
 		
-		//checkBox 체크가 안됬을때 강제로 N 삽입
+		//checkBox 체크가 안됬을때 강제로 N 삽입.
 		if(shop.getShopPackAble() == "") {
 			shop.setShopPackAble(shopPackAble);
 		}
