@@ -157,6 +157,9 @@ public class MybatisTest {
 		System.out.println(mybatisRepository.resultMap(memberId));
 	}
 	
+
+
+	
 	
 	
 	

@@ -10,8 +10,10 @@
 	<typeAliases>
 		<typeAlias type="com.kh.toy.board.model.vo.Board" alias="board"/>
 		<typeAlias type="com.kh.toy.shop.model.vo.Shop" alias="shop"/>
+		<typeAlias type="com.kh.toy.review.model.vo.Review" alias="review"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/boardMapper.xml"/>
+		<mapper resource="mybatis/mapper/reviewMapper.xml"/>
 	</mappers>
 </configuration>

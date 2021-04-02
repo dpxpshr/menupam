@@ -1,10 +1,20 @@
 package com.kh.toy.review.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.review.model.vo.Review;
 
 public interface ReviewService {
 
-	void writeReview(MultipartFile file, Review review);
+	void writeReview(MultipartFile file, Review review, String uploadPath);
+	
+	Map<Integer, Review> getReview(String shopIdx, int page);
+	
+	File getfileVo(String fileIdx) throws IOException;
 }

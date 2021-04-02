@@ -27,7 +27,7 @@
                 <div class="content">
                     <p class="fontSmall">가게이름적는곳</p><br>
                     <div class="line"></div>
-                    <div class="reviewBox">
+                    <!-- <div class="reviewBox">
                         <div class="profileBox">
                             <div class="profileImg">
                             </div>
@@ -42,8 +42,8 @@
                         <div class="contentBox">
                             잘 먹었습니다^^
                         </div>
-                    </div>
-                    <div class="reviewBox">
+                    </div> -->
+                    <!-- <div class="reviewBox">
                         <div class="profileBox">
                             <div class="profileImg">
                             </div>
@@ -61,7 +61,7 @@
                         <div class="imgBox">
                             <img src="../../resources/images/목살.PNG" alt="">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -74,4 +74,41 @@
         </div> 
     </div> 
 </body>
+<script>
+	let cnt = 1;
+    window.onload = function () {
+        console.log("cnt : " + cnt);
+
+        fetch("/review/views?cnt=" + cnt,{
+			   method:"POST"
+		})
+        .then(response => response.json())
+		.then(json =>{
+            for(let i=1; i<=5; i++){
+
+            	let memberId = json[i].memberId;
+                let reviewContent = json[i].reviewContent; 
+                let revireScore = json[i].reviewScore;
+                let fileIdx = json[i].fileIdx;
+                console.log(memberId);
+                console.log(reviewContent);
+                console.log(revireScore);
+
+                if(fileIdx!=null){
+                    fetch("/review/photo?fileIdx=" + fileIdx,{
+                    method:"POST"
+                    })
+                    .then(response => response.text())
+                    .then(text => {
+                        console.log(text);
+                        let img = document.createElement("img");
+                        img.src = text;
+                        document.querySelector(".content").appendChild(img);
+                    })
+                }
+            }
+        })
+    }
+    
+</script>
 </html>
