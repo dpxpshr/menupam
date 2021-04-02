@@ -20,5 +20,6 @@ public class ShopServiceImpl implements ShopSerivce{
 		return shopRepository.insertShop(shop);
 	}
 
+
 	
 }
