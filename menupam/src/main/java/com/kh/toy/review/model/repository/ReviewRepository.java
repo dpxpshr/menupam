@@ -1,5 +1,7 @@
 package com.kh.toy.review.model.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -23,4 +25,7 @@ public interface ReviewRepository {
 	
 	@Select("SELECT FILE_IDX FROM TB_FILE WHERE FILE_RENAME = #{renameFileName}")
 	String selectFileIdx(String renameFileName);
+	
+	
+	//List<Review> selectReview
 }

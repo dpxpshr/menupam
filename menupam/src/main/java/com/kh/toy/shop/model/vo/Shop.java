@@ -10,7 +10,7 @@ public class Shop {
 	private String shopType; //매장 분류
 	private String shopBln; //사업자 등록 번호
 	private String shopPackAble; //포장가능 여부
-	private int shopRatIng; //매장 평점
+	private int shopRating; //매장 평점
 	private Date shopRegDate; //매장 등록일
 	private Date shopLeaveDate; //매장 해지일
 	private String shopTell; //매장 전화번호
@@ -63,12 +63,12 @@ public class Shop {
 		this.shopPackAble = shopPackAble;
 	}
 	
-	public int getShopRatIng() {
-		return shopRatIng;
+	public int getShopRating() {
+		return shopRating;
 	}
 	
-	public void setShopRatIng(int shopRatIng) {
-		this.shopRatIng = shopRatIng;
+	public void setShopRating(int shopRating) {
+		this.shopRating = shopRating;
 	}
 	
 	public Date getShopRegDate() {
@@ -105,7 +105,7 @@ public class Shop {
 	@Override
 	public String toString() {
 		return "Shop [shopIdx=" + shopIdx + ", shopName=" + shopName + ", shopAddress=" + shopAddress + ", shopType="
-				+ shopType + ", shopBln=" + shopBln + ", shopPackAble=" + shopPackAble + ", shopRatIng=" + shopRatIng
+				+ shopType + ", shopBln=" + shopBln + ", shopPackAble=" + shopPackAble + ", shopRating=" + shopRating
 				+ ", shopRegDate=" + shopRegDate + ", shopLeaveDate=" + shopLeaveDate + ", shopTell=" + shopTell
 				+ ", memberId=" + memberId + "]";
 	}
