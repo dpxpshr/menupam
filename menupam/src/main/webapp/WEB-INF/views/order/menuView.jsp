@@ -6,8 +6,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/menuView.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/menuView.css'>
     <link rel="stylesheet" href="resources/slick/slick.css">
 	<link rel="stylesheet" href="resources/slick/slick-theme.css">
     

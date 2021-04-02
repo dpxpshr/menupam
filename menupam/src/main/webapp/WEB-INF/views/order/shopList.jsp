@@ -6,9 +6,10 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/shopList.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/shopList.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8741f560dfcb3473fb94dadb4c4b536c"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -23,9 +24,9 @@
         
         <section class="main">
         	<!-- 맵 설정 -->
-            <div class="map">
-            	
-            </div>
+            <div id="map"></div>
+            <br>
+            <div class="location_msg fontXSmall"></div>
             <!-- 매장 검색 목록 -->
             <div class="shopList">
              <table>
@@ -35,7 +36,7 @@
 	           	
 	           	<tbody >
 	           		<tr class="shopList_tr">
-	           			<td class="shopList_img"><img src="resources/images/교촌치킨.png"></td>
+	           			<td class="shopList_img"></td>
 	           			<td class="shopList_name">교촌치킨</td>
 	           			<td class="shopList_address">서울시 강남구 삼성동 44-18</td>
 	           		</tr>
@@ -43,7 +44,7 @@
 	           	<!-- test용 List로 적용시 삭제필수! -->
 	           	<tbody >
 	           		<tr class="shopList_tr">
-	           			<td class="shopList_img"><img src="resources/images/교촌치킨.png"></td>
+	           			<td class="shopList_img"></td>
 	           			<td class="shopList_name">교촌치킨</td>
 	           			<td class="shopList_address">경기도 성남시 분당구 판교로 303-13</td>
 	           		</tr>
@@ -58,6 +59,38 @@
             <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </footer> 
-    </div> 
+    </div>
+    <script type="text/javascript">
+	    let latlng = ()=>{ //현재 좌표값을 먼저 구한다
+			return new Promise((resolve,reject)=>{
+				navigator.geolocation.getCurrentPosition((position)=>{
+					resolve(position.coords);
+				},
+				()=>{
+					alert("위치 정보를 읽는 데 실패하였습니다.")
+				},
+				{
+					enableHighAccuracy: true,
+					timeout: 5000,
+					maximumAge: 0
+				});
+			});
+		}
+	    (async function drawMap(){
+			let coords = await latlng(); //현재 좌표값이 구해지면 진행
+			let header = new Headers();
+			header.append("Authorization","KakaoAK a1dd8df76ed926adfc905911f8959e96");
+			let url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x="+coords.longitude+"&y="+coords.latitude;
+			let response = await fetch(url,{"method":"get", "headers": header});
+			let obj = await response.json();
+			document.querySelector(".location_msg").innerHTML = await obj.documents[0].region_2depth_name + "에 있는 음식점을 검색합니다.";
+			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+			var options = { //지도를 생성할 때 필요한 기본 옵션
+				center: new kakao.maps.LatLng(coords.latitude,coords.longitude), //지도의 중심좌표
+				level: 3 //지도의 레벨(확대, 축소 정도)
+			};
+			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+		})();
+    </script> 
 </body>
 </html>

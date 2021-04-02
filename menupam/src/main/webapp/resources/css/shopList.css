@@ -33,13 +33,18 @@ body {
 .main{
     background-color: white;
     min-height: 900px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
 /* map 설정 */
-.map{
-	background-image : url("../images/sampleMap.png");
-	background-size:cover;
-	height: 55vh;
+#map{
+	width:90%;
+	height: 40vh;
+	border:2px solid;
+	border-color:#F2BB13;
+	border-radius:10%;
 }
 
 /* 매장 검색 목록 */
