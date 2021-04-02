@@ -38,5 +38,11 @@ public class reviewControllerTest {
 
 	 }
 	 
+	 @Test
+	 public void reviewViewTest() throws Exception {
+		 mockMvc
+		 .perform(get("/review/view"))
+		 .andDo(print());
+	 }
 	 
 }
