@@ -129,15 +129,15 @@ public class MybatisTest {
 	
 	@Test
 	public void dynamicQueryForeachTag() {
-		//留뚮뒫 insert荑쇰━ �깮�꽦
-		Map<String,Object> commandMap = new HashMap<String, Object>();
-		commandMap.put("table", "tb_book");
-		commandMap.put("primaryKey", Map.of("col", "b_idx","val","sc_b_idx.nextval"));
-		commandMap.put("data"
-				, Map.of("title","留뚮뒫�씤�꽌�듃�뿉���븳 3媛�吏� 怨좎같"
-						,"author","�뵾�겢�옒�뒪"
-						,"info","留덉씠諛뷀떚�뒪�쓽 �룞�쟻荑쇰━瑜� �솢�슜�븯�뒗 諛⑸쾿濡�"));
-		mybatisRepository.dynamicQueryForeachTag(commandMap);
+//		//留뚮뒫 insert荑쇰━ �깮�꽦
+//		Map<String,Object> commandMap = new HashMap<String, Object>();
+//		commandMap.put("table", "tb_book");
+//		commandMap.put("primaryKey", Map.of("col", "b_idx","val","sc_b_idx.nextval"));
+//		commandMap.put("data"
+//				, Map.of("title","留뚮뒫�씤�꽌�듃�뿉���븳 3媛�吏� 怨좎같"
+//						,"author","�뵾�겢�옒�뒪"
+//						,"info","留덉씠諛뷀떚�뒪�쓽 �룞�쟻荑쇰━瑜� �솢�슜�븯�뒗 諛⑸쾿濡�"));
+//		mybatisRepository.dynamicQueryForeachTag(commandMap);
 	}
 	
 	@Test

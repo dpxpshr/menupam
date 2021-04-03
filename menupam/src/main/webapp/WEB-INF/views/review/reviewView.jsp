@@ -25,7 +25,7 @@
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
-                    <p class="fontSmall">가게이름적는곳</p><br>
+                    <p class="fontSmall">${shop.shopName}</p><br>
                     <div class="line"></div>
                     <!-- <div class="reviewBox">
                         <div class="profileBox">
@@ -75,6 +75,7 @@
     </div> 
 </body>
 <script>
+    let shopIdx = "<c:out value='${shop.shopIdx}'/>";
 	let page = 1;
     window.onload = function () {
         getReviews(page);
@@ -82,11 +83,15 @@
     }
 
     let getReviews = (page) => {
-        fetch("/review/views?page=" + page,{
+    	console.log(page+"번째 page 가져옵니다")
+        fetch("/review/views?page="+page+"&shopIdx="+shopIdx,{
             method:"POST"
         })
         .then(response => response.json())
         .then(json => {
+			if(json[1]==null){
+				console.log("null");
+			}
             for(let i=1; i<=5; i++){
 
                 // DB에서 데이터 가져온 데이터 파싱
@@ -176,9 +181,11 @@
 
     document.addEventListener("wheel", () => {
         //console.dir(`scrollY : ${scrollY} / clientHeight : ${document.querySelector("body").clientHeight} / screen.availHeight : ${screen.availHeight}`);
-        console.log("scrollY = "+ window.scrollY);
-        console.log("clientHeight = "+ document.querySelector("body").clientHeight)
-        console.log("innerHeight = "+ window.innerHeight);
+        //scrollY > document.querySelector("body").clientHeight - screen.availHeight
+        if(window.scrollY > document.querySelector("body").clientHeight - window.innerHeight){
+        	getReviews(page);
+        	page++;
+        }
     })
 
     
