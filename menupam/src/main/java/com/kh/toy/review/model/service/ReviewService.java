@@ -16,5 +16,5 @@ public interface ReviewService {
 	
 	Map<Integer, Review> getReview(String shopIdx, int page);
 	
-	File getfileVo(String fileIdx) throws IOException;
+	String getSavePath(String fileIdx) throws IOException;
 }

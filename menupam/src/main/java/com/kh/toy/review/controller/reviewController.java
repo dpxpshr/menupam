@@ -53,19 +53,19 @@ public class reviewController {
 	
 	@PostMapping("views")
 	@ResponseBody
-	public Map<Integer, Review> getReviews(String cnt) {
+	public Map<Integer, Review> getReviews(String page) {
 		
-		int page = Integer.parseInt(cnt);
-		Map<Integer, Review> reviewMap = reviewService.getReview("test", page);
+		int pageNo = Integer.parseInt(page);
+		Map<Integer, Review> reviewMap = reviewService.getReview("test", pageNo);
 		
 		return reviewMap;
 	}
 	
 	@PostMapping("photo")
 	@ResponseBody
-	public File getPhoto(String fileIdx) throws IOException {
-		File file = reviewService.getfileVo(fileIdx);
-		return file;
+	public String getPhoto(String fileIdx) throws IOException {
+		String savePath = reviewService.getSavePath(fileIdx);
+		return savePath;
 	}
 	
 	@PostMapping("write")
@@ -77,9 +77,8 @@ public class reviewController {
 		review.setMemberId("lee5031207"); //임시 
 		review.setShopIdx("test"); //임시
 		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
-		String imgUploadPath = path + File.separator + "imgUpload" + File.separator;
-		
-
+		String imgUploadPath = path + File.separator + "reviewPhoto" + File.separator;
+		System.out.println(imgUploadPath);
 		reviewService.writeReview(file, review, imgUploadPath);
 		
 		return "review/reviewForm";

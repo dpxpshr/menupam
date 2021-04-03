@@ -24,6 +24,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.kh.toy.common.code.Code;
 import com.kh.toy.common.util.file.FileUtil;
 import com.kh.toy.common.util.file.FileVo;
+import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.review.model.repository.ReviewRepository;
 import com.kh.toy.review.model.vo.Review;
 
@@ -40,10 +41,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public void writeReview(MultipartFile file, Review review, String uploadPath) {
 		
-		FileUtil fileUtil = new FileUtil();
+		PhotoUtil photoUtil = new PhotoUtil();
 		String type = FilenameUtils.getExtension(file.getOriginalFilename());
 		try {
-			FileVo fileInfo = fileUtil.photoUpload(file, uploadPath, type);
+			FileVo fileInfo = photoUtil.photoUpload(file, uploadPath, type);
 			System.out.println(fileInfo);
 			if(fileInfo.getFileOriginName() == null) {
 				review.setFileIdx("");
@@ -57,7 +58,6 @@ public class ReviewServiceImpl implements ReviewService{
 			}
 	
 		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -78,22 +78,15 @@ public class ReviewServiceImpl implements ReviewService{
 
 	
 	@Override
-	public File getfileVo(String fileIdx) throws IOException {
+	public String getSavePath(String fileIdx) throws IOException {
 		
-//		FileVo fileVo = reviewRepository.selectFileVo(fileIdx);
-//		String root = "";
-//		if(fileVo != null) {
-//			root = Code.UPLOAD + fileVo.getFileSavePath() + fileVo.getFileRename();
-//		}
-//		
-//		File file = new File(root);
-//		System.out.println(root);
-//		System.out.println(file.exists());
-//		System.out.println(file.length());
-//		System.out.println(file.canExecute());
-		
+		FileVo fileVo = reviewRepository.selectFileVo(fileIdx);
+		String root = "";
+		if(fileVo != null) {
+			root = fileVo.getFileSavePath() + fileVo.getFileRename() +"."+ fileVo.getFileType();
+		}
 						
-		return null;
+		return root;
 	}
 
 	
