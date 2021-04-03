@@ -48,7 +48,7 @@ public class MemberControllerTest {
 	 public void idCheckTest() throws Exception {
 		 mockMvc
 		 .perform(get("/member/idcheck")
-				 .param("MemberId", "kim1"))
+				 .param("memberId", "kim1"))
 		 .andDo(print());
 	 }
 	

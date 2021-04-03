@@ -1,14 +1,30 @@
 package com.kh.toy.review.model.service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.kh.toy.common.code.Code;
 import com.kh.toy.common.util.file.FileUtil;
 import com.kh.toy.common.util.file.FileVo;
+import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.review.model.repository.ReviewRepository;
 import com.kh.toy.review.model.vo.Review;
 
@@ -23,29 +39,54 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 	@Override
-	public void writeReview(MultipartFile file, Review review) {
+	public void writeReview(MultipartFile file, Review review, String uploadPath) {
 		
-		FileUtil fileUtil = new FileUtil();
-		
+		PhotoUtil photoUtil = new PhotoUtil();
+		String type = FilenameUtils.getExtension(file.getOriginalFilename());
 		try {
-			FileVo fileInfo = fileUtil.fileUpload(file);
-			String type = fileInfo.getFileOriginName().substring(fileInfo.getFileOriginName().length()-4, fileInfo.getFileOriginName().length());
-			fileInfo.setFileType(type);
-
-			//이제 DB에 넣으믄댐
-			reviewRepository.insertFile(fileInfo);
-			
-			//넣었으니까 이제 인덱스 가져오자 
-			String fileIdx = reviewRepository.selectFileIdx(fileInfo.getFileRename());
-			review.setFileIdx(fileIdx);
-			
-			//review 완성 이제 DB에 넣어주자
-			reviewRepository.insertReview(review);
+			FileVo fileInfo = photoUtil.photoUpload(file, uploadPath, type);
+			System.out.println(fileInfo);
+			if(fileInfo.getFileOriginName() == null) {
+				review.setFileIdx("");
+				reviewRepository.insertReview(review);
+			}else {
+				fileInfo.setFileType(type);
+				reviewRepository.insertFile(fileInfo);
+				String fileIdx = reviewRepository.selectFileIdx(fileInfo.getFileRename());
+				review.setFileIdx(fileIdx);
+				reviewRepository.insertReview(review);
+			}
 	
 		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+	}
+
+	@Override
+	public Map<Integer, Review> getReview(String shopIdx, int page) {		
+		int queryStart = 1+(page-1)*5;
+		int queryEnd = page*5+1;
+		Map<Integer, Review> reviewMap = new HashMap<Integer, Review>();
+		List<Review> reviewList = reviewRepository.selectReview(shopIdx, queryStart, queryEnd);
+		for (int i=1; i<=reviewList.size(); i++) {
+			reviewMap.put(i, reviewList.get(i-1));
+		}
+		return reviewMap;
+	}
+
+	
+	@Override
+	public String getSavePath(String fileIdx) throws IOException {
+		
+		FileVo fileVo = reviewRepository.selectFileVo(fileIdx);
+		String root = "";
+		if(fileVo != null) {
+			root = fileVo.getFileSavePath() + fileVo.getFileRename() +"."+ fileVo.getFileType();
+		}
+						
+		return root;
 	}
 
 	

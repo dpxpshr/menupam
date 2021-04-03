@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.kh.toy.common.util.file.File;
@@ -26,6 +27,13 @@ public interface ReviewRepository {
 	@Select("SELECT FILE_IDX FROM TB_FILE WHERE FILE_RENAME = #{renameFileName}")
 	String selectFileIdx(String renameFileName);
 	
+	//@Select("SELECT * FROM TB_REVIEW WHERE SHOP_IDX = #{shopIdx}")
+	List<Review> selectReview(
+			@Param(value = "shopIdx") String shopIdx,
+			@Param(value = "queryStart") int queryStart,
+			@Param(value = "queryEnd") int queryEnd);
 	
-	//List<Review> selectReview
+	
+	@Select("SELECT * FROM TB_FILE WHERE FILE_IDX = #{fileIdx}")
+	FileVo selectFileVo(String fileIdx);
 }

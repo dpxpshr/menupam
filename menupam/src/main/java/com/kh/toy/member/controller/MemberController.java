@@ -87,8 +87,7 @@ public class MemberController {
 	public String idcheck(String memberId) {
 		if(memberService.selectMemberById(memberId) != null) {
 			return "fail";
-		}
-		
+		}		
 		return "success";
 	}
 	
