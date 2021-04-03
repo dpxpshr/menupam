@@ -27,6 +27,7 @@ import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.review.model.repository.ReviewRepository;
 import com.kh.toy.review.model.vo.Review;
+import com.kh.toy.shop.model.vo.Shop;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -87,6 +88,11 @@ public class ReviewServiceImpl implements ReviewService{
 		}
 						
 		return root;
+	}
+
+	@Override
+	public Shop getShopInform(String shopIdx) {
+		return reviewRepository.selectShop(shopIdx);
 	}
 
 	

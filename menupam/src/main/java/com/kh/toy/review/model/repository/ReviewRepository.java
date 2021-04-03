@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import com.kh.toy.common.util.file.File;
 import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.review.model.vo.Review;
+import com.kh.toy.shop.model.vo.Shop;
 
 @Mapper
 public interface ReviewRepository {
@@ -36,4 +37,7 @@ public interface ReviewRepository {
 	
 	@Select("SELECT * FROM TB_FILE WHERE FILE_IDX = #{fileIdx}")
 	FileVo selectFileVo(String fileIdx);
+	
+	@Select("SELECT * FROM TB_SHOP WHERE SHOP_IDX = #{shopIdx}")
+	Shop selectShop(String shopIdx);
 }

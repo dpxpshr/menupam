@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.review.model.vo.Review;
+import com.kh.toy.shop.model.vo.Shop;
 
 public interface ReviewService {
 
@@ -17,4 +18,6 @@ public interface ReviewService {
 	Map<Integer, Review> getReview(String shopIdx, int page);
 	
 	String getSavePath(String fileIdx) throws IOException;
+	
+	Shop getShopInform(String shopIdx);
 }

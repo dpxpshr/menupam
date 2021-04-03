@@ -63,9 +63,10 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Map<String, Object> selectBoardDetail(String bdIdx) {
-		Board board = boardRepository.selectBoardWithBdIdx(bdIdx);
-		List<FileVo> files = boardRepository.selectFileWithBdIdx(bdIdx);
-		return Map.of("board",board,"files",files);
+		return null;
+//		Board board = boardRepository.selectBoardWithBdIdx(bdIdx);
+//		List<FileVo> files = boardRepository.selectFileWithBdIdx(bdIdx);
+//		return Map.of("board",board,"files",files);
 	}
 	
 	

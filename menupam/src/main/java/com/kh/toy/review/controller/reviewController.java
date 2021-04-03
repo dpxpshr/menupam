@@ -41,22 +41,21 @@ public class reviewController {
 	}
 	
 	@GetMapping("view")
-	public String reviewView(String shopIdx) {
+	public String reviewView(String shopIdx, Model model) {
 
-		//List<Review> reviewList = reviewService.getReview(shopIdx);
-//		for (Review review : reviewList) {
-//			System.out.println(review);
-//		}
+		Shop shop = reviewService.getShopInform(shopIdx);
+		System.out.println(shop);
+		model.addAttribute("shop", shop);
 		
 		return "review/reviewView";		
 	}
 	
 	@PostMapping("views")
 	@ResponseBody
-	public Map<Integer, Review> getReviews(String page) {
+	public Map<Integer, Review> getReviews(String page, String shopIdx) {
 		
 		int pageNo = Integer.parseInt(page);
-		Map<Integer, Review> reviewMap = reviewService.getReview("test", pageNo);
+		Map<Integer, Review> reviewMap = reviewService.getReview(shopIdx, pageNo);
 		
 		return reviewMap;
 	}

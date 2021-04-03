@@ -33,14 +33,14 @@
                         <textarea name="reviewContent" id="reviewContent" cols="50" rows="10" placeholder="리뷰를 작성하세요" required="required"></textarea>
                         <div class="ratingBox">
                             <div class="ratings">
-                                <p class="fontSmall rating" id="1" stlye="color : #F28C0F"><i class="fas fa-star"></i></i></p>
+                                <p class="fontSmall rating" id="1" style="color : #F28C0F"><i class="fas fa-star"></i></i></p>
                                 <p class="fontSmall rating" id="2"><i class="fas fa-star"></i></p>
                                 <p class="fontSmall rating" id="3"><i class="fas fa-star"></i></p>
                                 <p class="fontSmall rating" id="4"><i class="fas fa-star"></i></p>
                                 <p class="fontSmall rating" id="5"><i class="fas fa-star"></i></p>
                             </div>
                         </div>
-                        <input type="text" name="reviewScore" id="reviewScore" style="display : none;"><br>
+                        <input type="text" name="reviewScore" id="reviewScore" value="1" style="display : none;"><br>
                         <input type="submit" value=" 리뷰 작성 완료" class="btnLarge width100">
                     </form>
                 </div>
