@@ -42,7 +42,7 @@
                     <input type="text" name="shopAddress" id="inputPost" >
                     <button class="addressSearch" type="button" onclick="kakaoAddress()">주소 찾기</button><br><br>
                    	<input type="text" name="shopAddress" id="inputAddress"><br><br>
-                    <input type="text" name="shopAddress" id="inputAddressDetail" placeholder="상세 주소를 입력해 주세요" ><br><br>
+                    <input type="text" name="detailedAddress" id="inputAddressDetail" placeholder="상세 주소를 입력해 주세요" ><br><br>
                     
                     <p class="fontSmall">매장 전화 번호</p><br>
                     <input type="text" name="shopTell" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)" ><br><br>
@@ -68,7 +68,7 @@
                     </label>
                     <br><br>
                     <p class="fontSmall">테이블 수</p><br> <!-- 고민중 -->
-                    <select name="cars" id="cars" class="inputMedium">
+                    <select name="shopTableCount" class="inputMedium">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -88,11 +88,16 @@
                         <option value="17">17</option>
                         <option value="18">18</option>
                     </select>
-                    <br><br>
-                    <p class="fontSmall confirmText"><i class="far fa-check-circle"></i> 전체 동의</p><br>
-                    <p class="fontXSmall confirmText"><i class="far fa-check-circle"></i> 개인회원 약관에 동의</p><br>
-                    <p class="fontXSmall confirmText"><i class="far fa-check-circle"></i> 개인정보 제 3자 제공 및 위탁사항 이용약관</p><br>
-                    <br>
+                    <br><br><br>
+          			
+          			<input type="checkbox" id="chkbox1" class="all">
+          			<label for="chkbox1" class="all confirmText"><em></em>전체 동의</label><br><br>
+          			<input type="checkbox" id="chkbox2" class="check">
+          			<label for="chkbox2" class="fontXSmall confirmText"><em></em>개인회원 약관에 동의</label><br><br>
+          			<input type="checkbox" id="chkbox3" class="check">
+          			<label for="chkbox3" class="fontXSmall confirmText"><em></em>개인정보 제 3자 제공 및 위탁사항 이용약관</label>
+          			<br><br><br>
+          			
                     <input type="submit" value="등록하기" class="btnXLarge">
                 </div>
               </div>

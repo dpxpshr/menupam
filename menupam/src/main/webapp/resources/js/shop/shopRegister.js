@@ -17,5 +17,25 @@ $('input[name="checkPackAble"]').addEventListener('click', (e)=>{
 		$('input[name="shopPackAble"]').value = "N";
 		
 	}
-	console.log($('input[name="shopPackAble"]').value);
+	
 });
+
+$(".all").addEventListener("click",()=>{
+	document.querySelectorAll('.check').forEach((e)=>{
+		
+		if($('.all').checked){
+			e.checked = true;
+		}else{
+			e.checked = false;
+		}
+		
+	})
+})
+
+$(".btnXLarge").addEventListener("click", ()=>{
+	if($('.all').checked){
+		return;
+	}else{
+		alert("모든 약관에 동의 하셔야 합니다.");
+	}
+})

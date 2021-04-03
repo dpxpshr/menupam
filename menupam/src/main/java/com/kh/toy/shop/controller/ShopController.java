@@ -29,6 +29,7 @@ public class ShopController {
 	@PostMapping("shopInfo")
 	public String shopInfo(@RequestParam(name="shopPackAble", defaultValue = "N") String shopPackAble
 						,Shop shop
+						,@RequestParam(name="detailedAddress") String detailedAddress
 						,HttpSession sessionn
 						,Model model) {
 		
@@ -38,7 +39,12 @@ public class ShopController {
 		}
 		
 		System.out.println(shop);
-		//shopService.insertShop(shop); // 전체 완료떄 까지 주석모드
+		//shopService.insertShop(shop); // kakaomap 데이터 DB저장
+		
+		shop.setShopAddress(shop.getShopAddress() + "," + detailedAddress);
+		
+		System.out.println(shop);
+		//shopService.insertShop(shop); // kakaomap 데이터 + 입력 데이터 DB저장
 		
 		model.addAttribute("msg", "매장등록이 완료 되었습니다.");
 		model.addAttribute("url", "/shop/shopRegister");

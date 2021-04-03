@@ -56,4 +56,26 @@
     font-family: 'Nanum Gothic', sans-serif;
 }
 
+.all{
+	color: gray;
+	font-size: 20px;
+}
 
+input[type="checkbox"]{
+	display: none;
+}
+
+input[type="checkbox"] + label em {
+	display: inline-block;
+	width: 23px;
+	height: 21px;
+	margin-right: 10px;
+	/* background-image: url('../images/bg_chkbox.gif') ; */
+	background-image: url('../images/check_off.png') ;
+	vertical-align: middle;
+}
+
+input[type="checkbox"]:checked + label em {
+	/* background-position: -38px 0; */
+	background-image: url('../images/check_on.png') ;
+}
