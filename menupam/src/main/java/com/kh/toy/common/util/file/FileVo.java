@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.kh.toy.common.code.Code;
 
 public class FileVo {
+	
 	private int fIdx;
 	private String typeIdx;
 	private String originFileName;

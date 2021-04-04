@@ -24,6 +24,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.kh.toy.common.code.Code;
 import com.kh.toy.common.util.file.FileUtil;
 import com.kh.toy.common.util.file.FileVo;
+import com.kh.toy.common.util.file.MenupamFile;
 import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.review.model.repository.ReviewRepository;
 import com.kh.toy.review.model.vo.Review;
@@ -45,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService{
 		PhotoUtil photoUtil = new PhotoUtil();
 		String type = FilenameUtils.getExtension(file.getOriginalFilename());
 		try {
-			FileVo fileInfo = photoUtil.photoUpload(file, uploadPath, type);
+			MenupamFile fileInfo = photoUtil.photoUpload(file, uploadPath, type);
 			System.out.println(fileInfo);
 			if(fileInfo.getFileOriginName() == null) {
 				review.setFileIdx("");
@@ -81,10 +82,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public String getSavePath(String fileIdx) throws IOException {
 		
-		FileVo fileVo = reviewRepository.selectFileVo(fileIdx);
+		MenupamFile menupamFile = reviewRepository.selectFileVo(fileIdx);
 		String root = "";
-		if(fileVo != null) {
-			root = fileVo.getFileSavePath() + fileVo.getFileRename() +"."+ fileVo.getFileType();
+		if(menupamFile != null) {
+			root = menupamFile.getFileSavePath() + menupamFile.getFileRename() +"."+ menupamFile.getFileType();
 		}
 						
 		return root;

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.kh.toy.common.util.file.File;
+import com.kh.toy.common.util.file.MenupamFile;
 import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.review.model.vo.Review;
 import com.kh.toy.shop.model.vo.Shop;
@@ -22,7 +22,7 @@ public interface ReviewRepository {
 	
 	@Insert("INSERT INTO TB_FILE (FILE_IDX, FILE_ORIGIN_NAME, FILE_RENAME, FILE_TYPE, FILE_SAVE_PATH)"
 			+ "VALUES ('F'||SC_FILE_IDX.NEXTVAL, #{fileOriginName}, #{fileRename}, #{fileType}, #{fileSavePath})")
-	int insertFile(FileVo file);
+	int insertFile(MenupamFile menupamFile);
 	
 	
 	@Select("SELECT FILE_IDX FROM TB_FILE WHERE FILE_RENAME = #{renameFileName}")
@@ -36,7 +36,7 @@ public interface ReviewRepository {
 	
 	
 	@Select("SELECT * FROM TB_FILE WHERE FILE_IDX = #{fileIdx}")
-	FileVo selectFileVo(String fileIdx);
+	MenupamFile selectFileVo(String fileIdx);
 	
 	@Select("SELECT * FROM TB_SHOP WHERE SHOP_IDX = #{shopIdx}")
 	Shop selectShop(String shopIdx);

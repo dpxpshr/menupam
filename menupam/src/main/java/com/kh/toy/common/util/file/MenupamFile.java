@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import com.kh.toy.common.code.Code;
 
-public class File {
+public class MenupamFile {
 
 	//메뉴팜 DB에 맞는 파일VO 입니다.
 	private String fileIdx;

@@ -8,29 +8,27 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.common.util.file.FileVo;
+import com.kh.toy.common.util.file.MenupamFile;
 
 public class PhotoUtil {
 
-	public FileVo photoUpload(MultipartFile file, String uploadPath, String type) throws IllegalStateException, IOException {
+	public MenupamFile photoUpload(MultipartFile file, String uploadPath, String type) throws IllegalStateException, IOException {
 		
 		String savePath = getSavePath(); 
-		FileVo fileVo = new FileVo();
-		if(!file.getOriginalFilename().equals("")) {
-			fileVo.setOriginFileName(file.getOriginalFilename());
-			fileVo.setRenameFileName(UUID.randomUUID().toString());
-			fileVo.setSavePath("/resources/reviewPhoto/"+savePath);
-			
-			fileVo.setOriginFileName(file.getOriginalFilename());
-			fileVo.setRenameFileName(UUID.randomUUID().toString());
-			fileVo.setSavePath("/resources/imgUpload/"+savePath);
+		MenupamFile menupamFile = new MenupamFile();
+		
+		if(!file.getOriginalFilename().equals("")) {			
+			menupamFile.setFileOriginName(file.getOriginalFilename());
+			menupamFile.setFileRename(UUID.randomUUID().toString());
+			menupamFile.setFileSavePath("/resources/reviewPhoto/"+savePath);
 			String path = uploadPath+savePath;
-			savePhoto(fileVo, file, path, type);
+			savePhoto(menupamFile, file, path, type);
 		}
-		return fileVo;
+		return menupamFile;
 	}
 	
-	private void savePhoto(FileVo fileVo, MultipartFile multipartFile, String path, String type) throws IllegalStateException, IOException {
-		File dest = new File(path + fileVo.getRenameFileName() + "."+type);
+	private void savePhoto(MenupamFile menupamFile, MultipartFile multipartFile, String path, String type) throws IllegalStateException, IOException {
+		File dest = new File(path + menupamFile.getFileRename() + "."+type);
 		if(!dest.exists()) {
 			new File(path).mkdirs();
 		}
