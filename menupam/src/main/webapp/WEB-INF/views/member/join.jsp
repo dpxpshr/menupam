@@ -53,7 +53,7 @@
 	          </div>
 	          <div class="field space">
 	            <span class="fas fa-unlock"></span>
-	            <input type="password" class="pw" id="pw2" name="pw2" required placeholder="비밀번호 확인" required="required">
+	            <input type="password" class="pw" id="pw2" name="pw2" required placeholder="PW 확인 영,특,숫포함 8글자이상" required="required">
 	          </div>
 	          <div class="field space">
 	            <span class="far fa-envelope"></span>
@@ -63,7 +63,8 @@
 	          </div>
 	          <div class="field space">
 	            <span class="fas fa-mobile-alt"></span>
-	            <input type="tel" class="name" id="name" name="memberPhone" required placeholder="전화번호" required="required">
+	            <input type="tel" class="name" id="Phone" name="memberPhone" required placeholder="전화번호" required="required">
+	            <button type="button" onclick="phoneAuth()">인증</button>
 	         	<form:errors path="tell" cssClass="valid_info"/>
 	          </div>
 	          

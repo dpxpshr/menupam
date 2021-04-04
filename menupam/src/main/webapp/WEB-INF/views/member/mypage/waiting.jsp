@@ -34,21 +34,23 @@
                     <br>
                     <div class="buttonBox">
                         <div class="manageBtn">
+                        <a href="${context}/member/mypage/mypage">
                             <div class="manageBtnIcon"><i class="fas fa-id-card"></i></div>
-                            <div class="manageBtnText">계정 정보</div>
-                        </div>
-                        
-                        <div class="manageBtn">
-                            <div class="manageBtnIcon"><i class="far fa-calendar-check"></i></div>
-                            <div class="manageBtnText">예약 현황</div>
-                        </div>
-                        <div class="manageBtn border">
-                            <div class="manageBtnIcon"><i class="fas fa-user-friends"></i></div>
-                            <div class="manageBtnText">대기 현황</div>
+                            <div class="manageBtnText">계정 정보</a></div>
                         </div>
                         <div class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-hand-holding-usd"></i></div>
                             <div class="manageBtnText">이용 내역</div>
+                        </div>
+                        <div class="manageBtn">
+                        	<a href="${context}/member/mypage/reservation">
+                            <div class="manageBtnIcon"><i class="far fa-calendar-check"></i></div>
+                            <div class="manageBtnText">예약 현황</a></div>
+                        </div>
+                        <div class="manageBtn">
+                       		 <a href="${context}/member/mypage/waiting">
+                            <div class="manageBtnIcon"><i class="fas fa-user-friends"></i></div>
+                            <div class="manageBtnText">대기 현황</a></div>
                         </div>
                         <div class="manageBtn"></div>
                         <div class="manageBtn"></div>
@@ -67,8 +69,8 @@ WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
 	                    <div class="wrap_user">
 							<i class="fas fa-user-circle"></i>
 	                    	<div class="user">
-								<span id="user_info">abcdef123</span><br> <!-- 아이디 -->
-								<span id="user_info">OOO님</span> <!-- 이름 -->
+								<span id="user_info">${sessionScope.userInfo.memberId}</span><br> <!-- 아이디 -->
+								<span id="user_info">${sessionScope.userInfo.memberName}님</span> <!-- 이름 -->
 	                    	</div>
 	                    </div>
 	                    <hr color="#F2BB13">

@@ -68,17 +68,38 @@ public class BoardController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition
 				.builder("attachment")
-				.filename(file.getFileOriginName(), Charset.forName("utf-8"))
+				.filename(file.getOriginFileName(), Charset.forName("utf-8"))
 				.build());
 		
 		//FileSystemResource의 생성자에 Path 객체를 던져, NIO.2로 파일다운로드 진행
 		FileSystemResource resource = new FileSystemResource( 
 				FileSystems
 				.getDefault()
-				.getPath(file.getFullPath(), file.getFileRename()));
+				.getPath(file.getFullPath(), file.getRenameFileName()));
 		
 		return ResponseEntity.ok().headers(headers).body(resource);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

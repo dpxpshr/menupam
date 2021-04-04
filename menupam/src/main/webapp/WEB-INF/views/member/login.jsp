@@ -10,7 +10,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/login.css'>
-    <script src='main.js'></script>
+   
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 
 </head>

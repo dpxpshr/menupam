@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.member.model.vo.Member;
-import com.kh.toy.review.model.vo.Review;
+/*import com.kh.toy.review.model.vo.Review;*/
 
 @Mapper
 public interface MybatisRepository {

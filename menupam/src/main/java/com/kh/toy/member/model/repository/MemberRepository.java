@@ -1,13 +1,21 @@
 package com.kh.toy.member.model.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.vo.Member;
 
 @Mapper
 public interface MemberRepository {
+	
+	List<Member>selectMemberList(Paging paging);
+	
+	@Select("select count(*) from tb_member")
+	int selectContentCnt();
 	
 	@Select("select * from tb_member where member_id = #{memberId}")
 	Member selectMemberById(String memberId);
@@ -24,4 +32,7 @@ public interface MemberRepository {
 	@Insert("insert into tb_member(member_id,member_pw,member_name,member_phone,member_email)"
 			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertMember(Member member);
+	
+	
+	
 }

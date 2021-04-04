@@ -16,9 +16,13 @@ public class PhotoUtil {
 		String savePath = getSavePath(); 
 		FileVo fileVo = new FileVo();
 		if(!file.getOriginalFilename().equals("")) {
-			fileVo.setFileOriginName(file.getOriginalFilename());
-			fileVo.setFileRename(UUID.randomUUID().toString());
-			fileVo.setFileSavePath("/resources/reviewPhoto/"+savePath);
+			fileVo.setOriginFileName(file.getOriginalFilename());
+			fileVo.setRenameFileName(UUID.randomUUID().toString());
+			fileVo.setSavePath("/resources/reviewPhoto/"+savePath);
+			
+			fileVo.setOriginFileName(file.getOriginalFilename());
+			fileVo.setRenameFileName(UUID.randomUUID().toString());
+			fileVo.setSavePath("/resources/imgUpload/"+savePath);
 			String path = uploadPath+savePath;
 			savePhoto(fileVo, file, path, type);
 		}
@@ -26,7 +30,7 @@ public class PhotoUtil {
 	}
 	
 	private void savePhoto(FileVo fileVo, MultipartFile multipartFile, String path, String type) throws IllegalStateException, IOException {
-		File dest = new File(path + fileVo.getFileRename() + "."+type);
+		File dest = new File(path + fileVo.getRenameFileName() + "."+type);
 		if(!dest.exists()) {
 			new File(path).mkdirs();
 		}

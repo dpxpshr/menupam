@@ -21,9 +21,9 @@ public class FileUtil {
 			for (MultipartFile multipartFile : files) {
 				//저장될 파일명
 				FileVo fileVo = new FileVo();
-				fileVo.setFileOriginName(multipartFile.getOriginalFilename());
-				fileVo.setFileRename(UUID.randomUUID().toString());
-				fileVo.setFileSavePath(savePath);
+				fileVo.setOriginFileName(multipartFile.getOriginalFilename());
+				fileVo.setRenameFileName(UUID.randomUUID().toString());
+				fileVo.setSavePath(savePath);
 				fileList.add(fileVo);
 				saveFile(fileVo,multipartFile);
 			}
@@ -37,9 +37,9 @@ public class FileUtil {
 		FileVo fileVo = new FileVo();
 		
 		if(!file.getOriginalFilename().equals("")) {	
-			fileVo.setFileOriginName(file.getOriginalFilename());
-			fileVo.setFileRename(UUID.randomUUID().toString());
-			fileVo.setFileSavePath(savePath);
+			fileVo.setOriginFileName(file.getOriginalFilename());
+			fileVo.setRenameFileName(UUID.randomUUID().toString());
+			fileVo.setSavePath(savePath);
 			saveFile(fileVo,file);
 		}
 		
@@ -55,7 +55,7 @@ public class FileUtil {
 	}
 	
 	private void saveFile(FileVo fileVo, MultipartFile multipartFile) throws IllegalStateException, IOException {
-		File dest = new File(fileVo.getFullPath() + fileVo.getFileRename());
+		File dest = new File(fileVo.getFullPath() + fileVo.getRenameFileName());
 		
 		if(!dest.exists()) {
 			new File(fileVo.getFullPath()).mkdirs();
@@ -65,7 +65,7 @@ public class FileUtil {
 	}
 	
 	private void savePhoto(FileVo fileVo, MultipartFile multipartFile, String uploadPath, String savePath, String type) throws IllegalStateException, IOException {
-		File dest = new File(uploadPath+savePath + fileVo.getFileRename() + "."+type);
+		File dest = new File(uploadPath+savePath + fileVo.getRenameFileName() + "."+type);
 		if(!dest.exists()) {
 			new File(uploadPath+savePath).mkdirs();
 		}
@@ -78,9 +78,10 @@ public class FileUtil {
 		String savePath = getSavePath(); 
 		FileVo fileVo = new FileVo();
 		if(!file.getOriginalFilename().equals("")) {
-			fileVo.setFileOriginName(file.getOriginalFilename());
-			fileVo.setFileRename(UUID.randomUUID().toString());
-			fileVo.setFileSavePath("/resources/imgUpload/"+savePath);
+			fileVo.setOriginFileName(file.getOriginalFilename());
+			fileVo.setRenameFileName(UUID.randomUUID().toString());
+			fileVo.setSavePath("/resources/imgUpload/"+savePath);
+			
 			System.out.println(uploadPath);
 			savePhoto(fileVo, file, uploadPath, savePath, type);
 		}

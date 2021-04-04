@@ -1,8 +1,12 @@
 package com.kh.toy.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -15,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kh.toy.common.code.Code;
 import com.kh.toy.common.mail.MailSender;
+import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
 
@@ -77,7 +82,29 @@ public class MemberServiceImpl implements MemberService{
 		
 		return userInfo;
 	}
-
+	@Override
+	public Map<String,Object>selectMemberList(int page) {
+	
+		Paging paging = Paging.builder()
+				.cuurentPage(page)
+				.blockCnt(5)
+				.cntPerPage(10)
+				.type("member")
+				.total(memberRepository.selectContentCnt())
+				.sort("member_name")
+				.direction("desc")
+				.build();
+		
+		Map<String,Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("paging", paging);
+		commandMap.put("selectMemberList",memberRepository.selectMemberList(paging));
+		System.out.println("커맨드맵?" + commandMap);
+		
+	return commandMap;	
+				
+	}
+	
+	
 	
 
 	

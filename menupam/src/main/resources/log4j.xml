@@ -21,24 +21,24 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.kh.toy">
-		<level value="info" />
+		<level value="trace" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="info" />
+		<level value="trace" />
 	</logger>
 	
 	<logger name="org.springframework.beans">
-		<level value="info" />
+		<level value="trace" />
 	</logger>
 	
 	<logger name="org.springframework.context">
-		<level value="info" />
+		<level value="trace" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="info" />
+		<level value="trace" />
 	</logger>
 	
 	<!-- Root Logger -->
