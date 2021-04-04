@@ -22,7 +22,8 @@
             </div>
         </div>
         
-        <form action="${context}/shop/shopInfo" method="post">
+
+        <form:form modelAttribute="shop" action="${context}/shop/shopInfo" method="post">
         	<div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
@@ -35,7 +36,9 @@
                     <input type="text" name="shopName" class="inputLarge" placeholder="  정확한 매장 명을 입력해주세요" required>
                     <br><br>
                     <p class="fontSmall">사업자 등록 번호</p><br>
-                    <input type="text" name="shopBln" class="inputLarge" placeholder="  사업자 등록 번호를 입력해주세요" >
+                    <input type="text" name="shopBln" class="inputLarge" placeholder="ex) 111-2222-3333" >
+                    <br><br>
+                    <form:errors path="shopBln" cssClass="valid_info"/>
                     <br><br>
                     <p class="fontSmall">매장 위치</p><br>
                     <!-- 나중에 바뀔수도 있음 생각중 -->
@@ -46,7 +49,8 @@
                     
                     <p class="fontSmall">매장 전화 번호</p><br>
                     <input type="text" name="shopTell" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)" ><br><br>
-                    
+                    <form:errors path="shopTell" cssClass="valid_info"/>
+                     
                     <p class="fontSmall">업종</p><br>
                     <select name="shopType" id="cars" class="inputLarge">
                         <option value="한식">한식</option>
@@ -102,7 +106,7 @@
                 </div>
               </div>
             </div>
-        </form>
+        </form:form>
         
         <div class="footer">
             <div><i class="fas fa-search"></i></div>

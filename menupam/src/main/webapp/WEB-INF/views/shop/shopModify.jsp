@@ -6,10 +6,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/shopModify.css'>
-    <script src='main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/shopModify.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -58,24 +57,24 @@
                     <label><input type="checkbox" name="color" value="blue"> 포장 가능 여부</label><br><br>
                     <p class="fontSmall">테이블 수</p><br>
                     <select name="cars" id="cars" class="inputMedium">
-                        <option value="volvo">1</option>
-                        <option value="volvo">2</option>
-                        <option value="volvo">3</option>
-                        <option value="volvo">4</option>
-                        <option value="volvo">5</option>
-                        <option value="volvo">6</option>
-                        <option value="volvo">7</option>
-                        <option value="volvo">8</option>
-                        <option value="volvo">9</option>
-                        <option value="volvo">10</option>
-                        <option value="volvo">11</option>
-                        <option value="volvo">12</option>
-                        <option value="volvo">13</option>
-                        <option value="volvo">14</option>
-                        <option value="volvo">15</option>
-                        <option value="volvo">16</option>
-                        <option value="volvo">17</option>
-                        <option value="volvo">18</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
                     </select>
                     <br><br>
                     <input type="button" value="정보 수정 완료" class="btnLarge width100">
@@ -86,7 +85,7 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 

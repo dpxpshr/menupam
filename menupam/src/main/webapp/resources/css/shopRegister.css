@@ -79,3 +79,10 @@ input[type="checkbox"]:checked + label em {
 	/* background-position: -38px 0; */
 	background-image: url('../images/check_on.png') ;
 }
+
+.valid_info{
+	display:block; 
+	color:red;	
+	font-size: 15px;
+	text-align: center;
+}
