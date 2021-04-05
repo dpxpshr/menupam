@@ -21,7 +21,9 @@
                 <i class="far fa-clipboard"></i>
             </div>
         </div>
-        <div class="main">
+        
+        <form action="${context}/shop/Modify" method="post">
+        	<div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
@@ -53,10 +55,10 @@
                     </div>
                     <br>
                     <p class="fontSmall">매장 전화 번호</p><br>
-                    <input type="text" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)"><br><br>
-                    <label><input type="checkbox" name="color" value="blue"> 포장 가능 여부</label><br><br>
+                    <input type="text" name="shopTell" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)"><br><br>
+                    <label><input type="checkbox" name="shopPackAble" > 포장 가능 여부</label><br><br>
                     <p class="fontSmall">테이블 수</p><br>
-                    <select name="cars" id="cars" class="inputMedium">
+                    <select name="shopTableCount" class="inputMedium">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -77,10 +79,13 @@
                         <option value="18">18</option>
                     </select>
                     <br><br>
-                    <input type="button" value="정보 수정 완료" class="btnLarge width100">
-                </div>
-            </div>
-        </div>
+                    <input type="submit" value="정보 수정 완료" class="btnLarge width100">
+               	 </div>
+            	</div>
+        	</div>
+        </form>
+        
+        
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>

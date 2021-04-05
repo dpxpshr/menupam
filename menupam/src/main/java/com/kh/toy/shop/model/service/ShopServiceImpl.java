@@ -1,5 +1,7 @@
 package com.kh.toy.shop.model.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kh.toy.shop.model.repository.ShopRepository;
@@ -18,6 +20,17 @@ public class ShopServiceImpl implements ShopSerivce{
 	@Override 
 	public int insertShop(Shop shop) {
 		return shopRepository.insertShop(shop); 
+	}
+
+	@Override
+	public int updateShop(Shop shop) {
+		return shopRepository.updateShop(shop);
+	}
+
+	@Override
+	public List<Shop> selectMemberShopList(String userId) {
+		
+		return shopRepository.selectMemberShopList(userId);
 	}
 	
 }
