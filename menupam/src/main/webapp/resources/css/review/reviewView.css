@@ -72,3 +72,20 @@
     height: 100%;
     border-radius: 6px;
 }
+
+
+/* 리뷰 더이상 볼 수 없음 박스 */
+.noReviewBox{
+    margin-top: 10px;
+    border-radius: 6px;
+    padding-bottom: 20px;
+    background-color : #f8f8f8;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.noReview{
+    text-align: center;
+    width: 100%;
+    margin-top: 15px;
+}
