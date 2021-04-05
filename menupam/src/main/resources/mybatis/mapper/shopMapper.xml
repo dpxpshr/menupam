@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.toy.shop.model.repository.ShopRepository">
+
+	<update id="updateShop">
+		update tb_shop 
+		 	<set>
+		 		<if test="shop_tell != null">
+		 			shop_tell = #{shopTell}
+		 		</if>
+		 		<if test="shop_pack_alble != null">
+		 			,shop_pack_alble = #{shopPackAble} 
+		 		</if>
+		 		<if test="shop_table_count != null">
+		 			,shop_table_count = #{shopTableCount} 
+		 		</if>
+		 	</set>
+		 where member_id = #{memberId} and shop_name = #{shopName}
+	</update>
+
+</mapper>
