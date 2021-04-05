@@ -1,11 +1,15 @@
 package com.kh.toy.common.mail;
 
+import java.util.Map;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
@@ -18,6 +22,7 @@ public class MailSender {
 	
 	@Autowired
 	JavaMailSender mailSender;
+	
 	@Async
 	public void send(String to, String subject, String htmlTxt) {
 		try {
@@ -34,4 +39,33 @@ public class MailSender {
 			e.printStackTrace();
 		}
 	}
+	
+	//파일첨부해서 메일 보내기
+	public void sendEmailWithFile(String to, String subject, String filePath, String htmlTxt) {
+		
+		try {
+			MimeMessage msg = mailSender.createMimeMessage();
+			MimeMessageHelper msgHelper = new MimeMessageHelper(msg, true, "UTF-8");
+			
+			msgHelper.setFrom(Code.EMAIL.desc);
+			msgHelper.setTo(to);
+			msgHelper.setSubject(subject);
+			//html Text가져오자
+			msgHelper.setText(htmlTxt, true);
+			
+			FileSystemResource fsr = new FileSystemResource(filePath);
+			msgHelper.addAttachment("test123.png", fsr);
+			
+			mailSender.send(msg);
+			
+		} catch (MessagingException e) {
+
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	
 }

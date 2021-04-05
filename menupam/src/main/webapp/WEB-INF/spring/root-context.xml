@@ -12,14 +12,7 @@
 		<property name="password" value="Finalproject11"/>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	</bean>	
-	
-	<bean id="dataSource2" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="bookmanager"/>
-		<property name="password" value="user11"/>
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-	</bean>	
-	
+
 	<!-- mybatis/config 에서 설정정보를 읽어 factory 생성-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
   		<property name="dataSource" ref="dataSource" />

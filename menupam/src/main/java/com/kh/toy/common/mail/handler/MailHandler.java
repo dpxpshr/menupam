@@ -19,6 +19,13 @@ public class MailHandler {
 	}
 	
 	
+	@PostMapping("mail/QR")
+	public String writeQRMail(@RequestParam Map<String, Object> data, Model model) {
+		model.addAllAttributes(data);
+		return "mail-template/QRTemplate";
+	}
+	
+	
 	
 	
 	

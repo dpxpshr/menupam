@@ -20,4 +20,11 @@ public interface ReviewService {
 	String getSavePath(String fileIdx) throws IOException;
 	
 	Shop getShopInform(String shopIdx);
+	
+	
+	//=========================================================옯겨야함 나중에=========================================================
+	void sendTableQR(String shopIdx, String path);
+	
+	void sendTableQR(String shopIdx, String path, String tableNo);
+	
 }
