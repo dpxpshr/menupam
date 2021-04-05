@@ -33,24 +33,24 @@ public class MemberValidator implements Validator{
 		Member member = (Member)target;
 		
 		//1. 아이디 존재 유무
-		if(memberRepository.selectMemberById(member.getUserId()) != null) {
+		if(memberRepository.selectMemberById(member.getMemberId()) != null) {
 			errors.rejectValue("userId", "error.userId", "이미 존재하는 아이디입니다.");
 		}
 		
 		//2. 비밀번호가 8글자 이상의 숫자,영문자,특수문자 조합인지
 		Pattern pattern = Pattern.compile("^(?!.*[ㄱ-힣])(?=.*\\W)(?=.*\\d)(?=.*[a-zA-Z])(?=.{8,})");
-		if(!pattern.matcher(member.getPassword()).find()) {
-			errors.rejectValue("password", "error.password", "비밀번호는 영어,숫자,특수문자 조합의 8글자 이상인 문자입니다.");
+		if(!pattern.matcher(member.getMemberPw()).find()) {
+			errors.rejectValue("memberPw", "error.memberPw", "비밀번호는 영어,숫자,특수문자 조합의 8글자 이상인 문자입니다.");
 		}
 				
 		//3. 이메일 존재 유무
-		if(memberRepository.selectMemberByEmail(member.getEmail()) > 0) {
-			//errors.rejectValue("email", "error.email", "이미 존재하는 이메일입니다.");
+		if(memberRepository.selectMemberByEmail(member.getMemberEmail()) > 0) {
+			//errors.rejectValue("memberEmail", "error.memberEmail", "이미 존재하는 이메일입니다.");
 		}
 		
 		//4. 휴대폰 존재 유무
-		if(memberRepository.selectMemberByTell(member.getTell()) > 0) {
-			errors.rejectValue("tell", "error.tell", "이미 존재하는 휴대폰 번호입니다.");
+		if(memberRepository.selectMemberByTell(member.getMemberPhone()) > 0) {
+			errors.rejectValue("memberPhone", "error.memberPhone", "이미 존재하는 휴대폰 번호입니다.");
 		}
 	}
 }

@@ -24,14 +24,28 @@ public class FileUtil {
 				fileVo.setOriginFileName(multipartFile.getOriginalFilename());
 				fileVo.setRenameFileName(UUID.randomUUID().toString());
 				fileVo.setSavePath(savePath);
-				
 				fileList.add(fileVo);
 				saveFile(fileVo,multipartFile);
 			}
 		}
-		
 		return fileList;
 	}
+	
+	public FileVo fileUpload(MultipartFile file) throws IllegalStateException, IOException{
+		
+		String savePath = getSavePath(); //파일 저장경로
+		FileVo fileVo = new FileVo();
+		
+		if(!file.getOriginalFilename().equals("")) {	
+			fileVo.setOriginFileName(file.getOriginalFilename());
+			fileVo.setRenameFileName(UUID.randomUUID().toString());
+			fileVo.setSavePath(savePath);
+			saveFile(fileVo,file);
+		}
+		
+		return fileVo;
+	}
+
 	
 	private String getSavePath() {
 		Calendar cal = Calendar.getInstance();
@@ -50,8 +64,27 @@ public class FileUtil {
 		multipartFile.transferTo(dest);
 	}
 	
+	private void savePhoto(FileVo fileVo, MultipartFile multipartFile, String uploadPath, String savePath, String type) throws IllegalStateException, IOException {
+		File dest = new File(uploadPath+savePath + fileVo.getRenameFileName() + "."+type);
+		if(!dest.exists()) {
+			new File(uploadPath+savePath).mkdirs();
+		}
+		multipartFile.transferTo(dest);
+	}
 	
 	
-	
-	
+	public FileVo photoUpload(MultipartFile file, String uploadPath, String type) throws IllegalStateException, IOException {
+		
+		String savePath = getSavePath(); 
+		FileVo fileVo = new FileVo();
+		if(!file.getOriginalFilename().equals("")) {
+			fileVo.setOriginFileName(file.getOriginalFilename());
+			fileVo.setRenameFileName(UUID.randomUUID().toString());
+			fileVo.setSavePath("/resources/imgUpload/"+savePath);
+			
+			System.out.println(uploadPath);
+			savePhoto(fileVo, file, uploadPath, savePath, type);
+		}
+		return fileVo;
+	}
 }

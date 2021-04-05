@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.wrapper{
+    max-width: 375px;
+    margin: 0 auto;
+    width: 375px;
+    position: relative;
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+}
+
+.header{
+    height: 48px;
+    width: 375px;
+    display:flex;
+    justify-content : flex-end;
+    opacity: 0.7;
+}
+.search, .notice{
+    width: 15%;
+    display: flex;
+}
+.search > i, .notice > i{
+    margin: auto;
+    font-size: 1.2em;
+    color: black;
+}
+.main{
+    background-color: white;
+    min-height: 900px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* map 설정 */
+#map{
+	width:90%;
+	height: 40vh;
+	border:2px solid;
+	border-color:#F2BB13;
+	border-radius:10%;
+}
+
+/* 매장 검색 목록 */
+.shopList{
+	height: 34vh;
+	margin-left: 10px;
+}
+
+.list{
+	display:flex;
+	margin-top:10px;
+	color :#5C5959;
+	padding : 7px 0 7px 0;
+	border-bottom: 1px solid #f4f4f4;
+}
+
+.shopList_tr{
+	width: 360px;
+	height: 70px;
+	display:flex;
+	align-items: center;
+}
+
+.shopList_img>img{
+	height: 45px;
+}
+
+.shopList_name{
+	width: 90px;
+	font-weight:bold;
+	text-align: center;
+}
+
+.shopList_address{
+	font-size : 0.7em;
+	color : #aaa;
+	font-weight: lighter;
+}
+
+
+
+
+.footer{
+    height : 48px;
+	width : 375px;
+	position: fixed;
+	bottom: 0;
+    display: flex;
+    background-color: whitesmoke;
+}
+.footer > div{
+    width: 20%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+    display: flex;
+}
+.footer i {
+    margin: auto;
+    font-size: 1.3em;
+}
+
+

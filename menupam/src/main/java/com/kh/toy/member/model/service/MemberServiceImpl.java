@@ -1,8 +1,12 @@
 package com.kh.toy.member.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -15,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kh.toy.common.code.Code;
 import com.kh.toy.common.mail.MailSender;
+import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
 
@@ -25,6 +30,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private RestTemplate http;
+	
 	@Autowired
 	private MailSender mailSender;
 	
@@ -36,14 +42,14 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member selectMemberById(String userId) {
-		return memberRepository.selectMemberById(userId);
+	public Member selectMemberById(String memberId) {
+		return memberRepository.selectMemberById(memberId);
 	}
 	
 	public void authenticateEmail(Member persistUser, String authPath) {
 		
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
-		body.add("userId",persistUser.getUserId());
+		body.add("memberId",persistUser.getMemberId());
 		body.add("mail-template","temp_join");
 		body.add("authPath", authPath);
 		
@@ -56,27 +62,50 @@ public class MemberServiceImpl implements MemberService{
 		ResponseEntity<String> response =
 				http.exchange(request, String.class);
 		
-		mailSender.send(persistUser.getEmail(), "회원 가입을 축하합니다.", response.getBody());
+		mailSender.send(persistUser.getMemberEmail(), "회원 가입을 축하합니다.", response.getBody());
 	}
 
 	@Override
 	public int insertMember(Member member) {
-		member.setPassword(passwordEncoder.encode(member.getPassword()));
+		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
 		return memberRepository.insertMember(member);
 	}
 
 	@Override
 	public Member authenticateUser(Member member) {
 		
-		Member userInfo = memberRepository.selectMemberForAuth(member.getUserId());
-		if(userInfo == null ||
-				!passwordEncoder.matches(member.getPassword(), userInfo.getPassword())) {
+		Member userInfo = memberRepository.selectMemberForAuth(member.getMemberId());
+		//|| -> && 변경
+		if(userInfo == null &&
+				!passwordEncoder.matches(member.getMemberPw(), userInfo.getMemberPw())) {
 			return null;
 		}
 		
 		return userInfo;
 	}
-
+	@Override
+	public Map<String,Object>selectMemberList(int page) {
+	
+		Paging paging = Paging.builder()
+				.cuurentPage(page)
+				.blockCnt(5)
+				.cntPerPage(10)
+				.type("member")
+				.total(memberRepository.selectContentCnt())
+				.sort("member_name")
+				.direction("desc")
+				.build();
+		
+		Map<String,Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("paging", paging);
+		commandMap.put("selectMemberList",memberRepository.selectMemberList(paging));
+		System.out.println("커맨드맵?" + commandMap);
+		
+	return commandMap;	
+				
+	}
+	
+	
 	
 
 	

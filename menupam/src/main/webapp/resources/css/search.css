@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.wrapper{
+    max-width: 375px;
+    margin: 0 auto;
+    width: 375px;
+    position: relative;
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+}
+
+.header{
+    height: 58px;
+    width: 375px;
+    opacity: 0.7;
+}
+/* 검색  */
+.saerch{
+	display: flex;
+	background-color: #dcdcdc;
+	background-clip: content-box;
+	border-radius: 30px;
+}
+.saerch>i{
+	font-size: 18px;
+	margin : 15px 19px 10px 20px;
+}
+
+.saerch>input{
+	width: 300px;
+	height : 10px;
+	margin : 10px 30px 10px 0px;
+	padding : 10px 0 10px 0;
+	border-radius: 10px;
+	background-color: #dcdcdc;
+	border:none;
+}
+
+.searchName:focus{
+	outline: none;
+}
+
+/* GPS 현위치 */
+.myPosition{
+	height:40px;
+	padding : 20px 0px 0px 0px;
+	text-align:center;
+	box-shadow: 0px 10px 5px 2px #dcdcdc;
+}
+
+.main{
+    background-color: white;
+    min-height: 900px;
+}
+.footer{
+    height : 48px;
+	width : 375px;
+	position: fixed;
+	bottom: 0;
+    display: flex;
+    background-color: whitesmoke;
+}
+.footer > div{
+    width: 20%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+    display: flex;
+}
+.footer i {
+    margin: auto;
+    font-size: 1.3em;
+}
+
+

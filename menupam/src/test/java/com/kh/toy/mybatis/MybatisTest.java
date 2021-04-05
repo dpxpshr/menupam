@@ -20,16 +20,16 @@ public class MybatisTest {
 	
 	@Autowired
 	MybatisRepository mybatisRepository;
-	private String userId = "test";
+	private String memberId = "kim2";
 	
 	@Test
 	public void selectOneTest() {
-		System.out.println(mybatisRepository.selectOne(userId));
+		System.out.println(mybatisRepository.selectOne(memberId));
 	}
 	
 	@Test
 	public void selectListReturnedAsMap() {
-		mybatisRepository.selectListReturnedAsMap(userId);
+		mybatisRepository.selectListReturnedAsMap(memberId);
 	}
 	
 	@Test
@@ -40,21 +40,24 @@ public class MybatisTest {
 	@Test
 	public void insertWithVo() {
 		Member member = new Member();
-		member.setUserId("파파파라안마앗");
-		member.setPassword("궁금해 허니이");
-		member.setEmail("test@test.com");
-		member.setTell("010-0112-1190");
+		member.setMemberId("kim2");
+		member.setMemberPw("1234");
+		member.setMemberName("김승현");
+		member.setMemberPhone("01001121190");
+		member.setMemberEmail("test@test.com");
+		
 		mybatisRepository.insertWithVo(member);
 	}
 	
+	//ㄴ
 	@Test
 	public void insertWithMap() {
 		Map<String,Object> commandMap = new HashMap<>();
 		Member member = new Member();
 		
-		member.setUserId(userId);
+		member.setMemberId(memberId);
 		commandMap.put("member", member);
-		commandMap.put("title", "해리포터와 불사조의 기사단 외 2권");
+		commandMap.put("title", "ㄴ");
 		commandMap.put("rentBookCnt", 3);
 		
 		mybatisRepository.insertWithMap(commandMap);
@@ -63,8 +66,8 @@ public class MybatisTest {
 	@Test
 	public void update() {
 		Member member = new Member();
-		member.setUserId(userId);
-		member.setPassword("동해물과백두산이");
+		member.setMemberId(memberId);
+		member.setMemberPw("12345");
 		mybatisRepository.update(member);
 	}
 	
@@ -77,40 +80,40 @@ public class MybatisTest {
 	
 	@Test
 	public void dynamicQueryIF() {
-		//사용자가 도서 검색필터에서 info를 선택하고 검색하면 사용자가 입력한 키워드로 info 컬럼을 검색
-		//사용자가 도서 검색필터에서 author를 선택하고 검색하면 사용자가 입력한 키워드로 author 컬럼을 검색
-		//사용자 선택 필터 : info
-		//사용자 입력 키워드 : 도시
+		//�궗�슜�옄媛� �룄�꽌 寃��깋�븘�꽣�뿉�꽌 info瑜� �꽑�깮�븯怨� 寃��깋�븯硫� �궗�슜�옄媛� �엯�젰�븳 �궎�썙�뱶濡� info 而щ읆�쓣 寃��깋
+		//�궗�슜�옄媛� �룄�꽌 寃��깋�븘�꽣�뿉�꽌 author瑜� �꽑�깮�븯怨� 寃��깋�븯硫� �궗�슜�옄媛� �엯�젰�븳 �궎�썙�뱶濡� author 而щ읆�쓣 寃��깋
+		//�궗�슜�옄 �꽑�깮 �븘�꽣 : info
+		//�궗�슜�옄 �엯�젰 �궎�썙�뱶 : �룄�떆
 		Map<String,Object> commandMap = new HashMap<String, Object>();
 		commandMap.put("searchType","info");
-		commandMap.put("keyword","도시");
+		commandMap.put("keyword","�룄�떆");
 		mybatisRepository.dynamicQueryIF(commandMap);
 	}
 	
 	@Test
 	public void dynamicQueryChoose() {
-		//사용자가 도서 검색필터에서 info를 선택하고 검색하면 사용자가 입력한 키워드로 info 컬럼을 검색
-		//사용자가 도서 검색필터에서 author를 선택하고 검색하면 사용자가 입력한 키워드로 author 컬럼을 검색
-		//사용자가 검색필터를 지정 하지 않을 경우 도서 제목으로 검색
-		//사용자 선택 필터 : info
-		//사용자 입력 키워드 : 도시
+		//�궗�슜�옄媛� �룄�꽌 寃��깋�븘�꽣�뿉�꽌 info瑜� �꽑�깮�븯怨� 寃��깋�븯硫� �궗�슜�옄媛� �엯�젰�븳 �궎�썙�뱶濡� info 而щ읆�쓣 寃��깋
+		//�궗�슜�옄媛� �룄�꽌 寃��깋�븘�꽣�뿉�꽌 author瑜� �꽑�깮�븯怨� 寃��깋�븯硫� �궗�슜�옄媛� �엯�젰�븳 �궎�썙�뱶濡� author 而щ읆�쓣 寃��깋
+		//�궗�슜�옄媛� 寃��깋�븘�꽣瑜� 吏��젙 �븯吏� �븡�쓣 寃쎌슦 �룄�꽌 �젣紐⑹쑝濡� 寃��깋
+		//�궗�슜�옄 �꽑�깮 �븘�꽣 : info
+		//�궗�슜�옄 �엯�젰 �궎�썙�뱶 : �룄�떆
 		Map<String,Object> commandMap = new HashMap<String, Object>();
 		commandMap.put("searchType","title");
-		commandMap.put("keyword","도시");
+		commandMap.put("keyword","�룄�떆");
 		mybatisRepository.dynamicQueryChoose(commandMap);
 	}
 	
 	@Test
 	public void dynamicQuerySetTag() {
-		//사용자가 회원수정란에서 수정한 내용을 update하는 쿼리를 작성
-		//사용자가 password, email만 수정했다면, update쿼리를
+		//�궗�슜�옄媛� �쉶�썝�닔�젙���뿉�꽌 �닔�젙�븳 �궡�슜�쓣 update�븯�뒗 荑쇰━瑜� �옉�꽦
+		//�궗�슜�옄媛� password, email留� �닔�젙�뻽�떎硫�, update荑쇰━瑜�
 		//[update tb_member set password = 1234, email = 'aa@aa.com' where userId = 'aa']
 		
 		Member member = new Member();
-		member.setUserId("test");
-		member.setEmail("test@update.com");
+		member.setMemberId("test");
+		member.setMemberEmail("test@update.com");
 		//member.setPassword("123999000");
-		member.setTell("010-1190-0112");
+		member.setMemberPhone("010-1190-0112");
 		mybatisRepository.dynamicQuerySetTag(member);
 	}
 	
@@ -126,33 +129,36 @@ public class MybatisTest {
 	
 	@Test
 	public void dynamicQueryForeachTag() {
-		//만능 insert쿼리 생성
-		Map<String,Object> commandMap = new HashMap<String, Object>();
-		commandMap.put("table", "tb_book");
-		commandMap.put("primaryKey", Map.of("col", "b_idx","val","sc_b_idx.nextval"));
-		commandMap.put("data"
-				, Map.of("title","만능인서트에대한 3가지 고찰"
-						,"author","피클래스"
-						,"info","마이바티스의 동적쿼리를 활용하는 방법론"));
-		mybatisRepository.dynamicQueryForeachTag(commandMap);
+//		//留뚮뒫 insert荑쇰━ �깮�꽦
+//		Map<String,Object> commandMap = new HashMap<String, Object>();
+//		commandMap.put("table", "tb_book");
+//		commandMap.put("primaryKey", Map.of("col", "b_idx","val","sc_b_idx.nextval"));
+//		commandMap.put("data"
+//				, Map.of("title","留뚮뒫�씤�꽌�듃�뿉���븳 3媛�吏� 怨좎같"
+//						,"author","�뵾�겢�옒�뒪"
+//						,"info","留덉씠諛뷀떚�뒪�쓽 �룞�쟻荑쇰━瑜� �솢�슜�븯�뒗 諛⑸쾿濡�"));
+//		mybatisRepository.dynamicQueryForeachTag(commandMap);
 	}
 	
 	@Test
 	public void dynamicQueryWhereAndForeachTag() {
-		//검색조건을 or 연산으로 검색하기
-		//대출가능, 제목, 작가
-		//사용자가 입력한 키워드
+		//寃��깋議곌굔�쓣 or �뿰�궛�쑝濡� 寃��깋�븯湲�
+		//��異쒓��뒫, �젣紐�, �옉媛�
+		//�궗�슜�옄媛� �엯�젰�븳 �궎�썙�뱶
 		String[] searchType = {"title","author"};
 		Map<String,Object> commandMap = new HashMap<String, Object>();
 		commandMap.put("searchType", searchType);
-		commandMap.put("keyword", "도시");
+		commandMap.put("keyword", "�룄�떆");
 		mybatisRepository.dynamicQueryWhereAndForeachTag(commandMap);
 	}
 	
 	@Test
 	public void resultMap() {
-		System.out.println(mybatisRepository.resultMap(userId));
+		System.out.println(mybatisRepository.resultMap(memberId));
 	}
+	
+
+
 	
 	
 	

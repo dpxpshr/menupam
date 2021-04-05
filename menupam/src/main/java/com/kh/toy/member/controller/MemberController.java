@@ -1,13 +1,19 @@
 package com.kh.toy.member.controller;
 
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,6 +24,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -59,7 +67,7 @@ public class MemberController {
 	//로깅 객체 생성
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	MemberService memberService;
+	private final MemberService memberService;
 	MemberValidator memberValidator;
 	
 	public MemberController(MemberService memberService, MemberValidator memberValidator) {
@@ -75,6 +83,10 @@ public class MemberController {
 		webDataBinder.addValidators(memberValidator);
 	}
 	
+	
+	
+	
+	
 	//view를 지정하는 방법
 	//1. ModelAndView 객체를 만들어서 setViewName 메서드에 view 경로를 지정하고 객체를 리턴
 	//2. view 경로를 반환
@@ -84,8 +96,8 @@ public class MemberController {
 	
 	@GetMapping("idcheck")
 	@ResponseBody
-	public String idcheck(String userId) {
-		if(memberService.selectMemberById(userId) != null) {
+	public String idcheck(String memberId) {
+		if(memberService.selectMemberById(memberId) != null) {
 			return "fail";
 		}
 		
@@ -144,6 +156,8 @@ public class MemberController {
 	@ResponseBody
 	public String loginImpl(@RequestBody Member member
 							,HttpSession session) {
+		System.out.println("로그인 정보" +member);
+		
 		Member userInfo = memberService.authenticateUser(member);
 		if(userInfo == null) {
 			return "fail";
@@ -159,13 +173,24 @@ public class MemberController {
 		//redirect 사용해보기
 		return "redirect:/index";
 	}
-	
-	@GetMapping("mypage")
+	//마이페이지
+	@GetMapping("mypage/mypage")
 	public void myPage() {};
+	//대기
+	@GetMapping("mypage/waiting")
+	public void waiting() {};
+	//예약확인
+	@GetMapping("mypage/reservation")
+	public void reservation() {};
 	
 	
-	
-	
+	@GetMapping("adminList")
+	public String selectMemberList(@RequestParam(defaultValue = "1") int page, Model model) {
+		
+		model.addAllAttributes(memberService.selectMemberList(page));
+		//droa
+		return "member/adminList";
+	};
 	
 	
 	

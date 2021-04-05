@@ -31,7 +31,7 @@ body {
 }
 .main{
     background-color: white;
-    height: 1000px;
+    /* height: 1000px; */
 }
 .footer{
     height : 48px;
@@ -64,6 +64,16 @@ body {
     padding-top: 48px;
     margin: auto;
 }
+.btnXLarge{
+    width: 320px;
+    height: 40px;
+    color: white;
+    font-weight: 300;
+    background-color: #F2BB13;
+    border-style: none;
+    border-radius: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
 .btnLarge{
     width: 300px;
     height: 40px;
@@ -72,6 +82,7 @@ body {
     background-color: #F2BB13;
     border-style: none;
     border-radius: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 .btnMedium{
     width: 200px;
@@ -81,6 +92,7 @@ body {
     background-color: #F2BB13;
     border-style: none;
     border-radius: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 .btnSmall{
     width: 100px;
@@ -90,7 +102,20 @@ body {
     background-color: #F2BB13;
     border-style: none;
     border-radius: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
+
+.btnXSmall{
+    width: 50px;
+    height: 40px;
+    color: white;
+    font-weight: 200;
+    background-color: #F2BB13;
+    border-style: none;
+    border-radius: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 .fontLarge{
     font-size: 40px;
 }
@@ -102,6 +127,9 @@ body {
 }
 .fontXSmall{
     font-size: 15px;
+}
+.fontXXSmall{
+    font-size: 12px;
 }
 
 .imgLarge{
@@ -143,4 +171,35 @@ body {
 }
 .imgSmall:hover{
     opacity: 0.9;
+}
+
+/* 새로 추가한것들 */
+.line{
+    /* width: 320px; */
+    background-color: #F2BB13;
+    height: 5px;
+}
+
+.inputLarge{
+    width: 320px;
+    height: 30px;
+    background-color: #F2F2F2;
+    border-radius: 5px;
+    border: 0px;
+    text-indent: 10px;
+}
+.inputMedium{
+    width: 160px;
+    height: 30px;
+    background-color: #F2F2F2;
+    border-radius: 5px;
+    border: 0px;
+    text-indent: 10px;
+}
+.width100{
+    width: 100%;
+}
+
+.red{
+    background-color: tomato;
 }

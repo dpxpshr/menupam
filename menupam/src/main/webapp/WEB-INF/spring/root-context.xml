@@ -6,13 +6,13 @@
 					http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="bm"/>
-		<property name="password" value="USER11"/>
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">	
+		<property name="url" value="jdbc:oracle:thin:@menupam_high?TNS_ADMIN=C:/Wallet/Wallet_MenuPam"/>
+		<property name="username" value="admin"/>
+		<property name="password" value="Finalproject11"/>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	</bean>	
-	
+
 	<!-- mybatis/config 에서 설정정보를 읽어 factory 생성-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
   		<property name="dataSource" ref="dataSource" />
@@ -23,8 +23,8 @@
 	
 	<bean id="javaMailSenderImpl"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="username" value="killsky2014@naver.com"/>
-		<property name="password" value=""/>
+		<property name="username" value="tlfpehd@naver.com"/>
+		<property name="password" value="fhrmdls!2"/>
 		<property name="host" value="smtp.naver.com"/>
 		<property name="port" value="587"/>
 		<property name="javaMailProperties">
@@ -41,16 +41,6 @@
 		<property name="maxInMemorySize"  value="10485760"/>
 		<property name="maxUploadSize"  value="10485760"/>	 
 	</bean>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 		

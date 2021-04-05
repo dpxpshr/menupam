@@ -56,7 +56,7 @@ public class BoardController {
 			, Board board) {
 		
 		//로그인 여부에 따른 예외처리
-		String userId = member == null?"guest":member.getUserId();
+		String userId = member == null?"guest":member.getMemberId();
 		board.setUserId(userId);
 		boardService.insertBoard(board, files);
 		return "redirect:/board/list";
