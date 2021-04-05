@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.kh.toy.common.util.file.MenupamFile;
+import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.common.util.file.FileVo;
 import com.kh.toy.review.model.vo.Review;
 import com.kh.toy.shop.model.vo.Shop;
@@ -40,4 +41,7 @@ public interface ReviewRepository {
 	
 	@Select("SELECT * FROM TB_SHOP WHERE SHOP_IDX = #{shopIdx}")
 	Shop selectShop(String shopIdx);
+
+	@Select("SELECT * FROM TB_MEMBER WHERE MEMBER_ID = #{memberId}")
+	Member selectMember(String memberId);
 }

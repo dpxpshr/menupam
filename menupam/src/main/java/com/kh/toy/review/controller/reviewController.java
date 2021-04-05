@@ -83,5 +83,28 @@ public class reviewController {
 		return "review/reviewForm";
 	}
 	
+	//=========================================================옯겨야함 나중에=========================================================
+	@GetMapping("QRtest")
+	public String QRTest() {
+		return "review/QRtest";
+	}
+	
+	@GetMapping("tableQRssend")
+	public String sendTableQR(String shopIdx, String tableNo, HttpServletRequest request) {
+		
+		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
+		
+		if(tableNo == null) {
+			//전체 테이블 개수만큼 반복해서 보내준다
+			reviewService.sendTableQR(shopIdx, path);
+		}else {
+			//지정한 테이블의 것만 보내준다
+			reviewService.sendTableQR(shopIdx, path, tableNo);
+		}
+		
+		
+		return "review/QRtest";
+	}
+	
 	
 }

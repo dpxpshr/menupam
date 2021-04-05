@@ -6,11 +6,10 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="../../../resources/css/reset.css">
-    <link rel='stylesheet' type='text/css' media='screen' href="../../../resources/css/main.css">
-    <link rel='stylesheet' type='text/css' media='screen' href="../../../resources/css/index.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/index.css'>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script src='main.js'></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
@@ -24,69 +23,77 @@
             </div>
             <div class="notice">
                 <i class="far fa-clipboard"></i>
-            </div> 
-        </div> <!--커밋테스트 19:33  -->
-        <div class="main">
-        	<!-- 커밋 -->
-            <!--여기서 부터 코드 작성-->
-            <p class="quick_search_head fontMedium">빠른 검색</p>
-            <div class="quick_search">
-            	<div class="cate_box"><p class="fontLarge">🥘</p><p class="fontSmall">한식</p></div>
-            	<div class="cate_box"><p class="fontLarge">🍤</p><p class="fontSmall">중식</p></div>
-            	<div class="cate_box"><p class="fontLarge">🍥</p><p class="fontSmall">일식</p></div>
-            	<div class="cate_box"><p class="fontLarge">🥓</p><p class="fontSmall">양식</p></div>
-            	<div class="cate_box"><p class="fontLarge">🍙</p><p class="fontSmall">분식</p></div>
-            	<div class="cate_box"><p class="fontLarge">🍽</p><p class="fontSmall">뷔페</p></div>
-            	<div class="cate_box"><p class="fontLarge">🍔</p><p class="fontXSmall">패스트푸드</p></div>
-            	<div class="cate_box"><p class="fontLarge">☕</p><p class="fontXSmall">카페/디저트</p></div>
-            	<div class="cate_box"><p class="fontLarge">🍀</p><p class="fontXSmall">랜덤메뉴</p></div>
-            </div>
-            <p class="trail_head fontMedium">공지 & 이벤트</p>
-            <div class="banner">
-            	<div class="slickBox">
-            		<div><img src="../../../resources/images/t1.jpg"></div>
-            		<div><img src="../../../resources/images/t2.jpg"></div>
-            		<div><img src="../../../resources/images/t3.jpg"></div>
-            	</div>
-            </div>
-            <p class="trail_head fontMedium">메뉴팜 이용방법</p>
-            <div class="infoBox">
-            	<p class="fontLarge downArrow"><i class="fas fa-angle-double-down"></i></p>
-            </div>
-            <div class="usageBox">
-            	<p class="fontSmall">-손님 이용방법-</p>
-            	<p class="fontSmall">1. 대기 QR[<i class="fas fa-qrcode"></i>] 찍기!</p>
-            	<p class="fontSmall">2. 입장해서 메뉴 QR[<i class="fas fa-qrcode"></i>] 찍기!</p>
-            	<p class="fontSmall">3. 메뉴를 고르고 주문하면 끝!</p>
-            	<br><br>
-            	<p class="fontSmall">-사장님 이용방법-</p>
-            	<p class="fontSmall">1. 매장 등록하기</p>
-            	<p class="fontSmall">2. 매장 정보 입력하기</p>
-            	<p class="fontSmall">3. QR[<i class="fas fa-qrcode"></i>] 출력해서 붙이기</p>
-            	<p class="fontSmall">4. 예약,대기,주문받기</p>
             </div>
         </div>
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
-            <div><i class="far fa-user"></i></div>
-        </div> 
+        <div class="main">
+            <!--여기서 부터 코드 작성-->
+            <div class="banner">
+                <div class="bannerContent"><img src="../../../resources/images/Banner1.jpg" alt=""></div>
+                <div class="bannerContent"><img src="../../../resources/images/Banner2.jpg" alt=""></div>
+                <div class="bannerContent"><img src="../../../resources/images/Banner3.jpg" alt=""></div>
+            </div>
+            <div class="body">
+                <div class="content">
+                    <p class="fontSmall title">가까운 매장 찾기</p>
+                    <br>
+                    <div class="line"></div>
+                    <div class="categoryBox">
+                        <div>
+                            <div id="C1">
+                                <p class="fontSmall"></p>
+                            </div>
+                            <div id="C2">
+                                <p class="fontSmall"></p>
+                            </div>
+                            <div id="C3">
+                                <p class="fontSmall"></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div id="C4">
+                                <p class="fontSmall"></p>
+                            </div>
+                            <div id="C5">
+                                <p class="fontSmall"></p>
+                            </div>
+                            <div id="C6">
+                                <p class="fontSmall"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="searchBarBox">
+                        <input type="text" class="searchBar" placeholder="    검색어를 입력하세요">
+                    </div>
+                    <p class="fontSmall title">메뉴팜 이란?</p>
+                    <div class="explainBox">
+                        <div class="QRBox"></div>
+                        <div class="explainContent">
+                            <p class="fontXSmall QR">QR코드 메뉴판 시스템</p>
+                            <p class="explain">식당에서 QR코드를 활용해 메뉴를 주문할 수 있는 키오스크를 대체할 <br>새로운 방식의 요식업 솔루션 입니다.</p>
+                        </div>
+                    </div>
+                    <div class="realFooter">
+                        <p class="fontXXSmall footerContet">상호명 : 메뉴팜&nbsp;&nbsp;&nbsp;&nbsp;대표 : 하명도 <br>주소 : 서울특별시 금천구 디지털로9길 68 <br>사업자등록번호 : 123-45-67890 [사업자정보확인]
+                        </p>
+                    </div>
+                </div>
+            </div>
     </div> 
-	<script type="text/javascript">
-		$('.slickBox').slick({
-			  dots:true,
-			  arrows:false,
-			  infinite:true,
-			  autoplay: true,
-			  autoplaySpeed: 5000,
-			});
-		$(".infoBox").on("click",function(){
-			$(".infoBox").css("display","none");
-			$(".usageBox").css("display","flex");
-			$(".main").css("height","1000px")
-		});
-	</script>
+    <div class="footer">
+        <div><i class="fas fa-search"></i></div>
+        <div><i class="fas fa-qrcode"></i></div>
+        <div><i class="fas fa-home"></i></div>
+        <div><i class="far fa-clipboard"></i></i></div>
+        <div><i class="far fa-user"></i></div>
+    </div>
 </body>
+<script>
+    $(document).ready(function(){
+      $('.banner').slick({
+        arrows : false,
+        autoplay : true
+      });
+    });
+</script>
 </html>

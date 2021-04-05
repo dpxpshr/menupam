@@ -30,6 +30,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private RestTemplate http;
+	
 	@Autowired
 	private MailSender mailSender;
 	
