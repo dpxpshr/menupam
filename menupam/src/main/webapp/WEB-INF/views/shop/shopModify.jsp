@@ -59,6 +59,7 @@
                     <label><input type="checkbox" name="shopPackAble" > 포장 가능 여부</label><br><br>
                     <p class="fontSmall">테이블 수</p><br>
                     <select name="shopTableCount" class="inputMedium">
+                        <option value="0">테이블 수 선택</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -79,7 +80,7 @@
                         <option value="18">18</option>
                     </select>
                     <br><br>
-                    <input type="submit" value="정보 수정 완료" class="btnLarge width100">
+                    <input type="button" value="정보 수정 완료" class="btnLarge width100">
                	 </div>
             	</div>
         	</div>
@@ -94,5 +95,7 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+    
+    <script src="/resources/js/shop/shopModify.js"></script>
 </body>
 </html>

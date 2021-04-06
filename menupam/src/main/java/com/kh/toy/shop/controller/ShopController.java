@@ -76,32 +76,13 @@ public class ShopController {
 	public void shopModify() {}
 	
 	@PostMapping("Modify")
-	public String modify(@RequestParam(name = "shopPackAble", defaultValue = "N") String shopPackAble
+	public String modify(Shop shop
 						,@SessionAttribute("userInfo") Member userInfo
-						,Shop shop
 						,Model model) {
 		
-		//포장 기능 체크하지 않을 경우
-		if(shop.getShopPackAble() == "") {
-			shop.setShopPackAble(shopPackAble);
-		}
+		shopService.selectMemberShopList(shop, userInfo.getMemberId());
+		shopService.updateShop(shop);
 		
-		// ------------ 여기 부터 수정 하시오 ---------------
-		//System.out.println("회원정보 가져오니 : " + userInfo.getMemberId());
-		//shop.setMemberId(userInfo.getMemberId());
-		//shop.setShopPackAble(shop.getShopPackAble()); // 포장 가능 여부
-		//shop.setShopTell(shop.getShopTell()); // 매장 번호
-		//shop.setShopTableCount(shop.getShopTableCount()); // 테이블수
-		//shop.setShopName(shop.getShopName());
-		//shopService.updateShop(shop);
-		//System.out.println("shop : " + shop);
-		List<Shop> shopList = shopService.selectMemberShopList(userInfo.getMemberId());
-
-		for (Shop shop2 : shopList) {
-			System.out.println("shop : " + shop2);
-		}
-		
-		model.addAttribute("msg", "매장 정보 수정 완료 되었습니다.");
 		model.addAttribute("url", "/shop/shopModify"); //어디로 이동시킬지 말지 추후 예정
 		
 		return "common/result";

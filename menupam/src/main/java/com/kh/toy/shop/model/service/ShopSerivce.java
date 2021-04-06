@@ -8,5 +8,5 @@ public interface ShopSerivce {
 
 	int insertShop(Shop shop);
 	int updateShop(Shop shop);
-	List<Shop> selectMemberShopList(String userId);
+	List<Shop> selectMemberShopList(Shop shop, String userId);
 }
