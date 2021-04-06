@@ -27,4 +27,6 @@ public interface ReviewService {
 	
 	void sendTableQR(String shopIdx, String path, String tableNo);
 	
+	void sendWaitQR(String shopIdx, String path);
+	
 }

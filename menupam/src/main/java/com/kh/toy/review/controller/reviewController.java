@@ -89,7 +89,7 @@ public class reviewController {
 		return "review/QRtest";
 	}
 	
-	@GetMapping("tableQRssend")
+	@GetMapping("tableQRsend")
 	public String sendTableQR(String shopIdx, String tableNo, HttpServletRequest request) {
 		
 		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
@@ -101,10 +101,21 @@ public class reviewController {
 			//지정한 테이블의 것만 보내준다
 			reviewService.sendTableQR(shopIdx, path, tableNo);
 		}
+		return "review/QRtest";
+	}
+	
+	@GetMapping("waitQRsend")
+	public String sendWaitQR(String shopIdx, HttpServletRequest request) {
+		
+		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
+		reviewService.sendWaitQR(shopIdx, path);
+		System.out.println(shopIdx);
 		
 		
 		return "review/QRtest";
 	}
+	
+	
 	
 	
 }
