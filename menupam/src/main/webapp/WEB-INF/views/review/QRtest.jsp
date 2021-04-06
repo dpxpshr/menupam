@@ -25,8 +25,10 @@
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
-                   	<a href="${context}/review/tableQRssend?shopIdx=test&tableNo=4">테이블 QR보내기</a>
+                   	<a href="${context}/review/tableQRsend?shopIdx=test">테이블 QR보내기</a><br>
+                   	<a href="${context}/review/waitQRsend?shopIdx=test">대기 QR보내기</a>
                 </div>
+                
             </div>
         </div>
         <div class="footer">
