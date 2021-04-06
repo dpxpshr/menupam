@@ -32,7 +32,7 @@ public class OrderController {
 					@RequestParam(defaultValue = "name") String type, Model model) {
 		if(keyword != null) {
 			System.out.println("입력값 : " + keyword +" / " + location + " / " + type);
-			Map commnadMap = Map.of("keyword",keyword,"location",location);
+			Map<String,String> commnadMap = Map.of("keyword",keyword,"location",location);
 			if(type.equals("category")) {
 				model.addAttribute("list",orderService.searchShopbyCategory(commnadMap));
 			}else {

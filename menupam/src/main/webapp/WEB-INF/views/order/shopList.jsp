@@ -34,15 +34,15 @@
 	           		<tr class="list"><td>목록</td></tr>
 	           	</thead>
 	           	
-	           	<tbody >
+	           	<tbody>
 	           		<tr class="shopList_tr">
 	           			<td class="shopList_img"></td>
-	           			<td class="shopList_name">교촌치킨</td>
+	           			<td class="shopList_name"></td>
 	           			<td class="shopList_address">서울시 강남구 삼성동 44-18</td>
 	           		</tr>
 	           	</tbody>
 	           	<!-- test용 List로 적용시 삭제필수! -->
-	           	<tbody >
+	           	<tbody>
 	           		<tr class="shopList_tr">
 	           			<td class="shopList_img"></td>
 	           			<td class="shopList_name">교촌치킨</td>
@@ -96,8 +96,8 @@
 			let searchUrl = "http://localhost:9090/order/shoplist?location="+locName+"&keyword=롯데";
 			searchUrl = encodeURI(searchUrl);
 			let searchResponse = await fetch(searchUrl);
-			let searchResult = await searchResponse.json();
-			console.dir(searchResult);
+			searchResponse.
+			
 		})();
 	    
 	    

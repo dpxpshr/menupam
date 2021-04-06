@@ -18,12 +18,12 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<Shop> searchShopbyName(Map commandMap) {
+	public List<Shop> searchShopbyName(Map<String,String> commandMap) {
 		return orderRepository.searchShopbyName(commandMap);
 	}
 
 	@Override
-	public List<Shop> searchShopbyCategory(Map commandMap) {
+	public List<Shop> searchShopbyCategory(Map<String,String> commandMap) {
 		return orderRepository.searchShopbyCategory(commandMap);
 	}
 

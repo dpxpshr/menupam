@@ -11,10 +11,10 @@ import com.kh.toy.shop.model.vo.Shop;
 @Mapper
 public interface OrderRepository {
 	
-	@Select("select * from tb_shop where shop_name like #{keyword} and shop_address like #{location}")
-	List<Shop> searchShopbyName(Map commandMap);
+	@Select("select * from tb_shop where shop_name like '%'||#{keyword}||'%' and shop_address like '%'||#{location}||'%'")
+	List<Shop> searchShopbyName(Map<String,String> commandMap);
 	
-	@Select("select * from tb_shop inner join tb_menu_category "
-			+ "where menu_category_name = #{keyword} and shop_address like #{location}")
-	List<Shop> searchShopbyCategory(Map commandMap);
+	@Select("select * from tb_shop "
+			+ "where shop_type = #{keyword} and shop_address like '%#{location}%'")
+	List<Shop> searchShopbyCategory(Map<String,String> commandMap);
 }
