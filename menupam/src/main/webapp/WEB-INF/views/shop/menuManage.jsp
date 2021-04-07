@@ -6,9 +6,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/menuManage.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/menuManage.css'>
     <!-- <script src='main.js'></script> -->
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
@@ -81,7 +81,7 @@
                                         <div class="menuItemPrice">13,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/삼겹살.PNG" alt="">
+                                        <img src="/resources/images/삼겹살.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -90,7 +90,7 @@
                                         <div class="menuItemPrice">13,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/목살.PNG" alt="">
+                                        <img src="/resources/images/목살.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -99,7 +99,7 @@
                                         <div class="menuItemPrice">12,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/항정살.PNG" alt="">
+                                        <img src="/resources/images/항정살.PNG" alt="">
                                     </div>
                                 </div>
                             </div>   
@@ -131,7 +131,7 @@
                                         <div class="menuItemPrice">4,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/no-Img.PNG" alt="">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -140,7 +140,7 @@
                                         <div class="menuItemPrice">4,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/냉면.PNG" alt="">
+                                        <img src="/resources/images/냉면.PNG" alt="">
                                     </div>
                                 </div>
                             </div>   
@@ -156,7 +156,7 @@
                                         <div class="menuItemPrice">1,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/no-Img.PNG" alt="">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -165,7 +165,7 @@
                                         <div class="menuItemPrice">1,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/no-Img.PNG" alt="">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
                                     </div>
                                 </div>
                             </div>   

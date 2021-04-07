@@ -88,4 +88,19 @@ public class ShopController {
 		return "common/result";
 	}
 	
+	@GetMapping("shopManage")
+	public void shopManage() {}
+	
+	@GetMapping("menuManage")
+	public void menuManage() {}
+	
+	@GetMapping("menuModify")
+	public void menuModify() {}
+	
+	@GetMapping("categoryModify")
+	public void categoryModify() {}
+	
+	@GetMapping("tableDetail")
+	public void tableDetail() {}
+	
 }

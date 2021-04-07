@@ -6,9 +6,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/tableDetail.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/tableDetail.css'>
     <script src='main.js'></script>
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
@@ -62,7 +62,7 @@
                                         <div class="menuItemPrice">13,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/삼겹살.PNG" alt="">
+                                        <img src="/resources/images/삼겹살.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -71,7 +71,7 @@
                                         <div class="menuItemPrice">13,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/목살.PNG" alt="">
+                                        <img src="/resources/images/목살.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -80,7 +80,7 @@
                                         <div class="menuItemPrice">12,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/항정살.PNG" alt="">
+                                        <img src="/resources/images/항정살.PNG" alt="">
                                     </div>
                                 </div>
                             </div>   
@@ -96,7 +96,7 @@
                                         <div class="menuItemPrice">8,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/no-Img.PNG" alt="">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
                                     </div>
                                 </div>
                             </div>   
@@ -112,7 +112,7 @@
                                         <div class="menuItemPrice">4,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/no-Img.PNG" alt="">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
                                     </div>
                                 </div>
                                 <div class="menuItem">
@@ -121,7 +121,7 @@
                                         <div class="menuItemPrice">4,000 원</div>
                                     </div>
                                     <div class="menuItemRight">
-                                        <img src="resources/images/냉면.PNG" alt="">
+                                        <img src="/resources/images/냉면.PNG" alt="">
                                     </div>
                                 </div>
                             </div>   
@@ -129,7 +129,27 @@
                         <div>
                             <div class="menuCategory">
                                 음료 및 기타 <i class="fas fa-angle-down"></i>
-                            </div> 
+                            </div>
+                            <div class="menuItems">
+                                <div class="menuItem">
+                                    <div class="menuItemLeft">
+                                        <div class="menuItemName">콜라</div>
+                                        <div class="menuItemPrice">1,000 원</div>
+                                    </div>
+                                    <div class="menuItemRight">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
+                                    </div>
+                                </div>
+                                <div class="menuItem">
+                                    <div class="menuItemLeft">
+                                        <div class="menuItemName">사이다</div>
+                                        <div class="menuItemPrice">1,000 원</div>
+                                    </div>
+                                    <div class="menuItemRight">
+                                        <img src="/resources/images/no-Img.PNG" alt="">
+                                    </div>
+                                </div>
+                            </div>  
                         </div>
                     </div>
                 </div>
@@ -139,7 +159,7 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
