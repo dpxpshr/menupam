@@ -96,8 +96,7 @@
 			let searchUrl = "http://localhost:9090/order/shoplist?location="+locName+"&keyword=롯데";
 			searchUrl = encodeURI(searchUrl);
 			let searchResponse = await fetch(searchUrl);
-			searchResponse.
-			
+
 		})();
 	    
 	    

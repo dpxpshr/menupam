@@ -12,10 +12,12 @@
 </head>
 <body>
     <div class="wrapper">
+    	
         <header class="header">
         	<div class="saerch">
         		<i class="fas fa-search"></i>
-          		<input class="searchName" type="text" placeholder="음식을 검색해 주세요.">
+        		<input id="location" style="display:none">
+          		<input class="searchName" type="text" placeholder="검색어를 입력해주세요.">
         	</div>
           	 
         </header>
@@ -35,7 +37,6 @@
         </footer> 
     </div> 
 	<script type="text/javascript">
-		document.querySelector(".myPosition").addEventListener("click",()=>{
 			let latlng = ()=>{ //현재 좌표값을 먼저 구한다
 				return new Promise((resolve,reject)=>{
 					navigator.geolocation.getCurrentPosition((position)=>{
@@ -51,7 +52,7 @@
 					});
 				});
 			}
-			(async function drawAndSearch(){
+			(async function getLocationAndSave(){
 				let coords = await latlng(); //현재 좌표값이 구해지면 진행
 				let header = new Headers();
 				header.append("Authorization","KakaoAK a1dd8df76ed926adfc905911f8959e96");
@@ -59,22 +60,12 @@
 				let response = await fetch(url,{"method":"get", "headers": header});
 				let obj = await response.json();
 				let locName = await obj.documents[0].region_2depth_name;
-				document.querySelector(".location_msg").innerHTML = locName + "에 있는 음식점을 검색합니다.";
-				var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-				var options = { //지도를 생성할 때 필요한 기본 옵션
-					center: new kakao.maps.LatLng(coords.latitude,coords.longitude), //지도의 중심좌표
-					level: 3 //지도의 레벨(확대, 축소 정도)
-				};
-				var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-				
-				//검색 요청 단계
-				let searchUrl = "http://localhost:9090/order/shoplist?location="+locName+"&keyword=롯데";
-				searchUrl = encodeURI(searchUrl);
-				let searchResponse = await fetch(searchUrl);
-				searchResponse.
-				
+				console.log(locName);
+				document.querySelector("#location").value = await locName;
 			})();
-		});
+			document.querySelector(".myPosition").addEventListener("click",()=>{
+				location.href = "/order/shoplist?location"+document.querySelector("#location").value+"&keyword="+document.querySelector(".searchName").value;
+			})
 	</script>
 </body>
 </html>

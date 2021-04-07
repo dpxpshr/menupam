@@ -27,22 +27,14 @@ public class OrderController {
 		return "order/search";
 	}
 	
+	
+	//search.jsp에서 keyword와 location을 받아서 넘어오면, 쿼리를 통해 리스트를 받고 slist attribute에 리스트를 넘긴다.
 	@GetMapping("shoplist")
 	public String shopList(String keyword, String location,
 					@RequestParam(defaultValue = "name") String type, Model model) {
-		if(keyword != null) {
-			System.out.println("입력값 : " + keyword +" / " + location + " / " + type);
-			Map<String,String> commnadMap = Map.of("keyword",keyword,"location",location);
-			if(type.equals("category")) {
-				model.addAttribute("list",orderService.searchShopbyCategory(commnadMap));
-			}else {
-				List<Shop> slist = orderService.searchShopbyName(commnadMap);
-				System.out.println(slist);
-				model.addAttribute("list",slist);
-			}
-		}
 		return "order/shopList";
 	}
+	
 	
 	@GetMapping("menuview")
 	public String menuView() {
