@@ -37,7 +37,7 @@ document.querySelector("#addBtn").addEventListener("click", (e)=>{
 
     let modifyBtn = document.createElement("input");
     modifyBtn.type = "button";
-    modifyBtn.value = "정보 수정 완료";
+    modifyBtn.value = "카테고리 추가";
     modifyBtn.className = "btnSmall";
 
     let deleteBtn = document.createElement("input");
@@ -59,7 +59,7 @@ document.querySelector("#addBtn").addEventListener("click", (e)=>{
 	
 	/* 추가된것만 삭제 할 경우 */
 	deleteBtn.addEventListener("click",()=>{
-		console.log(categoryBtn1.parentElement.parentElement.remove());
+		categoryBtn1.parentElement.parentElement.remove();
 	})
 })
 

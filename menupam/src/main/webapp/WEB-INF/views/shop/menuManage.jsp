@@ -28,26 +28,26 @@
                     <p class="fontSmall">공차 사당점</p><br>
                     <div class="line"></div><br>
                     <div class="buttonBox">
-                        <div class="manageBtn">
+                        <a class="manageBtn" href="${context}/shop/shopManage">
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-won-sign fontSmall"></i></div>
                             <div class="manageBtnText">매출 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-users fontSmall"></i></div>
                             <div class="manageBtnText">직원 관리</div>
-                        </div>
-                        <div class="manageBtn border">
+                        </a>
+                        <a class="manageBtn border" href="${context}/shop/menuManage">
                             <div class="manageBtnIcon"><i class="fas fa-utensils fontSmall"></i></div>
                             <div class="manageBtnText">메뉴 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn" href="${context}/shop/shopModify">
                             <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
                             <div class="manageBtnText">매장 정보 수정</div>
-                        </div>
+                        </a>
                         <div class="manageBtn"></div>
                     </div>
                     <br>
@@ -56,7 +56,7 @@
                             <p class="fontSmall">카테고리 편집</p>
                         </div>
                         <div class="categoryModifyBtn">
-                            <input type="button" value="수정 하기" class="btnSmall">
+                            <a href="${context}/shop/categoryModify"><input type="button" value="수정 하기" class="btnSmall"></a>
                         </div>
                     </div>
                     <br>
@@ -65,7 +65,7 @@
                             <p class="fontSmall" style="padding-right: 37px;">메뉴 편집</p>
                         </div>
                         <div class="categoryModifyBtn">
-                            <input type="button" value="메뉴 추가" class="btnSmall">
+                            <a href="${context}/shop/menuModify"><input type="button" value="메뉴 추가" class="btnSmall"></a>
                         </div>
                     </div>
                     <br>

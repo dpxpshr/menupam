@@ -1,8 +1,7 @@
 package com.kh.toy.shop.controller;
 
-import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -60,11 +59,12 @@ public class ShopController {
 			shop.setShopPackAble(shopPackAble);
 		}
 		
+		shop.setMemberId("mapTest");
+		shopService.insertShop(shop); // kakaomap에서 확인 하기 위한 용도
+	
 		shop.setMemberId(userInfo.getMemberId());
-		shopService.insertShop(shop); // kakaomap 데이터 DB저장
-		
 		shop.setShopAddress(shop.getShopAddress() + "," + detailedAddress);
-		shopService.insertShop(shop); // kakaomap 데이터 + 입력 데이터 DB저장
+		shopService.insertShop(shop); // 실제로 사용할 매장정보 kakaomap 데이터 + 입력 데이터 DB저장
 		
 		model.addAttribute("msg", "매장등록이 완료 되었습니다.");
 		model.addAttribute("url", "/shop/shopRegister");
@@ -98,7 +98,19 @@ public class ShopController {
 	public void menuModify() {}
 	
 	@GetMapping("categoryModify")
-	public void categoryModify() {}
+	public String categoryModify(Shop shop
+			,@SessionAttribute("userInfo") Member userInfo
+			,Model model) {
+
+		Map<String,Object> testMap = shopService.selectCategoryList(userInfo.getMemberId());
+		
+		System.out.println(testMap);
+		
+		model.addAllAttributes(shopService.selectCategoryList(userInfo.getMemberId()));
+		
+		return "shop/categoryModify";
+	}
+	
 	
 	@GetMapping("tableDetail")
 	public void tableDetail() {}

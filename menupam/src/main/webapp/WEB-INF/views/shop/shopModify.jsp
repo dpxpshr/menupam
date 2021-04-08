@@ -31,26 +31,26 @@
                     <div class="line"></div>
                     <br>
                     <div class="buttonBox">
-                        <div class="manageBtn">
+                         <a class="manageBtn" href="${context}/shop/shopManage">
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-won-sign fontSmall"></i></div>
                             <div class="manageBtnText">매출 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-users fontSmall"></i></div>
                             <div class="manageBtnText">직원 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn" href="${context}/shop/menuManage">
                             <div class="manageBtnIcon"><i class="fas fa-utensils fontSmall"></i></div>
                             <div class="manageBtnText">메뉴 관리</div>
-                        </div>
-                        <div class="manageBtn border">
+                        </a>
+                        <a class="manageBtn border" href="${context}/shop/shopModify">
                             <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
                             <div class="manageBtnText">매장 정보 수정</div>
-                        </div>
+                        </a>
                         <div class="manageBtn"></div>
                     </div>
                     <br>

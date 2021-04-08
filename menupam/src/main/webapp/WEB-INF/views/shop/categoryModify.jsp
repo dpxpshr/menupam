@@ -2,10 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>메뉴팜</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+  	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  	<meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/categoryModify.css'>
@@ -51,12 +49,15 @@
                         <div class="manageBtn"></div>
                     </div>
                     <br>
+                    
                     <p class="fontSmall">카테고리 편집</p><br>
+                  
                     <div class="categoryBoxs">
+                      <c:forEach var="menuCategory" items="${categorys}">
                         <div class="categoryBox">
                             <form action="">
                                 <div class="categoryInput">
-                                    <input type="text" class="inputMedium" value=" 구이류">
+                                    <input type="text" class="inputMedium" value="${menuCategory.menuCategoryName}">
                                 </div>
                                 <div class="categoryBtn">
                                     <input type="button" value="정보 수정 완료" class="btnSmall">
@@ -65,55 +66,19 @@
                                     <input type="button" value="삭제" class="btnXSmall red">
                                 </div>
                             </form>
-                        </div>
-                        <div class="categoryBox">
-                            <form action="">
-                                <div class="categoryInput">
-                                    <input type="text" class="inputMedium" value=" 식사류">
-                                </div>
-                                <div class="categoryBtn">
-                                    <input type="button" value="정보 수정 완료" class="btnSmall">
-                                </div>
-                                <div class="categoryBtn">
-                                    <input type="button" value="삭제" class="btnXSmall red">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="categoryBox">
-                            <form action="">
-                                <div class="categoryInput">
-                                    <input type="text" class="inputMedium" value=" 후식류">
-                                </div>
-                                <div class="categoryBtn">
-                                    <input type="button" value="정보 수정 완료" class="btnSmall">
-                                </div>
-                                <div class="categoryBtn">
-                                    <input type="button" value="삭제" class="btnXSmall red">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="categoryBox">
-                            <form action="">
-                                <div class="categoryInput">
-                                    <input type="text" class="inputMedium" value=" 음료 및 기타">
-                                </div>
-                                <div class="categoryBtn">
-                                    <input type="button" value="정보 수정 완료" class="btnSmall">
-                                </div>
-                                <div class="categoryBtn">
-                                    <input type="button" value="삭제" class="btnXSmall red">
-                                </div>
-                            </form>
-                        </div><br>
-                    </div>
-                    
+                          </div>
+                        </c:forEach>
+                        <br>
+                      </div>
+                   
                     <input type="button" value="추가" class="btnLarge width100" id="addBtn">
-                    
-                    
-
-                </div>
+               </div>
             </div>
         </div>
+        
+        
+        
+        <button class="categorySave">카테고리 저장</button>
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
@@ -122,6 +87,10 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+    
+    
+    
+    <script src="/resources/js/shop/categoryModify.js"></script>
 </body>
-<script src="/resources/js/shop/categoryModify.js"></script>
+
 </html>

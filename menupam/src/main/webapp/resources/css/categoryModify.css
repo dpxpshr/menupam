@@ -7,7 +7,6 @@
     /* background-color: #F2F2F2; */
     margin: auto;
     border-radius: 10px;
-    margin-bottom: 100px;
 }
 /* 상단 6개 버튼 CSS */
 .buttonBox{
@@ -67,4 +66,13 @@
     margin: auto;
 }
 
-
+.categorySave{
+	width: 375px;
+	height: 50px;
+	text-align: center;
+	background-color: #F2BB13;
+	color:white;
+	box-shadow: 0px 2px 10px 0px #dcdcdc; 
+	position: absolute;
+	bottom: 55px;
+}

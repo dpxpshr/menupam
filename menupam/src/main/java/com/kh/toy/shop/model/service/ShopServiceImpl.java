@@ -1,6 +1,8 @@
 package com.kh.toy.shop.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,17 @@ public class ShopServiceImpl implements ShopSerivce{
 		
 		return shopList;
 	}
+
+	@Override
+	public Map<String, Object> selectCategoryList(String userId) {
+		
+		Map<String,Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("categorys", shopRepository.selectCategoryList(userId));
+		
+		
+		return commandMap;
+	}
+
 	
 }
  
