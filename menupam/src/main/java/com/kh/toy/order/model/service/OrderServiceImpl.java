@@ -18,8 +18,9 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<Shop> searchShopbyName(Map<String,String> commandMap) {
-		return orderRepository.searchShopbyName(commandMap);
+	public List<Shop> searchShopbyName(String keyword, String location) {
+		List<Shop> shoplist = orderRepository.searchShopbyName(Map.of("keyword",keyword,"location",location));
+		return shoplist;
 	}
 
 	@Override

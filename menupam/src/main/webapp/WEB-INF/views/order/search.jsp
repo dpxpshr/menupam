@@ -64,7 +64,21 @@
 				document.querySelector("#location").value = await locName;
 			})();
 			document.querySelector(".myPosition").addEventListener("click",()=>{
-				location.href = "/order/shoplist?location"+document.querySelector("#location").value+"&keyword="+document.querySelector(".searchName").value;
+				let location = document.querySelector("#location").value;
+				let keyword = document.querySelector(".searchName").value;
+				
+				let searchHeader = new Headers();
+				searchHeader.append("content-type","application/x-www-form-urlencoded");
+				
+				fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword+"&location="+location})
+				.then(response=>{
+					if(response.ok){
+						console.dir(response);
+					}else{
+						alert("검색에 실패하였습니다.")
+					}
+				});
+				
 			})
 	</script>
 </body>
