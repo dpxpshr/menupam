@@ -27,4 +27,10 @@
 		where member_id = #{memberId}
 	</select>
 	
+	<update id="updateCategoryName">
+		update tb_menu_category
+		set menu_category_name = #{menuCategoryName}
+		where shop_idx = #{shopIdx}
+	</update>
+	
 </mapper>

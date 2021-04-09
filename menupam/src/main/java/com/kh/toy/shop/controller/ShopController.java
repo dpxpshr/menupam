@@ -1,7 +1,6 @@
 package com.kh.toy.shop.controller;
 
-import java.util.Map;
-
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.shop.model.service.ShopSerivce;
+import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.shop.validator.ShopValidator;
 
@@ -67,7 +67,7 @@ public class ShopController {
 		shopService.insertShop(shop); // 실제로 사용할 매장정보 kakaomap 데이터 + 입력 데이터 DB저장
 		
 		model.addAttribute("msg", "매장등록이 완료 되었습니다.");
-		model.addAttribute("url", "/shop/shopRegister");
+		model.addAttribute("url", "/index");
 		
 		return "common/result";
 	}
@@ -80,7 +80,7 @@ public class ShopController {
 						,@SessionAttribute("userInfo") Member userInfo
 						,Model model) {
 		
-		shopService.selectMemberShopList(shop, userInfo.getMemberId());
+		shopService.ShopInfoModify(shop, userInfo.getMemberId());
 		shopService.updateShop(shop);
 		
 		model.addAttribute("url", "/shop/shopModify"); //어디로 이동시킬지 말지 추후 예정
@@ -97,15 +97,28 @@ public class ShopController {
 	@GetMapping("menuModify")
 	public void menuModify() {}
 	
-	@GetMapping("categoryModify")
-	public String categoryModify(Shop shop
-			,@SessionAttribute("userInfo") Member userInfo
-			,Model model) {
+	@GetMapping("categoryData")
+	public String categoryData(@SessionAttribute("userInfo") Member userInfo
+							,Model model
+							,HttpSession session) {
 
-		Map<String,Object> testMap = shopService.selectCategoryList(userInfo.getMemberId());
+		model.addAllAttributes(shopService.selectCategoryList(userInfo.getMemberId()));
 		
-		System.out.println(testMap);
+		return "shop/categoryModify"; 
 		
+	}
+	
+	@PostMapping("categoryEidt")
+	public String categoryModify(MenuCategory menuCategory
+								,@SessionAttribute("userInfo") Member userInfo
+								,Model model) {
+		
+		System.out.println(menuCategory);
+		
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		
+		System.out.println(shopInfo); // 여기서부터 작업 진행
+				
 		model.addAllAttributes(shopService.selectCategoryList(userInfo.getMemberId()));
 		
 		return "shop/categoryModify";

@@ -28,15 +28,17 @@ public class ShopServiceImpl implements ShopSerivce{
 	public int updateShop(Shop shop) {
 		return shopRepository.updateShop(shop);
 	}
+	
+	@Override
+	public Shop selectShopInfo(String userId) {
+		return shopRepository.selectShopInfo(userId);
+	}
+
 
 	@Override
-	public List<Shop> selectMemberShopList(Shop shop, String userId) {
+	public void ShopInfoModify(Shop shop, String userId) {
 			
-		List<Shop> shopList = shopRepository.selectMemberShopList(userId);
-
-		for (Shop shopInfo : shopList) {
-			
-			shop.setMemberId(shopInfo.getMemberId()); // 회원아이디로 조회시 필요
+			shop.setMemberId(userId); // 회원아이디로 조회시 필요
 			
 			//html에서 체크하지 않을경우 null로 받아오기 떄문에 강제로 N을 넣어준다.
 			if(shop.getShopPackAble() == null) {
@@ -49,9 +51,7 @@ public class ShopServiceImpl implements ShopSerivce{
 			shop.setShopTableCount(shop.getShopTableCount()); // 테이블 개수
 			
 			shopRepository.updateShop(shop);
-		}
 		
-		return shopList;
 	}
 
 	@Override
@@ -64,6 +64,8 @@ public class ShopServiceImpl implements ShopSerivce{
 		return commandMap;
 	}
 
+	
+	
 	
 }
  

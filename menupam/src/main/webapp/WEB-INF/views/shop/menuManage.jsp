@@ -56,7 +56,7 @@
                             <p class="fontSmall">카테고리 편집</p>
                         </div>
                         <div class="categoryModifyBtn">
-                            <a href="${context}/shop/categoryModify"><input type="button" value="수정 하기" class="btnSmall"></a>
+                            <a href="${context}/shop/categoryData"><input type="button" value="수정 하기" class="btnSmall"></a>
                         </div>
                     </div>
                     <br>

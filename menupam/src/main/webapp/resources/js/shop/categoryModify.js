@@ -71,3 +71,15 @@ document.querySelectorAll(".btnXSmall").forEach((e)=>{
 	})
 	
 })
+
+document.querySelectorAll(".btnSmall").forEach((e)=>{
+	e.addEventListener("click",(event)=>{
+		let check = confirm("정말 수정 하시겠습니까?");
+		
+		if(check){
+			event.target.type = "submit";
+		}else{
+			event.target.type = "button";
+		}
+	})
+})

@@ -55,9 +55,9 @@
                     <div class="categoryBoxs">
                       <c:forEach var="menuCategory" items="${categorys}">
                         <div class="categoryBox">
-                            <form action="">
+                            <form action="${context}/shop/categoryEidt" method="post">
                                 <div class="categoryInput">
-                                    <input type="text" class="inputMedium" value="${menuCategory.menuCategoryName}">
+                                    <input type="text" class="inputMedium" name="menuCategoryName" value="${menuCategory.menuCategoryName}">
                                 </div>
                                 <div class="categoryBtn">
                                     <input type="button" value="정보 수정 완료" class="btnSmall">

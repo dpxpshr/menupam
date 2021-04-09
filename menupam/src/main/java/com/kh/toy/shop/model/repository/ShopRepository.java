@@ -12,6 +12,7 @@ import com.kh.toy.shop.model.vo.Shop;
 @Mapper
 public interface ShopRepository {
 	
+	// 매장 테이블
 	@Select("select count(*) from tb_shop where shop_tell = #{shopTell}")
 	int selectShopbyTell(String shopTell);
 	
@@ -26,9 +27,16 @@ public interface ShopRepository {
 	
 	int updateShop(Shop shop);
 	
-	@Select("select * from tb_shop where member_id = #{memberid}")
-	List<Shop> selectMemberShopList(String userId);
+	@Select("select * from tb_shop where member_id = #{memberId}")
+	Shop selectShopInfo(String userId);
 	
+	// 카테고리 테이블
 	List<MenuCategory> selectCategoryList(String userId);
+	
+	@Insert("insert into tb_menu_category(menu_category_idx, menu_category_name, shop_idx)"
+			+ " values('mc'||sc_menucategory_idx.nextval,#{menuCategory_name},#{shopIdx})")
+	int insertCategory();
+	
+	int updateCategory(MenuCategory menuCategory);
 		
 }	
