@@ -68,12 +68,16 @@
 				let keyword = document.querySelector(".searchName").value;
 				
 				let searchHeader = new Headers();
+				let slist = null;
 				searchHeader.append("content-type","application/x-www-form-urlencoded");
 				
 				fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword+"&location="+location})
 				.then(response=>{
 					if(response.ok){
-						console.dir(response);
+						response.json().then(function(data) {
+							  console.dir(data);
+						})
+						//this.location.href = "/order/shoplist";
 					}else{
 						alert("검색에 실패하였습니다.")
 					}
