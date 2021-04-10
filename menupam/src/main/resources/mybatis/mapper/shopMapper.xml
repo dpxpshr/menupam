@@ -20,17 +20,10 @@
 		 where member_id = #{memberId}
 	</update>
 	
-	<select id="selectCategoryList" resultType="menuCategory">
-		select shop_idx, menu_category_name, menu_category_idx
-		from tb_shop 
-		left outer join tb_menu_category using(shop_idx)
-		where member_id = #{memberId}
-	</select>
-	
 	<update id="updateCategoryName">
 		update tb_menu_category
 		set menu_category_name = #{menuCategoryName}
-		where shop_idx = #{shopIdx}
+		where menu_category_idx = #{menuCategoryIdx}
 	</update>
 	
 </mapper>

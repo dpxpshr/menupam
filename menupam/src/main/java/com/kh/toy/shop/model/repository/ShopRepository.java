@@ -3,6 +3,7 @@ package com.kh.toy.shop.model.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -31,12 +32,15 @@ public interface ShopRepository {
 	Shop selectShopInfo(String userId);
 	
 	// 카테고리 테이블
-	List<MenuCategory> selectCategoryList(String userId);
+	@Select("select * from tb_menu_category where shop_idx = #{shopIdx}")
+	List<MenuCategory> selectCategoryList(String shopIdx);
 	
 	@Insert("insert into tb_menu_category(menu_category_idx, menu_category_name, shop_idx)"
-			+ " values('mc'||sc_menucategory_idx.nextval,#{menuCategory_name},#{shopIdx})")
-	int insertCategory();
+			+ " values('mc'||sc_menucategory_idx.nextval,#{menuCategoryName},#{shopIdx})")
+	int insertCategory(MenuCategory menuCategory);
 	
-	int updateCategory(MenuCategory menuCategory);
-		
+	int updateCategoryName(MenuCategory menuCategory);
+	
+	@Delete("delete from tb_menu_category where menu_category_idx = #{menuCategoryIdx}")
+	int deleteCategory(MenuCategory menuCategory);
 }	

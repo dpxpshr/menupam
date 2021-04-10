@@ -1,5 +1,7 @@
 package com.kh.toy.shop.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -10,8 +12,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kh.toy.member.model.vo.Member;
@@ -82,7 +86,6 @@ public class ShopController {
 		
 		shopService.ShopInfoModify(shop, userInfo.getMemberId());
 		shopService.updateShop(shop);
-		
 		model.addAttribute("url", "/shop/shopModify"); //어디로 이동시킬지 말지 추후 예정
 		
 		return "common/result";
@@ -97,12 +100,24 @@ public class ShopController {
 	@GetMapping("menuModify")
 	public void menuModify() {}
 	
+	@GetMapping("categoryModify")
+	public void categoryModify(@SessionAttribute("shopInfo") Shop shopInfo
+							,Model model) {
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
+	}
+	
 	@GetMapping("categoryData")
 	public String categoryData(@SessionAttribute("userInfo") Member userInfo
 							,Model model
 							,HttpSession session) {
-
-		model.addAllAttributes(shopService.selectCategoryList(userInfo.getMemberId()));
+			
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		Map<String, Object> categoryInfo = shopService.selectCategoryList(shopInfo.getShopIdx());
+		
+		session.setAttribute("shopInfo", shopInfo);
+		//session.setAttribute("categoryInfo", categoryInfo);
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		
 		
 		return "shop/categoryModify"; 
 		
@@ -110,18 +125,39 @@ public class ShopController {
 	
 	@PostMapping("categoryEidt")
 	public String categoryModify(MenuCategory menuCategory
-								,@SessionAttribute("userInfo") Member userInfo
-								,Model model) {
-		
-		System.out.println(menuCategory);
-		
-		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		
-		System.out.println(shopInfo); // 여기서부터 작업 진행
+								,@SessionAttribute("shopInfo") Shop shopInfo
+ 								,Model model) {
 				
-		model.addAllAttributes(shopService.selectCategoryList(userInfo.getMemberId()));
+		shopService.updateCategoryName(menuCategory); // 카테고리 이름 수정
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		
 		return "shop/categoryModify";
+	}
+	
+	@PostMapping("addCategory")
+	public String addCategory(MenuCategory menuCategory
+					,@SessionAttribute("shopInfo") Shop shopInfo
+					,Model model) {
+		
+		shopService.insertCategory(menuCategory, shopInfo.getShopIdx());
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		
+		return "shop/categoryModify";
+	}
+	
+	@PostMapping("deleteCategory")
+	@ResponseBody
+	public String deleteCategory(@RequestBody MenuCategory menuCategory
+					,@SessionAttribute("shopInfo") Shop shopInfo
+					,Model model) {
+		
+		System.out.println("컴온요!!" + menuCategory);
+		
+		shopService.deleteCategory(menuCategory);
+		
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		
+		return "success";
 	}
 	
 	

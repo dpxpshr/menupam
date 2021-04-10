@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.kh.toy.shop.model.repository.ShopRepository;
+import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 
 
@@ -55,15 +56,38 @@ public class ShopServiceImpl implements ShopSerivce{
 	}
 
 	@Override
-	public Map<String, Object> selectCategoryList(String userId) {
+	public Map<String, Object> selectCategoryList(String shopIdx) {
 		
 		Map<String,Object> commandMap = new HashMap<String,Object>();
-		commandMap.put("categorys", shopRepository.selectCategoryList(userId));
-		
+		commandMap.put("categorys", shopRepository.selectCategoryList(shopIdx));
 		
 		return commandMap;
 	}
 
+	@Override
+	public void updateCategoryName(MenuCategory menuCategory) {
+		
+		menuCategory.setMenuCategoryName(menuCategory.getMenuCategoryName());
+		menuCategory.setMenuCategoryIdx(menuCategory.getMenuCategoryIdx());
+		
+		shopRepository.updateCategoryName(menuCategory);
+	}
+
+	@Override
+	public int insertCategory(MenuCategory menuCategory, String shopIdx) {
+		menuCategory.setMenuCategoryName(menuCategory.getMenuCategoryName());
+		menuCategory.setShopIdx(shopIdx);
+		
+		return shopRepository.insertCategory(menuCategory);
+	}
+
+	@Override
+	public int deleteCategory(MenuCategory menuCategory) {
+		menuCategory.setMenuCategoryIdx(menuCategory.getMenuCategoryIdx());
+		return shopRepository.deleteCategory(menuCategory);
+	}
+
+	
 	
 	
 	
