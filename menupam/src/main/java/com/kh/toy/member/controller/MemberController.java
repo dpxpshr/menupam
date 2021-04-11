@@ -2,10 +2,6 @@ package com.kh.toy.member.controller;
 
 
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import java.util.*;
 
 import javax.inject.Inject;
@@ -218,31 +214,45 @@ public class MemberController {
 	 * "member/adminList"; };
 	 */
 	  
-	  @GetMapping("findAll") public String findAll(Model model,String
-	  memberId,String memberName) { //String userId= "test1";
+	  @GetMapping("findAll") 
+	  public String findAll(Model model,String memberId,String memberName) {
+		  //String userId= "test1";
 	  
 	  List<Member> member = memberService.findAll(memberId,memberName);
 	  model.addAttribute("member", member); 
 	  System.out.println("멤버 값 " + member);
 	  
-	  return "member/adminList"; }
+	  return "member/adminList"; 
+	  }
 	  
+	  //휴대폰 번호 수정 기능 
 	 
-	
+	  //1.사용자가 자기 연락처를 다시적고 어떤 버튼을 누른다.
+	  //2. 다시적은 연락처 (ex.10321031) 버튼을 누르면 어디로보낼까 localhost:9090/member/modify?memberid=kim1&memberPhone=0312032103
+	  //3. ~~~~ 
+	  //4. dao update 
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	
 	  @GetMapping("adminList") 
-	  public String memberAll(String memberId,String
-	  memberName,Model model) {
+	  public String memberAll(Model model) {
 	  
-	  List<Member> member = memberService.memberAll(memberId, memberName);
-		 
+		  List<Member> memberList = memberService.findMember();
+
+
+		  
+		  model.addAttribute("memberList", memberList);
+		  
+		  return "member/adminList"; 
 	  
-	  model.addAttribute("member",memberId);
-	  model.addAttribute("member",memberName);
-	  System.out.println(member);
-	  System.out.println(model);
-	  System.out.println(memberId); 
-	  return "member/adminList"; }
+	  }
+	  
+
 	 
 	
 		@GetMapping("modifyPhone")

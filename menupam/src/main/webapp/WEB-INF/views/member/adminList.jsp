@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/head.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,37 +26,14 @@
             </div>
         </div>
         <div class="main">
-            <!--여기서 부터 코드 작성-->
-         <a href="${context}/member/logout"><span>logout</span></a>
-             	<a href="${context}/member/join"><span>join</span></a>       
-                    
-                   
-	  
-  	    <table style="text-align:center" border="1">
-	       
-	           <tr>
-	              
-	               <th><span>id</span></th>
-	               <th ><span>이름</span></th>
-	           </tr>
-	       
-	      
-	       <c:forEach items="${memberAll}" var="member">
-	           <tr>
-	           		<td>${member.memberId}</td>
-	               <td>${member.memberName}</td>
-	               
-	         
-	           </tr>
-	        </c:forEach>
-	    
-	    </table>
-	   
-	    	
-	 
-	 
+        <!--여기서 부터 코드 작성-->
+		
+		<c:forEach var="member" items="${memberList}" >
+			<p>${member.memberId}</p>
+		</c:forEach>
+
 	
-	                    </div>
+	    </div>
 	                    
 	                   
         <div class="footer">

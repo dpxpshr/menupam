@@ -22,6 +22,8 @@ public interface MemberService {
 	
 	List<Member>memberAll(String memberId,String memberName);
 	
+	List<Member>findMember();
+	
 	Member updateMemberTell(Member member);
 	
 	int updateMember(Member member);

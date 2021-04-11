@@ -17,7 +17,8 @@ import com.kh.toy.member.model.vo.Member;
 public interface MemberRepository {
 	
 	
-	List<Member>memberAll(Map<String,String> commandMap);
+	List<Member>selectMemberAll();
+	
 	
 	List<Member>selectMemberList(Paging paging);
 	
