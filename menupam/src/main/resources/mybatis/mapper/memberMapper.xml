@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.toy.member.model.repository.MemberRepository">
+		 
+
+	<select id="selectMemberList" resultType="member">
+		select member_id,member_name
+		from(
+			select rownum rnum, m.*
+			from(
+				select member_id, member_name
+				from tb_member
+				order by ${sort} ${direction}
+			) m
+		) where rnum between #{queryStart} and #{queryEnd}	
+	</select>
+
+	<select id="MemberAll" resultType="member" parameterType="map">
+		select member_id,member_name
+		from tb_member
+		where member_id LIKE '%'||#{test}||'%' 
+	</select>
+
+
+	<!-- '%'||#%test#||'%' -->
+		
+		
+		<update id="updateMember">
+			update tb_member
+			set member_phone = #{memberPhone}
+			where member_id = #{memberId}
+		
+		</update>
+	
+	
+</mapper>

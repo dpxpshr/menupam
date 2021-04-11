@@ -6,11 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +69,8 @@ public class MemberController {
 	//로깅 객체 생성
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	
+	
 	private final MemberService memberService;
 	MemberValidator memberValidator;
 	
@@ -82,7 +86,6 @@ public class MemberController {
 		//WebDataBinder : 컨트로러 메서드의 파라미터에 데이터를 bind 해주는 역할 수행
 		webDataBinder.addValidators(memberValidator);
 	}
-	
 	
 	
 	
@@ -111,6 +114,10 @@ public class MemberController {
 								, Model model) {
 		
 		if(error.hasErrors()) {
+			System.out.println(persistInfo);
+			System.out.println("===================================");
+			System.out.println("validator error" + error);
+			
 			return "member/join";
 		}
 		
@@ -122,6 +129,7 @@ public class MemberController {
 		
 		//memberService의 authenticateEmail 호출해서 회원가입 메일 발송
 		memberService.authenticateEmail(persistInfo, authPath);
+		
 		
 		//메일발송 안내창 출력 후 index페이지로 페이지 이동
 		model.addAttribute("msg", "이메일 발송이 완료되었습니다.");
@@ -184,30 +192,84 @@ public class MemberController {
 	public void reservation() {};
 	
 	
-	@GetMapping("adminList")
-	public String selectMemberList(@RequestParam(defaultValue = "1") int page, Model model) {
+	/*
+	 * @GetMapping("List") public String selectMemberList(@RequestParam(defaultValue
+	 * = "1") int page, Model model) {
+	 * 
+	 * 
+	 * model.addAllAttributes(memberService.selectMemberList(page)); return
+	 * "member/adminList"; };
+	 */
+	
+	
+	/*
+	 * @GetMapping("members") public String list(Model model) { List<Member> members
+	 * = memberService.findMembers(); model.addAttribute("members",members); return
+	 * "member/memberList"; }
+	 */
+	
+	/*
+	 * @GetMapping("List") public String selectMemberList(@RequestParam(defaultValue
+	 * = "1") int page, Model model) {
+	 * 
+	 * 
+	 * model.addAllAttributes(memberService.selectMemberList(page));
+	 * model.addAttribute("member",memberService.selectMemberList(page)); return
+	 * "member/adminList"; };
+	 */
+	  
+	  @GetMapping("findAll") public String findAll(Model model,String
+	  memberId,String memberName) { //String userId= "test1";
+	  
+	  List<Member> member = memberService.findAll(memberId,memberName);
+	  model.addAttribute("member", member); 
+	  System.out.println("멤버 값 " + member);
+	  
+	  return "member/adminList"; }
+	  
+	 
+	
+	
+	  @GetMapping("adminList") 
+	  public String memberAll(String memberId,String
+	  memberName,Model model) {
+	  
+	  List<Member> member = memberService.memberAll(memberId, memberName);
+		 
+	  
+	  model.addAttribute("member",memberId);
+	  model.addAttribute("member",memberName);
+	  System.out.println(member);
+	  System.out.println(model);
+	  System.out.println(memberId); 
+	  return "member/adminList"; }
+	 
+	
+		@GetMapping("modifyPhone")
+		public void phonemodify(HttpSession session,Model model ,Member member) {
+			
+			session.setAttribute("modify", model);
+			
+			
+			
+			
+			System.out.println(model);
+		}
+	
+	
+	
+	
+	
+	
+		@GetMapping("Modify")
+		public String modify(Member member
+				,@SessionAttribute("userInfo") Member userInfo
+		,Model model){
+		memberService.Memberinfo(member, userInfo.getMemberId());
+		memberService.updateMember(member);
 		
-		model.addAllAttributes(memberService.selectMemberList(page));
-		//droa
-		return "member/adminList";
-	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		return "common/result";
+		}
 	
 	
 	
