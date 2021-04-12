@@ -122,9 +122,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public List<Member> memberAll(String memberId,String memberName){
-		
-		List<Member> memberlist = null;
-		
+		List<Member> memberlist = memberRepository.memberAll(Map.of("member",memberId,"membername",memberName));
 		return memberlist;
 	}
 
@@ -147,14 +145,6 @@ public class MemberServiceImpl implements MemberService{
 		
 		memberRepository.updateMember(member);
 
-
-	}
-
-	@Override
-	public List<Member> findMember() {
-		
-		List<Member> memberlist = memberRepository.selectMemberAll();
-		return memberlist;
 	}
 
 	

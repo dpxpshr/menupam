@@ -15,8 +15,10 @@
 		) where rnum between #{queryStart} and #{queryEnd}	
 	</select>
 
-	<select id="selectMemberAll" resultType="member">
-		SELECT * FROM TB_MEMBER
+	<select id="MemberAll" resultType="member" parameterType="map">
+		select member_id,member_name
+		from tb_member
+		where member_id LIKE '%'||#{test}||'%' 
 	</select>
 
 
