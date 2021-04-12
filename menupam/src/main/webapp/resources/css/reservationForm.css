@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.main{
+	position: relative;
+	left:20px;
+}
+
+.btnBox{
+	position: absolute;
+	left:10px;
+}

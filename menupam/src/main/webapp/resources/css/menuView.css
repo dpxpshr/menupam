@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.wrapper{
+    max-width: 375px;
+    margin: 0 auto;
+    width: 375px;
+    position: relative;
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+}
+
+.header{
+    height: 35vh;
+}
+
+.header img{
+	height: 35vh;
+}
+
+.main{
+    background-color: white;
+   min-height: 900px;
+}
+
+.shopInfo{
+	padding: 0 20px;
+}
+
+.shopName{
+	font-size : 22px;
+	margin-top: 65px;
+	margin-bottom: 7px;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.slogan{
+	font-size: 16px;
+	margin-bottom: 4px;	
+}
+
+.tag{
+	font-size: 13px;
+	color:#666;
+	margin-bottom: 12px;
+}
+
+.star{
+	color:red;
+}
+
+.menuCategory{
+    border-top : 1px solid gainsboro;
+    padding : 20px 20px 20px 0;
+    text-indent: 30px;
+    background-color: #F2F2F2;
+    cursor: pointer;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 8%);
+    display: flex;
+  
+}
+
+.menuName{
+	width:220px;
+	text-align: left;
+}
+
+.menuCategory i{
+  display: flex;
+  justify-content:flex-end;
+  width: 100px;
+}
+
+.menuBox{
+	margin-top: 30px;
+}
+
+.menuBox:last-child{
+    border-bottom : 1px solid gainsboro;
+}
+
+.menuItems{
+    display: none;
+    /* border : 1px solid black; */
+}
+
+.menuItem{
+    /* border : 1px solid black; */
+    padding : 20px ;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid gainsboro;
+}
+
+.menuItemLeft{
+    width: 50%;
+}
+
+.menuItemRight{
+    /* border : 1px solid black; */
+    width: 60px;
+    height: 60px;
+}
+
+.menuItemRight > img{
+    border-radius: 6px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.menuItemName{
+    height: 49%;
+}
+
+.menuItemPrice{
+    padding-top: 10px;
+    height: 49%;
+}
+
+.active{
+    display: block;
+}
+
+
+
+
+
+.footer{
+    height : 48px;
+	width : 375px;
+	position: fixed;
+	bottom: 0;
+    display: flex;
+    background-color: whitesmoke;
+}
+.footer > div{
+    width: 20%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+    display: flex;
+}
+.footer i {
+    margin: auto;
+    font-size: 1.3em;
+}
+
+
