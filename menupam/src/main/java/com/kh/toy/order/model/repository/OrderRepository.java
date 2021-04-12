@@ -17,5 +17,4 @@ public interface OrderRepository {
 	@Select("select * from tb_shop "
 			+ "where shop_type = #{keyword} and shop_address like '%#{location}%'")
 	List<Shop> searchShopbyCategory(Map<String,String> commandMap);
-
 }

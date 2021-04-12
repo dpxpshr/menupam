@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.kh.toy.order.model.service.OrderService;
 import com.kh.toy.shop.model.vo.Shop;
 
@@ -30,7 +29,6 @@ public class OrderController {
 		return "order/search";
 	}
 	
-
 	
 	//search.jsp에서 keyword와 location을 받아서 넘어오면, 쿼리를 통해 리스트를 받고 slist attribute에 리스트를 넘긴다.
 	@PostMapping("find")
@@ -45,7 +43,6 @@ public class OrderController {
 	public String shopList() {
 		return "order/shopList";
 	}
-
 	@GetMapping("menuview")
 	public String menuView() {
 		return "order/menuView";

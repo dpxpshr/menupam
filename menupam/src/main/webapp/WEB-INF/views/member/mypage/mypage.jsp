@@ -118,7 +118,6 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
-
     
        <script src="/resources/js/member/mypage.js"></script>
 

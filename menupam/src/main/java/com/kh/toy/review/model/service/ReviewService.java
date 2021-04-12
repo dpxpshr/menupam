@@ -29,5 +29,4 @@ public interface ReviewService {
 	
 	void sendWaitQR(String shopIdx, String path);
 	
-
 }

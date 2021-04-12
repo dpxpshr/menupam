@@ -50,7 +50,6 @@ public class MailSender {
 			msgHelper.setFrom(Code.EMAIL.desc);
 			msgHelper.setTo(to);
 			msgHelper.setSubject(subject);
-
 			msgHelper.setText(htmlTxt, true);
 		
 			FileSystemResource fsr = null;

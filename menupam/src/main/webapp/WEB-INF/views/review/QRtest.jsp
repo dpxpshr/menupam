@@ -28,6 +28,7 @@
                    	<a href="${context}/review/tableQRsend?shopIdx=test">테이블 QR보내기</a><br>
                    	<a href="${context}/review/waitQRsend?shopIdx=test">대기 QR보내기</a>
                 </div>
+                
             </div>
         </div>
         <div class="footer">

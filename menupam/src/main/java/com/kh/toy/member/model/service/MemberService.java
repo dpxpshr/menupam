@@ -1,19 +1,14 @@
 package com.kh.toy.member.model.service;
 
 
-
-import java.util.Map;
-
 import java.util.List;
 import java.util.Map;
 
 import com.kh.toy.member.model.repository.MemberRepository;
-
 import com.kh.toy.member.model.vo.Member;
 
 public interface MemberService {
 	
-
 	
 	Member selectMemberById(String MemberId);
 	void authenticateEmail(Member persistUser, String authPath);
@@ -33,6 +28,5 @@ public interface MemberService {
 	
 	int updateMember(Member member);
 	void Memberinfo(Member member, String memberId);
-
 	
 }

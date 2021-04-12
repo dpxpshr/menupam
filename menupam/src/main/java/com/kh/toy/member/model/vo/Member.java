@@ -2,7 +2,6 @@ package com.kh.toy.member.model.vo;
 
 import java.sql.Date;
 
-
 //TB_MEMBER ���̺��� ROW ������ ���� Ŭ����
 public class Member {
 	
@@ -21,7 +20,6 @@ public class Member {
 	//3. ��� �ʵ庯���� GETTER/SETTER �޼��带 ������ �Ѵ�.
 	
 	//����Ŭ�� �ڹ��� Ÿ�� ����
-
 	//char, vachar2 -> String
 	//date -> java.util.date, java.sql.date
 	//number -> int, double

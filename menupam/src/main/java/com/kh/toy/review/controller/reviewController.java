@@ -89,7 +89,6 @@ public class reviewController {
 		return "review/QRtest";
 	}
 	
-
 	@GetMapping("tableQRsend")
 	public String sendTableQR(String shopIdx, String tableNo, HttpServletRequest request) {
 		
@@ -102,7 +101,6 @@ public class reviewController {
 			//지정한 테이블의 것만 보내준다
 			reviewService.sendTableQR(shopIdx, path, tableNo);
 		}
-
 		return "review/QRtest";
 	}
 	
@@ -116,6 +114,8 @@ public class reviewController {
 		
 		return "review/QRtest";
 	}
+	
+	
 	
 	
 }

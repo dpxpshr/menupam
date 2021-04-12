@@ -1,8 +1,6 @@
 package com.kh.toy.shop.controller;
 
-
 import java.util.Map;
-
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.shop.model.service.ShopSerivce;
 import com.kh.toy.shop.model.vo.MenuCategory;
-
 import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.shop.validator.ShopValidator;
 
@@ -51,7 +47,6 @@ public class ShopController {
 	
 	
 	@PostMapping("shopInfo")
-
 	public String shopInfo(@RequestParam(name = "shopPackAble", defaultValue = "N") String shopPackAble
 						,@Valid Shop shop
 						,Errors error
@@ -63,7 +58,6 @@ public class ShopController {
 			return "shop/shopRegister";
 		}
 		
-
 		//포장 기능 체크가 안됬을때 강제로 N 삽입.
 		if(shop.getShopPackAble() == "") {
 			shop.setShopPackAble(shopPackAble);

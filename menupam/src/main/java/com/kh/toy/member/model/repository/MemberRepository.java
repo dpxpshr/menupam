@@ -1,10 +1,8 @@
 package com.kh.toy.member.model.repository;
 
 import java.util.List;
-
 import java.util.Map;
 import java.util.Optional;
-
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -46,7 +44,6 @@ public interface MemberRepository {
 			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertMember(Member member);
 	
-
 	Member save(Member member);
 	Optional<Member> findById(String MemberId);
 	Optional<Member> findByName(String MemberName);

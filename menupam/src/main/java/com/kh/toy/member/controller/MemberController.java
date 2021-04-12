@@ -4,7 +4,6 @@ package com.kh.toy.member.controller;
 import java.text.DateFormat;
 import java.util.*;
 
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -66,7 +65,8 @@ public class MemberController {
 	//로깅 객체 생성
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-
+	
+	
 	private final MemberService memberService;
 	MemberValidator memberValidator;
 	
@@ -86,7 +86,6 @@ public class MemberController {
 	
 	
 	
-
 	//view를 지정하는 방법
 	//1. ModelAndView 객체를 만들어서 setViewName 메서드에 view 경로를 지정하고 객체를 리턴
 	//2. view 경로를 반환
@@ -187,7 +186,6 @@ public class MemberController {
 	//예약확인
 	@GetMapping("mypage/reservation")
 	public void reservation() {};
-
 	
 	
 	/*
@@ -269,13 +267,8 @@ public class MemberController {
 		}
 	
 	
-	@GetMapping("adminList")
-	public String selectMemberList(@RequestParam(defaultValue = "1") int page, Model model) {
-		
-		model.addAllAttributes(memberService.selectMemberList(page));
-		//droa
-		return "member/adminList";
-	};
+	
+	
 	
 	
 		@GetMapping("Modify")

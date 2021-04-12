@@ -117,7 +117,7 @@ public class ReviewServiceImpl implements ReviewService{
 	//=========================================================옯겨야함 나중에=========================================================
 	@Override
 	public void sendTableQR(String shopIdx, String path) {
-	
+		
 		Shop shop = reviewRepository.selectShop(shopIdx);
 		Member member = reviewRepository.selectMember(shop.getMemberId());
 		Map<String, String> filePathMap = new HashMap<String, String>();
@@ -214,7 +214,6 @@ public class ReviewServiceImpl implements ReviewService{
 		ResponseEntity<String> response =
 				http.exchange(request, String.class);
 		
-
 		return response.getBody();
 	}
 

@@ -24,6 +24,7 @@ public class ShopServiceImpl implements ShopSerivce{
 	public int insertShop(Shop shop) {
 		return shopRepository.insertShop(shop); 
 	}
+
 	@Override
 	public int updateShop(Shop shop) {
 		return shopRepository.updateShop(shop);
@@ -86,7 +87,9 @@ public class ShopServiceImpl implements ShopSerivce{
 		return shopRepository.deleteCategory(menuCategory);
 	}
 
-
+	
+	
+	
 	
 }
  

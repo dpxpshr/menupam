@@ -43,5 +43,4 @@ public interface ShopRepository {
 	
 	@Delete("delete from tb_menu_category where menu_category_idx = #{menuCategoryIdx}")
 	int deleteCategory(MenuCategory menuCategory);
-
 }	

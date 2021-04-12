@@ -1,6 +1,5 @@
 package com.kh.toy.shop.model.service;
 
-
 import java.util.Map;
 
 import com.kh.toy.shop.model.vo.MenuCategory;
@@ -17,5 +16,4 @@ public interface ShopSerivce {
 	void updateCategoryName(MenuCategory menuCategory);
 	int insertCategory(MenuCategory menuCategory, String shopIdx);
 	int deleteCategory(MenuCategory menuCategory);
-
 }
