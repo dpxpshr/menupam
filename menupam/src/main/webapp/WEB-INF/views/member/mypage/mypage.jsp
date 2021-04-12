@@ -18,6 +18,7 @@
 <body>
     <div class="wrapper">
         <div class="header">
+        	<a href="${context}/member/logout"><span>logout</span></a>
             <div class="search">
                 <i class="fas fa-search"></i>
             </div>
@@ -89,7 +90,7 @@
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-mobile-alt"></i></div>
-		                    	<input type="tel" id="user_info" required="required" readonly="readonly" value=${sessionScope.userInfo.memberPhone}>
+		                    	<input type="tel" id="user_info" required="required" value=${sessionScope.userInfo.memberPhone}>
 		                    	
 		                    	<button class="far fa-edit icon"></button>
 		                    	
@@ -97,7 +98,12 @@
 		                    	far fa-edit버튼 hidden +
 		                    	<input class="modify" type="submit" value="수정" onclick='modifyTel()'>
 		                    	 -->
+		                    	 <br>
+		                    	
+		                    	 
 	                    	</div>
+	                    	
+	                    	<input type="submit" value="수정 완료" class="btnLarge width100">
 	                    </div>
 	                    
                     
@@ -112,6 +118,9 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+
+    
+       <script src="/resources/js/member/mypage.js"></script>
 
 </body>
 </html>

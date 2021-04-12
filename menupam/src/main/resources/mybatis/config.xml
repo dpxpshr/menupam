@@ -12,11 +12,13 @@
 		<typeAlias type="com.kh.toy.shop.model.vo.Shop" alias="shop"/>
 		<typeAlias type="com.kh.toy.review.model.vo.Review" alias="review"/>
 		<typeAlias type="com.kh.toy.member.model.vo.Member" alias="member"/>
+		<typeAlias type="com.kh.toy.shop.model.vo.MenuCategory" alias="menuCategory"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/boardMapper.xml"/>
 		<mapper resource="mybatis/mapper/reviewMapper.xml"/>
-		<!--<mapper resource="mybatis/mapper/memberMapper.xml"/>-->
+		<mapper resource="mybatis/mapper/shopMapper.xml"/>
+		<mapper resource="mybatis/mapper/memberMapper.xml"/>
 		<!--<mapper resource="mybatis/mapper/orderMapper.xml"/> -->
 	</mappers>
 </configuration>

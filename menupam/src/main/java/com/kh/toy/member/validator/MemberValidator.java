@@ -34,7 +34,7 @@ public class MemberValidator implements Validator{
 		
 		//1. 아이디 존재 유무
 		if(memberRepository.selectMemberById(member.getMemberId()) != null) {
-			errors.rejectValue("userId", "error.userId", "이미 존재하는 아이디입니다.");
+			errors.rejectValue("memberId", "error.memberId", "이미 존재하는 아이디입니다.");
 		}
 		
 		//2. 비밀번호가 8글자 이상의 숫자,영문자,특수문자 조합인지
@@ -45,7 +45,7 @@ public class MemberValidator implements Validator{
 				
 		//3. 이메일 존재 유무
 		if(memberRepository.selectMemberByEmail(member.getMemberEmail()) > 0) {
-			//errors.rejectValue("memberEmail", "error.memberEmail", "이미 존재하는 이메일입니다.");
+			errors.rejectValue("memberEmail", "error.memberEmail", "이미 존재하는 이메일입니다.");
 		}
 		
 		//4. 휴대폰 존재 유무

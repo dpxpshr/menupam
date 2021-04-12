@@ -21,7 +21,9 @@
                 <i class="far fa-clipboard"></i>
             </div>
         </div>
-        <div class="main">
+        
+        <form action="${context}/shop/Modify" method="post">
+        	<div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
@@ -29,34 +31,35 @@
                     <div class="line"></div>
                     <br>
                     <div class="buttonBox">
-                        <div class="manageBtn">
+                         <a class="manageBtn" href="${context}/shop/shopManage">
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-won-sign fontSmall"></i></div>
                             <div class="manageBtnText">매출 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn">
                             <div class="manageBtnIcon"><i class="fas fa-users fontSmall"></i></div>
                             <div class="manageBtnText">직원 관리</div>
-                        </div>
-                        <div class="manageBtn">
+                        </a>
+                        <a class="manageBtn" href="${context}/shop/menuManage">
                             <div class="manageBtnIcon"><i class="fas fa-utensils fontSmall"></i></div>
                             <div class="manageBtnText">메뉴 관리</div>
-                        </div>
-                        <div class="manageBtn border">
+                        </a>
+                        <a class="manageBtn border" href="${context}/shop/shopModify">
                             <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
                             <div class="manageBtnText">매장 정보 수정</div>
-                        </div>
+                        </a>
                         <div class="manageBtn"></div>
                     </div>
                     <br>
                     <p class="fontSmall">매장 전화 번호</p><br>
-                    <input type="text" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)"><br><br>
-                    <label><input type="checkbox" name="color" value="blue"> 포장 가능 여부</label><br><br>
+                    <input type="text" name="shopTell" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)"><br><br>
+                    <label><input type="checkbox" name="shopPackAble" > 포장 가능 여부</label><br><br>
                     <p class="fontSmall">테이블 수</p><br>
-                    <select name="cars" id="cars" class="inputMedium">
+                    <select name="shopTableCount" class="inputMedium">
+                        <option value="0">테이블 수 선택</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -78,9 +81,12 @@
                     </select>
                     <br><br>
                     <input type="button" value="정보 수정 완료" class="btnLarge width100">
-                </div>
-            </div>
-        </div>
+               	 </div>
+            	</div>
+        	</div>
+        </form>
+        
+        
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
@@ -89,5 +95,7 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+    
+    <script src="/resources/js/shop/shopModify.js"></script>
 </body>
 </html>

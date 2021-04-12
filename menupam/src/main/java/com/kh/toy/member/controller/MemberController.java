@@ -2,15 +2,14 @@ package com.kh.toy.member.controller;
 
 
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
+
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +66,7 @@ public class MemberController {
 	//로깅 객체 생성
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+
 	private final MemberService memberService;
 	MemberValidator memberValidator;
 	
@@ -86,7 +86,7 @@ public class MemberController {
 	
 	
 	
-	
+
 	//view를 지정하는 방법
 	//1. ModelAndView 객체를 만들어서 setViewName 메서드에 view 경로를 지정하고 객체를 리턴
 	//2. view 경로를 반환
@@ -111,6 +111,10 @@ public class MemberController {
 								, Model model) {
 		
 		if(error.hasErrors()) {
+			System.out.println(persistInfo);
+			System.out.println("===================================");
+			System.out.println("validator error" + error);
+			
 			return "member/join";
 		}
 		
@@ -122,6 +126,7 @@ public class MemberController {
 		
 		//memberService의 authenticateEmail 호출해서 회원가입 메일 발송
 		memberService.authenticateEmail(persistInfo, authPath);
+		
 		
 		//메일발송 안내창 출력 후 index페이지로 페이지 이동
 		model.addAttribute("msg", "이메일 발송이 완료되었습니다.");
@@ -182,6 +187,86 @@ public class MemberController {
 	//예약확인
 	@GetMapping("mypage/reservation")
 	public void reservation() {};
+
+	
+	
+	/*
+	 * @GetMapping("List") public String selectMemberList(@RequestParam(defaultValue
+	 * = "1") int page, Model model) {
+	 * 
+	 * 
+	 * model.addAllAttributes(memberService.selectMemberList(page)); return
+	 * "member/adminList"; };
+	 */
+	
+	
+	/*
+	 * @GetMapping("members") public String list(Model model) { List<Member> members
+	 * = memberService.findMembers(); model.addAttribute("members",members); return
+	 * "member/memberList"; }
+	 */
+	
+	/*
+	 * @GetMapping("List") public String selectMemberList(@RequestParam(defaultValue
+	 * = "1") int page, Model model) {
+	 * 
+	 * 
+	 * model.addAllAttributes(memberService.selectMemberList(page));
+	 * model.addAttribute("member",memberService.selectMemberList(page)); return
+	 * "member/adminList"; };
+	 */
+	  
+	  @GetMapping("findAll") 
+	  public String findAll(Model model,String memberId,String memberName) {
+		  //String userId= "test1";
+	  
+	  List<Member> member = memberService.findAll(memberId,memberName);
+	  model.addAttribute("member", member); 
+	  System.out.println("멤버 값 " + member);
+	  
+	  return "member/adminList"; 
+	  }
+	  
+	  //휴대폰 번호 수정 기능 
+	 
+	  //1.사용자가 자기 연락처를 다시적고 어떤 버튼을 누른다.
+	  //2. 다시적은 연락처 (ex.10321031) 버튼을 누르면 어디로보낼까 localhost:9090/member/modify?memberid=kim1&memberPhone=0312032103
+	  //3. ~~~~ 
+	  //4. dao update 
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	
+	  @GetMapping("adminList") 
+	  public String memberAll(Model model) {
+	  
+		  List<Member> memberList = memberService.findMember();
+
+
+		  
+		  model.addAttribute("memberList", memberList);
+		  
+		  return "member/adminList"; 
+	  
+	  }
+	  
+
+	 
+	
+		@GetMapping("modifyPhone")
+		public void phonemodify(HttpSession session,Model model ,Member member) {
+			
+			session.setAttribute("modify", model);
+			
+			
+			
+			
+			System.out.println(model);
+		}
 	
 	
 	@GetMapping("adminList")
@@ -193,21 +278,15 @@ public class MemberController {
 	};
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		@GetMapping("Modify")
+		public String modify(Member member
+				,@SessionAttribute("userInfo") Member userInfo
+		,Model model){
+		memberService.Memberinfo(member, userInfo.getMemberId());
+		memberService.updateMember(member);
+		
+		return "common/result";
+		}
 	
 	
 	

@@ -1,13 +1,16 @@
 package com.kh.toy.order.controller;
 
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.kh.toy.order.model.service.OrderService;
 import com.kh.toy.shop.model.vo.Shop;
@@ -27,23 +30,22 @@ public class OrderController {
 		return "order/search";
 	}
 	
+
+	
+	//search.jsp에서 keyword와 location을 받아서 넘어오면, 쿼리를 통해 리스트를 받고 slist attribute에 리스트를 넘긴다.
+	@PostMapping("find")
+	@ResponseBody
+	public List<Shop> findShop(String keyword, String location,
+					@RequestParam(defaultValue = "name") String type, HttpSession session) {
+		List<Shop> result = orderService.searchShopbyName(keyword, location);
+		System.out.println(result);
+		return result;
+	}
 	@GetMapping("shoplist")
-	public String shopList(String keyword, String location,
-					@RequestParam(defaultValue = "name") String type, Model model) {
-		if(keyword != null) {
-			System.out.println("입력값 : " + keyword +" / " + location + " / " + type);
-			Map commnadMap = Map.of("keyword",keyword,"location",location);
-			if(type.equals("category")) {
-				model.addAttribute("list",orderService.searchShopbyCategory(commnadMap));
-			}else {
-				List<Shop> slist = orderService.searchShopbyName(commnadMap);
-				System.out.println(slist);
-				model.addAttribute("list",slist);
-			}
-		}
+	public String shopList() {
 		return "order/shopList";
 	}
-	
+
 	@GetMapping("menuview")
 	public String menuView() {
 		return "order/menuView";

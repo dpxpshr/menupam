@@ -34,21 +34,16 @@
 	           		<tr class="list"><td>목록</td></tr>
 	           	</thead>
 	           	
-	           	<tbody >
-	           		<tr class="shopList_tr">
-	           			<td class="shopList_img"></td>
-	           			<td class="shopList_name">교촌치킨</td>
-	           			<td class="shopList_address">서울시 강남구 삼성동 44-18</td>
-	           		</tr>
-	           	</tbody>
-	           	<!-- test용 List로 적용시 삭제필수! -->
-	           	<tbody >
-	           		<tr class="shopList_tr">
-	           			<td class="shopList_img"></td>
-	           			<td class="shopList_name">교촌치킨</td>
-	           			<td class="shopList_address">경기도 성남시 분당구 판교로 303-13</td>
-	           		</tr>
-	           	</tbody>
+	           	<c:forEach var="shop" items="${session.searchResult}">
+		           	<tbody>
+		           		<tr class="shopList_tr">
+		           			<td class="shopList_img"></td>
+		           			<td class="shopList_name">${shop.shopName}</td>
+		           			<td class="shopList_address">${shop.shopAddress}</td>
+		           		</tr>
+		           	</tbody>
+	           	</c:forEach>
+	           
            	 </table>
             </div>
         </section>
@@ -61,7 +56,7 @@
         </footer> 
     </div>
     <script type="text/javascript">
-	    let latlng = ()=>{ //현재 좌표값을 먼저 구한다
+/* 	    let latlng = ()=>{ //현재 좌표값을 먼저 구한다
 			return new Promise((resolve,reject)=>{
 				navigator.geolocation.getCurrentPosition((position)=>{
 					resolve(position.coords);
@@ -96,10 +91,10 @@
 			let searchUrl = "http://localhost:9090/order/shoplist?location="+locName+"&keyword=롯데";
 			searchUrl = encodeURI(searchUrl);
 			let searchResponse = await fetch(searchUrl);
-			let searchResult = await searchResponse.json();
-			console.dir(searchResult);
+
 		})();
-	    
+	     */
+	     console.dir("${session.searchResult}");
 	    
     </script> 
 </body>

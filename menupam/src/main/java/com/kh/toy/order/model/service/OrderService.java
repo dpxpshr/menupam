@@ -7,6 +7,7 @@ import com.kh.toy.shop.model.vo.Shop;
 
 public interface OrderService {
 	
-	List<Shop> searchShopbyName(Map commandMap);
-	List<Shop> searchShopbyCategory(Map commnadMap);
+	List<Shop> searchShopbyName(String keyword, String location);
+	List<Shop> searchShopbyCategory(Map<String,String> commnadMap);
+
 }

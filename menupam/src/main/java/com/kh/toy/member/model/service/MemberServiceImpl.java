@@ -1,5 +1,6 @@
 package com.kh.toy.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,13 @@ import com.kh.toy.member.model.vo.Member;
 @Service
 public class MemberServiceImpl implements MemberService{
 	
-	private final MemberRepository memberRepository;
+	private static Map<String, Member> store = new HashMap<>();
+	 	MemberRepository memberRepository;
 	
+		/*
+		 * @Inject private MemberRepository memberRepository;
+		 */
+	 
 	@Autowired
 	private RestTemplate http;
 	
@@ -104,8 +110,59 @@ public class MemberServiceImpl implements MemberService{
 	return commandMap;	
 				
 	}
+
+	
+	@Override
+	public List<Member>findAll(String memberId,String memberName) {
+	
+		
+		
+		
+		return memberRepository.findAll(memberId,memberName);
+	}
+
+	@Override
+	public List<Member> memberAll(String memberId,String memberName){
+		
+		List<Member> memberlist = null;
+		
+		return memberlist;
+	}
+
+	@Override
+	public Member updateMemberTell(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateMember(Member member) {
+		return memberRepository.updateMember(member);
+	}
+
+	@Override
+	public void Memberinfo(Member member, String memberId) {
+		member.setMemberId(memberId);
+
+		member.setMemberPhone(member.getMemberPhone());
+		
+		memberRepository.updateMember(member);
+
+
+	}
+
+	@Override
+	public List<Member> findMember() {
+		
+		List<Member> memberlist = memberRepository.selectMemberAll();
+		return memberlist;
+	}
+
 	
 	
+
+	
+		
 	
 
 	

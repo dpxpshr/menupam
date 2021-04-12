@@ -24,9 +24,9 @@ public class QRUtil {
 		
 	}
 	
-	public void makeQR(String URI, String fileName, String filePath, String text) {
+	public void makeQR(String URI, String fileName, String filePath, String text, int fontSize, int position) {
 		try {
-			BitMatrix bm = new QRCodeWriter().encode(URI, BarcodeFormat.QR_CODE, 300, 300);
+			BitMatrix bm = new QRCodeWriter().encode(URI, BarcodeFormat.QR_CODE, 300, 400);
 			File path = new File(filePath);
 			if(!path.exists()) {
 				path.mkdirs();
@@ -38,8 +38,8 @@ public class QRUtil {
 			image = ImageIO.read(new File(filePath+fileName+".png"));
 			Graphics g = image.getGraphics();
 			g.setColor(Color.BLACK);
-			g.setFont(new Font("나눔스퀘어_ac Bold", Font.PLAIN, 20));
-			g.drawString(text, 35, 290);
+			g.setFont(new Font("나눔스퀘어_ac Bold", Font.PLAIN, fontSize));
+			g.drawString(text, position, 350);
 			ImageIO.write(image, "png", new File(filePath+fileName+".png"));
 			g.dispose();
 

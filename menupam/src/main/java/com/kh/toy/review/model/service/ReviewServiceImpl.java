@@ -117,9 +117,24 @@ public class ReviewServiceImpl implements ReviewService{
 	//=========================================================옯겨야함 나중에=========================================================
 	@Override
 	public void sendTableQR(String shopIdx, String path) {
-		//(테이블 수 만큼 반복)
-		//1.QR코드 저장
+	
+		Shop shop = reviewRepository.selectShop(shopIdx);
+		Member member = reviewRepository.selectMember(shop.getMemberId());
+		Map<String, String> filePathMap = new HashMap<String, String>();
+		
+		//1.QR코드 저장 (테이블 수만큼 반복)
+		for(int i=1; i<=shop.getShopTableCount(); i++) {
+			Map<String, String> QRMap = getQRMaterialMap(shopIdx, i, path, shop.getShopName());
+			qrUtil.makeQR(QRMap.get("URI"), QRMap.get("fileName"), QRMap.get("filePath"), QRMap.get("text"), 20, 35);
+			String filePath = QRMap.get("filePath")+QRMap.get("fileName")+".png";
+			filePathMap.put(shop.getShopName()+" "+i+"번 QR", filePath);
+		}
 		//2.QR코드 img파일 메일 전송 
+		String to = member.getMemberEmail();
+		String subject = "[메뉴팜] 테이블 QR코드 입니다";
+		String htmlTxt = getHtmlTxt(member.getMemberId());
+		
+		mailSender.sendEmailWithFile(to, subject, filePathMap, htmlTxt);
 		
 	}
 
@@ -130,29 +145,65 @@ public class ReviewServiceImpl implements ReviewService{
 		Member member = reviewRepository.selectMember(shop.getMemberId());
 		
 		//1.QR코드 저장
-		//1-1. URI : QR코드로 만들 URI (! 각자 도메인코드 만들어 사용 )
-		String URI = Code.SUNGUKIPDOMAIN+"/order/menuView?shopIdx="+shopIdx+"&tableNo="+tableNo;
-		System.out.println(URI);
-		//1-2. fileName : 저장할 파일이름 shopIdx + t + tableNo
-		String fileName = shopIdx + "T" + tableNo;
-		//1-3. filePath : 서버 내부의 resources/QR/table/
-		String filePath = path+"/QR/table/";
-		//1-4. text : QR코드 식별하기 위해 하단의 적을 text
-		String text = shop.getShopName()+"    "+tableNo+"번 테이블";
-		qrUtil.makeQR(URI, fileName, filePath, text);
+		Map<String, String> QRMap = getQRMaterialMap(shopIdx, Integer.parseInt(tableNo), path, shop.getShopName());
+		qrUtil.makeQR(QRMap.get("URI"), QRMap.get("fileName"), QRMap.get("filePath"), QRMap.get("text"), 20, 35);
 		
 		
 		//2.QR코드 img파일 메일 전송
-		//2-1. to : 사장님 이메일 가져오기
 		String to = member.getMemberEmail();
-		//2-2. subject : [메뉴팜] 테이블 QR코드 입니다.
 		String subject = "[메뉴팜] "+tableNo+"번 테이블 QR코드 입니다";
-		//2-3. filePath : QR코드가 저장된 filePath
-		filePath += fileName+".png";
+		String filePath = QRMap.get("filePath")+QRMap.get("fileName")+".png";
+		Map<String, String> filePathMap = new HashMap<String, String>();
+		filePathMap.put(shop.getShopName()+" "+tableNo+"번 QR", filePath);
+		String htmlTxt = getHtmlTxt(member.getMemberId());
 		
+		mailSender.sendEmailWithFile(to, subject, filePathMap, htmlTxt);	
+	}
+	
+	@Override
+	public void sendWaitQR(String shopIdx, String path) {
+		
+		Shop shop = reviewRepository.selectShop(shopIdx);
+		Member member = reviewRepository.selectMember(shop.getMemberId());
+		
+		//1.QR코드 저장
+		String URI = Code.SUNGUKIPDOMAIN+"/wait?shopIdx="+shopIdx;
+		String fileName = shopIdx+"WaitQR";
+		String filePath = path+"/QR/"+shopIdx+"/";
+		String text = "QR 인식 후 대기 신청을 해주세요";
+		
+		qrUtil.makeQR(URI, fileName, filePath, text, 20 ,25);
+		
+		//2.QR코드 img파일 메일 전송
+		String to = member.getMemberEmail();
+		String subject = "[메뉴팜] 대기 시스템 QR코드 입니다";
+		filePath += fileName+".png";
+		Map<String, String> filePathMap = new HashMap<String, String>();
+		filePathMap.put(shop.getShopName()+"대기 QR", filePath);
+		String htmlTxt = getHtmlTxt(member.getMemberId());
+		mailSender.sendEmailWithFile(to, subject, filePathMap, htmlTxt);
+		
+	}
+	
+	private Map<String, String> getQRMaterialMap(String shopIdx, int tableNo, String path, String shopName){
+		
+		Map<String, String> QRMap = new HashMap<String, String>();
+		//1-1. URI : QR코드로 만들 URI (! 각자 도메인코드 만들어 사용 )
+		//1-2. fileName : 저장할 파일이름 shopIdx + t + tableNo
+		//1-3. filePath : 서버 내부의 resources/QR/table/
+		//1-4. text : QR코드 식별하기 위해 하단의 적을 text
+		QRMap.put("URI", Code.SUNGUKIPDOMAIN+"/order/menuView?shopIdx="+shopIdx+"&tableNo="+tableNo); 
+		QRMap.put("fileName", shopIdx + "T" + tableNo);
+		QRMap.put("filePath", path+"/QR/"+shopIdx+"/");
+		QRMap.put("text", shopName+"    "+tableNo+"번 테이블");
+		
+		return QRMap;
+	}
+	
+	private String getHtmlTxt (String memberId) {
 		
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
-		body.add("memberId", member.getMemberId());
+		body.add("memberId", memberId);
 		
 		RequestEntity<Map> request = 
 				RequestEntity
@@ -163,9 +214,10 @@ public class ReviewServiceImpl implements ReviewService{
 		ResponseEntity<String> response =
 				http.exchange(request, String.class);
 		
-		String htmlTxt = response.getBody();
-		
-		mailSender.sendEmailWithFile(to, subject, filePath, htmlTxt);	
+
+		return response.getBody();
 	}
+
+
 	
 }

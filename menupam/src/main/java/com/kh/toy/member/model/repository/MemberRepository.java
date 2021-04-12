@@ -2,9 +2,15 @@ package com.kh.toy.member.model.repository;
 
 import java.util.List;
 
+import java.util.Map;
+import java.util.Optional;
+
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.vo.Member;
@@ -12,7 +18,14 @@ import com.kh.toy.member.model.vo.Member;
 @Mapper
 public interface MemberRepository {
 	
+	
+	List<Member>selectMemberAll();
+	
+	
 	List<Member>selectMemberList(Paging paging);
+	
+	
+	public Member readMember(String memberId) throws Exception;
 	
 	@Select("select count(*) from tb_member")
 	int selectContentCnt();
@@ -33,6 +46,14 @@ public interface MemberRepository {
 			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertMember(Member member);
 	
+
+	Member save(Member member);
+	Optional<Member> findById(String MemberId);
+	Optional<Member> findByName(String MemberName);
+	List<Member>findAll(@Param("memberId")String memberId,@Param("memberName")String memberName);
 	
+	@Update("update tb_member set member_phone = #{memberPhone} where member_id = #{memberId}")
+	int updateMemberTell(Member member);
 	
+	int updateMember(Member member);
 }
