@@ -23,20 +23,12 @@ public class OrderController {
 	public OrderController(OrderService orderService) {
 		this.orderService = orderService;
 	}
-	
-	@GetMapping("search")
-	public String searchForm() {
-		return "order/search";
-	}
-	
-	
-	//search.jsp에서 keyword와 location을 받아서 넘어오면, 쿼리를 통해 리스트를 받고 slist attribute에 리스트를 넘긴다.
+
 	@PostMapping("find")
 	@ResponseBody
 	public List<Shop> findShop(String keyword, String location,
-					@RequestParam(defaultValue = "name") String type, HttpSession session) {
+					@RequestParam(defaultValue = "name") String type) {
 		List<Shop> result = orderService.searchShopbyName(keyword, location);
-		System.out.println(result);
 		return result;
 	}
 	@GetMapping("shoplist")

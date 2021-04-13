@@ -15,21 +15,36 @@ body {
 }
 
 .header{
-    height: 48px;
+    height: 58px;
     width: 375px;
-    display:flex;
-    justify-content : flex-end;
     opacity: 0.7;
 }
-.search, .notice{
-    width: 15%;
-    display: flex;
+/* 검색  */
+.search{
+	display: flex;
+	background-color: #dcdcdc;
+	background-clip: content-box;
+	border-radius: 30px;
 }
-.search > i, .notice > i{
-    margin: auto;
-    font-size: 1.2em;
-    color: black;
+.search>i{
+	font-size: 18px;
+	margin : 15px 19px 10px 20px;
 }
+
+.search>input{
+	width: 300px;
+	height : 10px;
+	margin : 10px 30px 10px 0px;
+	padding : 10px 0 10px 10px;
+	border-radius: 10px;
+	background-color: #dcdcdc;
+	border:none;
+}
+
+.searchName:focus{
+	outline: none;
+}
+
 .main{
     background-color: white;
     min-height: 900px;
