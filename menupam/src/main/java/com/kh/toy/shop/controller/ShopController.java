@@ -69,7 +69,7 @@ public class ShopController {
 		shop.setMemberId(userInfo.getMemberId());
 		shop.setShopAddress(shop.getShopAddress() + "," + detailedAddress);
 		shopService.insertShop(shop); // 실제로 사용할 매장정보 kakaomap 데이터 + 입력 데이터 DB저장
-		
+			
 		model.addAttribute("msg", "매장등록이 완료 되었습니다.");
 		model.addAttribute("url", "/index");
 		
@@ -95,10 +95,26 @@ public class ShopController {
 	public void shopManage() {}
 	
 	@GetMapping("menuManage")
-	public void menuManage() {}
+	public void menuManage(@SessionAttribute("userInfo") Member userInfo
+						,HttpSession session
+						,Model model) {
+		
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		session.setAttribute("shopInfo", shopInfo);
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
+	}
 	
+	//작업 진행중
 	@GetMapping("menuModify")
-	public void menuModify() {}
+	public void menuModify(@SessionAttribute("shopInfo") Shop shopInfo
+							,Model model) {
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
+	}
+	
+	@PostMapping("menuRegister")
+	public String menuRegister(){
+		return null;
+	}
 	
 	@GetMapping("categoryModify")
 	public void categoryModify(@SessionAttribute("shopInfo") Shop shopInfo
@@ -107,17 +123,14 @@ public class ShopController {
 	}
 	
 	@GetMapping("categoryData")
-	public String categoryData(@SessionAttribute("userInfo") Member userInfo
+	public String categoryData(@SessionAttribute("shopInfo") Shop shopInfo
 							,Model model
 							,HttpSession session) {
-			
-		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		Map<String, Object> categoryInfo = shopService.selectCategoryList(shopInfo.getShopIdx());
 		
-		session.setAttribute("shopInfo", shopInfo);
-		//session.setAttribute("categoryInfo", categoryInfo);
+		
+		//Map<String, Object> categoryInfo = shopService.selectCategoryList(shopInfo.getShopIdx());
+		//session.setAttribute("categoryInfo", categoryInfo); //필요한 경우시 사용 예정
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
-		
 		
 		return "shop/categoryModify"; 
 		
@@ -151,10 +164,7 @@ public class ShopController {
 					,@SessionAttribute("shopInfo") Shop shopInfo
 					,Model model) {
 		
-		System.out.println("컴온요!!" + menuCategory);
-		
 		shopService.deleteCategory(menuCategory);
-		
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		
 		return "success";

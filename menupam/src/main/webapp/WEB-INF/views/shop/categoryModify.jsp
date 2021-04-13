@@ -53,12 +53,12 @@
                     <p class="fontSmall">카테고리 편집</p><br>
                   
                     <div class="categoryBoxs">
-                      <c:forEach var="menuCategory" items="${categorys}">
+                      <c:forEach var="categorys" items="${categorys}">
                         <div class="categoryBox">
                             <form name="a" action="${context}/shop/categoryEidt" method="post">
                                 <div class="categoryInput">
-                                    <input type="text" class="inputMedium" name="menuCategoryName" value="${menuCategory.menuCategoryName}">
-                                    <input type="hidden" class="categoryIdx" name="menuCategoryIdx" value="${menuCategory.menuCategoryIdx}">
+                                    <input type="text" class="inputMedium" name="menuCategoryName" value="${categorys.menuCategoryName}">
+                                    <input type="hidden" class="categoryIdx" name="menuCategoryIdx" value="${categorys.menuCategoryIdx}">
                                 </div>
                                 <div class="categoryBtn">
                                     <input type="button" value="정보 수정 완료" class="btnSmall">

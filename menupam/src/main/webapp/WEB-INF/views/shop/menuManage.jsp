@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
 <head>
-    <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
@@ -70,106 +68,12 @@
                     </div>
                     <br>
                     <div class="menuBox">
-                        <div>
-                            <div class="menuCategory">
-                                구이 <i class="fas fa-angle-down"></i>
+                        <c:forEach var="categorys" items="${categorys}">
+                        	<div class="menuCategory">
+                                ${categorys.menuCategoryName}  <i class="fas fa-angle-down"></i>
                             </div> 
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">삼겹살</div>
-                                        <div class="menuItemPrice">13,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/삼겹살.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">목살</div>
-                                        <div class="menuItemPrice">13,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/목살.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">항정살</div>
-                                        <div class="menuItemPrice">12,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/항정살.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                        <div>
-                            <div class="menuCategory">
-                                식사류 <i class="fas fa-angle-down"></i>
-                            </div> 
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">육회 비빔밥</div>
-                                        <div class="menuItemPrice">8,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                        <div>
-                            <div class="menuCategory">
-                                후식류 <i class="fas fa-angle-down"></i>
-                            </div> 
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">볶음밥</div>
-                                        <div class="menuItemPrice">4,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">냉면</div>
-                                        <div class="menuItemPrice">4,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/냉면.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                        <div>
-                            <div class="menuCategory">
-                                음료 및 기타 <i class="fas fa-angle-down"></i>
-                            </div>
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">콜라</div>
-                                        <div class="menuItemPrice">1,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">사이다</div>
-                                        <div class="menuItemPrice">1,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
+                        </c:forEach>
+                            
                     </div>
                 </div>
             </div>
@@ -178,7 +82,7 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
