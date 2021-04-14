@@ -20,22 +20,22 @@ body {
     opacity: 0.7;
 }
 /* 검색  */
-.saerch{
+.search{
 	display: flex;
 	background-color: #dcdcdc;
 	background-clip: content-box;
 	border-radius: 30px;
 }
-.saerch>i{
+.search>i{
 	font-size: 18px;
 	margin : 15px 19px 10px 20px;
 }
 
-.saerch>input{
+.search>input{
 	width: 300px;
 	height : 10px;
 	margin : 10px 30px 10px 0px;
-	padding : 10px 0 10px 0;
+	padding : 10px 0 10px 10px;
 	border-radius: 10px;
 	background-color: #dcdcdc;
 	border:none;

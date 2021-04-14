@@ -14,12 +14,11 @@
     <div class="wrapper">
     	
         <header class="header">
-        	<div class="saerch">
+        	<div class="search">
         		<i class="fas fa-search"></i>
         		<input id="location" style="display:none">
           		<input class="searchName" type="text" placeholder="검색어를 입력해주세요.">
         	</div>
-          	 
         </header>
         <section class="main">
             <div class="myPosition">
@@ -75,11 +74,14 @@
 				.then(response=>{
 					if(response.ok){
 						response.json().then(function(data) {
-							  console.dir(data);
+							  if(data.length == 0){
+								  alert("검색 결과가 없습니다.");
+							  }else{
+								  console.dir(data);
+							  }
 						})
-						//this.location.href = "/order/shoplist";
 					}else{
-						alert("검색에 실패하였습니다.")
+						alert("검색에 실패하였습니다.");
 					}
 				});
 				
