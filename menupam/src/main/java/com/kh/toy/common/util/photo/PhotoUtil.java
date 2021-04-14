@@ -12,7 +12,7 @@ import com.kh.toy.common.util.file.MenupamFile;
 
 public class PhotoUtil {
 
-	public MenupamFile photoUpload(MultipartFile file, String uploadPath, String type) throws IllegalStateException, IOException {
+	public MenupamFile photoUpload(MultipartFile file, String uploadPath, String type, String route) throws IllegalStateException, IOException {
 		
 		String savePath = getSavePath(); 
 		MenupamFile menupamFile = new MenupamFile();
@@ -20,7 +20,7 @@ public class PhotoUtil {
 		if(!file.getOriginalFilename().equals("")) {			
 			menupamFile.setFileOriginName(file.getOriginalFilename());
 			menupamFile.setFileRename(UUID.randomUUID().toString());
-			menupamFile.setFileSavePath("/resources/reviewPhoto/"+savePath);
+			menupamFile.setFileSavePath(route + savePath); //저장 경로가 달라서 따로 지정함.
 			String path = uploadPath+savePath;
 			savePhoto(menupamFile, file, path, type);
 		}

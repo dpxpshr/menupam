@@ -40,6 +40,7 @@ public class ShopValidator implements Validator{
 		if(shopRepository.selectShopbyBin(shop.getShopBln()) > 0) {
 			errors.rejectValue("shopBln", "error.shopBln","존재하는 사업자 등록증 입니다.");
 		}
+		
 	}
 	
 }

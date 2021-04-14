@@ -62,8 +62,9 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		PhotoUtil photoUtil = new PhotoUtil();
 		String type = FilenameUtils.getExtension(file.getOriginalFilename());
+		String route = "/resources/reviewPhoto/";
 		try {
-			MenupamFile fileInfo = photoUtil.photoUpload(file, uploadPath, type);
+			MenupamFile fileInfo = photoUtil.photoUpload(file, uploadPath, type, route);
 			System.out.println(fileInfo);
 			if(fileInfo.getFileOriginName() == null) {
 				review.setFileIdx("");

@@ -48,27 +48,27 @@
                         </a>
                         <div class="manageBtn"></div>
                     </div>
-                    <br>
-                    <form action="${context}/shop/menuRegister">
+                    <br>                                                      
+                    <form action="${context}/shop/menuRegister" method="post" enctype="multipart/form-data">
                     	 <p class="fontSmall">매뉴 이름</p><br>
-	                    <input type="text" class="inputLarge" placeholder=" 삼겹살"><br><br>
+	                    <input type="text" class="inputLarge" name="menuName" placeholder=" 이름을 적어주세요" required><br><br>
 	                    <p class="fontSmall">매뉴 가격</p><br>
-	                    <input type="text" class="inputLarge" placeholder=" 13000"><br><br>
+	                    <input type="text" class="inputLarge" name="menuPrice" placeholder=" 가격을 적어주세요" required><br><br>
 	                    <p class="fontSmall">매뉴 사진</p><br><br>
-	                    <label class="input-file-button" for="input-file">
+	                    <label class="input-file-button"  for="input-file" >
 	                        업로드
 	                    </label>
-	                    <input type="file" id="input-file" style="display:none" /> 
+	                    <input type="file" name="file" id="input-file" style="display:none" />
 	                    <br><br><br>
 	                    <p class="fontSmall">매뉴 카테고리</p><br>
-	                    <select class="inputMedium">
+	                    <select name="menuCategoryName" class="inputMedium">
 	                    	<c:forEach var="categorys" items="${categorys}">
-	                    		<option name="menuCategoryName">${categorys.menuCategoryName}</option>
+	                    		<option>${categorys.menuCategoryName}</option>
 	                    	</c:forEach>
 	                       
 	                    </select><br><br>
-	                    <label><input type="checkbox" name="color" value="blue"> 비건 식사 가능 여부</label><br><br>
-	                    <input type="button" value="정보 수정 완료" class="btnLarge width100">
+	                    <label><input type="checkbox" name="menuVegan" value="blue"> 비건 식사 가능 여부</label><br><br>
+	                    <input type="submit" value="정보 수정 완료" class="btnLarge width100">
                     </form>
                    
                 </div>

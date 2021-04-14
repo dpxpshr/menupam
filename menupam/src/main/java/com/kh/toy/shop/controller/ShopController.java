@@ -1,7 +1,8 @@
 package com.kh.toy.shop.controller;
 
-import java.util.Map;
+import java.io.File;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.shop.model.service.ShopSerivce;
+import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.shop.validator.ShopValidator;
@@ -40,7 +43,6 @@ public class ShopController {
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.addValidators(shopValidator);
 	}
-	
 	
 	@GetMapping("shopRegister")
 	public void shopRegister() {}
@@ -104,7 +106,7 @@ public class ShopController {
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
 	}
 	
-	//작업 진행중
+	//////////////////////    작업 진행중     ////////////////////////////////
 	@GetMapping("menuModify")
 	public void menuModify(@SessionAttribute("shopInfo") Shop shopInfo
 							,Model model) {
@@ -112,8 +114,25 @@ public class ShopController {
 	}
 	
 	@PostMapping("menuRegister")
-	public String menuRegister(){
-		return null;
+	public String menuRegister(@RequestParam MultipartFile file
+							,Menu menu
+							,Model model
+							,HttpServletRequest request){
+		
+		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
+				+ File.separator + "images" + File.separator;
+
+		System.out.println("uploadPath : " + uploadPath);
+		System.out.println("MultipartFile : " + file);
+		System.out.println("파일 이름 : " + file.getOriginalFilename());
+		System.out.println("메뉴 작성 목록 : " + menu);
+		
+		shopService.menuRegister(file, menu, uploadPath);
+		
+		model.addAttribute("msg", "메뉴 등록이 완료 되었습니다.");
+		model.addAttribute("url", "/shop/menuManage");
+		
+		return "common/result";
 	}
 	
 	@GetMapping("categoryModify")

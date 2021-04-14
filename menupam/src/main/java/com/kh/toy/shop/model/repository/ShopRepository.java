@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import com.kh.toy.common.util.file.MenupamFile;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 
@@ -22,7 +24,7 @@ public interface ShopRepository {
 	
 	@Insert("insert into tb_shop(shop_idx,shop_name,shop_address,shop_type,shop_bln,shop_pack_able,shop_rating,"
 			+ "shop_table_count,shop_tell, member_id)"
-			+ " values('s'||sc_shop_idx.nextval,#{shopName},#{shopAddress},#{shopType},#{shopBln},#{shopPackAble},#{shopRating},"
+			+ " values('S'||sc_shop_idx.nextval,#{shopName},#{shopAddress},#{shopType},#{shopBln},#{shopPackAble},#{shopRating},"
 			+ "#{shopTableCount},#{shopTell},#{memberId})")
 	int insertShop(Shop shop);
 	
@@ -36,11 +38,17 @@ public interface ShopRepository {
 	List<MenuCategory> selectCategoryList(String shopIdx);
 	
 	@Insert("insert into tb_menu_category(menu_category_idx, menu_category_name, shop_idx)"
-			+ " values('mc'||sc_menucategory_idx.nextval,#{menuCategoryName},#{shopIdx})")
+			+ " values('MC'||sc_menucategory_idx.nextval, #{menuCategoryName}, #{shopIdx})")
 	int insertCategory(MenuCategory menuCategory);
 	
 	int updateCategoryName(MenuCategory menuCategory);
 	
 	@Delete("delete from tb_menu_category where menu_category_idx = #{menuCategoryIdx}")
 	int deleteCategory(MenuCategory menuCategory);
+	
+	//메뉴 테이블
+	@Insert("insert into tb_file(file_idx, file_origin_name, file_rename, file_type, file_save_path)"
+			+ " values('F'||sc_file_idx.nextval, #{fileOriginName}, #{fileRename}, #{fileType}, #{fileSavePath})")
+	int insertFile(MenupamFile menupamFile);
+	
 }	

@@ -1,12 +1,17 @@
 package com.kh.toy.shop.model.service;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.toy.common.util.file.MenupamFile;
+import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.shop.model.repository.ShopRepository;
+import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 
@@ -86,6 +91,31 @@ public class ShopServiceImpl implements ShopSerivce{
 		menuCategory.setMenuCategoryIdx(menuCategory.getMenuCategoryIdx());
 		return shopRepository.deleteCategory(menuCategory);
 	}
+
+	@Override
+	public void menuRegister(MultipartFile file, Menu menu, String uploadPath) {
+		
+		PhotoUtil photoUtil = new PhotoUtil();
+		String type = FilenameUtils.getExtension(file.getOriginalFilename());
+		String route = "/resources/images/";
+		
+		try {
+			
+			MenupamFile fileInfo = photoUtil.photoUpload(file, uploadPath, type, route);
+			
+			if(fileInfo.getFileOriginName() == null) {
+				
+			}else {
+				fileInfo.setFileType(type);
+				shopRepository.insertFile(fileInfo);
+				
+			}
+		
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+	}	
 
 	
 	

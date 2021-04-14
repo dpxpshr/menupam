@@ -2,6 +2,9 @@ package com.kh.toy.shop.model.service;
 
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 
@@ -16,4 +19,6 @@ public interface ShopSerivce {
 	void updateCategoryName(MenuCategory menuCategory);
 	int insertCategory(MenuCategory menuCategory, String shopIdx);
 	int deleteCategory(MenuCategory menuCategory);
+	
+	void menuRegister(MultipartFile file, Menu menu, String uploadPath);
 }
