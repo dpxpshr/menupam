@@ -28,4 +28,9 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.searchShopbyCategory(commandMap);
 	}
 
+	@Override
+	public Shop selectShopbyIdx(String shopIdx) {
+		return orderRepository.selectShopbyIdx(shopIdx);
+	}
+
 }

@@ -18,11 +18,36 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
             <div class="notice">
-                <i class="far fa-clipboard"></i>
+                <i class="far fa-bell" style="color: #CDC7D5;" ></i>
+                <div class="alertCnt">1</div>
+            </div>
+        </div>
+        <!--알림이 있는것 1. 예약, 주문,  -->
+        <div class="alertNotice">
+            <div class="alert">
+                <div class="alertMsg">
+                    <a href="" class="fontXSmall">롯데리아 과천점 예약</a>
+                </div>
+                <div class="alertTime">
+                    <p class="fontXXSmall">21.04.13</p>
+                </div>
+            </div>
+            <div class="alert">
+                <div class="alertMsg">
+                    <a href="" class="fontXSmall">롯데리아 과천점 3번 주문</a>
+                </div>
+                <div class="alertTime">
+                    <p class="fontXXSmall">21.04.13</p>
+                </div>
+            </div>
+            <div class="alert">
+                <div class="alertMsg">
+                    <a href="" class="fontXSmall">롯데리아 과천점 3번 주문</a>
+                </div>
+                <div class="alertTime">
+                    <p class="fontXXSmall">21.04.13</p>
+                </div>
             </div>
         </div>
         <div class="main">
@@ -30,7 +55,7 @@
             <div class="banner">
                 <div class="bannerContent"><img src="../../../resources/images/Banner1.jpg" alt=""></div>
                 <div class="bannerContent"><img src="../../../resources/images/Banner2.jpg" alt=""></div>
-                <div class="bannerContent"><img src="../../../resources/images/Banner3.jpg" alt=""></div>
+                <div class="bannerContent"><img src="../../../resources/images/Banner3.jpg" alt=""></div> 
             </div>
             <div class="body">
                 <div class="content">
@@ -96,4 +121,5 @@
       });
     });
 </script>
+<script type="text/javascript" src="../../../resources/js/main.js"></script>
 </html>

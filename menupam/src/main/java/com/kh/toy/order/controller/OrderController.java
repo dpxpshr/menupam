@@ -2,9 +2,8 @@ package com.kh.toy.order.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,7 @@ public class OrderController {
 
 	@PostMapping("find")
 	@ResponseBody
-	public List<Shop> findShop(String keyword, String location,
+	public List<Shop> findShop(String keyword, @RequestParam(defaultValue = "") String location,
 					@RequestParam(defaultValue = "name") String type) {
 		List<Shop> result = orderService.searchShopbyName(keyword, location);
 		return result;
@@ -36,7 +35,9 @@ public class OrderController {
 		return "order/shopList";
 	}
 	@GetMapping("menuview")
-	public String menuView() {
+	public String menuView(String shop,Model model) {
+		Shop shopInfo = orderService.selectShopbyIdx(shop);
+		model.addAttribute(shopInfo);
 		return "order/menuView";
 	}
 	

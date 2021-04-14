@@ -9,4 +9,5 @@ public interface OrderService {
 	
 	List<Shop> searchShopbyName(String keyword, String location);
 	List<Shop> searchShopbyCategory(Map<String,String> commnadMap);
+	Shop selectShopbyIdx(String shopIdx);
 }

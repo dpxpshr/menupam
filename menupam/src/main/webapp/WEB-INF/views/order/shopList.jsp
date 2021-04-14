@@ -69,7 +69,7 @@
 				});
 			}
 	     //현재 좌표값을 가지고 현재 위치를 지도에 표시한다.
-	     //원활한 테스트를 위해 지도기능 주석처리
+	     // *** 원활한 테스트를 위해 지도기능 주석처리
 // 		 (async function drawAndSearch(){
 // 			let coords = await latlng(); //현재 좌표값이 구해지면 진행
 // 			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -104,7 +104,9 @@
 				let slist = null;
 				searchHeader.append("content-type","application/x-www-form-urlencoded");
 				
-				fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword+"&location="+location})
+				// *** 테스트를 위해 위치정보 제거
+				//fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword+"&location="+location})
+				fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword})
 				.then(response=>{
 					if(response.ok){
 						response.json().then(function(data) {
@@ -146,6 +148,9 @@
 					row.append(name);
 					row.append(address);
 					
+					row.addEventListener('click',()=>{
+						location.href="/order/menuview?shop="+shop.shopIdx;
+					});
 					list.append(row);
 				});
 			}
