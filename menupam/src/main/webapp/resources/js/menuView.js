@@ -1,10 +1,11 @@
 $(document).ready(function(){
 	$('.header').slick({
-		dots: true, 
+		dots: false, 
         infinite:true,
         autoplay:true,
         slidesToShow: 1,
         centerPadding:'150px',
+        arrows:false,
         fade:true,
         speed:3000
 	});
