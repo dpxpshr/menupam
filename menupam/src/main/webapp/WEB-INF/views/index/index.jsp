@@ -18,7 +18,7 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            <div class="notice">
+            <div class=bell>
                 <i class="far fa-bell" style="color: #CDC7D5;" ></i>
                 <div class="alertCnt">1</div>
             </div>
@@ -121,5 +121,4 @@
       });
     });
 </script>
-<script type="text/javascript" src="../../../resources/js/main.js"></script>
 </html>

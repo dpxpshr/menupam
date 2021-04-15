@@ -21,13 +21,13 @@ body {
     z-index : 3;
     /* opacity: 0.7; */
 }
-.search, .notice{
+.search, .notice, .bell{
     width: 15%;
     display: flex;
     margin-top: 10px;
     margin-right: 5px;
 }
-.search > i, .notice > i{
+.search > i, .notice > i, .bell > i{
     margin: auto;
     font-size: 1.3em;
     color: white;
@@ -53,7 +53,7 @@ body {
     height: 300px;
     position: fixed;
     /* position: absolute; */
-    /* display: none; */
+    display: none;
     z-index: 5;
     margin-top: 30px;
     margin-left: 140px;
