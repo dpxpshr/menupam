@@ -1,6 +1,7 @@
 package com.kh.toy.shop.controller;
 
 import java.io.File;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -99,36 +100,44 @@ public class ShopController {
 	@GetMapping("menuManage")
 	public void menuManage(@SessionAttribute("userInfo") Member userInfo
 						,HttpSession session
-						,Model model) {
+						,Model model
+						,HttpServletRequest request) {
 		
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
 		session.setAttribute("shopInfo", shopInfo);
-		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
+		
+		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
+				+ File.separator + "images" + File.separator;
+		System.out.println("uploadPath" + uploadPath); // 이미지 저장경로 몰라서 가지고 있음
 	}
 	
-	//////////////////////    작업 진행중     ////////////////////////////////
+	
 	@GetMapping("menuModify")
 	public void menuModify(@SessionAttribute("shopInfo") Shop shopInfo
 							,Model model) {
+
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
 	}
 	
 	@PostMapping("menuRegister")
 	public String menuRegister(@RequestParam MultipartFile file
+							,@SessionAttribute("shopInfo") Shop shopInfo
+							,@RequestParam(name = "menuVegan", defaultValue = "N") String menuVegan
 							,Menu menu
 							,Model model
 							,HttpServletRequest request){
 		
 		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
 				+ File.separator + "images" + File.separator;
-
-		System.out.println("uploadPath : " + uploadPath);
-		System.out.println("MultipartFile : " + file);
-		System.out.println("파일 이름 : " + file.getOriginalFilename());
-		System.out.println("메뉴 작성 목록 : " + menu);
 		
+		if(menu.getMenuVegan() == null) {
+			menu.setMenuVegan(menuVegan);
+		}
+		
+		menu.setShopIdx(shopInfo.getShopIdx());
 		shopService.menuRegister(file, menu, uploadPath);
-		
 		model.addAttribute("msg", "메뉴 등록이 완료 되었습니다.");
 		model.addAttribute("url", "/shop/menuManage");
 		
@@ -138,7 +147,8 @@ public class ShopController {
 	@GetMapping("categoryModify")
 	public void categoryModify(@SessionAttribute("shopInfo") Shop shopInfo
 							,Model model) {
-		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
+		
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 	}
 	
 	@GetMapping("categoryData")
@@ -146,13 +156,8 @@ public class ShopController {
 							,Model model
 							,HttpSession session) {
 		
-		
-		//Map<String, Object> categoryInfo = shopService.selectCategoryList(shopInfo.getShopIdx());
-		//session.setAttribute("categoryInfo", categoryInfo); //필요한 경우시 사용 예정
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
-		
-		return "shop/categoryModify"; 
-		
+		return "shop/categoryModify"; 	
 	}
 	
 	@PostMapping("categoryEidt")

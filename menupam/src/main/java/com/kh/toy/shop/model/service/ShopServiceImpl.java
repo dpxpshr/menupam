@@ -99,15 +99,27 @@ public class ShopServiceImpl implements ShopSerivce{
 		String type = FilenameUtils.getExtension(file.getOriginalFilename());
 		String route = "/resources/images/";
 		
+		menu.setMenuName(menu.getMenuName());
+		menu.setMenuPrice(menu.getMenuPrice());
+		menu.setMenuCategoryName(menu.getMenuCategoryName());
+		menu.setMenuVegan(menu.getMenuVegan());
+		
 		try {
 			
 			MenupamFile fileInfo = photoUtil.photoUpload(file, uploadPath, type, route);
 			
 			if(fileInfo.getFileOriginName() == null) {
-				
+				menu.setMenuPhoto("noImage");
+				menu.setFileIdx("");
+				shopRepository.insertMenu(menu);
 			}else {
 				fileInfo.setFileType(type);
 				shopRepository.insertFile(fileInfo);
+				
+				String fileIdx = shopRepository.selectFileIdx(fileInfo.getFileRename());
+				menu.setFileIdx(fileIdx);
+				menu.setMenuPhoto(file.getOriginalFilename());
+				shopRepository.insertMenu(menu);
 				
 			}
 		
@@ -115,11 +127,16 @@ public class ShopServiceImpl implements ShopSerivce{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public Map<String, Object> selectMenuList(String shopIdx) {
+		
+		Map<String, Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("menuList", shopRepository.selectMenuList(shopIdx));
+	
+		return commandMap;
 	}	
 
-	
-	
-	
-	
 }
  

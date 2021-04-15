@@ -21,4 +21,5 @@ public interface ShopSerivce {
 	int deleteCategory(MenuCategory menuCategory);
 	
 	void menuRegister(MultipartFile file, Menu menu, String uploadPath);
+	Map<String,Object> selectMenuList(String shopIdx);
 }

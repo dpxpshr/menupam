@@ -14,6 +14,7 @@
 		<typeAlias type="com.kh.toy.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.toy.shop.model.vo.MenuCategory" alias="menuCategory"/>
 		<typeAlias type="com.kh.toy.shop.model.vo.Menu" alias="menu"/>
+		<typeAlias type="com.kh.toy.common.util.file.MenupamFile" alias="menupamFile"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/boardMapper.xml"/>

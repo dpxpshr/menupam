@@ -9,10 +9,12 @@ public class Menu {
 	private String menuVegan; //비건 식사 가능 여부
 	private String shopIdx; //매장 아이디
 	private String menuCategoryName; //메뉴 카테고리 이름
+	private String fileIdx; //파일 인덱스
 	
 	public String getMenuIdx() {
 		return menuIdx;
 	}
+	
 	public void setMenuIdx(String menuIdx) {
 		this.menuIdx = menuIdx;
 	}
@@ -40,7 +42,6 @@ public class Menu {
 	public void setMenuPrice(String menuPrice) {
 		this.menuPrice = menuPrice;
 	}
-	
 	public String getMenuVegan() {
 		return menuVegan;
 	}
@@ -65,14 +66,20 @@ public class Menu {
 		this.menuCategoryName = menuCategoryName;
 	}
 	
+	public String getFileIdx() {
+		return fileIdx;
+	}
+	
+	public void setFileIdx(String fileIdx) {
+		this.fileIdx = fileIdx;
+	}
+	
 	@Override
 	public String toString() {
 		return "Menu [menuIdx=" + menuIdx + ", menuName=" + menuName + ", menuPhoto=" + menuPhoto + ", menuPrice="
 				+ menuPrice + ", menuVegan=" + menuVegan + ", shopIdx=" + shopIdx + ", menuCategoryName="
-				+ menuCategoryName + "]";
+				+ menuCategoryName + ", fileIdx=" + fileIdx + "]";
 	}
-	
-
 	
 	
 }

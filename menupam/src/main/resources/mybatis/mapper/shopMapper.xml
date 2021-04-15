@@ -26,4 +26,12 @@
 		where menu_category_idx = #{menuCategoryIdx}
 	</update>
 	
+	<select id="selectMenuList" resultType="map">
+		select menu_name, menu_price, file_rename, file_save_path, file_type, menu_category_name
+		from tb_menu
+		left outer join tb_file using(file_idx)
+		where shop_idx = #{shopIdx}
+	</select>
+	
+	
 </mapper>

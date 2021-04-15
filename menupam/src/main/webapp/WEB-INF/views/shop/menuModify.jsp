@@ -67,7 +67,7 @@
 	                    	</c:forEach>
 	                       
 	                    </select><br><br>
-	                    <label><input type="checkbox" name="menuVegan" value="blue"> 비건 식사 가능 여부</label><br><br>
+	                    <label><input type="checkbox" name="menuVegan" value="Y"> 비건 식사 가능 여부</label><br><br>
 	                    <input type="submit" value="정보 수정 완료" class="btnLarge width100">
                     </form>
                    
@@ -81,19 +81,9 @@
             <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
-    </div> 
+    </div>
+    
+   
+ 
 </body>
-<script type="text/javascript">
-    document.querySelectorAll(".menuCategory").forEach((e)=>{
-        e.addEventListener("click", (event)=>{
-            let menuItems = e.nextSibling.nextSibling;
-            //만약 클래스명에 active가 없다면 넣어주기
-            if(menuItems.className.indexOf("active") != -1){
-                menuItems.className = "menuItems";
-            }else{
-                menuItems.className += " active";
-            }
-        })
-    })
-</script>
 </html>

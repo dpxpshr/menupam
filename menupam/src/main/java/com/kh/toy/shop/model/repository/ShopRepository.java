@@ -9,13 +9,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.kh.toy.common.util.file.MenupamFile;
+import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.Shop;
 
 @Mapper
 public interface ShopRepository {
 	
-	// 매장 테이블
+	////// 매장 테이블
 	@Select("select count(*) from tb_shop where shop_tell = #{shopTell}")
 	int selectShopbyTell(String shopTell);
 	
@@ -33,7 +34,7 @@ public interface ShopRepository {
 	@Select("select * from tb_shop where member_id = #{memberId}")
 	Shop selectShopInfo(String userId);
 	
-	// 카테고리 테이블
+	///////// 카테고리 테이블
 	@Select("select * from tb_menu_category where shop_idx = #{shopIdx}")
 	List<MenuCategory> selectCategoryList(String shopIdx);
 	
@@ -46,9 +47,17 @@ public interface ShopRepository {
 	@Delete("delete from tb_menu_category where menu_category_idx = #{menuCategoryIdx}")
 	int deleteCategory(MenuCategory menuCategory);
 	
-	//메뉴 테이블
+	/////// 메뉴 테이블
 	@Insert("insert into tb_file(file_idx, file_origin_name, file_rename, file_type, file_save_path)"
 			+ " values('F'||sc_file_idx.nextval, #{fileOriginName}, #{fileRename}, #{fileType}, #{fileSavePath})")
 	int insertFile(MenupamFile menupamFile);
 	
+	@Insert("insert into tb_menu(menu_idx, menu_name, menu_photo, menu_price, menu_vegan, menu_category_name, shop_idx, file_idx)"
+			+ "values('M'||sc_menu_idx.nextval, #{menuName},#{menuPhoto},#{menuPrice},#{menuVegan},#{menuCategoryName},#{shopIdx},#{fileIdx})")
+	int insertMenu(Menu menu);
+	
+	@Select("select file_idx from tb_file where file_rename = #{fileRename}")
+	String selectFileIdx(String fileRename);
+	
+	List<Menu> selectMenuList(String shopIdx);
 }	
