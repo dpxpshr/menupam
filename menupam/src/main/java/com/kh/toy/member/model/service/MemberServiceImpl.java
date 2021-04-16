@@ -173,13 +173,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberRepository.memberView(memberId);
 	}
 
+	//3
 	@Override
-	public void MemberInfoModify(Member member, String memberId) {
+	public void MemberInfoModify(Member member, String phone) {
 		
-		member.setMemberId(memberId);
-		
-		member.setMemberPhone(member.getMemberPhone());
-		
+		member.setMemberPhone(phone);
 		memberRepository.updateMember(member);
 		
 	}

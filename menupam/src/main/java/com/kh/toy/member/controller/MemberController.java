@@ -178,12 +178,18 @@ public class MemberController {
 		//redirect 사용해보기
 		return "redirect:/index";
 	}
+	
 	//마이페이지
-	@GetMapping("mypage/mypage")
-	public void myPage() {};
+	@GetMapping("mypage")
+	public String myPage() {
+		return "member/mypage/mypage";
+	};
+	
+	
 	//대기
 	@GetMapping("mypage/waiting")
 	public void waiting() {};
+	
 	//예약확인
 	@GetMapping("mypage/reservation")
 	public void reservation() {};
@@ -294,19 +300,15 @@ public class MemberController {
 		}
 		
 		
-		
+		//2
 		@PostMapping("modify")
-		public String modify(Member member
+		public String modify(String phone
 							,@SessionAttribute("userInfo") Member userInfo
 							,Model model) {
 			
-			memberService.MemberInfoModify(member, userInfo.getMemberId());
-			memberService.updateMember(member);
+			memberService.MemberInfoModify(userInfo, phone);			
 			
-			logger.info("modify member : " + member);
-			logger.info("userInfo" + userInfo);
-			
-			return "common/result";
+			return "member/mypage/mypage";
 		}
 		
 	

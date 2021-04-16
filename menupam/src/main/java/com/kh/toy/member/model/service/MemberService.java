@@ -32,7 +32,7 @@ public interface MemberService {
 	
 	Member memberView(String memberId);
 	
-	void MemberInfoModify(Member member, String memberId);
+	void MemberInfoModify(Member member, String phone);
 	
 	Member selectUserInfo(String userMember);
 	

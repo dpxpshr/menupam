@@ -53,6 +53,7 @@ public interface MemberRepository {
 	@Update("update tb_member set member_phone = #{memberPhone} where member_id = #{memberId}")
 	int updateMemberTell(Member member);
 	
+	//4
 	int updateMember(Member member);
 
 	@Select("select * from tb_member where member_id = #{memberId}")

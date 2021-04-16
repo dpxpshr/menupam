@@ -35,9 +35,6 @@
 		</div>
 		<div class="main">
 			<!--여기서 부터 코드 작성-->
-			<form name="form" method="get">
-
-
 				<div class="body">
 					<div class="content">
 						<p class="fontMedium" id="title">마이페이지</p>
@@ -120,47 +117,19 @@
 				</div>
 
 				<div class="info">
-
 					<div class="icon">
 						<i class="fas fa-mobile-alt"></i>
 					</div>
-					<input type="tel" id="user_info" required="required"
-						value="${sessionScope.userInfo.memberPhone}"> 
-						<input type="hidden" id="userMember"
-						value="${sessionScope.userInfo.memberId}">
+					<!-- 1 -->
 					<form action="${context}/member/modify" method="post">
-					<button class="far fa-edit icon"></button>
-
-					<!-- 버튼 누르면 #user_info의 readonly="false"로 변경 + 
-		                    	far fa-edit버튼 hidden +
-		                    	<input class="modify" type="submit" value="수정" onclick='modifyTel()'>
-		                    	 -->
+						<input type="tel" id="phone" name="phone" required="required" value="${sessionScope.userInfo.memberPhone}"> 
+						<input type="submit" value="수정테스트">
+					</form>
 					<br>
-	
-
 				</div>
-				
-		<%-- 		<div id="usertest" >
-				${sessionScope.userInfo.memberId}
-					${list.memberId}
-						${list}
-						${userList}
-						${memberId}
-				fklwsefkslklskl
-					<c:forEach var="list" items="${userList}" varStatus="i">
-						${list.memberId}
-						${list}
-						${userList}
-						${memberId}
-					</c:forEach> --%>
-						
 				</div>
-				<input type="submit" id="submit" value="수정 완료" class="btnUpdate">
 			</div>
-
-
 		</div>
-		</form>	
 	</div>
 	</div>
 	<div class="footer">
@@ -222,7 +191,5 @@
  	
  	
  </script>
-
-	</form>
 </body>
 </html>

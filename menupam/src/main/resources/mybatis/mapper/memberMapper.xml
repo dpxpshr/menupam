@@ -30,12 +30,11 @@
 		
 		</select>
 		
-		<update id="updateMember">
-			update tb_member
-			set member_phone = #{memberPhone}
-			where member_id = #{memberId}
-		
-		</update>
+	<update id="updateMember">
+		update tb_member
+		set member_phone = #{memberPhone}
+		where member_id = #{memberId}
+	</update>
 	
 	
 </mapper>
