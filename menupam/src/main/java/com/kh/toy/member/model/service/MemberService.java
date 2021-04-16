@@ -1,11 +1,13 @@
 package com.kh.toy.member.model.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
+import com.kh.toy.shop.model.vo.Shop;
 
 public interface MemberService {
 	
@@ -18,13 +20,20 @@ public interface MemberService {
 	
 	Map<String,Object>selectMemberList(int page);
 	
-	List<Member>findAll(String memberId,String memberName);
+	List<Member>selectMemberAll(String memberId,String memberName);
 	
 	List<Member>memberAll(String memberId,String memberName);
+	
+	List<Member>findMember();
 	
 	Member updateMemberTell(Member member);
 	
 	int updateMember(Member member);
-	void Memberinfo(Member member, String memberId);
+	
+	Member memberView(String memberId);
+	
+	void MemberInfoModify(Member member, String memberId);
+	
+	Member selectUserInfo(String userMember);
 	
 }

@@ -2,10 +2,6 @@ package com.kh.toy.member.controller;
 
 
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import java.util.*;
 
 import javax.inject.Inject;
@@ -37,6 +33,7 @@ import com.kh.toy.common.exception.ToAlertException;
 import com.kh.toy.member.model.service.MemberService;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.member.validator.MemberValidator;
+import com.kh.toy.shop.model.vo.Shop;
 
 //1. 해당 클래스를 applicationContext에 빈으로 등록
 //2. Controller와 관련된 annotation을 사용할 수 있게 해준다.
@@ -192,90 +189,125 @@ public class MemberController {
 	public void reservation() {};
 	
 	
-	/*
-	 * @GetMapping("List") public String selectMemberList(@RequestParam(defaultValue
-	 * = "1") int page, Model model) {
-	 * 
-	 * 
-	 * model.addAllAttributes(memberService.selectMemberList(page)); return
-	 * "member/adminList"; };
-	 */
 	
-	
-	/*
-	 * @GetMapping("members") public String list(Model model) { List<Member> members
-	 * = memberService.findMembers(); model.addAttribute("members",members); return
-	 * "member/memberList"; }
-	 */
-	
-	/*
-	 * @GetMapping("List") public String selectMemberList(@RequestParam(defaultValue
-	 * = "1") int page, Model model) {
-	 * 
-	 * 
-	 * model.addAllAttributes(memberService.selectMemberList(page));
-	 * model.addAttribute("member",memberService.selectMemberList(page)); return
-	 * "member/adminList"; };
-	 */
-	  
-	  @GetMapping("findAll") public String findAll(Model model,String
-	  memberId,String memberName) { //String userId= "test1";
-	  
-	  List<Member> member = memberService.findAll(memberId,memberName);
-	  model.addAttribute("member", member); 
-	  System.out.println("멤버 값 " + member);
-	  
-	  return "member/adminList"; }
-	  
-	 
 	
 	
 	  @GetMapping("adminList") 
-	  public String memberAll(String memberId,String
-	  memberName,Model model) {
+	  public String selectMemberList(@RequestParam(defaultValue= "1") int page, Model model) {
 	  
-	  List<Member> member = memberService.memberAll(memberId, memberName);
-		 
 	  
-	  model.addAttribute("member",memberId);
-	  model.addAttribute("member",memberName);
-	  System.out.println(member);
-	  System.out.println(model);
-	  System.out.println(memberId); 
-	  return "member/adminList"; }
+	  model.addAllAttributes(memberService.selectMemberList(page)); 
+	  
+	  return "member/adminList"; 
+	  };
+
+		/*
+		 * @GetMapping("adminList") public String selectMemberAll(Model model) {
+		 * List<Member> memberList = memberService.findMember();
+		 * 
+		 * model.addAttribute("memberList",memberList);
+		 * model.addAttribute(memberService.findMember());
+		 * 
+		 * logger.info("서비스" + memberService.findMember()); logger.info("memberlist" +
+		 * memberList); return "member/adminList"; }
+		 */
+	
+	  
+	  //휴대폰 번호 수정 기능 
 	 
+	  //1.사용자가 자기 연락처를 다시적고 어떤 버튼을 누른다.
+	  //2. 다시적은 연락처 (ex.10321031) 버튼을 누르면 어디로보낼까 localhost:9090/member/modify?memberid=kim1&memberPhone=0312032103
+	  //3. ~~~~ 
+	  //4. dao update 
+	 
+		/*
+		 * @GetMapping("tellmodify") public String memberModify(String
+		 * memberPhone,String memberId, Member member ,Model model){
+		 * 
+		 * 
+		 * 
+		 * 
+		 * memberService.updateMember(member); //전화번호 수정
+		 * model.addAttribute(memberService.selectMemberById(member.getMemberId()));
+		 * model.addAttribute("membermodify",member);
+		 * 
+		 * 
+		 * return "member/mypage/mypage";
+		 * 
+		 * }
+		 */
 	
-		@GetMapping("modifyPhone")
-		public void phonemodify(HttpSession session,Model model ,Member member) {
-			
-			session.setAttribute("modify", model);
-			
-			
-			
-			
-			System.out.println(model);
-		}
 	
-	
-	
-	
-	
-	
-		@GetMapping("Modify")
-		public String modify(Member member
-				,@SessionAttribute("userInfo") Member userInfo
-		,Model model){
-		memberService.Memberinfo(member, userInfo.getMemberId());
-		memberService.updateMember(member);
 		
-		return "common/result";
+		@PostMapping("selectUserInfo")
+		@ResponseBody
+		public void selectUserInfo(String userMember, Model model) {
+			
+			logger.info("memberId가 나오나 : ?" + userMember);
+			Member userList = memberService.selectUserInfo(userMember);
+			logger.info("userList" + userList.getMemberPhone());
+			model.addAttribute("userList는? :"   , userList);
+			
 		}
+		
+		
+		@PostMapping("updateMember")
+		public String updateMember(String userMember ,Member member, HttpSession session,Model model) {
+			
+			
+			int updatePhone = memberService.updateMember(member);
+			
 	
-	
-	
-	
-	
-	
-	
+			logger.info("update폰?" + updatePhone);
+
+			memberService.updateMember(member);
+			
+			logger.info("updateMember??" + member);
+			
+			return "redirect:/index";
+			
+			
+		}
+		
+		/*
+		 * @GetMapping("adminmodify") public String modify(Member member,String
+		 * memberId) {
+		 * 
+		 * memberService.selectMemberById(memberId);
+		 * 
+		 * 
+		 * 
+		 * return "member/adminlist"; }
+		 */
+		
+		
+		//회원 정보 상세 조회
+		@RequestMapping("memberview")
+		public String memberView(String memberId, Model model) {
+			
+			model.addAttribute("member", memberService.memberView(memberId));
+			
+			logger.info("memberview" + model);
+			//로그
+		
+			return "member/memberview";
+		}
+		
+		
+		
+		@PostMapping("modify")
+		public String modify(Member member
+							,@SessionAttribute("userInfo") Member userInfo
+							,Model model) {
+			
+			memberService.MemberInfoModify(member, userInfo.getMemberId());
+			memberService.updateMember(member);
+			
+			logger.info("modify member : " + member);
+			logger.info("userInfo" + userInfo);
+			
+			return "common/result";
+		}
+		
 	
 }

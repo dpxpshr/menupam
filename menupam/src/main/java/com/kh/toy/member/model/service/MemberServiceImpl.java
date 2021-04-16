@@ -27,8 +27,8 @@ import com.kh.toy.member.model.vo.Member;
 @Service
 public class MemberServiceImpl implements MemberService{
 	
-	private static Map<String, Member> store = new HashMap<>();
-	 	MemberRepository memberRepository;
+	
+	 private final	MemberRepository memberRepository;
 	
 		/*
 		 * @Inject private MemberRepository memberRepository;
@@ -106,13 +106,13 @@ public class MemberServiceImpl implements MemberService{
 		commandMap.put("selectMemberList",memberRepository.selectMemberList(paging));
 		System.out.println("커맨드맵?" + commandMap);
 		
-	return commandMap;	
+		return commandMap;	
 				
 	}
 
 	
 	@Override
-	public List<Member>findAll(String memberId,String memberName) {
+	public List<Member>selectMemberAll(String memberId,String memberName) {
 	
 		
 		
@@ -122,7 +122,9 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public List<Member> memberAll(String memberId,String memberName){
-		List<Member> memberlist = memberRepository.memberAll(Map.of("member",memberId,"membername",memberName));
+		
+		List<Member> memberlist = null;
+		
 		return memberlist;
 	}
 
@@ -134,24 +136,55 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int updateMember(Member member) {
+		
 		return memberRepository.updateMember(member);
 	}
 
-	@Override
-	public void Memberinfo(Member member, String memberId) {
-		member.setMemberId(memberId);
+	/*
+	 * @Override public void Memberinfo(Member member, String memberId) {
+	 * member.setMemberId(memberId);
+	 * 
+	 * member.setMemberPhone(member.getMemberPhone());
+	 * 
+	 * memberRepository.updateMember(member);
+	 * 
+	 * 
+	 * }
+	 */
 
+	@Override
+	public List<Member> findMember() {
+		
+		List<Member> memberlist = memberRepository.selectMemberAll();
+		return memberlist;
+	}
+
+	@Override
+	public Member selectUserInfo(String userMember) {
+		
+		 
+		
+		return memberRepository.selectUserInfo(userMember);
+	}
+
+	@Override
+	public Member memberView(String memberId) {
+		
+		return memberRepository.memberView(memberId);
+	}
+
+	@Override
+	public void MemberInfoModify(Member member, String memberId) {
+		
+		member.setMemberId(memberId);
+		
 		member.setMemberPhone(member.getMemberPhone());
 		
 		memberRepository.updateMember(member);
-
+		
 	}
 
 	
-	
-
-	
-		
 	
 
 	

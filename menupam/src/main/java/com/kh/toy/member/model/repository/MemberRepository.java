@@ -12,12 +12,14 @@ import org.apache.ibatis.annotations.Update;
 
 import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.vo.Member;
+import com.kh.toy.shop.model.vo.Shop;
 
 @Mapper
 public interface MemberRepository {
 	
 	
-	List<Member>memberAll(Map<String,String> commandMap);
+	List<Member>selectMemberAll();
+	
 	
 	List<Member>selectMemberList(Paging paging);
 	
@@ -52,4 +54,13 @@ public interface MemberRepository {
 	int updateMemberTell(Member member);
 	
 	int updateMember(Member member);
+
+	@Select("select * from tb_member where member_id = #{memberId}")
+	Member selectUserInfo(String memberId);
+	
+	Member memberView(String memberId);
+	
+	@Select("select * from tb_shop where member_id = #{memberId}")
+	Shop selectShopInfo(String memberId);
+	
 }

@@ -4,26 +4,31 @@
 		 
 
 	<select id="selectMemberList" resultType="member">
-		select member_id,member_name
+		select *
 		from(
 			select rownum rnum, m.*
 			from(
-				select member_id, member_name
+				select *
 				from tb_member
 				order by ${sort} ${direction}
 			) m
 		) where rnum between #{queryStart} and #{queryEnd}	
 	</select>
 
-	<select id="MemberAll" resultType="member" parameterType="map">
-		select member_id,member_name
-		from tb_member
-		where member_id LIKE '%'||#{test}||'%' 
+	<select id="selectMemberAll" resultType="member">
+		SELECT * FROM TB_MEMBER
 	</select>
 
-
+	<!-- <select id="selectUserInfo" resultType="member" parameterType="string">
+		SELECT * FROM TB_MEMBER
+		WHERE MEMBER_ID = #{value}
+	</select> -->
+	
 	<!-- '%'||#%test#||'%' -->
+		<select id="memberView" resultType="member">
+		SELECT * FROM TB_MEMBER WHERE MEMBER_ID = #{memberId}
 		
+		</select>
 		
 		<update id="updateMember">
 			update tb_member
