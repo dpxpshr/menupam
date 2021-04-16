@@ -149,7 +149,7 @@
 					row.append(address);
 					
 					row.addEventListener('click',()=>{
-						location.href="/order/menuview?shop="+shop.shopIdx;
+						location.href="/order/menuview?shopIdx="+shop.shopIdx;
 					});
 					list.append(row);
 				});

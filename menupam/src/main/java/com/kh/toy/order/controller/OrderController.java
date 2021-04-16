@@ -1,6 +1,7 @@
 package com.kh.toy.order.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.toy.order.model.service.OrderService;
+import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.Shop;
 
 @Controller
@@ -34,10 +36,13 @@ public class OrderController {
 	public String shopList() {
 		return "order/shopList";
 	}
+	
 	@GetMapping("menuview")
-	public String menuView(String shop,Model model) {
-		Shop shopInfo = orderService.selectShopbyIdx(shop);
+	public String menuView(String shopIdx,Model model) {
+		Shop shopInfo = orderService.selectShopbyIdx(shopIdx);
 		model.addAttribute(shopInfo);
+		Map<String,List<Menu>> menulist = orderService.getMenulistByShopIdx(shopIdx);
+		model.addAttribute("menulist",menulist);
 		return "order/menuView";
 	}
 	

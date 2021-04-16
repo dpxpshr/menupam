@@ -25,78 +25,40 @@
             	<h2 class="shopName">${shop.shopName}</h2>
             	<p class="slogan">${shop.shopType}</p>
             	<p class="tag">${shop.shopAddress}</p>
-            	<c:if test="${shop.shopRating != 0}">
+            	<c:if test="${shop.shopRating != 0}"> <!-- 리뷰가 한번도 등록되지 않은 매장은 별점정보를 출력하지 않음 -->
             		<p class="star"><i class='fa fa-star fa-fw'></i>${shop.shopRating}</p>
             	</c:if>
-            	
             </div>
             
             <div class="menuBox">
                <div>
+               <c:forEach items="${menulist}" var="category">
                  <div class="menuCategory">
-                 	<div class="menuName">치킨</div>
+                 	<div class="menuName">${category.key}</div>
                      <i class="fas fa-angle-down"></i>
                  </div>
                  
                  <div class="menuItems">
-                     <div class="menuItem">
+                 	<c:forEach items="${category.value}" var="menu">
+                     <div class="menuItem" id="${menu.menuIdx}">
                          <div class="menuItemLeft">
-                             <div class="menuItemName">반반치킨 콤보</div>
-                             <div class="menuItemPrice">18,000 원</div>
+                             <div class="menuItemName">${menu.menuName}</div>
+                             <div class="menuItemPrice">${menu.menuPrice}</div>
                          </div>
                          <div class="menuItemRight">
-                             <img src="../../../resources/images/반반치킨콤보.png" alt="">
+                             <img src="../../../resources/images/${menu.menuPhoto}" alt="">
                          </div>
                      </div>
-                     <div class="menuItem">
-                         <div class="menuItemLeft">
-                             <div class="menuItemName">후라이드 콤보</div>
-                             <div class="menuItemPrice">17,000 원</div>
-                         </div>
-                         <div class="menuItemRight">
-                             <img src="../../../resources/images/후라이드콤보.png" alt="">
-                         </div>
-                     </div>
-                     
-                 </div>   
+                     <script type="text/javascript">
+                     	document.querySelector("#${menu.menuIdx}").addEventListener("click",()=>{
+                     		alert("${menu.menuIdx}");
+                     	})
+                     </script>
+                     </c:forEach>
+                 </div>
+                
+             </c:forEach>   
              </div>
-             
-             <div>
-                 <div class="menuCategory">
-                     <div class="menuName">서브메뉴</div>
-                     <i class="fas fa-angle-down"></i>
-                 </div> 
-                 <div class="menuItems">
-                     <div class="menuItem">
-                         <div class="menuItemLeft">
-                             <div class="menuItemName">감자튀김</div>
-                             <div class="menuItemPrice">11,000 원</div>
-                         </div>
-                         <div class="menuItemRight">
-                             <img src="../../../resources/images/감자튀김.png" alt="">
-                         </div>
-                     </div>
-                 </div>   
-             </div>
-             
-             <div>
-                 <div class="menuCategory">
-                     <div class="menuName">국물</div>
-                     <i class="fas fa-angle-down"></i>
-                 </div> 
-                 <div class="menuItems">
-                     <div class="menuItem">
-                         <div class="menuItemLeft">
-                             <div class="menuItemName">크치 해물어묵탕</div>
-                             <div class="menuItemPrice">17,000 원</div>
-                         </div>
-                         <div class="menuItemRight">
-                             <img src="../../../resources/images/크치해물어묵탕.png" alt="">
-                         </div>
-                     </div>
-                    
-                 </div>   
-             </div>    
            </div> 
         </section>
         <footer class="footer">
