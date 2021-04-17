@@ -1,9 +1,12 @@
 package com.kh.toy.member.model.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.inject.Inject;
 
@@ -18,30 +21,34 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.toy.common.code.Code;
 import com.kh.toy.common.mail.MailSender;
+import com.kh.toy.common.util.http.HttpUtil;
+import com.kh.toy.common.util.kakao.KakaoUtil;
 import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
 
 @Service
-public class MemberServiceImpl implements MemberService{
-	
-	
-	 private final	MemberRepository memberRepository;
-	
-		/*
-		 * @Inject private MemberRepository memberRepository;
-		 */
-	 
+public class MemberServiceImpl implements MemberService {
+
+	KakaoUtil kakaoUtil = new KakaoUtil();
+
+	private final MemberRepository memberRepository;
+
+	/*
+	 * @Inject private MemberRepository memberRepository;
+	 */
+
 	@Autowired
 	private RestTemplate http;
 	@Autowired
 	private MailSender mailSender;
-	
+
 	@Autowired
-	private PasswordEncoder passwordEncoder; 
-	
+	private PasswordEncoder passwordEncoder;
+
 	public MemberServiceImpl(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
@@ -50,23 +57,19 @@ public class MemberServiceImpl implements MemberService{
 	public Member selectMemberById(String memberId) {
 		return memberRepository.selectMemberById(memberId);
 	}
-	
+
 	public void authenticateEmail(Member persistUser, String authPath) {
-		
+
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
-		body.add("memberId",persistUser.getMemberId());
-		body.add("mail-template","temp_join");
+		body.add("memberId", persistUser.getMemberId());
+		body.add("mail-template", "temp_join");
 		body.add("authPath", authPath);
-		
-		RequestEntity<Map> request = 
-				RequestEntity
-				.post(Code.DOMAIN+"/mail")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.body(body);
-		
-		ResponseEntity<String> response =
-				http.exchange(request, String.class);
-		
+
+		RequestEntity<Map> request = RequestEntity.post(Code.DOMAIN + "/mail")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED).body(body);
+
+		ResponseEntity<String> response = http.exchange(request, String.class);
+
 		mailSender.send(persistUser.getMemberEmail(), "회원 가입을 축하합니다.", response.getBody());
 	}
 
@@ -78,53 +81,42 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public Member authenticateUser(Member member) {
-		
+
 		Member userInfo = memberRepository.selectMemberForAuth(member.getMemberId());
-		//|| -> && 변경
-		if(userInfo == null &&
-				!passwordEncoder.matches(member.getMemberPw(), userInfo.getMemberPw())) {
+		// || -> && 변경
+		if (userInfo == null && !passwordEncoder.matches(member.getMemberPw(), userInfo.getMemberPw())) {
 			return null;
 		}
 		
 		return userInfo;
 	}
+
 	@Override
-	public Map<String,Object>selectMemberList(int page) {
-	
-		Paging paging = Paging.builder()
-				.cuurentPage(page)
-				.blockCnt(5)
-				.cntPerPage(10)
-				.type("member")
-				.total(memberRepository.selectContentCnt())
-				.sort("member_name")
-				.direction("desc")
-				.build();
-		
-		Map<String,Object> commandMap = new HashMap<String,Object>();
+	public Map<String, Object> selectMemberList(int page) {
+
+		Paging paging = Paging.builder().cuurentPage(page).blockCnt(5).cntPerPage(10).type("member")
+				.total(memberRepository.selectContentCnt()).sort("member_name").direction("desc").build();
+
+		Map<String, Object> commandMap = new HashMap<String, Object>();
 		commandMap.put("paging", paging);
-		commandMap.put("selectMemberList",memberRepository.selectMemberList(paging));
+		commandMap.put("selectMemberList", memberRepository.selectMemberList(paging));
 		System.out.println("커맨드맵?" + commandMap);
-		
-		return commandMap;	
-				
-	}
 
-	
-	@Override
-	public List<Member>selectMemberAll(String memberId,String memberName) {
-	
-		
-		
-		
-		return memberRepository.findAll(memberId,memberName);
+		return commandMap;
+
 	}
 
 	@Override
-	public List<Member> memberAll(String memberId,String memberName){
-		
+	public List<Member> selectMemberAll(String memberId, String memberName) {
+
+		return memberRepository.findAll(memberId, memberName);
+	}
+
+	@Override
+	public List<Member> memberAll(String memberId, String memberName) {
+
 		List<Member> memberlist = null;
-		
+
 		return memberlist;
 	}
 
@@ -136,7 +128,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int updateMember(Member member) {
-		
+
 		return memberRepository.updateMember(member);
 	}
 
@@ -154,44 +146,42 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public List<Member> findMember() {
-		
+
 		List<Member> memberlist = memberRepository.selectMemberAll();
 		return memberlist;
 	}
 
 	@Override
 	public Member selectUserInfo(String userMember) {
-		
-		 
-		
+
 		return memberRepository.selectUserInfo(userMember);
 	}
 
 	@Override
 	public Member memberView(String memberId) {
-		
+
 		return memberRepository.memberView(memberId);
 	}
 
-	//3
+	// 3
 	@Override
 	public void MemberInfoModify(Member member, String phone) {
-		
+
 		member.setMemberPhone(phone);
 		memberRepository.updateMember(member);
-		
+
+	}
+
+	// ============================================소셜로그인============================================
+	@Override
+	public Map<String, Object> getKakaoMemberData(String code) {
+
+		Map<String, String> tokenMap = kakaoUtil.getKakaoTokenMap(code);
+		String accessToken = tokenMap.get("access_token");
+		Map<String, Object> kakaoMemberData = kakaoUtil.getKakaoUser(accessToken);
+		return kakaoMemberData;
 	}
 
 	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

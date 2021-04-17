@@ -1,6 +1,5 @@
 package com.kh.toy.member.controller;
 
-
 import java.text.DateFormat;
 import java.util.*;
 
@@ -62,254 +61,218 @@ import com.kh.toy.shop.model.vo.Shop;
 @Controller
 @RequestMapping("member")
 public class MemberController {
-	
-	//로깅 객체 생성
+
+	// 로깅 객체 생성
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	
-	
+
 	private final MemberService memberService;
 	MemberValidator memberValidator;
-	
+
 	public MemberController(MemberService memberService, MemberValidator memberValidator) {
 		this.memberService = memberService;
 		this.memberValidator = memberValidator;
 	}
-	
-	//InitBinder : WebDataBinder를 초기화하는 메서드를 식별하는 주석
-	//		value : webDataBinder가 적용될 파라미터 명 또는 Model의 attribute 이름
+
+	// InitBinder : WebDataBinder를 초기화하는 메서드를 식별하는 주석
+	// value : webDataBinder가 적용될 파라미터 명 또는 Model의 attribute 이름
 	@InitBinder(value = "member")
 	public void initBinder(WebDataBinder webDataBinder) {
-		//WebDataBinder : 컨트로러 메서드의 파라미터에 데이터를 bind 해주는 역할 수행
+		// WebDataBinder : 컨트로러 메서드의 파라미터에 데이터를 bind 해주는 역할 수행
 		webDataBinder.addValidators(memberValidator);
 	}
-	
-	
-	
-	
-	//view를 지정하는 방법
-	//1. ModelAndView 객체를 만들어서 setViewName 메서드에 view 경로를 지정하고 객체를 리턴
-	//2. view 경로를 반환
-	//3. 아무것도 반환하지 않을 경우, 요청 url을 view 경로로 지정
+
+	// view를 지정하는 방법
+	// 1. ModelAndView 객체를 만들어서 setViewName 메서드에 view 경로를 지정하고 객체를 리턴
+	// 2. view 경로를 반환
+	// 3. 아무것도 반환하지 않을 경우, 요청 url을 view 경로로 지정
 	@GetMapping("join")
-	public void member() {};
-	
+	public void member() {
+	};
+
 	@GetMapping("idcheck")
 	@ResponseBody
 	public String idcheck(String memberId) {
-		if(memberService.selectMemberById(memberId) != null) {
+		if (memberService.selectMemberById(memberId) != null) {
 			return "fail";
 		}
-		
+
 		return "success";
 	}
-	
+
 	@PostMapping("mailauth")
-	public String authenticateEmail(@Valid Member persistInfo
-								, Errors error //반드시 @Valid 변수 바로 뒤에 작성
-								, HttpSession session
-								, Model model) {
-		
-		if(error.hasErrors()) {
+	public String authenticateEmail(@Valid Member persistInfo, Errors error // 반드시 @Valid 변수 바로 뒤에 작성
+			, HttpSession session, Model model) {
+
+		if (error.hasErrors()) {
 			System.out.println(persistInfo);
 			System.out.println("===================================");
 			System.out.println("validator error" + error);
-			
+
 			return "member/join";
 		}
-		
+
 		String authPath = UUID.randomUUID().toString();
-		
-		//session에 persistInfo 저장
+
+		// session에 persistInfo 저장
 		session.setAttribute("persistInfo", persistInfo);
 		session.setAttribute("authPath", authPath);
-		
-		//memberService의 authenticateEmail 호출해서 회원가입 메일 발송
+
+		// memberService의 authenticateEmail 호출해서 회원가입 메일 발송
 		memberService.authenticateEmail(persistInfo, authPath);
-		
-		
-		//메일발송 안내창 출력 후 index페이지로 페이지 이동
+
+		// 메일발송 안내창 출력 후 index페이지로 페이지 이동
 		model.addAttribute("msg", "이메일 발송이 완료되었습니다.");
-		model.addAttribute("url","/index");
-		
+		model.addAttribute("url", "/index");
+
 		return "common/result";
 	}
-	
-	
+
 	@GetMapping("joinimpl/{authPath}")
-	public String joinImpl(HttpSession session
-			,@PathVariable String authPath
-			,@SessionAttribute("authPath") String sessionPath
-			,@SessionAttribute("persistInfo") Member persistInfo
-			,Model model) {
-		
-		if(!authPath.equals(sessionPath)) {
+	public String joinImpl(HttpSession session, @PathVariable String authPath,
+			@SessionAttribute("authPath") String sessionPath, @SessionAttribute("persistInfo") Member persistInfo,
+			Model model) {
+
+		if (!authPath.equals(sessionPath)) {
 			throw new ToAlertException(ErrorCode.AUTH02);
 		}
-		
+
 		memberService.insertMember(persistInfo);
 		model.addAttribute("msg", "회원가입이 완료되었습니다.");
 		model.addAttribute("url", "/index");
 		session.removeAttribute("persistInfo");
 		return "common/result";
 	}
-	
+
 	@GetMapping("login")
-	public void login(){};
-	
+	public void login() {
+	};
+
 	@PostMapping("loginimpl")
 	@ResponseBody
-	public String loginImpl(@RequestBody Member member
-							,HttpSession session) {
-		System.out.println("로그인 정보" +member);
-		
+	public String loginImpl(@RequestBody Member member, HttpSession session) {
+		System.out.println("로그인 정보" + member);
+
 		Member userInfo = memberService.authenticateUser(member);
-		if(userInfo == null) {
+		if (userInfo == null) {
 			return "fail";
 		}
-		
+
 		session.setAttribute("userInfo", userInfo);
 		return "success";
 	}
-	
+
 	@GetMapping("logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("userInfo");
-		//redirect 사용해보기
+		// redirect 사용해보기
 		return "redirect:/index";
 	}
-	
-	//마이페이지
+
+	// 마이페이지
 	@GetMapping("mypage")
 	public String myPage() {
 		return "member/mypage/mypage";
 	};
-	
-	
-	//대기
+
+	// 대기
 	@GetMapping("mypage/waiting")
-	public void waiting() {};
-	
-	//예약확인
+	public void waiting() {
+	};
+
+	// 예약확인
 	@GetMapping("mypage/reservation")
-	public void reservation() {};
-	
-	
-	
-	
-	
-	  @GetMapping("adminList") 
-	  public String selectMemberList(@RequestParam(defaultValue= "1") int page, Model model) {
-	  
-	  
-	  model.addAllAttributes(memberService.selectMemberList(page)); 
-	  
-	  return "member/adminList"; 
-	  };
+	public void reservation() {
+	};
 
-		/*
-		 * @GetMapping("adminList") public String selectMemberAll(Model model) {
-		 * List<Member> memberList = memberService.findMember();
-		 * 
-		 * model.addAttribute("memberList",memberList);
-		 * model.addAttribute(memberService.findMember());
-		 * 
-		 * logger.info("서비스" + memberService.findMember()); logger.info("memberlist" +
-		 * memberList); return "member/adminList"; }
-		 */
-	
-	  
-	  //휴대폰 번호 수정 기능 
-	 
-	  //1.사용자가 자기 연락처를 다시적고 어떤 버튼을 누른다.
-	  //2. 다시적은 연락처 (ex.10321031) 버튼을 누르면 어디로보낼까 localhost:9090/member/modify?memberid=kim1&memberPhone=0312032103
-	  //3. ~~~~ 
-	  //4. dao update 
-	 
-		/*
-		 * @GetMapping("tellmodify") public String memberModify(String
-		 * memberPhone,String memberId, Member member ,Model model){
-		 * 
-		 * 
-		 * 
-		 * 
-		 * memberService.updateMember(member); //전화번호 수정
-		 * model.addAttribute(memberService.selectMemberById(member.getMemberId()));
-		 * model.addAttribute("membermodify",member);
-		 * 
-		 * 
-		 * return "member/mypage/mypage";
-		 * 
-		 * }
-		 */
-	
-	
-		
-		@PostMapping("selectUserInfo")
-		@ResponseBody
-		public void selectUserInfo(String userMember, Model model) {
-			
-			logger.info("memberId가 나오나 : ?" + userMember);
-			Member userList = memberService.selectUserInfo(userMember);
-			logger.info("userList" + userList.getMemberPhone());
-			model.addAttribute("userList는? :"   , userList);
-			
-		}
-		
-		
-		@PostMapping("updateMember")
-		public String updateMember(String userMember ,Member member, HttpSession session,Model model) {
-			
-			
-			int updatePhone = memberService.updateMember(member);
-			
-	
-			logger.info("update폰?" + updatePhone);
+	@GetMapping("adminList")
+	public String selectMemberList(@RequestParam(defaultValue = "1") int page, Model model) {
 
-			memberService.updateMember(member);
-			
-			logger.info("updateMember??" + member);
-			
-			return "redirect:/index";
-			
-			
-		}
-		
-		/*
-		 * @GetMapping("adminmodify") public String modify(Member member,String
-		 * memberId) {
-		 * 
-		 * memberService.selectMemberById(memberId);
-		 * 
-		 * 
-		 * 
-		 * return "member/adminlist"; }
-		 */
-		
-		
-		//회원 정보 상세 조회
-		@RequestMapping("memberview")
-		public String memberView(String memberId, Model model) {
-			
-			model.addAttribute("member", memberService.memberView(memberId));
-			
-			logger.info("memberview" + model);
-			//로그
-		
-			return "member/memberview";
-		}
-		
-		
-		//2
-		@PostMapping("modify")
-		public String modify(String phone
-							,@SessionAttribute("userInfo") Member userInfo
-							,Model model) {
-			
-			memberService.MemberInfoModify(userInfo, phone);			
-			
-			return "member/mypage/mypage";
-		}
-		
-	
+		model.addAllAttributes(memberService.selectMemberList(page));
+
+		return "member/adminList";
+	};
+
+	// 휴대폰 번호 수정 기능
+
+	// 1.사용자가 자기 연락처를 다시적고 어떤 버튼을 누른다.
+	// 2. 다시적은 연락처 (ex.10321031) 버튼을 누르면 어디로보낼까
+	// localhost:9090/member/modify?memberid=kim1&memberPhone=0312032103
+	// 3. ~~~~
+	// 4. dao update
+
+	/*
+	 * @GetMapping("tellmodify") public String memberModify(String
+	 * memberPhone,String memberId, Member member ,Model model){
+	 * 
+	 * 
+	 * 
+	 * 
+	 * memberService.updateMember(member); //전화번호 수정
+	 * model.addAttribute(memberService.selectMemberById(member.getMemberId()));
+	 * model.addAttribute("membermodify",member);
+	 * 
+	 * 
+	 * return "member/mypage/mypage";
+	 * 
+	 * }
+	 */
+
+	@PostMapping("selectUserInfo")
+	@ResponseBody
+	public void selectUserInfo(String userMember, Model model) {
+
+		logger.info("memberId가 나오나 : ?" + userMember);
+		Member userList = memberService.selectUserInfo(userMember);
+		logger.info("userList" + userList.getMemberPhone());
+		model.addAttribute("userList는? :", userList);
+
+	}
+
+	@PostMapping("updateMember")
+	public String updateMember(String userMember, Member member, HttpSession session, Model model) {
+
+		int updatePhone = memberService.updateMember(member);
+
+		logger.info("update폰?" + updatePhone);
+
+		memberService.updateMember(member);
+
+		logger.info("updateMember??" + member);
+
+		return "redirect:/index";
+
+	}
+
+	/*
+	 * @GetMapping("adminmodify") public String modify(Member member,String
+	 * memberId) {
+	 * 
+	 * memberService.selectMemberById(memberId);
+	 * 
+	 * 
+	 * 
+	 * return "member/adminlist"; }
+	 */
+
+	// 회원 정보 상세 조회
+	@RequestMapping("memberview")
+	public String memberView(String memberId, Model model) {
+
+		model.addAttribute("member", memberService.memberView(memberId));
+
+		logger.info("memberview" + model);
+		// 로그
+
+		return "member/memberview";
+	}
+
+	// 2
+	@PostMapping("modify")
+	public String modify(String phone, @SessionAttribute("userInfo") Member userInfo, Model model) {
+
+		memberService.MemberInfoModify(userInfo, phone);
+
+		return "member/mypage/mypage";
+	}
+
 }

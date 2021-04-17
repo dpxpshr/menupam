@@ -10,9 +10,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/login.css'>
-   
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
     <div class="wrapper">
@@ -27,47 +25,41 @@
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
-	          
-	          <div class="bg-img">
-	      <div class="content">
-	        <header>메뉴팜</header>
-	        
-	        
-	          <div class="field">
-	            <span class="fa fa-user"></span>
-	            <input type="text" class="id" id="id" name="memberId" required placeholder="아이디">
-	          </div>
-		<div class="field space">
-	            <span class="fa fa-lock"></span>
-	            <input type="password" class="pass-key" id="pw" name="memberPw" required placeholder="비밀번호">
-	            <span class="show">SHOW</span>
-	             
-	          </div>
-	          <span class='valid_info'></span>
-		<div class="pass">
-	            <a> </a>
-	          </div>
-	         <br>
-		<div class="field" id="login_wrapper">
-	            <input type="submit" value="LOGIN" onclick='login()'>
-	          </div>
-		<div class="login"></div>
-		
-	          	<a id="kakao-login-btn" href="javascript:kakaoLogin()">
-				  <img
-				    src="https://odaeri.kr/images/buttons/btn_kakao-v2.3.png"
-				    width="250"
-				  />
-				</a>
-				<div class="signup">아이디 찾기 | 비밀번호 찾기 | <a href="/member/join">회원가입</a>
-	        	</div>
-				
-	          </div>
-		
-	
-		</div>
-	</div>
-            
+	        	<div class="bg-img">
+	      			<div class="content">
+	        			<header>메뉴팜</header>
+	        			<div class="loginInline"></div>
+	        			<div class="field">
+	            			<span class="fa fa-user"></span>
+	            			<input type="text" class="id" id="id" name="memberId" required placeholder="아이디">
+	          			</div>
+						<div class="field space">
+	            			<span class="fa fa-lock"></span>
+	            			<input type="password" class="pass-key" id="pw" name="memberPw" required placeholder="비밀번호">
+	            			<span class="show">SHOW</span>
+	          			</div>
+	          			<span class='valid_info'></span>
+						<div class="pass">
+	            			<a></a>
+	          			</div>
+	         			<br>
+						<div class="btnBox">
+							<div class="btn">
+								<button class="loginBtn fitImg" onclick="login()">LOGIN</button>
+							</div>
+							<div class="btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=e6a2ed92a0d0a64336f42c9222ec8a26&redirect_uri=http://localhost:9090/social/kakaoOauth&response_type=code'">
+								<img alt="" src="../../../resources/images/kakaoBtn.png" class="fitImg">
+							</div>
+							<div class="btn">
+								<img alt="" src="../../../resources/images/naverBtn.PNG" class="fitImg">
+							</div>
+						</div>
+						<div class="signup">아이디 찾기 | 비밀번호 찾기 | 
+							<a href="/member/join">회원가입</a>
+	        			</div>
+	          		</div>
+				</div>
+			</div>
         </div>
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
@@ -119,21 +111,6 @@
 			error.alertMessage();
 		})
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	</script>	
-		
+	</script>		
 </body>
 </html>
