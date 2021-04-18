@@ -175,7 +175,6 @@ public class MemberServiceImpl implements MemberService {
 	// ============================================소셜로그인============================================
 	@Override
 	public Map<String, Object> getKakaoMemberData(String code) {
-
 		Map<String, String> tokenMap = kakaoUtil.getKakaoTokenMap(code);
 		String accessToken = tokenMap.get("access_token");
 		Map<String, Object> kakaoMemberData = kakaoUtil.getKakaoUser(accessToken);

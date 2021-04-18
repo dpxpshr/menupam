@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.kh.toy.common.code.Code;
 import com.kh.toy.common.code.ErrorCode;
 import com.kh.toy.common.exception.ToAlertException;
+import com.kh.toy.common.util.naver.NaverUtil;
 import com.kh.toy.member.model.service.MemberService;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.member.validator.MemberValidator;
@@ -144,7 +145,11 @@ public class MemberController {
 	}
 
 	@GetMapping("login")
-	public void login() {
+	public void login(HttpSession session) {
+		//Naver아이디로  로그인 사용
+		String state = new NaverUtil().generateState();
+		session.setAttribute("state", state);
+		
 	};
 
 	@PostMapping("loginimpl")

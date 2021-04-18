@@ -47,10 +47,10 @@
 							<div class="btn">
 								<button class="loginBtn fitImg" onclick="login()">LOGIN</button>
 							</div>
-							<div class="btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=e6a2ed92a0d0a64336f42c9222ec8a26&redirect_uri=http://localhost:9090/social/kakaoOauth&response_type=code'">
+							<div class="btn" onclick="kakaoLogin()">
 								<img alt="" src="../../../resources/images/kakaoBtn.png" class="fitImg">
 							</div>
-							<div class="btn">
+							<div class="btn" onclick="naverLogin()">
 								<img alt="" src="../../../resources/images/naverBtn.PNG" class="fitImg">
 							</div>
 						</div>
@@ -110,6 +110,13 @@
 		}).catch((error)=>{
 			error.alertMessage();
 		})
+	}
+	function kakaoLogin(){
+		location.href = "https://kauth.kakao.com/oauth/authorize?client_id=e6a2ed92a0d0a64336f42c9222ec8a26&redirect_uri=http://localhost:9090/social/kakaoOauth&response_type=code";
+	}
+	
+	function naverLogin(){
+		location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=zUZKAN8pubA1MePInXEY&state=${sessionScope.state}&redirect_uri=http://localhost:9090/social/naverOauth";
 	}
 	</script>		
 </body>
