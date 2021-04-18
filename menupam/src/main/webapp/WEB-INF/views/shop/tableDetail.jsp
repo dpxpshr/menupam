@@ -50,107 +50,34 @@
                         <p class="fontSmall">총 결제 금액 : 10000원</p><br>
                     </div>
                     <br>
+                
                     <div class="menuBox">
-                        <div>
-                            <div class="menuCategory">
-                                구이 <i class="fas fa-angle-down"></i>
-                            </div> 
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">삼겹살</div>
-                                        <div class="menuItemPrice">13,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/삼겹살.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">목살</div>
-                                        <div class="menuItemPrice">13,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/목살.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">항정살</div>
-                                        <div class="menuItemPrice">12,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/항정살.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                        <div>
-                            <div class="menuCategory">
-                                식사류 <i class="fas fa-angle-down"></i>
-                            </div> 
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">육회 비빔밥</div>
-                                        <div class="menuItemPrice">8,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                        <div>
-                            <div class="menuCategory">
-                                후식류 <i class="fas fa-angle-down"></i>
-                            </div> 
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">볶음밥</div>
-                                        <div class="menuItemPrice">4,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">냉면</div>
-                                        <div class="menuItemPrice">4,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/냉면.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                        <div>
-                            <div class="menuCategory">
-                                음료 및 기타 <i class="fas fa-angle-down"></i>
+                         <c:forEach var="categorys" items="${categorys}" >
+                        	<div class="menuCategory">
+                                ${categorys.menuCategoryName} <i class="fas fa-angle-down"></i>
+                                
                             </div>
-                            <div class="menuItems">
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">콜라</div>
-                                        <div class="menuItemPrice">1,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                                <div class="menuItem">
-                                    <div class="menuItemLeft">
-                                        <div class="menuItemName">사이다</div>
-                                        <div class="menuItemPrice">1,000 원</div>
-                                    </div>
-                                    <div class="menuItemRight">
-                                        <img src="/resources/images/no-Img.PNG" alt="">
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
+                             <div class="menuItems">
+                             	<c:forEach var="menuList" items="${menuList}">
+                             		<c:if test="${categorys.menuCategoryName == menuList.MENU_CATEGORY_NAME}">
+		                                <div class="menuItem">
+		                                    <div class="menuItemLeft">
+		                                        <div class="menuItemName">${menuList.MENU_NAME}</div>
+		                                        <div class="menuItemPrice">${menuList.MENU_PRICE} 원</div>
+		                                        <!-- ${menuList.MENU_CATEGORY_NAME} -->
+		                                    </div>
+		                                    <div class="menuItemRight">
+		                                        <img src="${menuList.FILE_SAVE_PATH}${menuList.FILE_RENAME}.${menuList.FILE_TYPE}">
+		                                    </div>
+		                                </div>
+                               		</c:if>
+                             	</c:forEach>   
+                             </div>
+                             
+                        </c:forEach>
+                            
+                        
+                        
                     </div>
                 </div>
             </div>

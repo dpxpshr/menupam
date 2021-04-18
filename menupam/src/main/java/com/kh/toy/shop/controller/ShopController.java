@@ -104,13 +104,10 @@ public class ShopController {
 						,HttpServletRequest request) {
 		
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		
 		session.setAttribute("shopInfo", shopInfo);
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
-		
-		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
-				+ File.separator + "images" + File.separator;
-		System.out.println("uploadPath" + uploadPath); // 이미지 저장경로 몰라서 가지고 있음
 	}
 	
 	
@@ -127,7 +124,8 @@ public class ShopController {
 							,@RequestParam(name = "menuVegan", defaultValue = "N") String menuVegan
 							,Menu menu
 							,Model model
-							,HttpServletRequest request){
+							,HttpServletRequest request
+							,HttpSession session){
 		
 		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
 				+ File.separator + "images" + File.separator;
@@ -196,6 +194,12 @@ public class ShopController {
 	
 	
 	@GetMapping("tableDetail")
-	public void tableDetail() {}
-	
+	public void tableDetail(@SessionAttribute("userInfo") Member userInfo
+						,Model model) {
+		
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
+	}
+			
 }
