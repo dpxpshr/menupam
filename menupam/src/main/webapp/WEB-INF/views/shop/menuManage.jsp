@@ -23,7 +23,7 @@
         <div class="main">
             <div class="body">
                 <div class="content">
-                    <p class="fontSmall">공차 사당점</p><br>
+                    <p class="fontSmall">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <div class="buttonBox">
                         <a class="manageBtn" href="${context}/shop/shopManage">

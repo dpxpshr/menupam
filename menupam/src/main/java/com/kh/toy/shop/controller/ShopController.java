@@ -108,6 +108,11 @@ public class ShopController {
 		session.setAttribute("shopInfo", shopInfo);
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
+		model.addAttribute("shop", shopInfo);
+		
+		System.out.println("selectCategoryList : " + shopService.selectCategoryList(shopInfo.getShopIdx()));
+		System.out.println("selectMenuList : " + shopService.selectMenuList(shopInfo.getShopIdx()));
+		
 	}
 	
 	
@@ -115,7 +120,8 @@ public class ShopController {
 	public void menuModify(@SessionAttribute("shopInfo") Shop shopInfo
 							,Model model) {
 
-		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));	
+		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		model.addAttribute("shop", shopInfo);
 	}
 	
 	@PostMapping("menuRegister")
@@ -147,6 +153,7 @@ public class ShopController {
 							,Model model) {
 		
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		model.addAttribute("shop", shopInfo);
 	}
 	
 	@GetMapping("categoryData")
@@ -155,6 +162,7 @@ public class ShopController {
 							,HttpSession session) {
 		
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
+		model.addAttribute("shop", shopInfo);
 		return "shop/categoryModify"; 	
 	}
 	
@@ -200,6 +208,7 @@ public class ShopController {
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
+		model.addAttribute("shop", shopInfo);
 	}
 			
 }

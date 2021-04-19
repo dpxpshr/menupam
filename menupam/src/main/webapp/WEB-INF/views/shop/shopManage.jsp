@@ -26,7 +26,7 @@
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
-                    <p class="fontSmall" id="title">공차 사당점</p><br>
+                    <p class="fontSmall" id="title">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <div class="buttonBox">
                        <a class="manageBtn border" href="${context}/shop/shopManage">

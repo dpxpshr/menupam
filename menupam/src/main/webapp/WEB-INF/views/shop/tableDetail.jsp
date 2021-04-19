@@ -27,7 +27,7 @@
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
-                    <p class="fontSmall">공차 사당점</p><br>
+                    <p class="fontSmall">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <div class="tableInform">
                         <p class="fontXSmall">테이블 번호 : 03</p><br>
