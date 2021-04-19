@@ -44,33 +44,24 @@
 	                    	<p class="fontXSmall">현재시간 : 2021.04.11 16:25 </p>
 	                    </div>
 	                    
+	                    <c:if test="${empty requestScope.waitList}">
+				            <p class="fontXSmall">대기자가 없습니다.</p> 
+				        </c:if> 
+	                    
 	                    <div class="wrap_box">
+	                    <c:forEach var="res" items="${waitList}" varStatus="status">
+	                    	<form name="form" method="POST" >
 	                    	<div class="wating_box">
 	                    		<span class="waiting_info">3인 010-0000-0000</span>
 	                    		<div class="wrap_btn">
-	                    			<input type="button" class="btn" id="send_msg" value="문자 전송" onclick='sendMsg()'>
-	                    			<input type="button" class="btn" id="arrived" value="손님 도착" onclick='arrived()'>
-	                    			<input type="button" class="btn" id="cancel_wait" value="대기 취소" onclick='cancelWait()'>
+	                    			<button class="btn" id="send_msg">문자 전송</button>
+	                    			<button class="btn" id="arrived">문자 전송</button>
+	                    			<button class="btn" id="cancel_wait">문자 전송</button>
 	                    		</div>
 	                    	</div>
-	                    	
-	                    	<div class="wating_box">
-	                    		<span class="waiting_info">3인 010-0000-0000</span>
-	                    		<div class="wrap_btn">
-	                    			<input type="button" class="btn" id="send_msg" value="문자 전송" onclick='sendMsg()'>
-	                    			<input type="button" class="btn" id="arrived" value="손님 도착" onclick='arrived()'>
-	                    			<input type="button" class="btn" id="cancel_wait" value="대기 취소" onclick='cancelWait()'>
-	                    		</div>
-	                    	</div>
-	                    	
-	                    	<div class="wating_box">
-	                    		<span class="waiting_info">3인 010-0000-0000</span>
-	                    		<div class="wrap_btn">
-	                    			<input type="button" class="btn" id="send_msg" value="문자 전송" onclick='sendMsg()'>
-	                    			<input type="button" class="btn" id="arrived" value="손님 도착" onclick='arrived()'>
-	                    			<input type="button" class="btn" id="cancel_wait" value="대기 취소" onclick='cancelWait()'>
-	                    		</div>
-	                    	</div>
+	                    	</form>
+	                    	</c:forEach>
+	                    
 	                    
 	                    
 	                    </div>
@@ -87,6 +78,24 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+     <script type="text/javascript">
+    $(document).ready(function(){
+    	$("#send_msg").click(function(){
+    		document.form.action = "${context}/waiting/sendMsg";
+    	});
+    	
+    	$("#arrived").click(function(){
+    		document.form.action = "${context}/waiting/arrived";
+    	});
+    	
+    	$("#cancel_wait").click(function(){
+    		document.form.action = "${context}/waiting/cancelWait";
+    	});
+    	
+    });
+    
+    
+    </script>
 
 </body>
 </html>

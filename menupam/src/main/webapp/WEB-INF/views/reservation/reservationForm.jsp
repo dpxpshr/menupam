@@ -8,9 +8,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='resources/css/main.css'>
-     <link rel='stylesheet' type='text/css' media='screen' href='resources/css/reservationForm.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
+     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationForm.css'>
     <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
@@ -25,10 +25,11 @@
             </div>
         </div>
         <div class="main">
-            <!--여기서 부터 코드 작성 -->
+            <!--여기서 부터 코드 작성 enctype="multipart/form-data"-->
            <div class=reservation_info>
            
-          
+           <form:form modelAttribute="reservation" 
+          action="${context}/reservation/reserve" method="POST" >
             <br>
             <div class="fontBox">
             <p class="fontLarge">예약 </p>
@@ -37,51 +38,53 @@
             <br>
                 <p class="fontMedium">방문 일자</p>
                 <br>
-                <input type="datetime-local" class="inputLarge">
+                <input type="datetime-local" class="inputLarge" name="reserDate">
       		
-      			<p class="fontMedium">방문 예정 시간</p>
+      			<!-- <p class="fontMedium">방문 예정 시간</p>
       			<br>
       			<input type="text" class="inputLarge" name="time" id="time"placeholder="방문 예정 시간을 입력해주세요">
-            	
+            	 -->
             	 <div class="imgBox">
+                <!-- 예약자 이름 입력칸 필요한가?
                 <div class="imgsmall">
-                      
                     <i class="far fa-user  fa-5x"></i>
-                    <input type="text" class="inputLarge" name="name" id="name" placeholder="성함을 입력해주세요">
-                   </div>
+                    <input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력해주세요">
+                </div> -->
                    <br>
              
                 	<div id="search_bar">
             				<p class="fontLarge"	class="inputLarge">예약 인원
-								<select id="search_sel" name="select">
+								<select id="search_sel" name="reserParty">
 								
-									<option value="reservation_1">1인 방문 ▼</option>
-									<option value="reservation_2">2인 방문 </option>
-									<option value="reservation_3">3인 방문 </option>
-									<option value="reservation_4">4인 방문 </option>
+									<option value="1">1인 방문 ▼</option>
+									<option value="2">2인 방문 </option>
+									<option value="3">3인 방문 </option>
+									<option value="4">4인 방문 </option>
 								</select>
-								
+								</p>
             </div>
-            </p>
+            
             
                 </div>
                 <br>
             
             <div class="phone_num">
-            <p class="fontLarge">휴대폰번호</p>
+            <p class="fontLarge">요청사항</p>
             <br>
-            <input type="text" class="inputLarge" name="phone" placeholder="휴대폰 번호를 입력해주세요">
+            <input type="text" class="inputLarge" name="reserComment" placeholder="요청사항을 입력해주세요">
            
             </div>
               <div class="btnBox">
                  <br>
-            <input type="button" value="예약하기" class="btnLarge">
+            
+            <button class="btnLarge">예약하기</button>
             <br>
             </div>
              
        
            
               </div>
+              </form:form>
             
         </div>
        </div>

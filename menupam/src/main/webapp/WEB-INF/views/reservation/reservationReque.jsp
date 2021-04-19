@@ -35,40 +35,38 @@
 	                    <div class="wrap_shop">
 							<i class="fas fa-store store"></i>
 	                    	<div class="shop">
-								<span id="shop_info">abcdef123</span><br> <!--매장 인덱스 -->
-								<span id="shop_info">나이스 닭다리</span> <!-- 매장 이름 -->
+								<span id="shop_info">${sessionScope.shop.shopIdx}</span><br> <!--매장 인덱스 -->
+								<span id="shop_info">${sessionScope.shop.shopName}</span> <!-- 매장 이름 -->
 	                    	</div>
 	                    </div>
 	                    <hr color="#F2BB13">
 	                    
-	                    <div class="time">
+	                    <div class="time"> <!-- 시간 어떻게 띄우지? -->
 	                    	<p class="fontXSmall">현재시간 : 2021.04.11 16:25 </p>
 	                    </div>
+	                    <br>
+	                    <c:if test="${empty requestScope.resRequeList}">
+				            <p class="fontSmall"> 요청된 예약이 없습니다.</p> 
+				        </c:if>  
+	                    
 	                    
 	                   <div class="wrap_box">
-	                    	<div class="reserv_box">
-	                    		<div class="box">
-	                    		<span class="reserv_info">4월 30일 (수) 17:30 4인</span>
-	                    		<input type="button" class="btn" id="reserv_ok" value="예약 승인" onclick='reserveOk()'>
-	                    		</div>
-	                    		<div class="box">
-	                    		<span class="reserv_info">하명도 010-0000-0000</span>
-	                    		<input type="button" class="btn" id="reserv_not" value="예약 거부" onclick='reserveNot()'>
-	                    		</div>
-	                    		<p class="fontXSmall">요청사항 : </span>
-	                    	</div>
+	                   <c:forEach var="reservation" items="${resRequeList}" varStatus="status">
+	                    	<form name="requeForm" method="POST" >
+		                    	<div class="reserv_box">
+		                    		<div class="box">
+		                    		<span class="reserv_info">${reservation.reserDate} ${reservation.reserParty}인</span>
+		                    		<button class="btn" id="reserv_ok">예약 승인</button>
+		                    		</div>
+		                    		<div class="box">
+		                    		<span class="reserv_info">${reservation.reserName} ${requestScope.memberPhone}</span>
+		                    		<button class="btn" id="reserv_not">예약 거부</button>
+		                    		</div>
+		                    		<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>
+		                    	</div>
+	                    	</form>
+	                    	</c:forEach>
 	                    	
-	                    	<div class="reserv_box">
-	                    		<div class="box">
-	                    		<span class="reserv_info">4월 30일 (수) 17:30 4인</span>
-	                    		<input type="button" class="btn" id="reserv_ok" value="예약 승인" onclick='reserveOk()'>
-	                    		</div>
-	                    		<div class="box">
-	                    		<span class="reserv_info">하명도 010-0000-0000</span>
-	                    		<input type="button" class="btn" id="reserv_not" value="예약 거부" onclick='reserveNot()'>
-	                    		</div>
-	                    		<p class="fontXSmall">요청사항 : </span>
-	                    	</div>
 	                    </div>
 	                    
                     
@@ -83,5 +81,20 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+    
+      <script type="text/javascript">
+    $(document).ready(function(){
+    	$("#reserv_ok").click(function(){
+    		document.requeForm.action = "${context}/reservation/approveRes";
+    	});
+    	
+    	$("#reserv_not").click(function(){
+    		document.requeForm.action = "${context}/reservation/rejectRes";
+    	});
+    	
+    });
+    
+    
+    </script>
 </body>
 </html>

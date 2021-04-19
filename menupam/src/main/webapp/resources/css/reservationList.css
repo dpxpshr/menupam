@@ -137,8 +137,8 @@
 }
 
 
-.fontXSmall{
+.fontSmall{
 	margin-left: 3px;
-	font-size: smaller;
+	margin-top: 10px;
 	height: 45%;
 }

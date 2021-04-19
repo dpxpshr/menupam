@@ -15,12 +15,16 @@
 		<typeAlias type="com.kh.toy.shop.model.vo.MenuCategory" alias="menuCategory"/>
 		<typeAlias type="com.kh.toy.shop.model.vo.Menu" alias="menu"/>
 		<typeAlias type="com.kh.toy.common.util.file.MenupamFile" alias="menupamFile"/>
+		<typeAlias type="com.kh.toy.reservation.model.vo.Reservation" alias="reservation"/>
+		<typeAlias type="com.kh.toy.waiting.model.vo.Waiting" alias="waiting"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/boardMapper.xml"/>
 		<mapper resource="mybatis/mapper/reviewMapper.xml"/>
 		<mapper resource="mybatis/mapper/shopMapper.xml"/>
 		<mapper resource="mybatis/mapper/memberMapper.xml"/>
+		<mapper resource="mybatis/mapper/reservationMapper.xml"/>
+		<mapper resource="mybatis/mapper/waitingMapper.xml"/>
 		<!--<mapper resource="mybatis/mapper/orderMapper.xml"/> -->
 	</mappers>
 </configuration>
