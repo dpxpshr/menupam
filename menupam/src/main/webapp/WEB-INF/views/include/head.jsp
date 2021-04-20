@@ -68,9 +68,28 @@ window.onload = function(){
 			let receiveId = "kim2";
 			let msg = "메시지 입니다";
 			socket.send(userId+","+msg+","+receiveId);
-
 		}
 	}
+	
+	
+	let getNotification = (memberId) => {
+		console.log(memberId);
+		fetch("/notification/notifications?memberId="+memberId,{
+			method:"POST"
+		})
+		.then(response => response.json())
+		.then(json => {
+			if(Object.keys(json).length == 0){
+				document.querySelector(".alertCnt").style.display = 'none';
+			}else{
+				document.querySelector(".alertCnt").innerHTML = Object.keys(json).length;
+			}
+		})
+	}
+	
+	
+	getNotification('${sessionScope.userInfo.memberId}');
+	
 }
 
 </script>

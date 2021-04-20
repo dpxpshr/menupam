@@ -11,16 +11,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../resources/css/review/reviewForm.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </div>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">

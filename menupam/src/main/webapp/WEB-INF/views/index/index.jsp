@@ -15,41 +15,7 @@
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <div class="header">
-            <div class=bell>
-                <i class="far fa-bell" style="color: #CDC7D5;" ></i>
-                <div class="alertCnt">1</div>
-            </div>
-        </div>
-        <!--알림이 있는것 1. 예약, 주문,  -->
-        <div class="alertNotice">
-            <div class="alert">
-                <div class="alertMsg">
-                    <a href="" class="fontXSmall">롯데리아 과천점 예약</a>
-                </div>
-                <div class="alertTime">
-                    <p class="fontXXSmall">21.04.13</p>
-                </div>
-            </div>
-            <div class="alert">
-                <div class="alertMsg">
-                    <a href="" class="fontXSmall">롯데리아 과천점 3번 주문</a>
-                </div>
-                <div class="alertTime">
-                    <p class="fontXXSmall">21.04.13</p>
-                </div>
-            </div>
-            <div class="alert">
-                <div class="alertMsg">
-                    <a href="" class="fontXSmall">롯데리아 과천점 3번 주문</a>
-                </div>
-                <div class="alertTime">
-                    <p class="fontXXSmall">21.04.13</p>
-                </div>
-            </div>
-        </div>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="banner">
