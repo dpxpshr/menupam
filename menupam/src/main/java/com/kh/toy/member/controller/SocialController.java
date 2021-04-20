@@ -17,6 +17,7 @@ import com.kh.toy.member.model.vo.Member;
 @RequestMapping("social")
 public class SocialController {
 
+	
 	private final MemberService memberService;
 
 	public SocialController(MemberService memberService) {
@@ -52,11 +53,21 @@ public class SocialController {
 
 		//State비교 진행 -> CSRF? 공격 때문에
 		if(state.equals((String)session.getAttribute("state"))) {
-			
+			Map<String, String> profile = memberService.getNaverMemberData(code,state);
+			Member member = memberService.selectMemberById((String)profile.get("id"));
+			if(member == null) {
+				member = new Member();
+				member.setMemberId(profile.get("id"));
+				member.setMemberPw(member.getMemberId());
+				member.setMemberEmail(profile.get("email"));
+				member.setMemberPhone(profile.get("mobile"));
+				member.setMemberName(profile.get("name"));
+				memberService.insertMember(member);
+			}else {
+				session.setAttribute("userInfo", member);
+				System.out.println("회원가입함");
+			}
 		}
-		
-		
-		
 		return "index/index";
 	}
 }

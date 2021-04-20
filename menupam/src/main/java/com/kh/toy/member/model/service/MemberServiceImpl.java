@@ -26,14 +26,17 @@ import com.kh.toy.common.code.Code;
 import com.kh.toy.common.mail.MailSender;
 import com.kh.toy.common.util.http.HttpUtil;
 import com.kh.toy.common.util.kakao.KakaoUtil;
+import com.kh.toy.common.util.naver.NaverUtil;
 import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
+
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	KakaoUtil kakaoUtil = new KakaoUtil();
+	NaverUtil naverUtil = new NaverUtil();
 
 	private final MemberRepository memberRepository;
 
@@ -179,6 +182,13 @@ public class MemberServiceImpl implements MemberService {
 		String accessToken = tokenMap.get("access_token");
 		Map<String, Object> kakaoMemberData = kakaoUtil.getKakaoUser(accessToken);
 		return kakaoMemberData;
+	}
+
+	@Override
+	public Map<String, String> getNaverMemberData(String code, String state) {
+		Map<String, String> tokenMap = naverUtil.getTokenMap(code, state);
+		Map<String, String> profile = naverUtil.getProfileMap(tokenMap.get("token_type"), tokenMap.get("access_token"));
+		return profile;
 	}
 
 	

@@ -37,5 +37,7 @@ public interface MemberService {
 	Member selectUserInfo(String userMember);
 
 	Map<String, Object> getKakaoMemberData(String code);
+	
+	Map<String, String> getNaverMemberData(String code, String state);
 
 }
