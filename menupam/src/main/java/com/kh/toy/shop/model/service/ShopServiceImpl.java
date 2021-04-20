@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.common.util.file.MenupamFile;
 import com.kh.toy.common.util.photo.PhotoUtil;
+import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.repository.ShopRepository;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
@@ -135,6 +136,20 @@ public class ShopServiceImpl implements ShopSerivce{
 		Map<String, Object> commandMap = new HashMap<String,Object>();
 		commandMap.put("menuList", shopRepository.selectMenuList(shopIdx));
 	
+		return commandMap;
+	}
+
+	@Override
+	public Order selectOrder(String userId) {
+		return shopRepository.selectOrder(userId);
+	}
+
+	@Override
+	public Map<String, Object> selectMenuOrderList(String orderIdx) {
+		
+		Map<String, Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("menuOrders", shopRepository.selectMenuOrderList(orderIdx));
+		
 		return commandMap;
 	}	
 

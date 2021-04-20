@@ -9,8 +9,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.kh.toy.common.util.file.MenupamFile;
+import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
+import com.kh.toy.shop.model.vo.MenuOrdering;
 import com.kh.toy.shop.model.vo.Shop;
 
 @Mapper
@@ -60,4 +62,11 @@ public interface ShopRepository {
 	String selectFileIdx(String fileRename);
 	
 	List<Menu> selectMenuList(String shopIdx);
+	
+	////// 메뉴 오더
+	@Select("select * from tb_order where member_id = #{memberId}")
+	Order selectOrder(String userId);
+	
+	List<MenuOrdering> selectMenuOrderList(String orderIdx);
+	
 }	

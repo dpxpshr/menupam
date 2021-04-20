@@ -17,6 +17,8 @@
 		<typeAlias type="com.kh.toy.common.util.file.MenupamFile" alias="menupamFile"/>
 		<typeAlias type="com.kh.toy.reservation.model.vo.Reservation" alias="reservation"/>
 		<typeAlias type="com.kh.toy.waiting.model.vo.Waiting" alias="waiting"/>
+		<typeAlias type="com.kh.toy.shop.model.vo.MenuOrdering" alias="menuOrdering"/>
+		
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/boardMapper.xml"/>

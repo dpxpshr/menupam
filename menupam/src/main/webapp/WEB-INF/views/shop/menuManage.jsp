@@ -80,7 +80,6 @@
 		                                    <div class="menuItemLeft">
 		                                        <div class="menuItemName">${menuList.MENU_NAME}</div>
 		                                        <div class="menuItemPrice">${menuList.MENU_PRICE} 원</div>
-		                                        <!-- ${menuList.MENU_CATEGORY_NAME} -->
 		                                    </div>
 		                                    <div class="menuItemRight">
 		                                        <img src="${menuList.FILE_SAVE_PATH}${menuList.FILE_RENAME}.${menuList.FILE_TYPE}">

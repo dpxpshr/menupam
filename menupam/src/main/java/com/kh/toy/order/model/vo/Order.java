@@ -53,5 +53,12 @@ public class Order {
 		this.shopIdx = shopIdx;
 	}
 	
+	@Override
+	public String toString() {
+		return "Order [orderIdx=" + orderIdx + ", orderPrice=" + orderPrice + ", orderDate=" + orderDate
+				+ ", orderPackState=" + orderPackState + ", orderPayState=" + orderPayState + ", memberId=" + memberId
+				+ ", shopIdx=" + shopIdx + "]";
+	}
+	
 	
 }

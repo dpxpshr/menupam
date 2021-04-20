@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.member.model.vo.Member;
+import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.service.ShopSerivce;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
@@ -104,14 +105,11 @@ public class ShopController {
 						,HttpServletRequest request) {
 		
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		
+	
 		session.setAttribute("shopInfo", shopInfo);
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
 		model.addAttribute("shop", shopInfo);
-		
-		System.out.println("selectCategoryList : " + shopService.selectCategoryList(shopInfo.getShopIdx()));
-		System.out.println("selectMenuList : " + shopService.selectMenuList(shopInfo.getShopIdx()));
 		
 	}
 	
@@ -135,7 +133,7 @@ public class ShopController {
 		
 		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
 				+ File.separator + "images" + File.separator;
-		
+	
 		if(menu.getMenuVegan() == null) {
 			menu.setMenuVegan(menuVegan);
 		}
@@ -205,9 +203,16 @@ public class ShopController {
 	public void tableDetail(@SessionAttribute("userInfo") Member userInfo
 						,Model model) {
 		
+		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		
+		Map<String,Object> map = shopService.selectMenuOrderList(order.getOrderIdx());
+		
+		System.out.println(map);
+		
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
+		model.addAllAttributes(shopService.selectMenuOrderList(order.getOrderIdx()));
 		model.addAttribute("shop", shopInfo);
 	}
 			

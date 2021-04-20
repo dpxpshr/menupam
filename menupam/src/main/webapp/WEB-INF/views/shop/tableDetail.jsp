@@ -37,14 +37,14 @@
                             <p class="fontXSmall">가격</p>
                             <p class="fontXSmall">수량</p>
                             <p class="fontXSmall">취소</p>
-                            <p class="fontXSmall">김치볶음밥</p>
-                            <p class="fontXSmall">6000원</p>
-                            <p class="fontXSmall">1</p>
-                            <p class="fontXSmall"><i class="far fa-times-circle"></i></p>
-                            <p class="fontXSmall">라면</p>
-                            <p class="fontXSmall">4000원</p>
-                            <p class="fontXSmall">1</p>
-                            <p class="fontXSmall"><i class="far fa-times-circle"></i></p>
+                            <c:forEach var="menuOrders" items="${menuOrders}">
+                            	<p class="fontXSmall">${menuOrders.ORDER_MENU_NAME}</p>
+	                            <p class="fontXSmall">${menuOrders.ORDER_MENU_PRICE}원</p>
+	                            <p class="fontXSmall">${menuOrders.ORDER_MENU_CNT}</p>
+	                            <p class="fontXSmall"><i class="far fa-times-circle"></i></p>
+                            </c:forEach>
+                            
+                           
                         </div>
                         <br>
                         <p class="fontSmall">총 결제 금액 : 10000원</p><br>
