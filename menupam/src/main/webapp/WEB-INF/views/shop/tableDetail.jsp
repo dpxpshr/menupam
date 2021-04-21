@@ -31,23 +31,23 @@
                     <div class="line"></div><br>
                     <div class="tableInform">
                         <p class="fontXSmall">테이블 번호 : 03</p><br>
-                        <p class="fontXSmall">2021.03.28 - 오후 3 : 51</p><br>
+                        <p class="fontXSmall">${order.orderDate}</p><br>
                         <div class="menuList">
                             <p class="fontXSmall">메뉴</p>
                             <p class="fontXSmall">가격</p>
                             <p class="fontXSmall">수량</p>
                             <p class="fontXSmall">취소</p>
-                            <c:forEach var="menuOrders" items="${menuOrders}">
-                            	<p class="fontXSmall">${menuOrders.ORDER_MENU_NAME}</p>
-	                            <p class="fontXSmall">${menuOrders.ORDER_MENU_PRICE}원</p>
-	                            <p class="fontXSmall">${menuOrders.ORDER_MENU_CNT}</p>
-	                            <p class="fontXSmall"><i class="far fa-times-circle"></i></p>
+                            <c:forEach var="orders" items="${menuOrders}">
+                            	<p class="fontXSmall">${orders.ORDER_MENU_NAME}</p>
+	                            <p class="fontXSmall">${orders.ORDER_MENU_PRICE}원</p>
+	                            <p class="fontXSmall">${orders.ORDER_MENU_CNT}</p>
+	                            <p class="fontXSmall"><a class="menuCancel"><i class="far fa-times-circle"></i></p></a>
                             </c:forEach>
                             
                            
                         </div>
                         <br>
-                        <p class="fontSmall">총 결제 금액 : 10000원</p><br>
+                        <p class="fontSmall">총 결제 금액 : ${menuSum}원</p><br>
                     </div>
                     <br>
                 
@@ -76,8 +76,6 @@
                              
                         </c:forEach>
                             
-                        
-                        
                     </div>
                 </div>
             </div>
@@ -90,18 +88,10 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
+    
+    <script src="/resources/js/shop/tableDetail.js"></script>
+   
+    
 </body>
-<script type="text/javascript">
-    document.querySelectorAll(".menuCategory").forEach((e)=>{
-        e.addEventListener("click", (event)=>{
-            let menuItems = e.nextSibling.nextSibling;
-            //만약 클래스명에 active가 없다면 넣어주기
-            if(menuItems.className.indexOf("active") != -1){
-                menuItems.className = "menuItems";
-            }else{
-                menuItems.className += " active";
-            }
-        })
-    })
-</script>
+
 </html>

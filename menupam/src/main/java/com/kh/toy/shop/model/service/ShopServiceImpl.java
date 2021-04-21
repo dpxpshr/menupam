@@ -2,6 +2,7 @@ package com.kh.toy.shop.model.service;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
@@ -14,6 +15,7 @@ import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.repository.ShopRepository;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
+import com.kh.toy.shop.model.vo.MenuOrdering;
 import com.kh.toy.shop.model.vo.Shop;
 
 
@@ -145,12 +147,12 @@ public class ShopServiceImpl implements ShopSerivce{
 	}
 
 	@Override
-	public Map<String, Object> selectMenuOrderList(String orderIdx) {
+	public List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx) {
 		
-		Map<String, Object> commandMap = new HashMap<String,Object>();
-		commandMap.put("menuOrders", shopRepository.selectMenuOrderList(orderIdx));
+		//Map<String, Object> commandMap = new HashMap<String,Object>();
+		//commandMap.put("menuOrders", shopRepository.selectMenuOrderList(orderIdx));
 		
-		return commandMap;
+		return shopRepository.selectMenuOrderList(orderIdx);
 	}	
 
 }

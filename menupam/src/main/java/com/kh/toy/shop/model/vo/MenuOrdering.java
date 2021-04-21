@@ -7,6 +7,8 @@ public class MenuOrdering {
 	private String orderIdx;
 	private String menuIdx;
 	private String orderMenuName;
+	private String orderMenuPrice;
+	
 	
 	public String getMoIdx() {
 		return moIdx;
@@ -47,12 +49,19 @@ public class MenuOrdering {
 		this.orderMenuName = orderMenuName;
 	}
 	
+	public String getOrderMenuPrice() {
+		return orderMenuPrice;
+	}
+	public void setOrderMenuPrice(String orderMenuPrice) {
+		this.orderMenuPrice = orderMenuPrice;
+	}
+	
 	@Override
 	public String toString() {
 		return "MenuOrdering [moIdx=" + moIdx + ", orderMenuCnt=" + orderMenuCnt + ", orderIdx=" + orderIdx
-				+ ", menuIdx=" + menuIdx + ", orderMenuName=" + orderMenuName + "]";
+				+ ", menuIdx=" + menuIdx + ", orderMenuName=" + orderMenuName + ", orderMenuPrice=" + orderMenuPrice
+				+ "]";
 	}
-	
 	
 	
 }

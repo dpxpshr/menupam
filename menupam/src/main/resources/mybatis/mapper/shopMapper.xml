@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="selectMenuOrderList" resultType="map">
-		select order_menu_name, order_menu_price, order_price, order_menu_cnt, order_date
+		select order_menu_name, order_menu_price, order_menu_cnt, order_date
 		from tb_menu_ordering
 		left outer join tb_order using(order_idx)
 		where order_idx = #{orderIdx}

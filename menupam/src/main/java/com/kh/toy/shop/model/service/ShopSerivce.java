@@ -1,5 +1,6 @@
 package com.kh.toy.shop.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
+import com.kh.toy.shop.model.vo.MenuOrdering;
 import com.kh.toy.shop.model.vo.Shop;
 
 public interface ShopSerivce {
@@ -25,5 +27,5 @@ public interface ShopSerivce {
 	Map<String,Object> selectMenuList(String shopIdx);
 	
 	Order selectOrder(String userId);
-	Map<String, Object> selectMenuOrderList(String orderIdx);
+	List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx);
 }
