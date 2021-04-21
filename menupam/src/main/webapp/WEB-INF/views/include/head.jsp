@@ -18,19 +18,19 @@ window.onload = function(){
 	//우측 상단 알림벨 클릭 시 알림창 open/close 작업
 	let open = false;
 	let bell = document.querySelector(".bell")
-	let alertNotice = document.querySelector(".alertNotice")
+	let notifications = document.querySelector(".notifications")
 	
 	bell.addEventListener("click",(e)=>{
-		socketTest();
+		
 	    if(open){
 	        //open O
-	        alertNotice.style.display = "none";
-	        console.log("닫자");
+	        notifications.style.display = "none";
+	        console.log("닫힘");
 	        open = false;
 	    }else{
 	        //open X
-	        alertNotice.style.display = "block";
-	        console.log("열자");
+	        notifications.style.display = "block";
+	        console.log("열림");
 	        open = true;
 	    }
 	})
@@ -68,9 +68,60 @@ window.onload = function(){
 			let receiveId = "kim2";
 			let msg = "메시지 입니다";
 			socket.send(userId+","+msg+","+receiveId);
-
 		}
 	}
+	
+	let makeNotificationDIV = (content, link, regDate) => {
+		let notification = document.createElement("div");
+		notification.className = 'notification';
+
+		let notificationMsg = document.createElement("div");
+		notificationMsg.className = 'notificationMsg';
+		let aTag = document.createElement("a");
+		aTag.className = 'fontXSmall'
+		aTag.href = link;
+		aTag.innerHTML = content;
+		notificationMsg.appendChild(aTag);
+
+		let notificationTime = document.createElement("div");
+		notificationTime.className = 'notificationTime';
+		let pTag = document.createElement("p");
+		pTag.className = 'fontXXSmall';
+		pTag.innerHTML = regDate;
+		notificationTime.appendChild(pTag);
+
+		notification.appendChild(notificationMsg);
+		notification.appendChild(notificationTime);
+
+		return notification;
+	}
+	
+	let getNotification = (memberId) => {
+		console.log(memberId);
+		fetch("/notification/notifications?memberId="+memberId,{
+			method:"POST"
+		})
+		.then(response => response.json())
+		.then(json => {
+			if(Object.keys(json).length == 0){
+				document.querySelector(".notificationCnt").style.display = 'none';
+			}else{
+				document.querySelector(".notificationCnt").innerHTML = Object.keys(json).length;
+				for(let i=1; i<=Object.keys(json).length; i++){
+					let content = json[i].notificationContent;
+					let link = json[i].notificationLink;
+					let regDate = json[i].notificationRegDate.substring(2,10);
+					
+					let notification = makeNotificationDIV(content,link,regDate);
+					document.querySelector(".notifications").appendChild(notification);
+				}
+			}
+		})
+	}
+	
+	
+	getNotification('${sessionScope.userInfo.memberId}');
+	
 }
 
 </script>
