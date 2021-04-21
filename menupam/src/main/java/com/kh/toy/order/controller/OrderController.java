@@ -150,7 +150,12 @@ public class OrderController {
 	
 	//결제 화면
 	@GetMapping("payment")
-	public String payment() {
+	public String payment(String shopIdx,Model model,HttpSession session) {
+		//장바구니 내역이 없거나, 장바구니 idx와 입력한 shopIdx가 다르다면 shoplist로 보낸다.
+		if(session.getAttribute("cartIdx") == null ||!session.getAttribute("cartIdx").equals(shopIdx) ) {
+			return "redirect:order/shoplist";
+		}
+		model.addAttribute(orderService.selectShopbyIdx(shopIdx));
 		return "order/payment";
 	}
 	

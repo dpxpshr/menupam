@@ -36,7 +36,7 @@
 	            	<div class="menuItem_Left">
 	            		<div class="menuItem_Name">${menu.menuName}</div>
 	            		<span class="${menu.menuIdx}unit_price" style="display:none">${menu.menuPrice}</span> <!-- 메뉴의 1개당 가격을 저장 -->
-	            		<div class="menuItem_Price"><span class="${menu.menuIdx}price">${menu.menuPrice}</span> 원</div> <!-- 실제 화면에 나타나는 가격 -->
+	            		<div class="menuItem_Price"><span class="${menu.menuIdx}price">${menu.menuPrice * menu.count}</span> 원</div> <!-- 실제 화면에 나타나는 가격 -->
 	            	</div>
 	            	<div class="menuItem_Right">
 	            		<div class="menuItem_Delete" onclick="deletemenu('${menu.menuIdx}')">
@@ -56,7 +56,7 @@
         
         
 
-        <button class="menuOrder">주문하기</button>
+        <button class="menuOrder" onclick="payment()">주문하기</button>
         
        
         <script type="text/javascript">
@@ -108,7 +108,9 @@
 					}
 				});
         	}
-
+			let payment = ()=>{
+				location.href = "/order/payment?shopIdx=${shop.shopIdx}";
+			}
     	</script>
         <footer class="footer">
             <div class="menuView"><i class="fas fa-store"></i></div>
