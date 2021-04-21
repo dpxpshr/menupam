@@ -35,7 +35,7 @@ public class SocialController {
 			return "member/socialJoin";
 		}else {
 			session.setAttribute("userInfo", member);
-			return "index/index";
+			return "redirect:/index";
 		}
 	}
 	
@@ -65,9 +65,8 @@ public class SocialController {
 				memberService.insertMember(member);
 			}else {
 				session.setAttribute("userInfo", member);
-				System.out.println("회원가입함");
 			}
 		}
-		return "index/index";
+		return "redirect:/index";
 	}
 }
