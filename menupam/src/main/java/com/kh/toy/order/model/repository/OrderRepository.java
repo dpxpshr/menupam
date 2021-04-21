@@ -28,4 +28,7 @@ public interface OrderRepository {
 
 	@Select("select * from tb_menu where shop_idx = #{shopIdx}")
 	List<Menu> searchMenuByShopIdx(String shopIdx);
+
+	@Select("select * from tb_menu where shop_idx = #{shopIdx} and menu_idx = #{menuIdx}")
+	Menu menuExistInShopIdx(Map<String,String> commandMap);
 }

@@ -55,4 +55,9 @@ public class OrderServiceImpl implements OrderService{
 		return result;
 	}
 
+	@Override
+	public Menu getMenuInShopIdx(String shopIdx, String menuIdx) {
+		return orderRepository.menuExistInShopIdx(Map.of("shopIdx",shopIdx,"menuIdx",menuIdx));
+	}
+
 }

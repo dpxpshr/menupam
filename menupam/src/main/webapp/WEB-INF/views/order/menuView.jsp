@@ -51,7 +51,7 @@
                      </div>
                      <script type="text/javascript">
                      	document.querySelector("#${menu.menuIdx}").addEventListener("click",()=>{
-                     		alert("${menu.menuIdx}");
+                     		location.href="/order/menucart?shopIdx=${shop.shopIdx}&add=${menu.menuIdx}";
                      	})
                      </script>
                      </c:forEach>
@@ -59,16 +59,22 @@
                 
              </c:forEach>   
              </div>
-           </div> 
+           </div>
         </section>
         <footer class="footer">
+        	<div class="menuCart"><i class="fas fa-shopping-bag"></i></div>
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
             <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </footer> 
-    </div> 
+    </div>
+    <script type="text/javascript">
+    	document.querySelector(".menuCart").addEventListener("click",()=>{
+    		location.href="/order/menucart?shopIdx=${shop.shopIdx}";
+    	});
+    </script>
 	<script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-migrate-3.3.2.js" integrity="sha256-BDmtN+79VRrkfamzD16UnAoJP8zMitAz093tvZATdiE=" crossorigin="anonymous"></script>

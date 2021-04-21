@@ -129,9 +129,6 @@ body {
 }
 
 
-
-
-
 .footer{
     height : 48px;
 	width : 375px;
@@ -150,4 +147,15 @@ body {
     font-size: 1.3em;
 }
 
-
+.menuCart{
+	width:50px !important;
+	height:50px;
+	background-color:rgb(255,188,4);
+	position:fixed;
+	transform:translate(300px,-150px);
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	font-size:18px !important;
+	border-radius: 20%;
+}
