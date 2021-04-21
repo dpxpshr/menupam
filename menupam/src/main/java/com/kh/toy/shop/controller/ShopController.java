@@ -1,6 +1,7 @@
 package com.kh.toy.shop.controller;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.service.ShopSerivce;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
+import com.kh.toy.shop.model.vo.MenuOrdering;
 import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.shop.validator.ShopValidator;
 
@@ -205,15 +207,21 @@ public class ShopController {
 		
 		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		List<Map<MenuOrdering,Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
+		int sum = 0;
 		
-		Map<String,Object> map = shopService.selectMenuOrderList(order.getOrderIdx());
-		
-		System.out.println(map);
-		
+		// 메뉴 가격 더한 값 view 출력
+		for (Map<MenuOrdering, Object> mo : menOrders) {
+			sum += Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_PRICE", mo.values()));
+		}
+			
+		model.addAttribute("shop", shopInfo);
+		model.addAttribute("order", order);
+		model.addAttribute("menuOrders", menOrders);
+		model.addAttribute("menuSum", sum);
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
-		model.addAllAttributes(shopService.selectMenuOrderList(order.getOrderIdx()));
-		model.addAttribute("shop", shopInfo);
+		
 	}
 			
 }

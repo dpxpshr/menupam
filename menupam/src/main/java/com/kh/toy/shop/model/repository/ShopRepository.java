@@ -2,6 +2,7 @@ package com.kh.toy.shop.model.repository;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -67,6 +68,6 @@ public interface ShopRepository {
 	@Select("select * from tb_order where member_id = #{memberId}")
 	Order selectOrder(String userId);
 	
-	List<MenuOrdering> selectMenuOrderList(String orderIdx);
+	List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx);
 	
 }	
