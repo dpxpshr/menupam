@@ -40,7 +40,7 @@
 						<div class="line"></div>
 						<br>
 						<p class="fontMedium">방문 일자</p>
-						<br> <input type="datetime-local" class="inputLarge"
+						<br> <input type="datetime-local" class="inputLarge" id="calendar" step="1800"
 							name="reserDate"> <br> <br>
 						<!-- <p class="fontMedium">방문 예정 시간</p>
       			<br>
@@ -71,6 +71,8 @@
 								name="reserComment" placeholder="요청사항을 입력해주세요">
 						</div>
 						<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
+						<br>
+						<input type="text" name="reserPhone" value="${sessionScope.userInfo.memberPhone}">
 						<div class="btnBox">
 							<br>
 							<button class="btnLarge">예약하기</button>
@@ -111,4 +113,23 @@
 		</div>
 	</div>
 </body>
+<script>
+	let getToday = () => {
+		//2021-02-10T09:00
+		let today = new Date();   
+		let year = today.getFullYear(); // 년도
+		let month = today.getMonth() + 1;  // 월
+		if(month<10){
+			month = '0'+month;
+		}
+		let date = today.getDate();  // 날짜
+		let day = today.getDay();  // 요일
+		return year+'-'+month+'-'+date+'T09:00';
+	}
+	
+	
+	window.onload = function(){
+		document.querySelector("#calendar").min = getToday();	
+	}
+</script>
 </html>

@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>메뉴팜</title>
-<script type="text/javascript" src="/resources/js/common/asyncResponseError.js"></script>
+<script type="text/javascript"
+	src="/resources/js/common/asyncResponseError.js"></script>
 <script type="text/javascript" src="/resources/js/common/urlEncoder.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<c:set var="context" value="${pageContext.request.contextPath}"/>
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<c:set var="context" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
 
 window.onload = function(){
@@ -57,25 +59,30 @@ window.onload = function(){
 </head>
 
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>메뉴팜</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/shopModify.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationReque.css'>
-    <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>메뉴팜</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' type='text/css' media='screen'
+	href='../../../resources/css/reset.css'>
+<link rel='stylesheet' type='text/css' media='screen'
+	href='../../../resources/css/main.css'>
+<link rel='stylesheet' type='text/css' media='screen'
+	href='../../../resources/css/shopModify.css'>
+<link rel='stylesheet' type='text/css' media='screen'
+	href='../../../resources/css/reservationReque.css'>
+<script src="https://kit.fontawesome.com/e5012d0871.js"
+	crossorigin="anonymous"></script>
 <style type="text/css">
- #divClock{
-	 font-size:10px;
- 	height: 10vh;
- }
+#divClock {
+	font-size: 10px;
+	height: 10vh;
+}
 </style>
 
 </head>
 <body>
-<script type="text/javascript">
+	<script type="text/javascript">
 function $(selector, text){ 
 	if(text){
 		document.querySelector(selector).innerHTML += `${text}<br>`; 
@@ -100,82 +107,122 @@ function showClock(){
 }
 
 </script>
-    <div class="wrapper">
-        <div class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </div>
-        <div class="main">
-            <!--여기서 부터 코드 작성-->
-            <div class="body">
-                <div class="content_wrapper">
-                    <p class="fontMedium" id="title">예약 승인 요청</p><br>
-                    <div class="line"></div>
-                    <div class="content">
-	                    <div class="wrap_shop">
+	<div class="wrapper">
+		<div class="header">
+			<div class="search">
+				<i class="fas fa-search"></i>
+			</div>
+			<div class="notice">
+				<i class="far fa-clipboard"></i>
+			</div>
+		</div>
+		<div class="main">
+			<!--여기서 부터 코드 작성-->
+			<div class="body">
+				<div class="content_wrapper">
+					<p class="fontMedium" id="title">예약 승인 요청</p>
+					<br>
+					<div class="line"></div>
+					<div class="content">
+						<div class="wrap_shop">
 							<i class="fas fa-store store"></i>
-	                    	<div class="shop">
-								<span id="shop_info">${sessionScope.shop.shopIdx}</span><br> <!--매장 인덱스 -->
-								<span id="shop_info">${sessionScope.shop.shopName}</span> <!-- 매장 이름 -->
-	                    	</div>
-	                    </div>
-	                    <hr color="#F2BB13">
-	                    
-	                    <div onload="showColck()">
-	                    <div id="divClock"></div>
-	                    </div>
-	                    <br>
-	                    <c:if test="${empty requestScope.resRequeList}">
-				            <p class="fontSmall"> 요청된 예약이 없습니다.</p> 
-				        </c:if>  
-	                    
-	                    
-	                   <div class="wrap_box">
-	                   <c:forEach var="reservation" items="${resRequeList}">
-		                    	<div class="reserv_box" value="${reservation.reserIdx}">
-		                    		<div class="box">
-		                    		<span class="reserv_info">${reservation.reserDate} ${reservation.reserParty}인</span>
-		                    		<button class="btn" id="reserv_ok" onclick="hitApprove(${reservation.getReserIdx()})">예약 승인</button>
-		                    		</div>
-		                    		<div class="box">
-		                    		<span class="reserv_info">${reservation.reserName} ${reservation.memberPhone}</span>
-		                    		<button class="btn" id="reserv_not" onclick="hitreject()">예약 거부</button>
-		                    		</div>
-		                    		<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>
-		                    	</div>
-	                    	</c:forEach>
-	                    	
-	                    	<script type="text/javascript">
-	                    		let hitApprove = (reserIdx) =>{
-	                    			location.href = "${context}/reservation/approveRes?reserIdx="+reserIdx;
-	                    		}
+							<div class="shop">
+								<span id="shop_info">${sessionScope.shop.shopIdx}</span><br>
+								<!--매장 인덱스 -->
+								<span id="shop_info">${sessionScope.shop.shopName}</span>
+								<!-- 매장 이름 -->
+							</div>
+						</div>
+						<hr color="#F2BB13">
+
+						<div>
+							<div id="divClock"></div>
+						</div>
+						<br>
+						<c:if test="${empty requestScope.resRequeList}">
+							<p class="fontSmall">요청된 예약이 없습니다.</p>
+						</c:if>
+
+
+						<div class="wrap_box">
+							<c:forEach var="reservation" items="${resRequeList}">
+								<div class="reserv_box" value="${reservation.reserIdx}" id="${reservation.reserIdx}">
+									<div class="box">
+										<span class="reserv_info">${reservation.reserDate}
+											${reservation.reserParty}인</span>
+										<button class="btn" id="reserv_ok" name="${reservation.reserIdx}">예약 승인</button>
+									</div>
+									<div class="box">
+										<span class="reserv_info">${reservation.reserName}
+											${reservation.reserPhone}</span>
+										<button class="btn" id="reserv_not" onclick="hitreject()">예약
+											거부</button>
+									</div>
+									<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>
+								</div>
+							</c:forEach>
+
+							<script type="text/javascript">
+
+								document.querySelectorAll("#reserv_ok").forEach((e)=>{
+									e.addEventListener("click", (event)=>{
+										fetch("/reservation/approveRes?reserIdx="+e.name,{
+											method:"POST"
+										})
+										.then(response => response.text())
+										.then(text => {
+											if(text=="success"){
+												let reserIdx = e.name;
+												let removeTarget = document.querySelector("#"+reserIdx);
+												removeTarget.parentNode.removeChild(removeTarget);
+
+											}else if(text=="fail"){
+												window.alert("승인 도중 오류가 발생했습니다. 다시 시도해주세요");
+											}
+										})
+										
+									})
+								})
+							
 	                    	
 							    /* function hitApprove(reserIdx()}){
 							    	location.href = "${context}/reservation/approveRes?reserIdx="+${reservation.reserIdx};
 							    }; */
 							    
 							    function hitreject(){
-							    	location.href = "${context}/reservation/rejectRes?reserIdx="+${reservation.reserIdx};
+							    	//location.href = "${context}/reservation/rejectRes?reserIdx="+${reservation.reserIdx};
 							    		
 							    };
+								window.onload = function(){
+									showClock();	
+								}
 						    </script>
-	                    </div><!-- wrap_box -->
-                </div><!-- content -->
-            </div><!-- content_wrapper -->
-        </div><!-- body -->
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
-            <div><i class="far fa-user"></i></div>
-        </div> 
-    </div> <!-- main -->
-    
-    
+						</div>
+						<!-- wrap_box -->
+					</div>
+					<!-- content -->
+				</div>
+				<!-- content_wrapper -->
+			</div>
+			<!-- body -->
+			<div class="footer">
+				<div>
+					<i class="fas fa-search"></i>
+				</div>
+				<div>
+					<i class="fas fa-qrcode"></i>
+				</div>
+				<div>
+					<i class="fas fa-home"></i>
+				</div>
+				<div>
+					<i class="far fa-clipboard"></i></i>
+				</div>
+				<div>
+					<i class="far fa-user"></i>
+				</div>
+			</div>
+		</div>
+		<!-- main -->
 </body>
 </html>

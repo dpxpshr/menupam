@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kh.toy.member.model.vo.Member;
@@ -46,16 +47,17 @@ public class ReservationController {
 	} 
 	
 	//예약하기
-	@PostMapping("reserve")
+	@PostMapping("reserve") //[알림기능 해야함!]
 	public String reservationInsert(@SessionAttribute(name="userInfo", required = false) Member member, Reservation res, Model model) {
 
+		
 		//1. 여기서 만약에 session에 userInfo가 있는놈이다 하면 res객체에 ID넣어주자		
 		if(member != null) {
 			res.setMemberId(member.getMemberId());
 		}else {
 			res.setMemberId("notMember");
 		}
-		//2. 예약 신청 해주자
+		//2. 예약 신청 해주자  
 		resService.insertRes(res);
 		
 		//3. 어디로 갈지 지정해주자
@@ -83,25 +85,29 @@ public class ReservationController {
 	
 	//예약승인 화면(사장)
 	@GetMapping("reque")
-	public String reservationReque(Model model, HttpServletRequest request, Member member) {
+	public String reservationReque(Model model, HttpServletRequest request, Member member, String shopIdx) {
+		
+		//[1. seession에서 ID꺼내서 shop의 사장님의 아이디랑 일치하는지 확인해야함]
+		
 		//사장이어야하고 그 해당매장이어야하고
-		List<Map<String, Object>> resRequeList = resService.selectResRequeList();
+		List<Reservation> resRequeList = resService.selectResRequeList(shopIdx);
 		
-		model.addAllAttributes(resRequeList);
-		request.setAttribute("resRequeList", resRequeList);
-		
+		model.addAttribute("resRequeList",resRequeList);		
+		//view에 주어야되는건 shopIdx가 같으면서 '승인대기'인 TB_RESERVATION  
 		return "reservation/reservationReque";	
 	} 
 	
-	//예약 승인(사장)
-	@GetMapping("approveRes")
-	public String approveRes(@RequestParam String reserIdx) throws Exception {
-		System.out.println(reserIdx);
-		resService.updateStateApprove(reserIdx);
+	//예약 승인(사장) [알림기능 해야함!]
+	@PostMapping("approveRes")
+	@ResponseBody
+	public String approveRes(String reserIdx) throws Exception {
 		
-		return "redirect:reservation/reservationList";
-		
-		//메일 날려야하는데?
+		int res = resService.updateStateApprove(reserIdx);
+		if(res==1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	//예약 거부(사장)
