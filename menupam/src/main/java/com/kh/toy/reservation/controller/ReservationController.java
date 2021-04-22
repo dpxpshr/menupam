@@ -31,7 +31,9 @@ public class ReservationController {
 		
 	
 	@GetMapping("form")
-	public String reservationForm() {
+	public String reservationForm(String shopIdx) {
+		//1. shopIdx를 가지고 해당 매장의 이름을 TB_SHOP 에서 가져온다
+		//2. jsp로 데이터 넣어서 보내주고   => 1개 
 		return "reservation/reservationForm";	
 	} 
 	
