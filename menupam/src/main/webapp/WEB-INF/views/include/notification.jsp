@@ -14,7 +14,7 @@
         <div class="notifications">
         	<div class="nHeader">
                 <p class="fontXSmall">알림 확인</p>
-                <a class="fontXXSmall" href="">전체 읽음</a>
+                <a class="fontXXSmall" onclick="allReadNotification('${sessionScope.userInfo.memberId}')">전체 읽음</a>
             </div>
 <!-- 	    <div class="notification">
                 <div class="notificationMsg">

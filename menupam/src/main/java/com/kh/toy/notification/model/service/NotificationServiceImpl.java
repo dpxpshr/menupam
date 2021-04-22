@@ -30,5 +30,10 @@ public class NotificationServiceImpl implements NotificationService{
 		return notificationMap;
 	}
 
+	@Override
+	public void allReadNotifications(String memberId) {
+		notificationRepository.updateNotification(memberId);
+	}
+
 	
 }
