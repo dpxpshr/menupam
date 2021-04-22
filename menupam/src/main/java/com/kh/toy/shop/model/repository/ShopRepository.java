@@ -19,7 +19,7 @@ import com.kh.toy.shop.model.vo.Shop;
 @Mapper
 public interface ShopRepository {
 	
-	////// 매장 테이블
+	////// 매장 테이블 //////
 	@Select("select count(*) from tb_shop where shop_tell = #{shopTell}")
 	int selectShopbyTell(String shopTell);
 	
@@ -37,7 +37,7 @@ public interface ShopRepository {
 	@Select("select * from tb_shop where member_id = #{memberId}")
 	Shop selectShopInfo(String userId);
 	
-	///////// 카테고리 테이블
+	///////// 카테고리 테이블 /////////
 	@Select("select * from tb_menu_category where shop_idx = #{shopIdx}")
 	List<MenuCategory> selectCategoryList(String shopIdx);
 	
@@ -50,7 +50,7 @@ public interface ShopRepository {
 	@Delete("delete from tb_menu_category where menu_category_idx = #{menuCategoryIdx}")
 	int deleteCategory(MenuCategory menuCategory);
 	
-	/////// 메뉴 테이블
+	/////// 메뉴 테이블 ///////
 	@Insert("insert into tb_file(file_idx, file_origin_name, file_rename, file_type, file_save_path)"
 			+ " values('F'||sc_file_idx.nextval, #{fileOriginName}, #{fileRename}, #{fileType}, #{fileSavePath})")
 	int insertFile(MenupamFile menupamFile);
@@ -64,10 +64,12 @@ public interface ShopRepository {
 	
 	List<Menu> selectMenuList(String shopIdx);
 	
-	////// 메뉴 오더
+	////// 메뉴 오더 //////
 	@Select("select * from tb_order where member_id = #{memberId}")
 	Order selectOrder(String userId);
 	
 	List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx);
+	
+	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
 	
 }	

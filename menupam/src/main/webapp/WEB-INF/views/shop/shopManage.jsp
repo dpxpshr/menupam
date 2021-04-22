@@ -9,7 +9,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/shopManage.css'>
-    <script src='main.js'></script>
+    <!-- <script src='main.js'></script> -->
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -103,6 +103,7 @@
                         </div>
                         <div class="table">
                             <p class="fontXSmall">13번</p>
+                            <p class="fontXXSmall"></p>
                         </div>
                         <div class="table eating">
                             <p class="fontXSmall">14번</p>
@@ -117,7 +118,7 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 

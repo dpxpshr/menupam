@@ -97,9 +97,6 @@ public class ShopController {
 		return "common/result";
 	}
 	
-	@GetMapping("shopManage")
-	public void shopManage() {}
-	
 	@GetMapping("menuManage")
 	public void menuManage(@SessionAttribute("userInfo") Member userInfo
 						,HttpSession session
@@ -203,16 +200,21 @@ public class ShopController {
 	
 	@GetMapping("tableDetail")
 	public void tableDetail(@SessionAttribute("userInfo") Member userInfo
-						,Model model) {
+						,Model model
+						,HttpSession session) {
 		
 		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
 		List<Map<MenuOrdering,Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
 		int sum = 0;
+		int menuPrice = 0;
+		int menuCnt = 0 ;
 		
 		// 메뉴 가격 더한 값 view 출력
 		for (Map<MenuOrdering, Object> mo : menOrders) {
-			sum += Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_PRICE", mo.values()));
+			menuPrice = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_PRICE", mo.values()));
+			menuCnt = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_CNT", mo.values())) ;
+			sum += (menuPrice * menuCnt);
 		}
 			
 		model.addAttribute("shop", shopInfo);
@@ -222,6 +224,34 @@ public class ShopController {
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
 		
+		session.setAttribute("order", order);
 	}
+	
+	@PostMapping("cancelMenu")
+	@ResponseBody
+	public String deleteSelectionMenuOrder(@RequestBody MenuOrdering menuOrdering
+										,@SessionAttribute("order") Order order) {
+		
+		menuOrdering.setOrderIdx(order.getOrderIdx());
+		shopService.deleteSelectionMenuOrder(menuOrdering);
+
+		return "cancelSuccess";
+	}
+	
+	@GetMapping("shopManage")
+	public void shopManage(@SessionAttribute("userInfo") Member userInfo
+						,Model model) {
+		
+		// 계획 - 배열을 사용해서 jstl에 할수 있는지 확인하기
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+	
+		int tableCount = shopInfo.getShopTableCount();
+		for (int i = 0; i < tableCount; i++) {
+			System.out.println(i);
+		}
+		
+		model.addAttribute("shop", shopInfo);
+	}
+	
 			
 }
