@@ -1,6 +1,5 @@
 package com.kh.toy.reservation.model.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,21 +45,20 @@ public class ReservationServiceImpl implements ReservationService{
 	//예약 승인
 	@Override
 	public int updateStateApprove(String reserIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return resRepository.updateStateApprove(reserIdx);
 	}
 
 	//예약 거부
 	@Override
 	public int updateStateReject(String reserIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return resRepository.updateStateReject(reserIdx);
 	}
 
 	@Override
 	public List<Reservation> searchByName(Reservation res, Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return resRepository.searchByName(res, member);
 	}
 
 	

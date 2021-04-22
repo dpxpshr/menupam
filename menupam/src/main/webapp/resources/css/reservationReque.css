@@ -3,7 +3,7 @@
  .body{
     padding-top: 48px;
 }
-.content{
+.content_wrapper{
     width: 90%;
     height: 717px;
     /* background-color: #F2F2F2; */

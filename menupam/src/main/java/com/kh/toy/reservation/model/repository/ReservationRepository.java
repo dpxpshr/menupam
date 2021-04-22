@@ -1,6 +1,5 @@
 package com.kh.toy.reservation.model.repository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.kh.toy.board.model.vo.Board;
-import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.vo.Reservation;
 

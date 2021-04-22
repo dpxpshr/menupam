@@ -33,7 +33,12 @@ public class ReservationController {
 	@GetMapping("form")
 	public String reservationForm() {
 		return "reservation/reservationForm";	
-	} 		
+	} 
+	
+	@GetMapping("clock")
+	public String clock() {
+		return "reservation/clock";	
+	} 
 	
 	//예약하기
 	@PostMapping("reserve")
@@ -59,11 +64,12 @@ public class ReservationController {
 	@GetMapping("list")
 	public String ReservationList(String reserDate, Model model, HttpServletRequest request) {
 		//session 사장이어야하고 그 해당매장이어야하고
-		reserDate = "2021-05-19";
+		//reserDate = "2021-05-19";
 		List<Reservation> resList = resService.selectResListByDate(reserDate);
-		
+		System.out.println("reserDate" + reserDate);
 		//달력으로 날짜 받아와
 		
+		//승인인데 리스트 안떠
 		model.addAllAttributes(resList);
 		
 		request.setAttribute("resList", resList);
@@ -74,15 +80,8 @@ public class ReservationController {
 	@GetMapping("reque")
 	public String reservationReque(Model model, HttpServletRequest request, Member member) {
 		//사장이어야하고 그 해당매장이어야하고
-		//전화번호
 		List<Map<String, Object>> resRequeList = resService.selectResRequeList();
-		System.out.println(resRequeList.get(0).get("memberPhone").toString());
-		String memberPhone = null;
-		for (Map<String, Object> map : resRequeList) {
-			memberPhone = resRequeList.get(0).get("memberPhone").toString();
-		}
-		System.out.println(memberPhone);
-		request.setAttribute("memberPhone", memberPhone);
+		
 		model.addAllAttributes(resRequeList);
 		request.setAttribute("resRequeList", resRequeList);
 		
@@ -90,9 +89,9 @@ public class ReservationController {
 	} 
 	
 	//예약 승인(사장)
-	@PostMapping("approveRes")
+	@GetMapping("approveRes")
 	public String approveRes(@RequestParam String reserIdx) throws Exception {
-		
+		System.out.println(reserIdx);
 		resService.updateStateApprove(reserIdx);
 		
 		return "redirect:reservation/reservationList";
@@ -101,7 +100,7 @@ public class ReservationController {
 	}
 	
 	//예약 거부(사장)
-	@PostMapping("rejectRes")
+	@GetMapping("rejectRes")
 	public String rejectRes(@RequestParam String reserIdx) throws Exception {
 		resService.updateStateReject(reserIdx);
 		return "redirect:reservation/reservationList";

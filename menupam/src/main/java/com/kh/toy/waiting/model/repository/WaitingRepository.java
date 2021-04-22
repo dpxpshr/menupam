@@ -15,7 +15,7 @@ import com.kh.toy.waiting.model.vo.Waiting;
 public interface WaitingRepository {
 
 	//대기리스트 대기등록먼저한 순서대로 잘나오나?
-	@Select("select * from tb_waiting where wait_reg_date and wait_state = '대기상태' orderby wait_reg_date")
+	@Select("select * from tb_waiting where wait_reg_date = #{waitRegDate} and wait_state = 'wait' orderby wait_reg_date")
 	List<Waiting> selectWaitingListByDate(Date waitRegDate);
 	
 	//insert 
