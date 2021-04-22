@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.toy.order.model.repository.OrderRepository;
+import com.kh.toy.order.model.vo.Order;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
+import com.kh.toy.shop.model.vo.MenuOrdering;
 import com.kh.toy.shop.model.vo.Shop;
 
 @Service
@@ -58,6 +61,74 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Menu getMenuInShopIdx(String shopIdx, String menuIdx) {
 		return orderRepository.menuExistInShopIdx(Map.of("shopIdx",shopIdx,"menuIdx",menuIdx));
+	}
+
+	@Override
+	@Transactional
+	public void registOrder(List<Map> ordering,String shopIdx,String memberId, String packState,String tableNum) {
+		//menuIdx + count를 받고, menuIdx를 통해 menu데이터를 가져온다.
+		Map<Menu,Integer> menus = new HashMap<>(); //메뉴와 주문수량을 기록한 맵
+		int totalPrice = 0;
+		for(Map<String,String> menu : ordering) {
+			int count = Integer.parseInt(menu.get("count"));
+			Menu menuData = orderRepository.searchMenuByMenuIdx(menu.get("menuIdx"));
+			menus.put(menuData,count);
+			totalPrice += Integer.parseInt(menuData.getMenuPrice()) * count; //메뉴 가격 * 주문 수량을 메뉴마다 더하여 주문 총 가격 계산
+		}
+		//Order 생성하고
+		{
+			Map<String,String> commandMap = new HashMap<>();
+			commandMap.put("shopIdx", shopIdx);
+			commandMap.put("memberId", memberId);
+			commandMap.put("packState", packState);
+			commandMap.put("orderPrice", ""+totalPrice);
+			commandMap.put("tableNum", tableNum);
+			orderRepository.createNewOrder(commandMap);
+		}
+		//Order에 종속되는 menu-ordering을 각각 생성한다.
+		//#{count},#{menuIdx},#{menuName},#{menuPrice}
+		for(Menu menu : menus.keySet()) {
+			Map<String,String> commandMap = new HashMap<>();
+			commandMap.put("menuIdx", menu.getMenuIdx());
+			commandMap.put("menuName", menu.getMenuName());
+			commandMap.put("menuPrice", menu.getMenuPrice());
+			commandMap.put("count",""+menus.get(menu));
+			orderRepository.createMenuOrdering(commandMap);
+		}
+	}
+
+	@Override
+	public Order selectOrderByMemberIdAndShopIdx(String memberId, String shopIdx) {
+		Map<String,String> commandMap = Map.of("memberId",memberId,"shopIdx",shopIdx);
+		return orderRepository.selectOrderByMemberIdAndShopIdx(commandMap);
+	}
+
+	@Override
+	public List<MenuOrdering> selectMenuOrderingByOrderIdx(String orderIdx) {
+		return orderRepository.selectMenuOrderingByOrderIdx(orderIdx);
+	}
+
+	@Override
+	public boolean discardOrder(String orderIdx, String memberId) {
+		Map<String,String> commandMap = Map.of("orderIdx",orderIdx,"memberId",memberId);
+		return orderRepository.updateOrderStateByOrderIdx(commandMap);
+	}
+
+	@Override
+	public Order checkOrderInfo(String orderIdx, String shopIdx, String memberId) {
+		Map<String,String> commandMap = Map.of("orderIdx",orderIdx,"memberId",memberId,"shopIdx",shopIdx);
+		return orderRepository.checkOrderInfo(commandMap);
+	}
+
+	@Override
+	@Transactional
+	public boolean insertPayment(Order order, String payType, String shopIdx) {
+		Map<String,String> commandMap = new HashMap<>();
+		commandMap.put("paymentAmount", order.getOrderPrice());
+		commandMap.put("paymentType", payType);
+		commandMap.put("shopIdx", shopIdx);
+		commandMap.put("orderIdx", order.getOrderIdx());
+		return orderRepository.insertPayment(commandMap) && orderRepository.updateOrderPayState(order.getOrderIdx());
 	}
 
 }

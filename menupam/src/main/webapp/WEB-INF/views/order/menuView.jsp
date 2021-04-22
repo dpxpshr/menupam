@@ -43,7 +43,7 @@
                      <div class="menuItem" id="${menu.menuIdx}">
                          <div class="menuItemLeft">
                              <div class="menuItemName">${menu.menuName}</div>
-                             <div class="menuItemPrice">${menu.menuPrice}</div>
+                             <div class="menuItemPrice">${menu.menuPrice}원</div>
                          </div>
                          <div class="menuItemRight">
                              <img src="../../../resources/images/${menu.menuPhoto}" alt="">

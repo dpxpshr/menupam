@@ -64,19 +64,6 @@ body {
 	margin : 10px 0 20px 0;
 }
 
-.pointPayment{
-	display: flex;
-}
-
-.pointPayment>p{
-	width: 100px;
-}
-
-.pointPayment>a{
-	padding : 2px;
-	font-size: 12px;
-}
-
 #paymentBox{
 	padding : 5px 30px 0px 10px;
 }
@@ -89,42 +76,45 @@ body {
 .money{
 	display: flex;
 	padding : 30px 10px 0 20px;
+	justify-content:center;
 }
-
+.money>p{
+	display:flex;
+	width:100px;
+	justify-content: flex-start;
+}
 .money>div{
 	width: 200px;
 	display: flex;
 	justify-content: flex-end;
 }
 
-.pointMoney{
-	display: flex;
-	padding : 0px 10px 0 20px;
-	border-bottom: 2px solid #F2BB13;
-}
-
-.pointMoney>div{
-	width: 185px;
-	display: flex;
-	justify-content: flex-end;
-}
-
 .sum{
 	display: flex;
-	padding : 5px 10px 0 20px;
+	padding : 30px 10px 0 20px;
+	justify-content:center;
 }
-
+.sum>p{
+	display:flex;
+	width:100px;
+	justify-content: flex-start;
+}
 .sum>div{
-	width: 180px;
+	width: 200px;
 	display: flex;
 	justify-content: flex-end;
 }
 
-
-
-
-
-
+.discard{
+	width: 375px;
+	height: 50px;
+	text-align: center;
+	background-color: #c0c0c0;
+	color:white;
+	box-shadow: 0px 2px 10px 0px #dcdcdc; 
+	position: absolute;
+	bottom:108px;
+}
 
 .payments{
 	width: 375px;
