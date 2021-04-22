@@ -14,7 +14,7 @@ public interface ReservationService {
 	
 	int insertRes(Reservation res);
 	void deleteRes(String reserIdx);
-	List<Map<String, Object>> selectResRequeList();
+	List<Reservation> selectResRequeList(String shopIdx);
 	int updateStateApprove(String reserIdx);
 	int updateStateReject(String reserIdx);
 	List<Reservation> searchByName(Reservation res, Member member);

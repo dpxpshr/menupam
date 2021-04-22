@@ -30,6 +30,13 @@ public class AuthInterceptor implements HandlerInterceptor{
 					  break;
 				}
 				break;
+			
+			case "reservation":
+				switch (uriArr[2]) {
+				case "reque" : if(session.getAttribute("userInfo") == null)
+								throw new ToAlertException(ErrorCode.AUTH01);
+				  	break;
+				}
 			}
 		}
 		return true;

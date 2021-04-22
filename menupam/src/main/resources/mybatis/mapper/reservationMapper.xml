@@ -2,25 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.toy.reservation.model.repository.ReservationRepository">
 
-<resultMap type="map" id="resReque">
- 		<result column="reser_idx" javaType="string" property="reserIdx"/>
- 		<result column="shop_idx" javaType="string" property="shopIdx"/>
- 		<result column="member_id" javaType="string" property="memberId"/>
- 		<result column="reser_comment" javaType="string" property="reserComment"/>
- 		<result column="reser_date" javaType="string" property="reserDate"/>
- 		<result column="reser_name" javaType="string" property="reserName"/>
- 		<result column="reser_party" javaType="int" property="reserParty"/>
- 		<result column="reser_reg_date" javaType="Date" property="reserRegDate"/>
- 		<result column="reser_state" javaType="string" property="reserState"/>
- 		<result column="member_phone" javaType="string" property="memberPhone"/>
- 	</resultMap>
- 	<select id="selectResRequeList" resultMap="resReque">
- 		select r.reser_idx, r.shop_idx, r.member_id, r.reser_comment, r.reser_date, r.reser_name, r.reser_party
- 		, r.reser_reg_date, r.reser_state, m.member_phone
-		from tb_reservation r inner join tb_member m on(r.member_id = m.member_id) 
-		where reser_state = '승인대기' order by reser_reg_date
- 	
- 	</select>
+
 
 
 </mapper>

@@ -39,14 +39,13 @@ public class ReservationServiceImpl implements ReservationService{
 
 	//예약 요청 리스트
 	@Override
-	public List<Map<String, Object>> selectResRequeList() {
-		return resRepository.selectResRequeList();
+	public List<Reservation> selectResRequeList(String shopIdx) {
+		return resRepository.selectResRequeList(shopIdx);
 	}
 
 	//예약 승인
 	@Override
 	public int updateStateApprove(String reserIdx) {
-		
 		return resRepository.updateStateApprove(reserIdx);
 	}
 

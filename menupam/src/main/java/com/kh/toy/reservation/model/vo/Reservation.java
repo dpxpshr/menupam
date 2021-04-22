@@ -13,13 +13,14 @@ public class Reservation {
 	private String reserComment;
 	private int reserParty;
 	private String memberId;
+	private String reserPhone;
 	
 	public Reservation() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Reservation(String reserIdx, String shopIdx, String reserName, String reserDate, Date reserRegDate,
-			String reserState, String reserComment, int reserParty, String memberId) {
+			String reserState, String reserComment, int reserParty, String memberId, String reserPhone) {
 		super();
 		this.reserIdx = reserIdx;
 		this.shopIdx = shopIdx;
@@ -30,14 +31,7 @@ public class Reservation {
 		this.reserComment = reserComment;
 		this.reserParty = reserParty;
 		this.memberId = memberId;
-	}
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+		this.reserPhone = reserPhone;
 	}
 
 	public String getReserIdx() {
@@ -104,21 +98,28 @@ public class Reservation {
 		this.reserParty = reserParty;
 	}
 
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getReserPhone() {
+		return reserPhone;
+	}
+
+	public void setReserPhone(String reserPhone) {
+		this.reserPhone = reserPhone;
+	}
+
 	@Override
 	public String toString() {
 		return "Reservation [reserIdx=" + reserIdx + ", shopIdx=" + shopIdx + ", reserName=" + reserName
 				+ ", reserDate=" + reserDate + ", reserRegDate=" + reserRegDate + ", reserState=" + reserState
-				+ ", reserComment=" + reserComment + ", reserParty=" + reserParty + ", memberId=" + memberId + "]";
+				+ ", reserComment=" + reserComment + ", reserParty=" + reserParty + ", memberId=" + memberId
+				+ ", reserPhone=" + reserPhone + "]";
 	}
 
-	
-	
-	
-	
-
-
-	
-	
-	
-	
 }
