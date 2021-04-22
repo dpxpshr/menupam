@@ -21,7 +21,7 @@ import com.kh.toy.reservation.model.vo.Reservation;
 @Controller
 @RequestMapping("reservation")
 public class ReservationController {
-
+///merge test
 	private final ReservationService resService;
 	
 	public ReservationController(ReservationService resService) {
