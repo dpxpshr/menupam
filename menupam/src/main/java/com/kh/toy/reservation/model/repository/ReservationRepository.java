@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 
 
@@ -23,8 +24,8 @@ public interface ReservationRepository {
 	
 	//@Insert("insert into tb_reservation(reser_idx, shop_idx, reser_name, reser_date, reser_comment, reser_party)"
 		//	+ " values('b'||sc_reser_idx.nextval, #{shopIdx}, #{reserName}, #{reserDate}, #{reserComment}, #{reserParty})")
-	@Insert("insert into tb_reservation(reser_idx, reser_name, reser_date, reser_comment, reser_party, member_id)"
-			+ " values('b'||sc_reser_idx.nextval, #{reserName}, #{reserDate}, #{reserComment}, #{reserParty}, #{memberId})")
+	@Insert("insert into tb_reservation(reser_idx, shop_idx, reser_name, reser_date, reser_comment, reser_party, member_id)"
+			+ " values('R'||sc_reser_idx.nextval, #{shopIdx}, #{reserName}, #{reserDate}, #{reserComment}, #{reserParty}, #{memberId})")
 	int insertRes(Reservation res);
 	
 	@Delete("delete from tb_reservation where reser_idx = #{reserIdx}")
@@ -44,4 +45,8 @@ public interface ReservationRepository {
 	//예약리스트에서 예약손님 검색
 	@Select("select * tb_reservation where reser_date = #{reserDate} and reser_name = #{reserName}")
 	List<Reservation> searchByName(Reservation res, Member member);
+	
+	
+	@Select("select * from tb_shop where shop_idx = #{shopIdx}")
+	Shop selectShopByShopIdx(String shopIdx);
 }

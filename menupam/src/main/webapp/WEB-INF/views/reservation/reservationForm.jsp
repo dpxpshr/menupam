@@ -35,30 +35,27 @@
 					action="${context}/reservation/reserve" method="POST">
 					<br>
 					<div class="fontBox">
-						<p class="fontLarge">${requestScope.shopName}</p>
+						<p class="fontLarge">${shop.shopName}</p>
 						<br>
 						<div class="line"></div>
 						<br>
 						<p class="fontMedium">방문 일자</p>
 						<br> <input type="datetime-local" class="inputLarge"
-							name="reserDate">
-
+							name="reserDate"> <br> <br>
 						<!-- <p class="fontMedium">방문 예정 시간</p>
       			<br>
       			<input type="text" class="inputLarge" name="time" id="time"placeholder="방문 예정 시간을 입력해주세요">
             	 -->
 						<div class="imgBox">
-							<!-- 예약자 이름 입력칸 필요한가?
-                <div class="imgsmall">
-                    <i class="far fa-user  fa-5x"></i>
-                    <input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력해주세요">
-                </div> -->
+							<div class="imgsmall">
+								<input type="text" class="inputLarge" name="reserName" id="name"
+									placeholder="성함을 입력해주세요"
+									value="${sessionScope.userInfo.memberName}">
+							</div>
 							<br>
-
 							<div id="search_bar">
 								<p class="fontLarge" class="inputLarge">
 									예약 인원 <select id="search_sel" name="reserParty">
-
 										<option value="1">1인 방문 ▼</option>
 										<option value="2">2인 방문</option>
 										<option value="3">3인 방문</option>
@@ -66,31 +63,35 @@
 									</select>
 								</p>
 							</div>
-
-
 						</div>
 						<br>
-
 						<div class="phone_num">
 							<p class="fontLarge">요청사항</p>
 							<br> <input type="text" class="inputLarge"
 								name="reserComment" placeholder="요청사항을 입력해주세요">
-
 						</div>
+						<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
 						<div class="btnBox">
 							<br>
-
 							<button class="btnLarge">예약하기</button>
 							<br>
 						</div>
-
-
-
 					</div>
 				</form:form>
-
 			</div>
-		</div>
+		</div> 
+
+<%-- 		<div class="main">
+			<div class="body">
+				<div class="content">
+					<p class="fontSmall">${shopIdx}</p><br>
+	            	<div class="line"></div><br>
+	            	<form>
+	            	
+	            	</form>
+				</div>
+			</div>
+		</div> --%>
 		<div class="footer">
 			<div>
 				<i class="fas fa-search"></i>

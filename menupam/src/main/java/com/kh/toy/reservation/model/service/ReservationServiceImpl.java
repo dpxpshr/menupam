@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.repository.ReservationRepository;
 import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -59,6 +60,11 @@ public class ReservationServiceImpl implements ReservationService{
 	public List<Reservation> searchByName(Reservation res, Member member) {
 		
 		return resRepository.searchByName(res, member);
+	}
+
+	@Override
+	public Shop selectShopByShopIdx(String shopIdx) {
+		return resRepository.selectShopByShopIdx(shopIdx);
 	}
 
 	

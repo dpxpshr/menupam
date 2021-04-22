@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 public interface ReservationService {
 
@@ -17,4 +18,5 @@ public interface ReservationService {
 	int updateStateApprove(String reserIdx);
 	int updateStateReject(String reserIdx);
 	List<Reservation> searchByName(Reservation res, Member member);
+	Shop selectShopByShopIdx(String shopIdx);
 }

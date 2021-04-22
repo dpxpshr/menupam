@@ -31,8 +31,11 @@ public class ReservationController {
 		
 	
 	@GetMapping("form")
-	public String reservationForm(String shopIdx) {
+	public String reservationForm(String shopIdx, Model model) { 
+
 		//1. shopIdx를 가지고 해당 매장의 이름을 TB_SHOP 에서 가져온다
+		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+		System.out.println(resService.selectShopByShopIdx(shopIdx));
 		//2. jsp로 데이터 넣어서 보내주고   => 1개 
 		return "reservation/reservationForm";	
 	} 
@@ -44,22 +47,22 @@ public class ReservationController {
 	
 	//예약하기
 	@PostMapping("reserve")
-	public String reservationInsert( @SessionAttribute(name="userInfo", required = false) Member member,
-			HttpServletRequest request, Reservation res, Model model) {
-		/*
-		 * //로그인 여부에 따른 예외처리 
-		 * String memberName = member == null?"guest":member.getMemberName();
-		 */
-		res.setMemberId(member.getMemberId());
+	public String reservationInsert(@SessionAttribute(name="userInfo", required = false) Member member, Reservation res, Model model) {
 
-		//세션에서 유저의 이름을 가져와서 Reservation VO에 저장하기
-		res.setReserName(member.getMemberName());
+		//1. 여기서 만약에 session에 userInfo가 있는놈이다 하면 res객체에 ID넣어주자		
+		if(member != null) {
+			res.setMemberId(member.getMemberId());
+		}else {
+			res.setMemberId("notMember");
+		}
+		//2. 예약 신청 해주자
 		resService.insertRes(res);
 		
+		//3. 어디로 갈지 지정해주자
 		model.addAttribute("msg", "예약이 요청되었습니다.");
-		model.addAttribute("url", "/index");
+		model.addAttribute("url", "/index"); //-> [임시] 수정 해야함 원래 보던 매장 페이지로 이동해야 함
 		
-		return "redirect:/index";	
+		return "common/result";	
 	} 
 	
 	//예약리스트(사장)
