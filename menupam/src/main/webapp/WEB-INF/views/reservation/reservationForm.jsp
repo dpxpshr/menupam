@@ -29,16 +29,27 @@
 			</div>
 		</div>
 		<div class="main">
-			<!--여기서 부터 코드 작성 enctype="multipart/form-data"-->
+			<!--여기서 부터 코드 작성 "-->
+			<body class="body">
+			<div class="content_wrapper">
+			
 			<div class=reservation_info>
 				<form:form modelAttribute="reservation"
 					action="${context}/reservation/reserve" method="POST">
 					<br>
 					<div class="fontBox">
-						<p class="fontLarge">${shop.shopName}</p>
-						<br>
-						<div class="line"></div>
-						<br>
+						<p class="fontMedium" id="title">예약</p>
+					<br>
+					<div class="line"></div>
+					<div class="content">
+						<div class="wrap_shop">
+							<i class="fas fa-store store"></i>
+							<div class="shop">
+								<span id="shop_info">${shop.shopName}</span>
+								<!-- 매장 이름 -->
+							</div>
+						</div>
+						<hr color="#F2BB13">
 						<p class="fontMedium">방문 일자</p>
 						<br> <input type="datetime-local" class="inputLarge" id="calendar" step="1800"
 							name="reserDate"> <br> <br>
@@ -81,6 +92,8 @@
 					</div>
 				</form:form>
 			</div>
+			</div>
+			</body>
 		</div> 
 
 <%-- 		<div class="main">

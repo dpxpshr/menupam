@@ -21,7 +21,7 @@ import com.kh.toy.reservation.model.vo.Reservation;
 @Controller
 @RequestMapping("reservation")
 public class ReservationController {
-///merge test
+
 	private final ReservationService resService;
 	
 	public ReservationController(ReservationService resService) {
@@ -34,16 +34,10 @@ public class ReservationController {
 	@GetMapping("form")
 	public String reservationForm(String shopIdx, Model model) { 
 
-		//1. shopIdx를 가지고 해당 매장의 이름을 TB_SHOP 에서 가져온다
+		//shopIdx를 가지고 해당 매장의 이름을 TB_SHOP 에서 가져온다
 		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
 		System.out.println(resService.selectShopByShopIdx(shopIdx));
-		//2. jsp로 데이터 넣어서 보내주고   => 1개 
 		return "reservation/reservationForm";	
-	} 
-	
-	@GetMapping("clock")
-	public String clock() {
-		return "reservation/clock";	
 	} 
 	
 	//예약하기
@@ -87,9 +81,12 @@ public class ReservationController {
 	@GetMapping("reque")
 	public String reservationReque(Model model, HttpServletRequest request, Member member, String shopIdx) {
 		
-		//[1. seession에서 ID꺼내서 shop의 사장님의 아이디랑 일치하는지 확인해야함]
 		
-		//사장이어야하고 그 해당매장이어야하고
+		//[1. seession에서 ID꺼내서 shop의 사장님의 아이디랑 일치하는지 확인해야함]
+		//일단 AuthInterceptor에서 로그인 안했으면 접근불가.
+		
+		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+		
 		List<Reservation> resRequeList = resService.selectResRequeList(shopIdx);
 		
 		model.addAttribute("resRequeList",resRequeList);		
@@ -110,12 +107,16 @@ public class ReservationController {
 		}
 	}
 	
-	//예약 거부(사장)
-	@GetMapping("rejectRes")
-	public String rejectRes(@RequestParam String reserIdx) throws Exception {
-		resService.updateStateReject(reserIdx);
-		return "redirect:reservation/reservationList";
-		//메일 날려야하는데?
+	//예약 거부(사장) [알림기능 해야함!]
+	@PostMapping("rejectRes")
+	@ResponseBody
+	public String rejectRes(String reserIdx) throws Exception {
+		int res = resService.updateStateReject(reserIdx);
+		if(res==1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	//예약 검색(사장)

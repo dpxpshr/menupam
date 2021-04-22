@@ -30,7 +30,7 @@
 }
     
 .shop{
- 	display: inline-block;
+ 	display: flex;
  	padding-left: 10px;
  	font-size: 25px;
  	font-weight: lighter;

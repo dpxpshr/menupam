@@ -4,10 +4,49 @@
 	position: relative;
 	left:20px;
 }
+
+.body{
+    padding-top: 48px;
+}
+
 .btnBox{
 	position: absolute;
 	left:10px;
 } 
+
+.line{
+	height: 5px;
+	background-color: #F2BB13;
+}
+
+.wrap_shop{
+	padding-left: 10px;
+	font-size: 50px;
+	height: 60px;
+	display:flex;
+	justify-content: space-around;
+} 
+    
+.store{
+	margin-top: 10px;
+	text-align: justify;
+}
+    
+.shop{
+ 	display: flex;
+ 	padding-left: 10px;
+ 	font-size: 25px;
+ 	font-weight: lighter;
+ 	height: 100%;
+ }
+
+.shop>span{
+	height: 50%;
+	margin-top: 20px;
+	vertical-align: sub;
+}
+
+
 
 /* .body{
     padding-top: 48px;

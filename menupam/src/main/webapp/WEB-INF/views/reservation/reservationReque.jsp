@@ -1,62 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>메뉴팜</title>
-<script type="text/javascript"
-	src="/resources/js/common/asyncResponseError.js"></script>
-<script type="text/javascript" src="/resources/js/common/urlEncoder.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<c:set var="context" value="${pageContext.request.contextPath}" />
-<script type="text/javascript">
 
-window.onload = function(){
-
-    //소켓 관련 JS
-    let socket = null;
-	
-    connectWs();
-    
-    function connectWs(){
-		sock = new SockJS("<c:url value='/echo' />");
-		socket = sock;
-
-		sock.onopen = function(){
-			console.log("info : connection opened");
-		}
-
-		sock.onclose = function(){
-			console.log("info : connection closed");
-		}
-
-		sock.onmessage = function(event){
-			//메시지가 오는 메서드
-			let data = event.data;
-			let p = document.createElement("p");
-			p.innerHTML = data;
-			document.querySelector("body").appendChild(p);
-		}		
-    }
-
-
-	function socketTest(){
-		if(socket){
-			let userId = '${sessionScope.userInfo.memberId}';
-			let receiveId = "kim2";
-			let msg = "메시지 입니다";
-			socket.send(userId+","+msg+","+receiveId);
-
-		}
-	}
-}
-
-</script>
-</head>
+<%@ include file="/WEB-INF/views/include/head.jsp"%>
 
 <head>
 <meta charset='utf-8'>
@@ -71,30 +16,20 @@ window.onload = function(){
 	href='../../../resources/css/shopModify.css'>
 <link rel='stylesheet' type='text/css' media='screen'
 	href='../../../resources/css/reservationReque.css'>
+<script src='main.js'></script>
 <script src="https://kit.fontawesome.com/e5012d0871.js"
 	crossorigin="anonymous"></script>
 <style type="text/css">
-#divClock {
-	font-size: 10px;
-	height: 10vh;
-}
 </style>
 
 </head>
 <body>
 	<script type="text/javascript">
-function $(selector, text){ 
-	if(text){
-		document.querySelector(selector).innerHTML += `${text}<br>`; 
-	}
-	return document.querySelector(selector); 
-}
-
 function showClock(){
 	var date = new Date();
 	var divClock = document.getElementById("divClock");
 	if(date.getHours() > 12){
-		var msg = "현재 시간 : 오후 " + (date.getHours()-12)+"시";
+		var msg = date.getFullYear() + "." + (date.getMonth()+1) + "." + date.getDate() + " 오후 " + (date.getHours()-12)+"시";
 	}
 	else{
 		var msg = "현재 시간 : 오전 " + date.getHours()+"시";
@@ -127,9 +62,7 @@ function showClock(){
 						<div class="wrap_shop">
 							<i class="fas fa-store store"></i>
 							<div class="shop">
-								<span id="shop_info">${sessionScope.shop.shopIdx}</span><br>
-								<!--매장 인덱스 -->
-								<span id="shop_info">${sessionScope.shop.shopName}</span>
+								<span id="shop_info">${shop.shopName}</span>
 								<!-- 매장 이름 -->
 							</div>
 						</div>
@@ -155,7 +88,7 @@ function showClock(){
 									<div class="box">
 										<span class="reserv_info">${reservation.reserName}
 											${reservation.reserPhone}</span>
-										<button class="btn" id="reserv_not" onclick="hitreject()">예약
+										<button class="btn" id="reserv_not" name="${reservation.reserIdx}">예약
 											거부</button>
 									</div>
 									<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>
@@ -184,15 +117,28 @@ function showClock(){
 									})
 								})
 							
+								
+									document.querySelectorAll("#reserv_not").forEach((e)=>{
+									e.addEventListener("click", (event)=>{
+										fetch("/reservation/rejectRes?reserIdx="+e.name,{
+											method:"POST"
+										})
+										.then(response => response.text())
+										.then(text => {
+											if(text=="success"){
+												let reserIdx = e.name;
+												let removeTarget = document.querySelector("#"+reserIdx);
+												removeTarget.parentNode.removeChild(removeTarget);
+
+											}else if(text=="fail"){
+												window.alert("승인 거부 도중 오류가 발생했습니다. 다시 시도해주세요");
+											}
+										})
+										
+									})
+								})
 	                    	
-							    /* function hitApprove(reserIdx()}){
-							    	location.href = "${context}/reservation/approveRes?reserIdx="+${reservation.reserIdx};
-							    }; */
-							    
-							    function hitreject(){
-							    	//location.href = "${context}/reservation/rejectRes?reserIdx="+${reservation.reserIdx};
-							    		
-							    };
+							   
 								window.onload = function(){
 									showClock();	
 								}
