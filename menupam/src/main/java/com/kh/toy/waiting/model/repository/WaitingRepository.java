@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.waiting.model.vo.Waiting;
 
 @Mapper
@@ -21,8 +22,8 @@ public interface WaitingRepository {
 	//insert 
 	//@Insert("insert into tb_waiting(wait_idx, shop_idx, wait_phone, wait_party, wait_time) "
 	//		+ " values('b'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty}, #{waitTime})")
-	@Insert("insert into tb_waiting(wait_idx, wait_phone, wait_party) "
-			+ " values('b'||sc_wait_idx.nextval, #{waitPhone}, #{waitParty})")
+	@Insert("insert into tb_waiting(wait_idx, shop_idx, wait_phone, wait_party) "
+			+ " values('b'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty})")
 	int insertWaiting(Waiting waiting);
 	
 	@Delete("delete from tb_waiting where wait_idx = #{waitIdx}")
@@ -34,4 +35,6 @@ public interface WaitingRepository {
 	@Update("update tb_waiting set wait_state = 'cancel' where wait_idx = #{waitIdx}")
 	int updateCancel(String waitIdx);
 	
+	@Select("select * from tb_shop where shop_idx = #{shopIdx}")
+	Shop selectShopByShopIdx(String shopIdx);
 }

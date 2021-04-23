@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
  .main{
-	position: relative;
-	left:20px;
+	margin: 10px;
 }
 
 .body{
@@ -18,6 +17,8 @@
 	height: 5px;
 	background-color: #F2BB13;
 }
+
+
 
 .wrap_shop{
 	padding-left: 10px;

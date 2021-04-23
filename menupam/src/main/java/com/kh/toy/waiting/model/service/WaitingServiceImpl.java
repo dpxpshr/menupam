@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.waiting.model.repository.WaitingRepository;
 import com.kh.toy.waiting.model.vo.Waiting;
 
@@ -35,13 +36,16 @@ public class WaitingServiceImpl implements WaitingService {
 
 	@Override
 	public int updateArrived(String waitIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return waitingRepository.updateArrived(waitIdx);
 	}
 
 	@Override
 	public int updateCancel(String waitIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return waitingRepository.updateCancel(waitIdx);
+	}
+
+	@Override
+	public Shop selectShopByShopIdx(String shopIdx) {
+		return waitingRepository.selectShopByShopIdx(shopIdx);
 	}
 }

@@ -24,14 +24,29 @@
         </div>
         <div class="main">
             <!--여기서 부터 코드 작성-->
-            <form action="${context}/waiting/registerWait" method="POST" enctype="multipart/form-data">
-               <div class="imgLarge">
+            <div class="body">
+			<div class="content_wrapper">
+			
+            <form:form modelAttribute="waiting"
+            	action="${context}/waiting/registerWait" method="POST">
+               
+                <div class="textBox">
+						<p class="fontMedium" id="title">대기</p>
+					</div>
+					<br>
+					<div class="line"></div>
+					<div class="content">
+						<div class="wrap_shop">
+							<i class="fas fa-store store"></i>
+							<div class="shop">
+								<span id="shop_info">${shop.shopName}</span>
+								<!-- 매장 이름 -->
+							</div>
+						</div>
+						<hr color="#F2BB13">
+					</div>
+                <div class="imgLarge">
                     <img src="../../resources/images/sample.PNG" alt="">
-                </div>
-                <div class="text_box">
-                	<p class="fontLarge">ccc${shop_name}</p>
-                	<br>
-                	<p class="fontLarge">대기 신청하기</p>
                 </div>
                 <div class="text_box">
                 	<p class="fontSmall">현재 대기인원 수 : 00명</p>
@@ -39,18 +54,23 @@
 					<p class="fontSmall">예상 대기시간 : (00시간) 00분</p>
 				</div>
 				<br><br>
+				<div class="wrap_field">
 				<div class="field">
 	            <span class="fas fa-ghost"></span>
-	            <input type="number" class="name" id="name" name="waitParty" required placeholder="인원수" required="required">
+	            <input type="number" class="input" id="name" name="waitParty" required="required">
 	          </div>
 	          <br>
 	          <div class="field space">
 	            <span class="fas fa-mobile-alt"></span>
-	            <input type="tel" class="name" id="Phone" name="waitPhone" required placeholder="전화번호" required="required"
+	            <input type="tel" class="input" id="Phone" name="waitPhone" value="${sessionScope.userInfo.memberPhone}" required placeholder="전화번호" required="required"
 	            pattern="[0-9]{11}">
 	          </div>
             	<button class="btnMedium">대기 등록하기</button>
-            	</form>
+            </div>
+            	</form:form>
+            	
+            	</div>
+            	</div>
         </div>
         <div class="footer">
             <div><i class="fas fa-search"></i></div>

@@ -34,8 +34,8 @@
 	                    <div class="wrap_shop">
 							<i class="fas fa-store store"></i>
 	                    	<div class="shop">
-								<span id="shop_info">매장 인덱스</span><br> <!-- {sessionScope.shop.shopIdx}-->
-								<span id="shop_info">매장 이름</span> <!-- sessionScope.shop.shopName} -->
+								<span id="shop_info">${shop.shopIdx}</span><br>
+								<span id="shop_info">${shop.shopName}</span> <!-- 매장이름 -->
 	                    	</div>
 	                    </div>
 	                    <hr color="#F2BB13">
@@ -43,14 +43,14 @@
 	                    <div class="date_box">
 	                    	
 	                    	<div class="date">
-	                    		<input type="date" id="reserDate" name="reserDate">
+	                    		<input type="date" id="calendar" name="reserDate">
 	                    	</div>
 	                    </div>
 	                    
 	                    <div class="search_box">
 	                    	<div class="wrap_input">
 	                    		<span class="fas fa-ghost"></span>
-	                    		<input type="text" id="search_input" value="${reservation.reserName}" placeholder="예약자 이름">
+	                    		<input type="text" id="search_input" value="${reservation.reserName}" placeholder="예약자 성함">
 	                    	</div>
 	                    		<button id="search_btn">검색</button>
 	                    </div>
@@ -65,7 +65,7 @@
 	                    	<div class="reserv_box">
 	                    		<div class="box">
 	                    		<span class="reserv_info">${reservation.reserName} ${reservation.reserParty}인 시간</span>
-	                    		<button class="btn" id="cancel_reserv">예약 취소</button>
+	                    		<button class="btn" id="cancel_reserv" name="${reservation.reserIdx}">예약 취소</button>
 	                    		</div>
 	                    		<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>
 	                    	</div>
@@ -75,8 +75,8 @@
 	                    
 	                    </div>
                 </div>
-            </div>
-        </div>
+            </div> <!-- content -->
+        </div> <!-- body -->
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
@@ -84,23 +84,50 @@
             <div><i class="far fa-clipboard"></i></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
-    </div> 
+    </div> <!-- main -->
     
   <script type="text/javascript">
-    $(document).ready(function(){
-    	$("#search_btn").click(function(){
-    		document.requeForm.action = "${context}/reservation/searchByName";
-    	});
-    	
-    	$("#cancel_reserv").click(function(){
-    		document.requeForm.action = "${context}/reservation/cancelRes";
-    	});
-    	
-    	
-    	
-    });
+  document.querySelectorAll("#cancel_reserv").forEach((e)=>{
+		e.addEventListener("click", (event)=>{
+			fetch("/reservation/cancelRes?reserIdx="+e.name,{
+				method:"POST"
+			})
+			.then(response => response.text())
+			.then(text => {
+				if(text=="success"){
+					let reserIdx = e.name;
+					let removeTarget = document.querySelector("#"+reserIdx);
+					removeTarget.parentNode.removeChild(removeTarget);
+
+				}else if(text=="fail"){
+					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
+				}
+			})
+			
+		})
+	})
     
-    //document.getElementById('reserDate').value = new Date().toISOString().substring(0,10);
+    <script>
+	let getToday = () => {
+		//2021-02-10T09:00
+		let today = new Date();   
+		let year = today.getFullYear(); // 년도
+		let month = today.getMonth() + 1;  // 월
+		if(month<10){
+			month = '0'+month;
+		}
+		let date = today.getDate();  // 날짜
+		let day = today.getDay();  // 요일
+		return year+'-'+month+'-'+date;
+	}
+	
+	
+	window.onload = function(){
+		document.querySelector("#calendar").min = getToday();	
+	}
+</script>
+    
+   
     </script>
     
     

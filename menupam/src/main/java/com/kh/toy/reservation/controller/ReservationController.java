@@ -1,7 +1,6 @@
 package com.kh.toy.reservation.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -36,7 +34,6 @@ public class ReservationController {
 
 		//shopIdx를 가지고 해당 매장의 이름을 TB_SHOP 에서 가져온다
 		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
-		System.out.println(resService.selectShopByShopIdx(shopIdx));
 		return "reservation/reservationForm";	
 	} 
 	
@@ -63,17 +60,16 @@ public class ReservationController {
 	
 	//예약리스트(사장)
 	@GetMapping("list")
-	public String ReservationList(String reserDate, Model model, HttpServletRequest request) {
+	public String ReservationList(String reserDate, Model model, HttpServletRequest request, String shopIdx) {
 		//session 사장이어야하고 그 해당매장이어야하고
 		//reserDate = "2021-05-19";
+		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
 		List<Reservation> resList = resService.selectResListByDate(reserDate);
 		System.out.println("reserDate" + reserDate);
 		//달력으로 날짜 받아와
 		
 		//승인인데 리스트 안떠
-		model.addAllAttributes(resList);
-		
-		request.setAttribute("resList", resList);
+		model.addAttribute("resList", resList);
 		return "reservation/reservationList";
 	}
 	
@@ -84,6 +80,9 @@ public class ReservationController {
 		
 		//[1. seession에서 ID꺼내서 shop의 사장님의 아이디랑 일치하는지 확인해야함]
 		//일단 AuthInterceptor에서 로그인 안했으면 접근불가.
+		String memberId = ((Member)request.getSession().getAttribute("userInfo")).getMemberId();
+		
+		//if(memberId == shop.getMemberId())
 		
 		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
 		
@@ -130,9 +129,16 @@ public class ReservationController {
 		
 	
 	//예약 취소(사장) - 손님도 필요?
-	public String cancelRes(String reserIdx){
-		resService.deleteRes(reserIdx);
-		return "redirect:index";
+	@PostMapping("cancelRes")
+	@ResponseBody
+	public String cancelRes(String reserIdx) throws Exception {
+		boolean res = false; 
+		//		resService.deleteRes(reserIdx); 이거 왜 boolean안될까
+		if(res==true) { //delete말고 update?
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 		
 	
