@@ -1,5 +1,6 @@
 package com.kh.toy.reservation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,8 @@ public class ReservationServiceImpl implements ReservationService{
 	//날짜별예약리스트 
 	@Override
 	public List<Reservation> selectResListByDate(String reserDate) {
-		return resRepository.selectResListByDate(reserDate);
+		return null;
+		//return resRepository.selectResListByDate(reserDate);
 	}
 	
 	//예약 등록
@@ -64,6 +66,19 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public Shop selectShopByShopIdx(String shopIdx) {
 		return resRepository.selectShopByShopIdx(shopIdx);
+	}
+
+	@Override
+	public Map<Integer, Reservation> getResMap(String shopIdx, String reserDate) {
+		//여기서 date를 DB형식에 맞게 들어갈 수 있게 만들어주고
+		Map<Integer, Reservation> resMap = new HashMap<Integer, Reservation>();
+		List<Reservation> resList = resRepository.selectResListByDate(shopIdx,reserDate);
+		
+		for(int i=0; i<resList.size(); i++) {
+			resMap.put(i, resList.get(i));
+		}
+		
+		return resMap;
 	}
 
 	

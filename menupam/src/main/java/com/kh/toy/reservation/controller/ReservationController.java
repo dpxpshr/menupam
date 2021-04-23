@@ -1,6 +1,7 @@
 package com.kh.toy.reservation.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.service.ReservationService;
 import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 @Controller
 @RequestMapping("reservation")
@@ -58,39 +60,38 @@ public class ReservationController {
 		return "common/result";	
 	} 
 	
-	//예약리스트(사장)
+	//예약리스트(사장) -> 사장님이 승인한 예약들을 보는곳 
 	@GetMapping("list")
-	public String ReservationList(String reserDate, Model model, HttpServletRequest request, String shopIdx) {
-		//session 사장이어야하고 그 해당매장이어야하고
-		//reserDate = "2021-05-19";
+	public String ReservationList(String shopIdx, Model model) {
 		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
-		List<Reservation> resList = resService.selectResListByDate(reserDate);
-		System.out.println("reserDate" + reserDate);
-		//달력으로 날짜 받아와
-		
-		//승인인데 리스트 안떠
-		model.addAttribute("resList", resList);
+//		//session 사장이어야하고 그 해당매장이어야하고
+//		//reserDate = "2021-05-19";
+//		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+//		List<Reservation> resList = resService.selectResListByDate(reserDate);
+//		System.out.println("reserDate" + reserDate);
+//		//달력으로 날짜 받아와
+//		
+//		//승인인데 리스트 안떠
+//		model.addAttribute("resList", resList);
 		return "reservation/reservationList";
 	}
 	
 	//예약승인 화면(사장)
 	@GetMapping("reque")
-	public String reservationReque(Model model, HttpServletRequest request, Member member, String shopIdx) {
+	public String reservationReque(Model model, HttpServletRequest request,
+			@SessionAttribute(name="userInfo", required = false) Member member, String shopIdx) {
 		
-		
-		//[1. seession에서 ID꺼내서 shop의 사장님의 아이디랑 일치하는지 확인해야함]
-		//일단 AuthInterceptor에서 로그인 안했으면 접근불가.
-		String memberId = ((Member)request.getSession().getAttribute("userInfo")).getMemberId();
-		
-		//if(memberId == shop.getMemberId())
-		
-		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
-		
-		List<Reservation> resRequeList = resService.selectResRequeList(shopIdx);
-		
-		model.addAttribute("resRequeList",resRequeList);		
-		//view에 주어야되는건 shopIdx가 같으면서 '승인대기'인 TB_RESERVATION  
-		return "reservation/reservationReque";	
+		Shop shop = resService.selectShopByShopIdx(shopIdx);
+		if(shop.getMemberId().equals(member.getMemberId())) {
+			model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+			List<Reservation> resRequeList = resService.selectResRequeList(shopIdx);
+			model.addAttribute("resRequeList",resRequeList);	
+			return "reservation/reservationReque";	
+		}else {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("url", "/index");
+			return "common/result";
+		}
 	} 
 	
 	//예약 승인(사장) [알림기능 해야함!]
@@ -141,7 +142,13 @@ public class ReservationController {
 		}
 	}
 		
-	
+	@PostMapping("getList")
+	@ResponseBody
+	public Map<Integer, Reservation> getReservationList(String shopIdx, String reserDate) {
+		System.out.println(reserDate);
+		Map<Integer, Reservation> resMap = resService.getResMap(shopIdx, reserDate);
+		return resMap;
+	}
 	
 	//(사장)usertype이 사장이고, 취소버튼 누르면 delete ->리스트에서 삭제 -> 손님 문자
 
