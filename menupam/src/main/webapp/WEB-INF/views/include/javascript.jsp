@@ -11,7 +11,7 @@ window.onload = function(){
 	let notifications = document.querySelector(".notifications")
 	
 	bell.addEventListener("click",(e)=>{
-		
+		socketTest();
 	    if(open){
 	        //open O
 	        notifications.style.display = "none";
@@ -42,8 +42,8 @@ window.onload = function(){
 			console.log("info : connection closed");
 		}
 
+		// [메시지가 오는 메서드]
 		sock.onmessage = function(event){
-			//메시지가 오는 메서드
 			let data = event.data;
 			let p = document.createElement("p");
 			p.innerHTML = data;
@@ -51,13 +51,22 @@ window.onload = function(){
 		}		
     }
 
-
+	
 	function socketTest(){
 		if(socket){
 			let userId = '${sessionScope.userInfo.memberId}';
-			let receiveId = "kim2";
+			let receiveId = "kakao1700452227";
 			let msg = "메시지 입니다";
 			socket.send(userId+","+msg+","+receiveId);
+		}
+	}
+
+
+	// [메시지 보내는 메서드]
+	function sendNotification(receiveId, msg, link){
+		if(socket){
+			window.alert("멈추나여기서");
+			socket.send(receiveId+","+msg+","+link);
 		}
 	}
 	
@@ -111,6 +120,9 @@ window.onload = function(){
 	}
 
 	getNotification('${sessionScope.userInfo.memberId}');	 
+
+
+	
 	
 }
 
@@ -128,10 +140,9 @@ let allReadNotification = (memberId) => {
 			})
 			
 		}else if(text=='fail'){
-			
+			//여기도 예외처리 해야함
 		}
 	})
-	
 }
 
 </script>

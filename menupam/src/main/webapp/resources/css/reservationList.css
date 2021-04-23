@@ -100,7 +100,7 @@
 }
 .reserv_box{
 	width: 100%;
-	height: 50px;
+	height: 65px;
 	display: inline-block;
 	justify-content: space-around;
 	background-color: 	#FFFFE0;
@@ -109,7 +109,7 @@
 
 .box{
 	margin-top: 5px;
-	height: 50%;
+	height: 65%;
 }
 
 .reserv_info{

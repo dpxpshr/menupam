@@ -7,20 +7,21 @@ public class Notification {
 	private String notificationLink;
 	private String notificationCheck;
 	private String notificationRegDate;
-
+	private String notificationIdx;
+	
 	public Notification() {
 
 	}
 
 	public Notification(String memberId, String notificationContent, String notificationLink, String notificationCheck,
-			String notificationRegDate) {
+			String notificationRegDate, String notificationIdx) {
 
 		this.memberId = memberId;
 		this.notificationContent = notificationContent;
 		this.notificationLink = notificationLink;
 		this.notificationCheck = notificationCheck;
 		this.notificationRegDate = notificationRegDate;
-
+		this.notificationIdx = notificationIdx;
 	}
 
 	public String getMemberId() {
@@ -63,11 +64,19 @@ public class Notification {
 		this.notificationRegDate = notificationRegDate;
 	}
 
+	public String getNotificationIdx() {
+		return notificationIdx;
+	}
+
+	public void setNotificationIdx(String notificationIdx) {
+		this.notificationIdx = notificationIdx;
+	}
+
 	@Override
 	public String toString() {
 		return "Notification [memberId=" + memberId + ", notificationContent=" + notificationContent
 				+ ", notificationLink=" + notificationLink + ", notificationCheck=" + notificationCheck
-				+ ", notificationRegDate=" + notificationRegDate + "]";
+				+ ", notificationRegDate=" + notificationRegDate + ", notificationIdx=" + notificationIdx + "]";
 	}
 
 }

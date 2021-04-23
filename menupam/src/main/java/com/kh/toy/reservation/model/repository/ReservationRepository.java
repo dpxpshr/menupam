@@ -44,6 +44,9 @@ public interface ReservationRepository {
 	@Update("update tb_reservation set reser_state = '승인거부' where reser_idx = #{reserIdx}")
 	int updateStateReject(String reserIdx);
 	
+	@Update("update tb_reservation set reser_state = '예약취소' where reser_idx = #{reserIdx}")
+	int cancelRes(String reserIdx);
+	
 	//예약리스트에서 예약손님 검색
 	@Select("select * tb_reservation where reser_date = #{reserDate} and reser_name = #{reserName}")
 	List<Reservation> searchByName(Reservation res, Member member);
