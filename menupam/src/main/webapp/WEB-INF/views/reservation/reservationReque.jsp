@@ -51,6 +51,7 @@ function showClock(){
 				<i class="far fa-clipboard"></i>
 			</div>
 		</div>
+	</div>
 		<div class="main">
 			<!--여기서 부터 코드 작성-->
 			<div class="body">
@@ -172,3 +173,4 @@ function showClock(){
 		<!-- main -->
 </body>
 </html>
+

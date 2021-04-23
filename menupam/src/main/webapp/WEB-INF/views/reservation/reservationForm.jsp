@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/head.jsp"%>
-
-
 <head>
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <title>메뉴팜</title>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='../../../resources/css/reset.css'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='../../../resources/css/main.css'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='../../../resources/css/reservationForm.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationForm.css'>
 <script src='main.js'></script>
-<script src="https://kit.fontawesome.com/e5012d0871.js"
-	crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -30,8 +24,7 @@
 		</div>
 		<div class="main">
 			<!--여기서 부터 코드 작성 "-->
-			<body class="body">
-			<div class="content_wrapper">
+			<div class="body">
 			
 			<div class=reservation_info>
 				<form:form modelAttribute="reservation"
@@ -39,6 +32,7 @@
 					<br>
 					<div class="fontBox">
 						<p class="fontMedium" id="title">예약</p>
+					</div>
 					<br>
 					<div class="line"></div>
 					<div class="content">
@@ -49,7 +43,10 @@
 								<!-- 매장 이름 -->
 							</div>
 						</div>
-						<hr color="#F2BB13">
+						<br>
+						<div class="line"></div>
+					<br>
+						
 						<p class="fontMedium">방문 일자</p>
 						<br> <input type="datetime-local" class="inputLarge" id="calendar" step="1800"
 							name="reserDate"> <br> <br>
@@ -62,6 +59,9 @@
 								<input type="text" class="inputLarge" name="reserName" id="name"
 									placeholder="성함을 입력해주세요"
 									value="${sessionScope.userInfo.memberName}">
+								<br><br>
+								<input type="text" class="inputLarge" name="reserPhone" value="${sessionScope.userInfo.memberPhone}" placeholder="전화번호를 입력해주세요">
+							
 							</div>
 							<br>
 							<div id="search_bar">
@@ -71,6 +71,10 @@
 										<option value="2">2인 방문</option>
 										<option value="3">3인 방문</option>
 										<option value="4">4인 방문</option>
+										<option value="5">5인 방문</option>
+										<option value="6">6인 방문</option>
+										<option value="7">7인 방문</option>
+										<option value="8">8인 방문</option>
 									</select>
 								</p>
 							</div>
@@ -82,8 +86,8 @@
 								name="reserComment" placeholder="요청사항을 입력해주세요">
 						</div>
 						<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
-						<br>
-						<input type="text" name="reserPhone" value="${sessionScope.userInfo.memberPhone}">
+						
+						
 						<div class="btnBox">
 							<br>
 							<button class="btnLarge">예약하기</button>
@@ -92,8 +96,7 @@
 					</div>
 				</form:form>
 			</div>
-			</div>
-			</body>
+			</div> <!-- body -->
 		</div> 
 
 <%-- 		<div class="main">
