@@ -80,7 +80,7 @@
     				header.append("Content-type","application/x-www-form-urlencoded;charset=utf-8");
     				let body = {
     					cid : "TC0ONETIME", //카카오페이 테스트 가맹점 코드
-    					partner_order_id : "${order.orderIdx}",
+    					partner_order_id : "${order.orderIdx}", 
     					partner_user_id : "${userInfo.memberId}",
     					item_name : "${shop.shopName} 주문",
     					quantity : 1,
@@ -91,8 +91,10 @@
     					fail_url : "결제 실패시 보낼 url"
     				};
     				
-    				
+    				//fetch로 카카오 결제준비 요청후 받아온 url로 카카오 결제 진행
     				fetch(url,{method : "post", headers : header})
+    				
+    				//결제 끝나고 서버에 결제확인 요청
     			}	
     		}
     	}
