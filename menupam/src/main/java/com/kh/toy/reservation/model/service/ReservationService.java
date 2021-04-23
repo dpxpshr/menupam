@@ -1,11 +1,11 @@
 package com.kh.toy.reservation.model.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 public interface ReservationService {
 
@@ -14,8 +14,9 @@ public interface ReservationService {
 	
 	int insertRes(Reservation res);
 	void deleteRes(String reserIdx);
-	List<Map<String, Object>> selectResRequeList();
+	List<Reservation> selectResRequeList(String shopIdx);
 	int updateStateApprove(String reserIdx);
 	int updateStateReject(String reserIdx);
 	List<Reservation> searchByName(Reservation res, Member member);
+	Shop selectShopByShopIdx(String shopIdx);
 }

@@ -1,6 +1,6 @@
 package com.kh.toy.waiting.controller;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +47,7 @@ public class WaitingController {
 	public String waitingList(Date waitRegDate, Model model, HttpServletRequest request) {
 		//session 사장 & 해당 매장
 		//날짜 그날 날짜로 자동 설정어떻게..
+		//waitRegDate = "21/04/20";
 		List<Waiting> waitList = waitingService.selectWaitingListByDate(waitRegDate);
 		model.addAllAttributes(waitList);
 		request.setAttribute("waitList", waitList);

@@ -1,6 +1,5 @@
 package com.kh.toy.reservation.model.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.repository.ReservationRepository;
 import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -39,28 +39,31 @@ public class ReservationServiceImpl implements ReservationService{
 
 	//예약 요청 리스트
 	@Override
-	public List<Map<String, Object>> selectResRequeList() {
-		return resRepository.selectResRequeList();
+	public List<Reservation> selectResRequeList(String shopIdx) {
+		return resRepository.selectResRequeList(shopIdx);
 	}
 
 	//예약 승인
 	@Override
 	public int updateStateApprove(String reserIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return resRepository.updateStateApprove(reserIdx);
 	}
 
 	//예약 거부
 	@Override
 	public int updateStateReject(String reserIdx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return resRepository.updateStateReject(reserIdx);
 	}
 
 	@Override
 	public List<Reservation> searchByName(Reservation res, Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return resRepository.searchByName(res, member);
+	}
+
+	@Override
+	public Shop selectShopByShopIdx(String shopIdx) {
+		return resRepository.selectShopByShopIdx(shopIdx);
 	}
 
 	

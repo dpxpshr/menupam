@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kh.toy.member.model.vo.Member;
@@ -31,39 +32,45 @@ public class ReservationController {
 		
 	
 	@GetMapping("form")
-	public String reservationForm() {
+	public String reservationForm(String shopIdx, Model model) { 
+
+		//shopIdx를 가지고 해당 매장의 이름을 TB_SHOP 에서 가져온다
+		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+		System.out.println(resService.selectShopByShopIdx(shopIdx));
 		return "reservation/reservationForm";	
-	} 		
+	} 
 	
 	//예약하기
-	@PostMapping("reserve")
-	public String reservationInsert( @SessionAttribute(name="userInfo", required = false) Member member,
-			HttpServletRequest request, Reservation res, Model model) {
-		/*
-		 * //로그인 여부에 따른 예외처리 
-		 * String memberName = member == null?"guest":member.getMemberName();
-		 */
-		res.setMemberId(member.getMemberId());
+	@PostMapping("reserve") //[알림기능 해야함!]
+	public String reservationInsert(@SessionAttribute(name="userInfo", required = false) Member member, Reservation res, Model model) {
 
-		//세션에서 유저의 이름을 가져와서 Reservation VO에 저장하기
-		res.setReserName(member.getMemberName());
+		
+		//1. 여기서 만약에 session에 userInfo가 있는놈이다 하면 res객체에 ID넣어주자		
+		if(member != null) {
+			res.setMemberId(member.getMemberId());
+		}else {
+			res.setMemberId("notMember");
+		}
+		//2. 예약 신청 해주자  
 		resService.insertRes(res);
 		
+		//3. 어디로 갈지 지정해주자
 		model.addAttribute("msg", "예약이 요청되었습니다.");
-		model.addAttribute("url", "/index");
+		model.addAttribute("url", "/index"); //-> [임시] 수정 해야함 원래 보던 매장 페이지로 이동해야 함
 		
-		return "redirect:/index";	
+		return "common/result";	
 	} 
 	
 	//예약리스트(사장)
 	@GetMapping("list")
 	public String ReservationList(String reserDate, Model model, HttpServletRequest request) {
 		//session 사장이어야하고 그 해당매장이어야하고
-		reserDate = "2021-05-19";
+		//reserDate = "2021-05-19";
 		List<Reservation> resList = resService.selectResListByDate(reserDate);
-		
+		System.out.println("reserDate" + reserDate);
 		//달력으로 날짜 받아와
 		
+		//승인인데 리스트 안떠
 		model.addAllAttributes(resList);
 		
 		request.setAttribute("resList", resList);
@@ -72,40 +79,44 @@ public class ReservationController {
 	
 	//예약승인 화면(사장)
 	@GetMapping("reque")
-	public String reservationReque(Model model, HttpServletRequest request, Member member) {
-		//사장이어야하고 그 해당매장이어야하고
-		//전화번호
-		List<Map<String, Object>> resRequeList = resService.selectResRequeList();
-		System.out.println(resRequeList.get(0).get("memberPhone").toString());
-		String memberPhone = null;
-		for (Map<String, Object> map : resRequeList) {
-			memberPhone = resRequeList.get(0).get("memberPhone").toString();
-		}
-		System.out.println(memberPhone);
-		request.setAttribute("memberPhone", memberPhone);
-		model.addAllAttributes(resRequeList);
-		request.setAttribute("resRequeList", resRequeList);
+	public String reservationReque(Model model, HttpServletRequest request, Member member, String shopIdx) {
 		
+		
+		//[1. seession에서 ID꺼내서 shop의 사장님의 아이디랑 일치하는지 확인해야함]
+		//일단 AuthInterceptor에서 로그인 안했으면 접근불가.
+		
+		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+		
+		List<Reservation> resRequeList = resService.selectResRequeList(shopIdx);
+		
+		model.addAttribute("resRequeList",resRequeList);		
+		//view에 주어야되는건 shopIdx가 같으면서 '승인대기'인 TB_RESERVATION  
 		return "reservation/reservationReque";	
 	} 
 	
-	//예약 승인(사장)
+	//예약 승인(사장) [알림기능 해야함!]
 	@PostMapping("approveRes")
-	public String approveRes(@RequestParam String reserIdx) throws Exception {
+	@ResponseBody
+	public String approveRes(String reserIdx) throws Exception {
 		
-		resService.updateStateApprove(reserIdx);
-		
-		return "redirect:reservation/reservationList";
-		
-		//메일 날려야하는데?
+		int res = resService.updateStateApprove(reserIdx);
+		if(res==1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
-	//예약 거부(사장)
+	//예약 거부(사장) [알림기능 해야함!]
 	@PostMapping("rejectRes")
-	public String rejectRes(@RequestParam String reserIdx) throws Exception {
-		resService.updateStateReject(reserIdx);
-		return "redirect:reservation/reservationList";
-		//메일 날려야하는데?
+	@ResponseBody
+	public String rejectRes(String reserIdx) throws Exception {
+		int res = resService.updateStateReject(reserIdx);
+		if(res==1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	//예약 검색(사장)

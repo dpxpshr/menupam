@@ -43,7 +43,7 @@
 	                    <div class="date_box">
 	                    	
 	                    	<div class="date">
-	                    		<input type="date" name="reserDate">
+	                    		<input type="date" id="reserDate" name="reserDate">
 	                    	</div>
 	                    </div>
 	                    
@@ -64,7 +64,7 @@
 	                    	<form name="form" method="POST">
 	                    	<div class="reserv_box">
 	                    		<div class="box">
-	                    		<span class="reserv_info">${reservation.reserName} ${reservation.reserParty}인 날짜</span>
+	                    		<span class="reserv_info">${reservation.reserName} ${reservation.reserParty}인 시간</span>
 	                    		<button class="btn" id="cancel_reserv">예약 취소</button>
 	                    		</div>
 	                    		<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>
@@ -100,7 +100,7 @@
     	
     });
     
-    
+    //document.getElementById('reserDate').value = new Date().toISOString().substring(0,10);
     </script>
     
     

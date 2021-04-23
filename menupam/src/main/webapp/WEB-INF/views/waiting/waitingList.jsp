@@ -49,10 +49,10 @@
 				        </c:if> 
 	                    
 	                    <div class="wrap_box">
-	                    <c:forEach var="res" items="${waitList}" varStatus="status">
+	                    <c:forEach var="waiting" items="${waitList}" varStatus="status">
 	                    	<form name="form" method="POST" >
 	                    	<div class="wating_box">
-	                    		<span class="waiting_info">3인 010-0000-0000</span>
+	                    		<span class="waiting_info">${waiting.waitParty}인 ${waiting.waitPhone}</span>
 	                    		<div class="wrap_btn">
 	                    			<button class="btn" id="send_msg">문자 전송</button>
 	                    			<button class="btn" id="arrived">문자 전송</button>

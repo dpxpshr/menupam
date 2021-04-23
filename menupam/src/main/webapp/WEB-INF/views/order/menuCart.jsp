@@ -109,7 +109,9 @@
 				});
         	}
 			let payment = ()=>{
-				location.href = "/order/payment?shopIdx=${shop.shopIdx}";
+				if (confirm("주문하시겠습니까?")) {
+					location.href = "/order/payment?shopIdx=${shop.shopIdx}";
+				}
 			}
     	</script>
         <footer class="footer">
