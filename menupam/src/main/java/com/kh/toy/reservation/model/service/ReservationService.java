@@ -19,4 +19,5 @@ public interface ReservationService {
 	int updateStateReject(String reserIdx);
 	List<Reservation> searchByName(Reservation res, Member member);
 	Shop selectShopByShopIdx(String shopIdx);
+	Map<Integer, Reservation> getResMap(String shopIdx, String reserDate);
 }

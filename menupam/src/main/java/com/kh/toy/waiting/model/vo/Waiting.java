@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Waiting {
 	
 	private String waitIdx;
+	private String shopIdx;
 	private String waitPhone;
 	private int waitParty;
 	private String waitState;
@@ -16,10 +17,11 @@ public class Waiting {
 	}
 
 	
-	public Waiting(String waitIdx, String waitPhone, int waitParty, String waitState, String waitTime,
+	public Waiting(String waitIdx, String shopIdx,String waitPhone, int waitParty, String waitState, String waitTime,
 			Date waitRegDate) {
 		super();
 		this.waitIdx = waitIdx;
+		this.shopIdx = shopIdx;
 		this.waitPhone = waitPhone;
 		this.waitParty = waitParty;
 		this.waitState = waitState;
@@ -27,6 +29,16 @@ public class Waiting {
 		this.waitRegDate = waitRegDate;
 	}
 
+
+
+	public String getShopIdx() {
+		return shopIdx;
+	}
+
+
+	public void setShopIdx(String shopIdx) {
+		this.shopIdx = shopIdx;
+	}
 
 
 	public String getWaitIdx() {
@@ -77,11 +89,14 @@ public class Waiting {
 		this.waitRegDate = waitRegDate;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Waiting [waitIdx=" + waitIdx + ", waitPhone=" + waitPhone + ", waitParty=" + waitParty + ", waitState="
-				+ waitState + ", waitTime=" + waitTime + ", waitRegDate=" + waitRegDate + "]";
+		return "Waiting [waitIdx=" + waitIdx + ", shopIdx=" + shopIdx + ", waitPhone=" + waitPhone + ", waitParty="
+				+ waitParty + ", waitState=" + waitState + ", waitTime=" + waitTime + ", waitRegDate=" + waitRegDate
+				+ "]";
 	}
+
 	
 	
 	

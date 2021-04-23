@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -19,8 +20,8 @@ import com.kh.toy.shop.model.vo.Shop;
 public interface ReservationRepository {
 	
 	//사장이 보는 예약 리스트
-	@Select("select * from tb_reservation where reser_date = #{reserDate}")
-	List<Reservation> selectResListByDate(String reserDate);
+	@Select("SELECT * FROM TB_RESERVATION WHERE SHOP_IDX = #{shopIdx} AND RESER_DATE LIKE CONCAT(#{reserDate},'%') AND RESER_STATE = '승인완료'")
+	List<Reservation> selectResListByDate(@Param(value = "shopIdx") String shopIdx, @Param(value = "reserDate") String reserDate);
 	
 	//@Insert("insert into tb_reservation(reser_idx, shop_idx, reser_name, reser_date, reser_comment, reser_party)"
 		//	+ " values('b'||sc_reser_idx.nextval, #{shopIdx}, #{reserName}, #{reserDate}, #{reserComment}, #{reserParty})")
@@ -50,4 +51,8 @@ public interface ReservationRepository {
 	
 	@Select("select * from tb_shop where shop_idx = #{shopIdx}")
 	Shop selectShopByShopIdx(String shopIdx);
+	
+	
+
+	
 }
