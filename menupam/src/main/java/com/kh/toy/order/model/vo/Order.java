@@ -10,6 +10,7 @@ public class Order {
 	private String orderPayState;
 	private String memberId;
 	private String shopIdx;
+	private String orderTableNum;
 	public String getOrderIdx() {
 		return orderIdx;
 	}
@@ -52,13 +53,20 @@ public class Order {
 	public void setShopIdx(String shopIdx) {
 		this.shopIdx = shopIdx;
 	}
+	public String getOrderTableNum() {
+		return orderTableNum;
+	}
+	public void setOrderTableNum(String orderTableNum) {
+		this.orderTableNum = orderTableNum;
+	}
 	
 	@Override
 	public String toString() {
 		return "Order [orderIdx=" + orderIdx + ", orderPrice=" + orderPrice + ", orderDate=" + orderDate
 				+ ", orderPackState=" + orderPackState + ", orderPayState=" + orderPayState + ", memberId=" + memberId
-				+ ", shopIdx=" + shopIdx + "]";
+				+ ", shopIdx=" + shopIdx + ", orderTableNum=" + orderTableNum + "]";
 	}
+	
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.kh.toy.shop.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -242,15 +243,28 @@ public class ShopController {
 	public void shopManage(@SessionAttribute("userInfo") Member userInfo
 						,Model model) {
 		
-		// 계획 - 배열을 사용해서 jstl에 할수 있는지 확인하기
+		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-	
-		int tableCount = shopInfo.getShopTableCount();
-		for (int i = 0; i < tableCount; i++) {
-			System.out.println(i);
+		List<Map<MenuOrdering, Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
+		
+		int count = shopInfo.getShopTableCount();
+		int[] tableArr = new int[count];
+		
+		for (int i = 0; i < tableArr.length; i++) {
+			tableArr[i] = i+1;
 		}
 		
+		// 메뉴 주문 들어온 정보를 김치볶음밥 외 3개 세팅
+		String menuName = menOrders.size() > 1 
+				? menOrders.get(0).getOrDefault("ORDER_MENU_NAME", menOrders.get(0).values()) // 메뉴이름
+						+ " 외 " + (menOrders.size()-1) + "개" 
+						: (String) menOrders.get(0).getOrDefault("ORDER_MENU_NAME", menOrders.get(0).values());
+				
+		
+		model.addAttribute("menuName", menuName);
+		model.addAttribute("tableArr", tableArr);
 		model.addAttribute("shop", shopInfo);
+		model.addAttribute("order", order);
 	}
 	
 			
