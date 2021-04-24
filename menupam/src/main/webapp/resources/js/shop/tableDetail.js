@@ -1,3 +1,5 @@
+const context = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+
 function $(selector,text) {
 	if(text){
 		document.querySelector(selector).innerHTML += `${text}<br>`;
@@ -25,8 +27,26 @@ document.querySelectorAll(".menuCancel").forEach((e)=>{
 		let check = confirm("정말 취소 하시겠습니까?");
 		
 		if(check){
-			console.log(event.srcElement.parentElement.parentElement
-				.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML);
+			let menuName = event.srcElement.parentElement.parentElement
+				.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML;
+				
+			let menuOrders = {}
+			menuOrders.orderMenuName = menuName;
+			
+			let xhr = new XMLHttpRequest();
+			xhr.open("post", context + "/cancelMenu");
+			xhr.setRequestHeader("content-type", "application/json");
+			xhr.send(JSON.stringify(menuOrders));
+			
+			xhr.onreadystatechange = () =>{
+				if(xhr.status == 200){
+					if(xhr.responseText == "cancelSuccess"){
+						location.href = context + "/tableDetail";
+					}
+				}else{
+					eroor.alertMessage();
+				}
+			}
 		}
 	   
 	})

@@ -30,7 +30,7 @@
                     <p class="fontSmall">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <div class="tableInform">
-                        <p class="fontXSmall">테이블 번호 : 03</p><br>
+                        <p class="fontXSmall">테이블 번호 : ${order.orderTableNum}</p><br>
                         <p class="fontXSmall">${order.orderDate}</p><br>
                         <div class="menuList">
                             <p class="fontXSmall">메뉴</p>
@@ -43,8 +43,7 @@
 	                            <p class="fontXSmall">${orders.ORDER_MENU_CNT}</p>
 	                            <p class="fontXSmall"><a class="menuCancel"><i class="far fa-times-circle"></i></p></a>
                             </c:forEach>
-                            
-                           
+                          
                         </div>
                         <br>
                         <p class="fontSmall">총 결제 금액 : ${menuSum}원</p><br>

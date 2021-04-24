@@ -9,7 +9,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/shopManage.css'>
-    <script src='main.js'></script>
+    <!-- <script src='main.js'></script> -->
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -62,52 +62,21 @@
                     </div>
                     <br>
                     <div class="tableBox">
-                        <div class="table eating">
-                            <p class="fontXSmall">1번</p>
-                            <p class="fontXXSmall">김치볶음밥 외 3개</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">2번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">3번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">4번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">5번</p>
-                        </div>
-                        <div class="table eating">
-                            <p class="fontXSmall">6번</p>
-                            <p class="fontXXSmall">치즈 라면 외 2개</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">7번</p>
-                        </div>
-                        <div class="table eating">
-                            <p class="fontXSmall">8번</p>
-                            <p class="fontXXSmall">김치볶음밥 외 3개</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">9번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">10번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">11번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">12번</p>
-                        </div>
-                        <div class="table">
-                            <p class="fontXSmall">13번</p>
-                        </div>
-                        <div class="table eating">
-                            <p class="fontXSmall">14번</p>
-                            <p class="fontXXSmall">김치볶음밥 외 3개</p>
-                        </div>
+                    	<c:forEach var="tableCount" items="${tableArr}">
+                        	<c:choose>
+                        		<c:when test="${tableCount == order.orderTableNum}">
+                        			<a><div class="table eating">
+                            			<p class="fontXSmall">${tableCount}번</p>
+                            			<p class="fontXXSmall">${menuName}</p>
+                        			</div></a>
+                        		</c:when>
+                        		<c:otherwise>
+                        			<div class="table">                        	
+                        		 		<p class="fontXSmall">${tableCount}번</p>  
+                        			</div>
+                        		</c:otherwise>
+                        	</c:choose>
+                        </c:forEach>
                     </div>
                     <br>
                 </div>
@@ -117,7 +86,7 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 

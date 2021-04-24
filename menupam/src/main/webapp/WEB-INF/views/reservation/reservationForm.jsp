@@ -2,114 +2,74 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/head.jsp"%>
 <head>
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<title>메뉴팜</title>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
-<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
-<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationForm.css'>
-<script src='main.js'></script>
-<script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>메뉴팜</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+	<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
+	<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationForm.css'>
+	<script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-	<div class="wrapper">
-		<div class="header">
-			<div class="search">
-				<i class="fas fa-search"></i>
-			</div>
-			<div class="notice">
-				<i class="far fa-clipboard"></i>
-			</div>
-		</div>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
 		<div class="main">
 			<!--여기서 부터 코드 작성 "-->
 			<div class="body">
-			
-			<div class=reservation_info>
-				<form:form modelAttribute="reservation"
-					action="${context}/reservation/reserve" method="POST">
-					<br>
-					<div class="fontBox">
-						<p class="fontMedium" id="title">예약</p>
-					</div>
-					<br>
-					<div class="line"></div>
-					<div class="content">
-						<div class="wrap_shop">
-							<i class="fas fa-store store"></i>
-							<div class="shop">
-								<span id="shop_info">${shop.shopName}</span>
-								<!-- 매장 이름 -->
-							</div>
+				<div class=reservation_info>
+					<form:form modelAttribute="reservation" action="${context}/reservation/reserve" method="POST" id="reserForm"><br>
+						<div class="fontBox">
+							<p class="fontMedium" id="title">예약</p>
+						</div><br>
+						<div class="line">
+
 						</div>
-						<br>
-						<div class="line"></div>
-					<br>
-						
-						<p class="fontMedium">방문 일자</p>
-						<br> <input type="datetime-local" class="inputLarge" id="calendar" step="1800"
-							name="reserDate"> <br> <br>
-						<!-- <p class="fontMedium">방문 예정 시간</p>
-      			<br>
-      			<input type="text" class="inputLarge" name="time" id="time"placeholder="방문 예정 시간을 입력해주세요">
-            	 -->
-						<div class="imgBox">
-							<div class="imgsmall">
-								<input type="text" class="inputLarge" name="reserName" id="name"
-									placeholder="성함을 입력해주세요"
-									value="${sessionScope.userInfo.memberName}">
-								<br><br>
-								<input type="text" class="inputLarge" name="reserPhone" value="${sessionScope.userInfo.memberPhone}" placeholder="전화번호를 입력해주세요">
-							
+						<div class="content">
+							<div class="wrap_shop">
+								<i class="fas fa-store store"></i>
+								<div class="shop">
+									<span id="shop_info">${shop.shopName}</span>
+									<!-- 매장 이름 -->
+								</div>
 							</div>
 							<br>
-							<div id="search_bar">
-								<p class="fontLarge" class="inputLarge">
-									예약 인원 <select id="search_sel" name="reserParty">
-										<option value="1">1인 방문 ▼</option>
-										<option value="2">2인 방문</option>
-										<option value="3">3인 방문</option>
-										<option value="4">4인 방문</option>
-										<option value="5">5인 방문</option>
-										<option value="6">6인 방문</option>
-										<option value="7">7인 방문</option>
-										<option value="8">8인 방문</option>
-									</select>
-								</p>
+							<div class="line">
+
+							</div><br>
+							<p class="fontMedium">방문 일자</p><br> 
+							<input type="datetime-local" class="inputLarge" id="calendar" step="1800" name="reserDate"><br><br>
+							<div class="imgBox">
+								<div class="imgsmall">
+									<input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력해주세요" value="${sessionScope.userInfo.memberName}"><br><br>
+									<input type="text" class="inputLarge" name="reserPhone" value="${sessionScope.userInfo.memberPhone}" placeholder="전화번호를 입력해주세요">
+								</div><br>
+								<div id="search_bar">
+									<p class="fontLarge" class="inputLarge">예약 인원 
+										<select id="search_sel" name="reserParty">
+											<option value="1">1인 방문 ▼</option>
+											<option value="2">2인 방문</option>
+											<option value="3">3인 방문</option>
+											<option value="4">4인 방문</option>
+											<option value="5">5인 방문</option>
+											<option value="6">6인 방문</option>
+											<option value="7">7인 방문</option>
+											<option value="8">8인 방문</option>
+										</select>
+									</p>
+								</div>
+							</div><br>
+							<div class="phone_num">
+								<p class="fontLarge">요청사항</p><br>
+								<input type="text" class="inputLarge" name="reserComment" placeholder="요청사항을 입력해주세요">
+							</div>
+							<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
+							<div class="btnBox"><br>
+								<button class="btnLarge" id="reserBtn">예약하기</button><br>
 							</div>
 						</div>
-						<br>
-						<div class="phone_num">
-							<p class="fontLarge">요청사항</p>
-							<br> <input type="text" class="inputLarge"
-								name="reserComment" placeholder="요청사항을 입력해주세요">
-						</div>
-						<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
-						
-						
-						<div class="btnBox">
-							<br>
-							<button class="btnLarge">예약하기</button>
-							<br>
-						</div>
-					</div>
-				</form:form>
-			</div>
+					</form:form>
+				</div>
 			</div> <!-- body -->
 		</div> 
-
-<%-- 		<div class="main">
-			<div class="body">
-				<div class="content">
-					<p class="fontSmall">${shopIdx}</p><br>
-	            	<div class="line"></div><br>
-	            	<form>
-	            	
-	            	</form>
-				</div>
-			</div>
-		</div> --%>
 		<div class="footer">
 			<div>
 				<i class="fas fa-search"></i>
@@ -147,5 +107,21 @@
 	window.onload = function(){
 		document.querySelector("#calendar").min = getToday();	
 	}
+
+	document.querySelector("#reserBtn").addEventListener("click",(e)=>{
+		//[알림파트]
+		//1. 예약버튼 누름 -> 원래 이벤트 잠시 멈춤
+		//1-1. 알림을 DB에 저장해주기 ->이거는 service에서 같이 해줬다
+		//1-2. 알림을 sendNotification 메서드를 통해 보내준다.
+		e.preventDefault();
+		
+		//=========================send가 안된가 왜? 끝====================
+		//sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/list?shopIdx=${shop.shopIdx}");
+		
+		document.querySelector("#reserForm").submit();
+	})
+
+
 </script>
+<%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 </html>

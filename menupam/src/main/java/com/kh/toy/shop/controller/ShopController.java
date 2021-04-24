@@ -1,6 +1,7 @@
 package com.kh.toy.shop.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -96,9 +97,6 @@ public class ShopController {
 		
 		return "common/result";
 	}
-	
-	@GetMapping("shopManage")
-	public void shopManage() {}
 	
 	@GetMapping("menuManage")
 	public void menuManage(@SessionAttribute("userInfo") Member userInfo
@@ -203,16 +201,21 @@ public class ShopController {
 	
 	@GetMapping("tableDetail")
 	public void tableDetail(@SessionAttribute("userInfo") Member userInfo
-						,Model model) {
+						,Model model
+						,HttpSession session) {
 		
 		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
 		List<Map<MenuOrdering,Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
 		int sum = 0;
+		int menuPrice = 0;
+		int menuCnt = 0 ;
 		
 		// 메뉴 가격 더한 값 view 출력
 		for (Map<MenuOrdering, Object> mo : menOrders) {
-			sum += Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_PRICE", mo.values()));
+			menuPrice = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_PRICE", mo.values()));
+			menuCnt = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_CNT", mo.values())) ;
+			sum += (menuPrice * menuCnt);
 		}
 			
 		model.addAttribute("shop", shopInfo);
@@ -222,6 +225,47 @@ public class ShopController {
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
 		
+		session.setAttribute("order", order);
 	}
+	
+	@PostMapping("cancelMenu")
+	@ResponseBody
+	public String deleteSelectionMenuOrder(@RequestBody MenuOrdering menuOrdering
+										,@SessionAttribute("order") Order order) {
+		
+		menuOrdering.setOrderIdx(order.getOrderIdx());
+		shopService.deleteSelectionMenuOrder(menuOrdering);
+
+		return "cancelSuccess";
+	}
+	
+	@GetMapping("shopManage")
+	public void shopManage(@SessionAttribute("userInfo") Member userInfo
+						,Model model) {
+		
+		Order order = shopService.selectOrder(userInfo.getMemberId());
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		List<Map<MenuOrdering, Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
+		
+		int count = shopInfo.getShopTableCount();
+		int[] tableArr = new int[count];
+		
+		for (int i = 0; i < tableArr.length; i++) {
+			tableArr[i] = i+1;
+		}
+		
+		// 메뉴 주문 들어온 정보를 김치볶음밥 외 3개 세팅
+		String menuName = menOrders.size() > 1 
+				? menOrders.get(0).getOrDefault("ORDER_MENU_NAME", menOrders.get(0).values()) // 메뉴이름
+						+ " 외 " + (menOrders.size()-1) + "개" 
+						: (String) menOrders.get(0).getOrDefault("ORDER_MENU_NAME", menOrders.get(0).values());
+				
+		
+		model.addAttribute("menuName", menuName);
+		model.addAttribute("tableArr", tableArr);
+		model.addAttribute("shop", shopInfo);
+		model.addAttribute("order", order);
+	}
+	
 			
 }

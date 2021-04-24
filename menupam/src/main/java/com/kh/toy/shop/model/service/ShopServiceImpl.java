@@ -147,12 +147,13 @@ public class ShopServiceImpl implements ShopSerivce{
 	}
 
 	@Override
-	public List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx) {
-		
-		//Map<String, Object> commandMap = new HashMap<String,Object>();
-		//commandMap.put("menuOrders", shopRepository.selectMenuOrderList(orderIdx));
-		
+	public List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx) {		
 		return shopRepository.selectMenuOrderList(orderIdx);
+	}
+
+	@Override
+	public int deleteSelectionMenuOrder(MenuOrdering menuOrdering) {
+		return shopRepository.deleteSelectionMenuOrder(menuOrdering);
 	}	
 
 }

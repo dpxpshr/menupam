@@ -9,7 +9,6 @@ public class MenuOrdering {
 	private String orderMenuName;
 	private String orderMenuPrice;
 	
-	
 	public String getMoIdx() {
 		return moIdx;
 	}
