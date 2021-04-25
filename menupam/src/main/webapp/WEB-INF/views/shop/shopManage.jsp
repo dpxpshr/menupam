@@ -62,21 +62,22 @@
                     </div>
                     <br>
                     <div class="tableBox">
-                    	<c:forEach var="tableCount" items="${tableArr}">
-                        	<c:choose>
-                        		<c:when test="${tableCount == order.orderTableNum}">
-                        			<a><div class="table eating">
-                            			<p class="fontXSmall">${tableCount}번</p>
-                            			<p class="fontXXSmall">${menuName}</p>
-                        			</div></a>
-                        		</c:when>
-                        		<c:otherwise>
-                        			<div class="table">                        	
-                        		 		<p class="fontXSmall">${tableCount}번</p>  
-                        			</div>
-                        		</c:otherwise>
-                        	</c:choose>
-                        </c:forEach>
+                    	<c:forEach var="i" items="${tableArr}" >
+		                    <c:forEach items="${menuOrderListList}" var="list">
+		                    	
+		                    		<c:if test="${i == list[0].ORDER_TABLE_NUM}">
+		                    			<div class="table eating">                 	
+		                    		 		<p class="fontXSmall">${i}번</p>
+		                    		 		 <c:set var="i" value="${i + 1}"/> 
+		                    		 		  
+		                    			</div>
+		                    		</c:if>
+                        		
+		                    </c:forEach>
+	                    	<div class="table">                        	
+	                        	<p class="fontXSmall">${i}번</p>  
+	                        </div>
+                    	</c:forEach>
                     </div>
                     <br>
                 </div>

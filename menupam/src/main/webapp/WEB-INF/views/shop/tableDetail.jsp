@@ -9,7 +9,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/tableDetail.css'>
-    <script src='main.js'></script>
+    <!-- <script src='main.js'></script> -->
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>

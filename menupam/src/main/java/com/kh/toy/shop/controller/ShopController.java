@@ -2,6 +2,7 @@ package com.kh.toy.shop.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -204,15 +205,16 @@ public class ShopController {
 						,Model model
 						,HttpSession session) {
 		
+		//shopManage에서 table번호를 받아서 출력하게 만든다.
 		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		List<Map<MenuOrdering,Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
+		List<Map<String,Object>> menuOrders = shopService.selectMenuOrderList(order.getOrderIdx());
 		int sum = 0;
 		int menuPrice = 0;
 		int menuCnt = 0 ;
 		
 		// 메뉴 가격 더한 값 view 출력
-		for (Map<MenuOrdering, Object> mo : menOrders) {
+		for (Map<String, Object> mo : menuOrders) {
 			menuPrice = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_PRICE", mo.values()));
 			menuCnt = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_CNT", mo.values())) ;
 			sum += (menuPrice * menuCnt);
@@ -220,7 +222,7 @@ public class ShopController {
 			
 		model.addAttribute("shop", shopInfo);
 		model.addAttribute("order", order);
-		model.addAttribute("menuOrders", menOrders);
+		model.addAttribute("menuOrders", menuOrders);
 		model.addAttribute("menuSum", sum);
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
@@ -242,11 +244,20 @@ public class ShopController {
 	@GetMapping("shopManage")
 	public void shopManage(@SessionAttribute("userInfo") Member userInfo
 						,Model model) {
-		
-		Order order = shopService.selectOrder(userInfo.getMemberId());
+		// 대 수정
+		List<Order> orderList = shopService.selectOrderList();
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		List<Map<MenuOrdering, Object>> menOrders = shopService.selectMenuOrderList(order.getOrderIdx());
+		List<Map<String,Object>> menuOrders = new ArrayList<Map<String,Object>>();
+		List<List<Map<String,Object>>> menuOrderListList = new ArrayList<List<Map<String,Object>>>();
 		
+		for (Order order : orderList) {
+			if(order.getOrderTableNum() != null) {
+				menuOrders = shopService.selectMenuOrderList(order.getOrderTableNum());
+				menuOrderListList.add(menuOrders);
+			}
+		}
+		
+	
 		int count = shopInfo.getShopTableCount();
 		int[] tableArr = new int[count];
 		
@@ -255,16 +266,16 @@ public class ShopController {
 		}
 		
 		// 메뉴 주문 들어온 정보를 김치볶음밥 외 3개 세팅
-		String menuName = menOrders.size() > 1 
-				? menOrders.get(0).getOrDefault("ORDER_MENU_NAME", menOrders.get(0).values()) // 메뉴이름
-						+ " 외 " + (menOrders.size()-1) + "개" 
-						: (String) menOrders.get(0).getOrDefault("ORDER_MENU_NAME", menOrders.get(0).values());
+		String menuName = menuOrders.size() > 1 
+				? menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values()) // 메뉴이름
+						+ " 외 " + (menuOrders.size()-1) + "개" 
+						: (String) menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values());
 				
 		
 		model.addAttribute("menuName", menuName);
 		model.addAttribute("tableArr", tableArr);
 		model.addAttribute("shop", shopInfo);
-		model.addAttribute("order", order);
+		model.addAttribute("menuOrderListList", menuOrderListList);
 	}
 	
 			

@@ -27,6 +27,7 @@ public interface ShopSerivce {
 	Map<String,Object> selectMenuList(String shopIdx);
 	
 	Order selectOrder(String userId);
-	List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx);
+	List<Map<String,Object>> selectMenuOrderList(String orderIdx);
 	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
+	List<Order> selectOrderList();
 }
