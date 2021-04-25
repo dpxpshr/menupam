@@ -39,17 +39,20 @@ public class EchoHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		String msg = message.getPayload();
-//		String[] strs = msg.split(",");
-//		String userId = strs[0];
-//		String text = strs[1];
-//		String receiveId = strs[2];
-//		
-//		WebSocketSession receiveSession = userSessionMap.get(receiveId);
-//		TextMessage textMessage = new TextMessage(userId+" : "+text);
-//		receiveSession.sendMessage(textMessage);
-		System.out.println(msg);
+		String[] strs = msg.split(",");
+		//String notificationType = strs[0];
+		String receiveId = strs[0];
+		String content = strs[1];
+		String link = strs[2];
 		
-		
+		WebSocketSession receiveSession = userSessionMap.get(receiveId);
+		if(receiveSession!=null) {
+			TextMessage textMessage = new TextMessage(receiveId+" : "+content+" : "+link);
+			receiveSession.sendMessage(textMessage);
+		}else {
+			
+		}
+
 	}
 	
 	
