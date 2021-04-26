@@ -28,4 +28,5 @@ public interface ShopSerivce {
 	
 	Order selectOrder(String userId);
 	List<Map<MenuOrdering,Object>> selectMenuOrderList(String orderIdx);
+	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
 }

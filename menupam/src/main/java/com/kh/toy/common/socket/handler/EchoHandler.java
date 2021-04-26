@@ -40,14 +40,18 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		String msg = message.getPayload();
 		String[] strs = msg.split(",");
-		String userId = strs[0];
-		String text = strs[1];
-		String receiveId = strs[2];
+		//String notificationType = strs[0];
+		String receiveId = strs[0];
+		String content = strs[1];
+		String link = strs[2];
 		
 		WebSocketSession receiveSession = userSessionMap.get(receiveId);
-		TextMessage textMessage = new TextMessage(userId+" : "+text);
-		receiveSession.sendMessage(textMessage);
-		
+		if(receiveSession!=null) {
+			TextMessage textMessage = new TextMessage(receiveId+" : "+content+" : "+link);
+			receiveSession.sendMessage(textMessage);
+		}else {
+			
+		}
 		
 	}
 	

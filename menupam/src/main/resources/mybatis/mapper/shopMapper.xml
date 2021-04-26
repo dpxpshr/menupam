@@ -39,4 +39,10 @@
 		left outer join tb_order using(order_idx)
 		where order_idx = #{orderIdx}
 	</select>
+	
+	<delete id="deleteSelectionMenuOrder" parameterType="menuOrdering">
+		delete 
+		from tb_menu_ordering 
+		where order_menu_name = #{orderMenuName} and order_idx = #{orderIdx}
+	</delete>
 </mapper>
