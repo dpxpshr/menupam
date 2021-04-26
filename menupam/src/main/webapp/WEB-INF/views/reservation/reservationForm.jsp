@@ -89,15 +89,5 @@
 		</div>
 	</div>
 </body>
-<script>	
-	window.onload = function(){
-
-		
-	}
-
-
-
-
-</script>
 <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 </html>

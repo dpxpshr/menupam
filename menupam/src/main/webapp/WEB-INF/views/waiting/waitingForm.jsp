@@ -56,12 +56,12 @@
 				<br><br>
 				<div class="wrap_field">
 				<div class="field">
-	            <span class="fas fa-ghost"></span>
-	            <input type="number" class="input" id="name" name="waitParty" required="required">
+	            <span class="fas fa-ghost"> 인원수 </span>
+	            <input type="number" class="input party" id="name" name="waitParty" required="required">
 	          </div>
 	          <br>
 	          <div class="field space">
-	            <span class="fas fa-mobile-alt"></span>
+	            <span class="fas fa-mobile-alt"> 연락처  </span>
 	            <input type="tel" class="input" id="Phone" name="waitPhone" value="${sessionScope.userInfo.memberPhone}" required placeholder="전화번호" required="required"
 	            pattern="[0-9]{11}">
 	          </div>

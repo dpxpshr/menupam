@@ -45,14 +45,15 @@ public class EchoHandler extends TextWebSocketHandler{
 		String content = strs[1];
 		String link = strs[2];
 		
+		
 		WebSocketSession receiveSession = userSessionMap.get(receiveId);
-		if(receiveSession!=null) {
+		if(receiveSession!=null) { //지금 receive받을 놈이 브라우저 켜져있음
 			TextMessage textMessage = new TextMessage(receiveId+" : "+content+" : "+link);
 			receiveSession.sendMessage(textMessage);
 		}else {
-			
+			//안보냄
 		}
-
+		
 	}
 	
 	

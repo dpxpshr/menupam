@@ -13,7 +13,7 @@ import com.kh.toy.notification.model.vo.Notification;
 @Mapper
 public interface NotificationRepository {
 	
-	@Select("SELECT * FROM TB_NOTIFICATION WHERE MEMBER_ID = #{memberId} AND NOTIFICATION_CHECK = '0'"
+	@Select("SELECT * FROM TB_NOTIFICATION WHERE MEMBER_ID = #{memberId}"
 			+ "ORDER BY NOTIFICATION_REG_DATE DESC")
 	List<Notification> getNotifications(String memberId);
 	

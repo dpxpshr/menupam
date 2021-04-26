@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.toy.common.sms.SMS;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.notification.model.service.NotificationService;
 import com.kh.toy.notification.model.vo.Notification;
@@ -20,6 +21,7 @@ import com.kh.toy.review.model.vo.Review;
 public class NotificationController {
 
 	private final NotificationService notificationService;
+	SMS sms = new SMS();
 	
 	public NotificationController(NotificationService notificationService) {
 		this.notificationService = notificationService;
@@ -44,6 +46,17 @@ public class NotificationController {
 		}else {
 			return "fail";
 		}
+	}
+	
+	@PostMapping("sms")
+	@ResponseBody
+	public String sendSMS(String phone, String content) {
+		
+		System.out.println(phone);
+		System.out.println(content);
+		sms.sendSMS(phone, content);
+		
+		return "success";
 	}
 	
 }

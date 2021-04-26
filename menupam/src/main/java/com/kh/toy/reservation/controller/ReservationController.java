@@ -43,7 +43,6 @@ public class ReservationController {
 	@PostMapping("reserve") //[알림기능 해야함!]
 	public String reservationInsert(@SessionAttribute(name="userInfo", required = false) Member member, Reservation res, Model model) {
 
-		//1. 여기서 만약에 session에 userInfo가 있는놈이다 하면 res객체에 ID넣어주자		
 		if(member != null) {
 			res.setMemberId(member.getMemberId());
 		}else {
@@ -110,6 +109,7 @@ public class ReservationController {
 	@PostMapping("rejectRes")
 	@ResponseBody
 	public String rejectRes(String reserIdx) throws Exception {
+		
 		int res = resService.updateStateReject(reserIdx);
 		if(res==1) {
 			return "success";
@@ -141,6 +141,7 @@ public class ReservationController {
 	//(사장)usertype이 사장이고, 취소버튼 누르면 delete ->리스트에서 삭제 -> 손님 문자
 
 	//예약 검색(사장) - 일단 보류
+		
 	@PostMapping("searchByName")
 	public String searchByName(Reservation res, Member member) {
 		res.setReserName(member.getMemberName());

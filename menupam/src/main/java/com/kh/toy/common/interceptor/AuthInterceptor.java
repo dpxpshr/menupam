@@ -36,9 +36,9 @@ public class AuthInterceptor implements HandlerInterceptor{
 				case "reque" : if(session.getAttribute("userInfo") == null)
 								throw new ToAlertException(ErrorCode.AUTH01);
 				  	break;
-				//case "list" : if(session.getAttribute("userInfo") == null)
-				//				throw new ToAlertException(ErrorCode.AUTH01);
-				//	break;
+				case "list" : if(session.getAttribute("userInfo") == null)
+								throw new ToAlertException(ErrorCode.AUTH01);
+					break;
 				}
 			}
 		}
