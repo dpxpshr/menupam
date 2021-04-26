@@ -10,66 +10,60 @@ window.onload = function(){
 	let bell = document.querySelector(".bell")
 	let notifications = document.querySelector(".notifications")
 	
-	bell.addEventListener("click",(e)=>{
-		socketTest();
-	    if(open){
-	        //open O
-	        notifications.style.display = "none";
-	        console.log("닫힘");
-	        open = false;
-	    }else{
-	        //open X
-	        notifications.style.display = "block";
-	        console.log("열림");
-	        open = true;
-	    }
-	})
+	if(bell!=null){
+		bell.addEventListener("click",(e)=>{
+		    if(open){
+		        //open O
+		        notifications.style.display = "none";
+		        console.log("닫힘");
+		        open = false;
+		    }else{
+		        //open X
+		        notifications.style.display = "block";
+		        console.log("열림");
+		        open = true;
+		    }
+		})	
+	}
+
 
     //소켓 관련 JS
     let socket = null;
-	
-    connectWs();
     
     function connectWs(){
 		sock = new SockJS("<c:url value='/echo' />");
 		socket = sock;
 
 		sock.onopen = function(){
-			console.log("info : connection opened");
+			console.log("info : sock Connection Open 입니다");
 		}
 
 		sock.onclose = function(){
-			console.log("info : connection closed");
+			console.log("info : sock Connection Close 입니다");
 		}
 
 		// [메시지가 오는 메서드]
 		sock.onmessage = function(event){
+			console.log("비동기 알림 메시지 도착");
 			let data = event.data;
-			let p = document.createElement("p");
-			p.innerHTML = data;
-			document.querySelector("body").appendChild(p);
+			deleteNotification();
+			getNotification('${sessionScope.userInfo.memberId}');
+			let alarm = new Audio();
+			alarm.src = '../../../resources/sound/ding-dong.wav';
+			alarm.play(); 
 		}		
     }
-
-	
-	function socketTest(){
-		if(socket){
-			let userId = '${sessionScope.userInfo.memberId}';
-			let receiveId = "kakao1700452227";
-			let msg = "메시지 입니다";
-			socket.send(userId+","+msg+","+receiveId);
-		}
-	}
-
+    
+    connectWs();
 
 	// [메시지 보내는 메서드]
-	function sendNotification(receiveId, msg, link){
+	function sendNotification(receiveId, content, link){
 		if(socket){
-			window.alert("멈추나여기서");
-			socket.send(receiveId+","+msg+","+link);
+			socket.send(receiveId+","+content+","+link);
 		}
 	}
 	
+	//[알림 Div 만드는 메서드]
 	let makeNotificationDIV = (content, link, regDate) => {
 		let notification = document.createElement("div");
 		notification.className = 'notification';
@@ -95,8 +89,8 @@ window.onload = function(){
 		return notification;
 	}
 	
+	//[비동기로 안읽은 알림 내역 가져오는 메서드]
 	let getNotification = (memberId) => {
-		console.log(memberId);
 		fetch("/notification/notifications?memberId="+memberId,{
 			method:"POST"
 		})
@@ -118,14 +112,51 @@ window.onload = function(){
 			}
 		})
 	}
-
-	getNotification('${sessionScope.userInfo.memberId}');	 
-
-
 	
+
+	//[비동기로 안읽은 알림 내역 가져오는 메서드]
+	if(bell!=null){
+		getNotification('${sessionScope.userInfo.memberId}');	 	
+	}
+	
+		
+	
+
+	let getToday = () => {
+		//2021-02-10T09:00
+		let today = new Date();   
+		let year = today.getFullYear(); // 년도
+		let month = today.getMonth() + 1;  // 월
+		if(month<10){
+			month = '0'+month;
+		}
+		let date = today.getDate();  // 날짜
+		let day = today.getDay();  // 요일
+		return year+'-'+month+'-'+date+'T09:00';
+	}
+
+	if(document.querySelector("#calendar")!=null){
+		document.querySelector("#calendar").min = getToday();	
+	}
+	
+	if(document.querySelector("#reserBtn")!=null){
+		document.querySelector("#reserBtn").addEventListener("click",(e)=>{
+			//[알림파트]
+			//1. 예약버튼 누름 -> 원래 이벤트 잠시 멈춤
+			//1-1. 알림을 DB에 저장해주기 ->이거는 service에서 같이 해줬다
+			//1-2. 알림을 sendNotification 메서드를 통해 보내준다.
+			e.preventDefault();
+			sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/list?shopIdx=${shop.shopIdx}");
+			document.querySelector("#reserForm").submit();
+		})		
+	}
+
+
 	
 }
 
+
+//[알림 모두 읽음 처리]
 let allReadNotification = (memberId) => {
 	fetch("/notification/allRead?memberId="+memberId,{
 		method:"POST"
@@ -133,16 +164,24 @@ let allReadNotification = (memberId) => {
 	.then(response => response.text())
 	.then(text => {
 		if(text=='success'){
-			document.querySelectorAll(".notification").forEach((e)=>{
+/* 			document.querySelectorAll(".notification").forEach((e)=>{
 				e.parentNode.removeChild(e);
 				document.querySelector(".notificationCnt").innerHTML = "";
 				document.querySelector(".notificationCnt").style.display = 'none';
-			})
-			
+			}) */
+			deleteNotification();
 		}else if(text=='fail'){
 			//여기도 예외처리 해야함
 		}
 	})
-}
+}	
 
+
+let deleteNotification = () => {
+	document.querySelectorAll(".notification").forEach((e)=>{
+		e.parentNode.removeChild(e);
+		document.querySelector(".notificationCnt").innerHTML = "";
+		document.querySelector(".notificationCnt").style.display = 'none';
+	})
+}
 </script>

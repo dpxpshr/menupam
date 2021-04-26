@@ -2,13 +2,21 @@
     pageEncoding="UTF-8"%>
 <body>
     <div class="wrapper">
-        <div class="header">
-        	<c:if test="${sessionScope.userInfo != null}">
-	        	<div class=bell>
-	                <i class="far fa-bell" style="color: #CDC7D5;" ></i>
-	                <div class="notificationCnt"></div>
-	            </div>
-        	</c:if>            
+        <div class="header">  
+        	<c:choose>
+        		<c:when test="${sessionScope.userInfo != null}">
+        			<div class=bell>
+		                <i class="far fa-bell" style="color: #CDC7D5;" ></i>
+		                <div class="notificationCnt"></div>
+		            </div>
+        		</c:when>
+        		<c:otherwise>
+	        		<div class=bell style="display:none">
+		                <i class="far fa-bell" style="color: #CDC7D5;" ></i>
+		                <div class="notificationCnt"></div>
+		            </div>
+        		</c:otherwise>
+        	</c:choose>       
         </div>
         <!--알림이 있는것 1. 예약, 주문,  -->
         <div class="notifications">

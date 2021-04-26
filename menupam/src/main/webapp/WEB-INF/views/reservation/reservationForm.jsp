@@ -89,37 +89,13 @@
 		</div>
 	</div>
 </body>
-<script>
-	let getToday = () => {
-		//2021-02-10T09:00
-		let today = new Date();   
-		let year = today.getFullYear(); // 년도
-		let month = today.getMonth() + 1;  // 월
-		if(month<10){
-			month = '0'+month;
-		}
-		let date = today.getDate();  // 날짜
-		let day = today.getDay();  // 요일
-		return year+'-'+month+'-'+date+'T09:00';
-	}
-	
-	
+<script>	
 	window.onload = function(){
-		document.querySelector("#calendar").min = getToday();	
+
+		
 	}
 
-	document.querySelector("#reserBtn").addEventListener("click",(e)=>{
-		//[알림파트]
-		//1. 예약버튼 누름 -> 원래 이벤트 잠시 멈춤
-		//1-1. 알림을 DB에 저장해주기 ->이거는 service에서 같이 해줬다
-		//1-2. 알림을 sendNotification 메서드를 통해 보내준다.
-		e.preventDefault();
-		
-		//=========================send가 안된가 왜? 끝====================
-		//sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/list?shopIdx=${shop.shopIdx}");
-		
-		document.querySelector("#reserForm").submit();
-	})
+
 
 
 </script>
