@@ -39,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService{
 			Shop shop = resRepository.selectShopByShopIdx(res.getShopIdx());
 			notificationRepository.insertNotification(shop.getMemberId(),
 													  shop.getShopName()+" 예약이 있습니다!", 
-													  "/reservation/list?shopIdx="+shop.getShopIdx());
+													  "/reservation/reque?shopIdx="+shop.getShopIdx());
 		}
 		return result;
 	}
@@ -67,12 +67,30 @@ public class ReservationServiceImpl implements ReservationService{
 	//예약 승인
 	@Override
 	public int updateStateApprove(String reserIdx) {
+		
+		//예약 승인 알림 저장 (준비물 : 예약자 아이디, 예약 가게 이름)
+		Reservation reservation = resRepository.selectReservationByReserIdx(reserIdx);
+		Shop shop = resRepository.selectShopByShopIdx(reservation.getShopIdx());
+		
+		notificationRepository.insertNotification(reservation.getMemberId(),
+				  					shop.getShopName()+" 예약이 완료 되었습니다!", 
+				  					"/member/mypage");
+		
 		return resRepository.updateStateApprove(reserIdx);
 	}
 
 	//예약 거부
 	@Override
 	public int updateStateReject(String reserIdx) {
+		
+		//예약 거부 알림 저장 (준비물 : 예약자 아이디, 예약 가게 이름)
+		Reservation reservation = resRepository.selectReservationByReserIdx(reserIdx);
+		Shop shop = resRepository.selectShopByShopIdx(reservation.getShopIdx());
+		
+		notificationRepository.insertNotification(reservation.getMemberId(),
+				  					shop.getShopName()+" 예약이 거부 되었습니다!", 
+				  					"/member/mypage");
+		
 		return resRepository.updateStateReject(reserIdx);
 	}
 

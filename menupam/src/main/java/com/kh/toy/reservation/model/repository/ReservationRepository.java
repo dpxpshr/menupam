@@ -55,7 +55,8 @@ public interface ReservationRepository {
 	@Select("select * from tb_shop where shop_idx = #{shopIdx}")
 	Shop selectShopByShopIdx(String shopIdx);
 	
-	
+	@Select("SELECT * FROM TB_RESERVATION WHERE RESER_IDX = #{reserIdx}")
+	Reservation selectReservationByReserIdx(String reserIdx);
 
 	
 }
