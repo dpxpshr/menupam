@@ -38,9 +38,8 @@
 						<div class="wrap_shop">
 							<i class="fas fa-store store"></i>
 							<div class="shop">
-								<span id="shop_info">${shop.shopIdx}</span><br> <span
-									id="shop_info">${shop.shopName}</span>
-								<!-- 매장이름 -->
+								<span id="shop_info">${shop.shopIdx}</span><br> 
+								<span id="shop_info">${shop.shopName}</span> <!-- 매장이름 -->
 							</div>
 						</div>
 						<hr color="#F2BB13">
@@ -92,34 +91,21 @@
 		let day = today.getDay();  // 요일
 		return year+'-'+month+'-'+date;
 	}
-  document.querySelectorAll("#cancel_reserv").forEach((e)=>{
-		e.addEventListener("click", (event)=>{
-			fetch("/reservation/cancelRes?reserIdx="+e.name,{
-				method:"POST"
-			})
-			.then(response => response.text())
-			.then(text => {
-				if(text=="success"){
-					let reserIdx = e.name;
-					let removeTarget = document.querySelector("#"+reserIdx);
-					removeTarget.parentNode.removeChild(removeTarget);
 
-				}else if(text=="fail"){
-					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
-				}
-			})
-			
-		})
-	})
-	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserComment) => {
+	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment) => {
 		let reserv_box = document.createElement("div");
 		reserv_box.className = "reserv_box";
+		reserv_box.id = reserIdx;
 		let box = document.createElement("div");
 		box.className = "box";
 		let reserv_info = document.createElement("span");
+		let reserv_info2 = document.createElement("span");
 		reserv_info.className = "reserv_info";
 		let infoStr = reserName+"  "+reserParty+"인 "+reserDate.slice(-5);
 		reserv_info.innerHTML = infoStr;
+		let infoStr2 = reserPhone;
+		reserv_info2.className = "reserv_info";
+		reserv_info2.innerHTML = infoStr2;
 
 		// <button class="btn" id="cancel_reserv"
 		// 								name="${reservation.reserIdx}">예약 취소</button>
@@ -128,6 +114,23 @@
 		cancel_reserv.id = "cancel_reserv";
 		cancel_reserv.name = reserIdx;
 		cancel_reserv.innerHTML = "예약 취소";
+		cancel_reserv.addEventListener("click", (event)=>{
+			fetch("/reservation/cancelRes?reserIdx="+reserIdx,{
+				method:"POST"
+			})
+			.then(response => response.text())
+			.then(text => {
+				if(text=="success"){
+					let removeTarget = document.querySelector("#"+reserIdx);
+					removeTarget.parentNode.removeChild(removeTarget);
+				}else if(text=="fail"){
+					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
+				} 
+			}) 
+		})
+		//1. 매개변수로 버튼(cancel_reserv)를 받아옴
+		//2. 그 받아온 애에다가 eventLis 걸어줌
+		//3. return cancel_reserv 해줌
 
 		//<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>\
 		let comment = document.createElement("p");
@@ -135,12 +138,22 @@
 		comment.innerHTML = "요청 사항 : "+reserComment;
 
 		box.appendChild(reserv_info);
+		box.appendChild(reserv_info2);
 		box.appendChild(cancel_reserv);
 
 		reserv_box.appendChild(box);
 		reserv_box.appendChild(comment);
 		
 		return reserv_box;
+	}
+	
+	// 예약리스트가 없을때
+	let noRes = ()=>{
+		let msg = document.createElement("p");
+		msg.className = "fontXSmall";
+		msg.innerHTML = "예약이 없습니다."
+		
+		document.querySelector(".wrap_box").appendChild(msg);
 	}
 	
 	window.onload = function(){
@@ -157,9 +170,10 @@
 		.then(json => {
 			if(Object.keys(json).length==0){
 				//예약없습니다 그려주면댐
+				noRes();
 			}else{
 				for(let i=0; i<Object.keys(json).length; i++){
-					let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx, json[i].reserComment);
+					let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx, json[i].reserPhone, json[i].reserComment);
 					document.querySelector(".wrap_box").appendChild(reserv_box);
 				}
 			}
@@ -179,6 +193,7 @@
 			.then(json => {
 				if(Object.keys(json).length==0){
 					//예약없습니다 그려주면댐
+					noRes();
 				}else{
 					for(let i=0; i<Object.keys(json).length; i++){
 						let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx, json[i].reserComment);
@@ -187,7 +202,40 @@
 				}
 			})
 		})
+		
+		/* document.querySelectorAll("#cancel_reserv").forEach((e)=>{
+			
+			  e.target.addEventListener("click", (event)=>{
+					fetch("/reservation/cancelRes?reserIdx="+e.target.name,{
+						method:"POST"
+					})
+					.then(response => response.text())
+					.then(text => {
+						if(text=="success"){
+							let reserIdx = e.target.name;
+							let removeTarget = document.querySelector("#"+reserIdx);
+							removeTarget.parentNode.removeChild(removeTarget);
+						}else if(text=="fail"){
+							window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
+						}
+						console.log(text);
+					})  
+					console.log(e.target.name);
+					
+					
+					
+				})  
+				e.target.name="test입니다";
+			}) */
+			
+		
+		
 	}
+	
+	
+	
+	
+	  
 </script>
 </body>
 </html>

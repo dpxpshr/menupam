@@ -35,8 +35,8 @@ public class ReservationServiceImpl implements ReservationService{
 
 	//예약 취소
 	@Override
-	public void deleteRes(String reserIdx) {
-		resRepository.deleteRes(reserIdx);
+	public int cancelRes(String reserIdx) {
+		return resRepository.cancelRes(reserIdx);
 	}
 
 	//예약 요청 리스트

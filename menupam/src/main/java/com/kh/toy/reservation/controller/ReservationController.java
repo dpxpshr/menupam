@@ -62,18 +62,18 @@ public class ReservationController {
 	
 	//예약리스트(사장) -> 사장님이 승인한 예약들을 보는곳 
 	@GetMapping("list")
-	public String ReservationList(String shopIdx, Model model) {
-		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
-//		//session 사장이어야하고 그 해당매장이어야하고
-//		//reserDate = "2021-05-19";
-//		model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
-//		List<Reservation> resList = resService.selectResListByDate(reserDate);
-//		System.out.println("reserDate" + reserDate);
-//		//달력으로 날짜 받아와
-//		
-//		//승인인데 리스트 안떠
-//		model.addAttribute("resList", resList);
-		return "reservation/reservationList";
+	public String ReservationList(String shopIdx, Model model, 
+						@SessionAttribute(name="userInfo", required = false) Member member) {
+
+		Shop shop = resService.selectShopByShopIdx(shopIdx);
+		if(shop.getMemberId().equals(member.getMemberId())) {
+			model.addAttribute("shop", resService.selectShopByShopIdx(shopIdx));
+			return "reservation/reservationList";	
+		}else {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("url", "/index");
+			return "common/result";
+		}
 	}
 	
 	//예약승인 화면(사장)
@@ -111,6 +111,7 @@ public class ReservationController {
 	@PostMapping("rejectRes")
 	@ResponseBody
 	public String rejectRes(String reserIdx) throws Exception {
+		
 		int res = resService.updateStateReject(reserIdx);
 		if(res==1) {
 			return "success";
@@ -119,23 +120,13 @@ public class ReservationController {
 		}
 	}
 	
-	//예약 검색(사장)
-	@PostMapping("searchByName")
-	public String searchByName(Reservation res, Member member) {
-		res.setReserName(member.getMemberName());
-		resService.searchByName(res, member);
-		
-		return null;
-	}
-		
-	
-	//예약 취소(사장) - 손님도 필요?
+	//예약 취소(사장) - 손님도 필요? -> 손님한테 알림
 	@PostMapping("cancelRes")
 	@ResponseBody
 	public String cancelRes(String reserIdx) throws Exception {
-		boolean res = false; 
-		//		resService.deleteRes(reserIdx); 이거 왜 boolean안될까
-		if(res==true) { //delete말고 update?
+		System.out.println(reserIdx);
+		int res = resService.cancelRes(reserIdx);
+		if(res==1) {
 			return "success";
 		}else {
 			return "fail";
@@ -145,12 +136,19 @@ public class ReservationController {
 	@PostMapping("getList")
 	@ResponseBody
 	public Map<Integer, Reservation> getReservationList(String shopIdx, String reserDate) {
-		System.out.println(reserDate);
 		Map<Integer, Reservation> resMap = resService.getResMap(shopIdx, reserDate);
 		return resMap;
 	}
 	
 	//(사장)usertype이 사장이고, 취소버튼 누르면 delete ->리스트에서 삭제 -> 손님 문자
 
-	
+	//예약 검색(사장) - 일단 보류
+		@PostMapping("searchByName")
+		public String searchByName(Reservation res, Member member) {
+			res.setReserName(member.getMemberName());
+			resService.searchByName(res, member);
+			
+			return null;
+		}
+			
 }
