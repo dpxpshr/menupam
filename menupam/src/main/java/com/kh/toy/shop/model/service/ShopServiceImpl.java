@@ -141,14 +141,11 @@ public class ShopServiceImpl implements ShopSerivce{
 		return commandMap;
 	}
 
-	@Override
-	public Order selectOrder(String userId) {
-		return shopRepository.selectOrder(userId);
-	}
+	
 
 	@Override
-	public List<Map<String,Object>> selectMenuOrderList(String orderIdx) {		
-		return shopRepository.selectMenuOrderList(orderIdx);
+	public List<Map<String,Object>> selectMenuOrderList(String orderTableNum) {		
+		return shopRepository.selectMenuOrderList(orderTableNum);
 	}
 
 	@Override
@@ -159,6 +156,30 @@ public class ShopServiceImpl implements ShopSerivce{
 	@Override
 	public List<Order> selectOrderList() {
 		return shopRepository.selectOrderList();
+	}
+
+	@Override
+	public int updateMenuNameList(String orderIdx, String menuName) {
+		
+		MenuOrdering mo = new MenuOrdering();
+		
+		mo.setOrderIdx(orderIdx);
+		mo.setOrderMenuList(menuName);
+		
+		return shopRepository.updateMenuNameList(mo);
+	}
+
+	@Override
+	public Order selectOrderAndTableNum(String orderTableNum) {
+		return shopRepository.selectOrderAndTableNum(orderTableNum);
+	}
+
+	@Override
+	public void updateOrderTableNum(Order order) {
+		order.setOrderIdx(order.getOrderIdx());
+		order.setOrderTableNum("0");
+		
+		shopRepository.updateOrderTableNum(order);
 	}	
 
 }

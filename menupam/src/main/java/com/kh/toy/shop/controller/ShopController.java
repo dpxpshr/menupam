@@ -202,13 +202,12 @@ public class ShopController {
 	
 	@GetMapping("tableDetail")
 	public void tableDetail(@SessionAttribute("userInfo") Member userInfo
+						,@RequestParam String orderTableNum // 테이블 클릭시 번호 받아오기
 						,Model model
 						,HttpSession session) {
 		
-		//shopManage에서 table번호를 받아서 출력하게 만든다.
-		Order order = shopService.selectOrder(userInfo.getMemberId());
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		List<Map<String,Object>> menuOrders = shopService.selectMenuOrderList(order.getOrderIdx());
+		List<Map<String,Object>> menuOrders = shopService.selectMenuOrderList(orderTableNum);
 		int sum = 0;
 		int menuPrice = 0;
 		int menuCnt = 0 ;
@@ -219,15 +218,13 @@ public class ShopController {
 			menuCnt = Integer.parseInt((String) mo.getOrDefault("ORDER_MENU_CNT", mo.values())) ;
 			sum += (menuPrice * menuCnt);
 		}
-			
-		model.addAttribute("shop", shopInfo);
-		model.addAttribute("order", order);
+		
 		model.addAttribute("menuOrders", menuOrders);
+		model.addAttribute("orderTableNum", orderTableNum);
 		model.addAttribute("menuSum", sum);
+		model.addAttribute("shop", shopInfo);
 		model.addAllAttributes(shopService.selectCategoryList(shopInfo.getShopIdx()));
 		model.addAllAttributes(shopService.selectMenuList(shopInfo.getShopIdx()));
-		
-		session.setAttribute("order", order);
 	}
 	
 	@PostMapping("cancelMenu")
@@ -241,23 +238,52 @@ public class ShopController {
 		return "cancelSuccess";
 	}
 	
+	@PostMapping("tableNum")
+	@ResponseBody
+	public String tableNumChange(@RequestBody Order order
+					) {
+		
+		Order orderInfo = shopService.selectOrderAndTableNum(order.getOrderTableNum());
+		
+		if(orderInfo != null) {
+			shopService.updateOrderTableNum(orderInfo);
+			System.out.println(orderInfo);
+			return "tableNumSuccess";
+		}
+		
+		return "fail";
+	}
+	
+	
 	@GetMapping("shopManage")
 	public void shopManage(@SessionAttribute("userInfo") Member userInfo
 						,Model model) {
-		// 대 수정
+		
 		List<Order> orderList = shopService.selectOrderList();
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
 		List<Map<String,Object>> menuOrders = new ArrayList<Map<String,Object>>();
 		List<List<Map<String,Object>>> menuOrderListList = new ArrayList<List<Map<String,Object>>>();
+		String menuName = null;
 		
 		for (Order order : orderList) {
 			if(order.getOrderTableNum() != null) {
+				
 				menuOrders = shopService.selectMenuOrderList(order.getOrderTableNum());
-				menuOrderListList.add(menuOrders);
+				
+				// 메뉴 주문 들어온 정보를 김치볶음밥 외 3개 세팅
+				menuName = menuOrders.size() > 1 
+						? menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values()) // 메뉴이름
+								+ " 외 " + (menuOrders.size()-1) + "개" 
+								: (String) menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values());
+				
+				shopService.updateMenuNameList(order.getOrderIdx(), menuName);
+				
+				menuOrderListList.add(menuOrders); 
+				
 			}
 		}
 		
-	
+		//테이블 개수를 배열에 담아서 shopManage.jsp 출력
 		int count = shopInfo.getShopTableCount();
 		int[] tableArr = new int[count];
 		
@@ -265,14 +291,7 @@ public class ShopController {
 			tableArr[i] = i+1;
 		}
 		
-		// 메뉴 주문 들어온 정보를 김치볶음밥 외 3개 세팅
-		String menuName = menuOrders.size() > 1 
-				? menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values()) // 메뉴이름
-						+ " 외 " + (menuOrders.size()-1) + "개" 
-						: (String) menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values());
-				
 		
-		model.addAttribute("menuName", menuName);
 		model.addAttribute("tableArr", tableArr);
 		model.addAttribute("shop", shopInfo);
 		model.addAttribute("menuOrderListList", menuOrderListList);

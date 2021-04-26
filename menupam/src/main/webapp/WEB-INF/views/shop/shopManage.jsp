@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/head.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -61,22 +63,25 @@
                         </div>
                     </div>
                     <br>
-                    <div class="tableBox">
-                    	<c:forEach var="i" items="${tableArr}" >
-		                    <c:forEach items="${menuOrderListList}" var="list">
-		                    	
-		                    		<c:if test="${i == list[0].ORDER_TABLE_NUM}">
-		                    			<div class="table eating">                 	
-		                    		 		<p class="fontXSmall">${i}번</p>
-		                    		 		 <c:set var="i" value="${i + 1}"/> 
-		                    		 		  
-		                    			</div>
-		                    		</c:if>
-                        		
+                    <div class="tableBox">                        
+                    	<c:set var="tableArr" value="${fn:length(tableArr)}"/> 
+                    	<c:forEach var="i" begin="1" end="${tableArr}" step="1" >
+                    	<c:set var="flg" value="true"/>
+		                    <c:forEach items="${menuOrderListList}" var="list" > 
+              		 		 	<c:if test="${i == list[0].ORDER_TABLE_NUM}">
+              		 		 	<c:set var="flg" value="false"/>
+              		 			 	<a href="${context}/shop/tableDetail?orderTableNum=${i}">
+              		 			 	<div class="table eating">                 	
+              		 					<p class="fontXSmall"><c:out value="${i}번"/></p> 
+              		 					<p class="fontXXSmall">${list[0].ORDER_MENU_LIST}</p> 			
+              		 				</div></a>               		 				
+              		 		 	</c:if>                    		 		 	              		 		                 			
 		                    </c:forEach>
-	                    	<div class="table">                        	
-	                        	<p class="fontXSmall">${i}번</p>  
-	                        </div>
+		                    	<c:if test="${flg}">
+	                    		<div class="table">                  	
+                       				<p class="fontXSmall"><c:out value="${i}번"/></p> 
+                      			</div>
+                      			</c:if>
                     	</c:forEach>
                     </div>
                     <br>

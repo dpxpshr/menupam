@@ -65,14 +65,16 @@ public interface ShopRepository {
 	List<Menu> selectMenuList(String shopIdx);
 	
 	////// 메뉴 오더 //////
-	@Select("select * from tb_order where member_id = #{memberId}")
-	Order selectOrder(String userId);
-	
-	List<Map<String,Object>> selectMenuOrderList(String orderIdx);
+	List<Map<String,Object>> selectMenuOrderList(String orderTableNum);
 	
 	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
 	
 	@Select("select * from tb_order")
 	List<Order> selectOrderList();
 	
+	int updateMenuNameList(MenuOrdering menuOrdering);
+	
+	@Select("select * from tb_order where order_table_num = #{orderTableNum}")
+	Order selectOrderAndTableNum(String orderTableNum);
+	void updateOrderTableNum(Order order);
 }	

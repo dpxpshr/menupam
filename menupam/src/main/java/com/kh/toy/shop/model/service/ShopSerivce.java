@@ -12,22 +12,27 @@ import com.kh.toy.shop.model.vo.MenuOrdering;
 import com.kh.toy.shop.model.vo.Shop;
 
 public interface ShopSerivce {
-
+	
+	//////매장 테이블 //////
 	int insertShop(Shop shop);
 	int updateShop(Shop shop);
 	Shop selectShopInfo(String userId);
 	void ShopInfoModify(Shop shop, String userId);
 	
+	///////// 카테고리 테이블 /////////
 	Map<String,Object> selectCategoryList(String shopIdx);
 	void updateCategoryName(MenuCategory menuCategory);
 	int insertCategory(MenuCategory menuCategory, String shopIdx);
 	int deleteCategory(MenuCategory menuCategory);
-	
+	/////// 메뉴 테이블 ///////
 	void menuRegister(MultipartFile file, Menu menu, String uploadPath);
 	Map<String,Object> selectMenuList(String shopIdx);
 	
-	Order selectOrder(String userId);
-	List<Map<String,Object>> selectMenuOrderList(String orderIdx);
+	//////메뉴 오더 //////
+	List<Map<String,Object>> selectMenuOrderList(String orderTableNum);
 	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
 	List<Order> selectOrderList();
+	int updateMenuNameList(String orderIdx, String menuName);
+	Order selectOrderAndTableNum(String orderTableNum);
+	void updateOrderTableNum(Order order);
 }

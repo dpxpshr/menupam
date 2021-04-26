@@ -44,10 +44,51 @@ document.querySelectorAll(".menuCancel").forEach((e)=>{
 						location.href = context + "/tableDetail";
 					}
 				}else{
-					eroor.alertMessage();
+					error.alertMessage();
 				}
 			}
 		}
 	   
 	})
 })
+
+$(".tableBack").addEventListener("click",()=>{
+	location.href = context + "/shopManage";
+})
+
+$(".tableEmpty").addEventListener("click",()=>{
+	
+	let check = confirm("정말 자리를 비우시겠습니까?");
+	
+	if(check){
+		
+		let table = document.querySelector(".tableInform");
+		let tableNum = table.firstChild.nextSibling.nextSibling.innerHTML;
+		let tableJson = {}
+		tableJson.orderTableNum = tableNum;
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", context + "/tableNum");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.send(JSON.stringify(tableJson));
+		
+		xhr.onreadystatechange = () =>{
+			if(xhr.status == 200){
+				if(xhr.responseText == "tableNumSuccess"){
+					alert(tableNum + "번 테이블 자리를 비웠습니다.");
+					location.href = context + "/shopManage";
+				}
+				else if(xhr.responseText == "fail"){
+					alert("잘못된 정보 입니다.");
+					location.href = context + "/shopManage";
+				}
+			}else{
+					error.alertMessage();
+			}
+		}
+	}
+	
+	
+	
+})
+

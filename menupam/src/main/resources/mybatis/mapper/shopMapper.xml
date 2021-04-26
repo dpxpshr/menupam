@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="selectMenuOrderList" resultType="map">
-		select order_menu_name, order_menu_price, order_menu_cnt, order_date, order_table_num
+		select order_menu_name, order_menu_price, order_menu_cnt, order_date, order_table_num, order_menu_list
 		from tb_menu_ordering
 		left outer join tb_order using(order_idx)
 		where order_table_num = #{orderTableNum}
@@ -45,4 +45,18 @@
 		from tb_menu_ordering 
 		where order_menu_name = #{orderMenuName} and order_idx = #{orderIdx}
 	</delete>
+	
+	<update id="updateMenuNameList">
+		update tb_menu_ordering
+		set order_menu_list = #{orderMenuList}
+		where order_idx = #{orderIdx}
+	</update>
+	
+	<update id="updateOrderTableNum">
+		update tb_order
+		set order_table_num = #{orderTableNum}
+		where order_idx = #{orderIdx}
+	</update>
+	
+	
 </mapper>

@@ -30,8 +30,8 @@
                     <p class="fontSmall">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <div class="tableInform">
-                        <p class="fontXSmall">테이블 번호 : ${order.orderTableNum}</p><br>
-                        <p class="fontXSmall">${order.orderDate}</p><br>
+                    	<p class="tableNum">테이블 번호 :</p><p class="tableNum">${orderTableNum}</p><br> 
+                        <p class="fontXSmall">${menuOrders[0].ORDER_DATE}</p><br>
                         <div class="menuList">
                             <p class="fontXSmall">메뉴</p>
                             <p class="fontXSmall">가격</p>
@@ -79,6 +79,13 @@
                 </div>
             </div>
         </div>
+        
+        <div class="tablebutton">
+        	 <button class="tableBack"><i class="fas fa-arrow-alt-circle-left"></i></button>
+        	 <button class="tableEmpty">테이블 비우기</button>
+        </div>
+       
+        
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
