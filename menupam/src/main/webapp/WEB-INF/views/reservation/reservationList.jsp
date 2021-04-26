@@ -6,34 +6,18 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <title>메뉴팜</title>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='../../../resources/css/reset.css'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='../../../resources/css/main.css'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='../../../resources/css/reservationList.css'>
-<script src="https://kit.fontawesome.com/e5012d0871.js"
-	crossorigin="anonymous"></script>
-
+<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationList.css'>
+<script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-	<div class="wrapper">
-		<div class="header">
-			<div class="search">
-				<i class="fas fa-search"></i>
-			</div>
-			<div class="notice">
-				<i class="far fa-clipboard"></i>
-			</div>
-		</div>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
 		<div class="main">
 			<!--여기서 부터 코드 작성-->
 			<div class="body">
 				<div class="content">
-					<p class="fontMedium" id="title">예약 리스트</p>
-					<br>
+					<p class="fontMedium" id="title">예약 리스트</p><br>
 					<div class="line"></div>
-
 					<div>
 						<div class="wrap_shop">
 							<i class="fas fa-store store"></i>
@@ -51,12 +35,10 @@
 						<div class="wrap_box">
 
 						</div>
-						</div>
 					</div>
 				</div>
-				<!-- content -->
 			</div>
-			<!-- body -->
+		</div>
 			<div class="footer">
 				<div>
 					<i class="fas fa-search"></i>
@@ -75,88 +57,12 @@
 				</div>
 			</div>
 		</div>
-		<!-- main -->
-
+<%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 <script type="text/javascript">
 
-	let getToday = () => {
-		//2021-02-10T09:00
-		let today = new Date();   
-		let year = today.getFullYear(); // 년도
-		let month = today.getMonth() + 1;  // 월
-		if(month<10){
-			month = '0'+month;
-		}
-		let date = today.getDate();  // 날짜
-		let day = today.getDay();  // 요일
-		return year+'-'+month+'-'+date;
-	}
 
-	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment) => {
-		let reserv_box = document.createElement("div");
-		reserv_box.className = "reserv_box";
-		reserv_box.id = reserIdx;
-		let box = document.createElement("div");
-		box.className = "box";
-		let reserv_info = document.createElement("span");
-		let reserv_info2 = document.createElement("span");
-		reserv_info.className = "reserv_info";
-		let infoStr = reserName+"  "+reserParty+"인 "+reserDate.slice(-5);
-		reserv_info.innerHTML = infoStr;
-		let infoStr2 = reserPhone;
-		reserv_info2.className = "reserv_info";
-		reserv_info2.innerHTML = infoStr2;
-
-		// <button class="btn" id="cancel_reserv"
-		// 								name="${reservation.reserIdx}">예약 취소</button>
-		let cancel_reserv = document.createElement("button");
-		cancel_reserv.className = "btn";
-		cancel_reserv.id = "cancel_reserv";
-		cancel_reserv.name = reserIdx;
-		cancel_reserv.innerHTML = "예약 취소";
-		cancel_reserv.addEventListener("click", (event)=>{
-			fetch("/reservation/cancelRes?reserIdx="+reserIdx,{
-				method:"POST"
-			})
-			.then(response => response.text())
-			.then(text => {
-				if(text=="success"){
-					let removeTarget = document.querySelector("#"+reserIdx);
-					removeTarget.parentNode.removeChild(removeTarget);
-				}else if(text=="fail"){
-					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
-				} 
-			}) 
-		})
-		//1. 매개변수로 버튼(cancel_reserv)를 받아옴
-		//2. 그 받아온 애에다가 eventLis 걸어줌
-		//3. return cancel_reserv 해줌
-
-		//<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>\
-		let comment = document.createElement("p");
-		comment.className = "fontXSmall";
-		comment.innerHTML = "요청 사항 : "+reserComment;
-
-		box.appendChild(reserv_info);
-		box.appendChild(reserv_info2);
-		box.appendChild(cancel_reserv);
-
-		reserv_box.appendChild(box);
-		reserv_box.appendChild(comment);
-		
-		return reserv_box;
-	}
 	
-	// 예약리스트가 없을때
-	let noRes = ()=>{
-		let msg = document.createElement("p");
-		msg.className = "fontXSmall";
-		msg.innerHTML = "예약이 없습니다."
-		
-		document.querySelector(".wrap_box").appendChild(msg);
-	}
-	
-	window.onload = function(){
+	window.addEventListener('load', function() {
 		document.querySelector("#calendar").value = getToday();	
 		let today = getToday();
 		
@@ -174,6 +80,7 @@
 			}else{
 				for(let i=0; i<Object.keys(json).length; i++){
 					let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx, json[i].reserPhone, json[i].reserComment);
+					//let reserv_box = makeReservBox(json[i]);
 					document.querySelector(".wrap_box").appendChild(reserv_box);
 				}
 			}
@@ -196,46 +103,13 @@
 					noRes();
 				}else{
 					for(let i=0; i<Object.keys(json).length; i++){
-						let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx, json[i].reserComment);
+						let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx,json[i].reserPhone, json[i].reserComment);
 						document.querySelector(".wrap_box").appendChild(reserv_box);
 					}
 				}
 			})
-		})
-		
-		/* document.querySelectorAll("#cancel_reserv").forEach((e)=>{
-			
-			  e.target.addEventListener("click", (event)=>{
-					fetch("/reservation/cancelRes?reserIdx="+e.target.name,{
-						method:"POST"
-					})
-					.then(response => response.text())
-					.then(text => {
-						if(text=="success"){
-							let reserIdx = e.target.name;
-							let removeTarget = document.querySelector("#"+reserIdx);
-							removeTarget.parentNode.removeChild(removeTarget);
-						}else if(text=="fail"){
-							window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
-						}
-						console.log(text);
-					})  
-					console.log(e.target.name);
-					
-					
-					
-				})  
-				e.target.name="test입니다";
-			}) */
-			
-		
-		
-	}
-	
-	
-	
-	
-	  
+		})         	 
+    });
 </script>
 </body>
 </html>

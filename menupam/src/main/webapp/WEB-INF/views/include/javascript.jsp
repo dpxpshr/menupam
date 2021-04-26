@@ -47,11 +47,25 @@ window.onload = function(){
 		sock.onmessage = function(event){
 			console.log("비동기 알림 메시지 도착");
 			let data = event.data;
-			deleteNotification();
-			getNotification('${sessionScope.userInfo.memberId}');
+			
+			// 1. 혜령
+			// 2. 성욱
+			// 3. 승현
 			let alarm = new Audio();
 			alarm.src = '../../../resources/sound/ding-dong.wav';
-			alarm.play(); 
+			alarm.play();
+			realDeleteNotification();
+			getNotification('${sessionScope.userInfo.memberId}');
+						
+/* 			
+			//appendNotification()
+			console.log(data);
+			//1. 저 벨 위에 숫자를 가져와서 ++해준다.
+			//2. notification을 하나 만들어서 맨위에 넣어준다.
+			appendNotification */
+			
+			//소리나게 띵동
+
 		}		
     }
     
@@ -101,7 +115,6 @@ window.onload = function(){
 				document.querySelector(".notificationCnt").style.display = 'none';
 			}else{
 				console.log(json);
-				document.querySelector(".notificationCnt").style.display = 'block';
 				let notificationCnt = 0;
 				for(let i=1; i<=Object.keys(json).length; i++){
 					if(json[i].notificationCheck == '0'){
@@ -124,8 +137,12 @@ window.onload = function(){
 				if(notificationCnt=='0'){
 					document.querySelector(".notificationCnt").style.display = 'none';
 				}else{
+					document.querySelector(".notificationCnt").style.display = 'block';
 					document.querySelector(".notificationCnt").innerHTML = notificationCnt;	
 				}
+				
+				
+				// 아까 예약 승인 , 예약 신청만 이상하지
 				
 				
 				/* document.querySelector(".notificationCnt").style.display = 'block';
@@ -142,7 +159,7 @@ window.onload = function(){
 	}
 	
 
-	//[비동기로 안읽은 알림 내역 가져오는 메서드]
+	//[비동기로 알림 내역 가져오는 메서드]
 	if(bell!=null){
 		getNotification('${sessionScope.userInfo.memberId}');	 	
 	}
@@ -195,6 +212,15 @@ window.onload = function(){
 						if(e.dataset.id != 'notMember'){
 							//회원이 이니까 예약완료라고 알림 보내주자
 							sendNotification(e.dataset.id, '${shop.shopName} 예약이 완료 되었습니다!', "/member/mypage");
+							let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 정상적으로 완료 되었습니다.\n"+e.dataset.date;
+							// 문자도 보내주자 
+							fetch("/notification/sms?phone="+e.dataset.phone+"&content="+encodeURI(content,"UTF-8"),{
+			                	method:"POST"
+			              	})
+							.then(response => response.text())
+							.then(text => {
+								
+							})
 						}
 	              }else if(text=="fail"){
 	                 window.alert("승인 도중 오류가 발생했습니다. 다시 시도해주세요");
@@ -217,7 +243,20 @@ window.onload = function(){
                      let reserIdx = e.name;
                      let removeTarget = document.querySelector("#"+reserIdx);
                      removeTarget.parentNode.removeChild(removeTarget);
-                     sendNotification(e.dataset.id, '${shop.shopName} 예약이 거부 되었습니다!', "/member/mypage");
+                   	 //비동기로 알림 보내주어야 함
+						if(e.dataset.id != 'notMember'){
+							//회원이 이니까 예약완료라고 알림 보내주자
+							sendNotification(e.dataset.id, '${shop.shopName} 예약이 거부 되었습니다!', "/member/mypage");
+							let content = "[메뉴팜] ${shop.shopName} 예약 알림\n 예약이 가게 사정으로 인해 거부 되었습니다.\n";
+							// 문자도 보내주자 
+							fetch("/notification/sms?phone="+e.dataset.phone+"&content="+encodeURI(content,"UTF-8"),{
+			                	method:"POST"
+			              	})
+							.then(response => response.text())
+							.then(text => {
+								
+							})
+						}
                   }else if(text=="fail"){
                      window.alert("승인 거부 도중 오류가 발생했습니다. 다시 시도해주세요");
                   }
@@ -225,7 +264,6 @@ window.onload = function(){
             })
          })
 	}
-
 }
 
 
@@ -252,9 +290,114 @@ let allReadNotification = (memberId) => {
 
 let deleteNotification = () => {
 	document.querySelectorAll(".notification").forEach((e)=>{
+		//e.parentNode.removeChild(e);
 		e.style.opacity = '0.6';
  		document.querySelector(".notificationCnt").innerHTML = "";
 		document.querySelector(".notificationCnt").style.display = 'none'; 
 	})
 }
+
+
+
+let realDeleteNotification = () => {
+	document.querySelectorAll(".notification").forEach((e)=>{
+		e.parentNode.removeChild(e);
+		//e.style.opacity = '0.6';
+ 		document.querySelector(".notificationCnt").innerHTML = "";
+		document.querySelector(".notificationCnt").style.display = 'none'; 
+	})
+}
+
+//===============================================================절취선===============================================================
+	let getToday = () => {
+		//2021-02-10T09:00
+		let today = new Date();   
+		let year = today.getFullYear(); // 년도
+		let month = today.getMonth() + 1;  // 월
+		if(month<10){
+			month = '0'+month;
+		}
+		let date = today.getDate();  // 날짜
+		let day = today.getDay();  // 요일
+		return year+'-'+month+'-'+date;
+	}
+	
+	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment) => {
+	//let makeReservBox = (json) => {
+		let reserv_box = document.createElement("div");
+		reserv_box.className = "reserv_box";
+		reserv_box.id = reserIdx;
+		let box = document.createElement("div");
+		box.className = "box";
+		let reserv_info = document.createElement("span");
+		let reserv_info2 = document.createElement("span");
+		reserv_info.className = "reserv_info";
+		let infoStr = reserName+"  "+reserParty+"인 "+reserDate.slice(-5);
+		reserv_info.innerHTML = infoStr;
+		let infoStr2 = reserPhone;
+		reserv_info2.className = "reserv_info";
+		reserv_info2.innerHTML = infoStr2;
+	
+		// <button class="btn" id="cancel_reserv"
+		// 								name="${reservation.reserIdx}">예약 취소</button>
+		let cancel_reserv = document.createElement("button");
+		cancel_reserv.className = "btn";
+		cancel_reserv.id = "cancel_reserv";
+		cancel_reserv.name = reserIdx;
+		cancel_reserv.innerHTML = "예약 취소";
+		cancel_reserv.addEventListener("click", (event)=>{
+			fetch("/reservation/cancelRes?reserIdx="+reserIdx,{
+				method:"POST"
+			})
+			.then(response => response.text())
+			.then(text => {
+				if(text=="success"){
+					let removeTarget = document.querySelector("#"+reserIdx);
+					removeTarget.parentNode.removeChild(removeTarget);
+					//취소된 친구 아이디, 
+					sendNotification("test","test","test");
+					
+					let content = "[메뉴팜] ${shop.shopName} 예약 알림\n 예약이 가게 사정으로 인해 취소 되었습니다.\n";
+					// 문자도 보내주자 
+					fetch("/notification/sms?phone="+reserPhone+"&content="+encodeURI(content,"UTF-8"),{
+	                	method:"POST"
+	              	})
+					.then(response => response.text())
+					.then(text => {
+						
+					})
+				}else if(text=="fail"){
+					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
+				} 
+			}) 
+		})
+		//1. 매개변수로 버튼(cancel_reserv)를 받아옴
+		//2. 그 받아온 애에다가 eventListener 걸어줌
+		//3. return cancel_reserv 해줌
+	
+		//<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>\
+		let comment = document.createElement("p");
+		comment.className = "fontXSmall";
+		comment.innerHTML = "요청 사항 : "+reserComment;
+	
+		box.appendChild(reserv_info);
+		box.appendChild(reserv_info2);
+		box.appendChild(cancel_reserv);
+	
+		reserv_box.appendChild(box);
+		reserv_box.appendChild(comment);
+		
+		return reserv_box;
+	}
+	
+	// 예약리스트가 없을때
+	let noRes = ()=>{
+		let msg = document.createElement("p");
+		msg.className = "fontXSmall";
+		msg.innerHTML = "예약이 없습니다."
+		
+		document.querySelector(".wrap_box").appendChild(msg);
+	}
+
+//===============================================================절취선===============================================================
 </script>

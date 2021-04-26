@@ -12,16 +12,7 @@
 <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservationReque.css'>
 <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-	<div class="wrapper">
-		<div class="header">
-			<div class="search">
-				<i class="fas fa-search"></i>
-			</div>
-			<div class="notice">
-				<i class="far fa-clipboard"></i>
-			</div>
-		</div>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
 		<div class="main">
 			<!--여기서 부터 코드 작성-->
 			<div class="body">
@@ -47,7 +38,9 @@
 								<div class="reserv_box" value="${reservation.reserIdx}" id="${reservation.reserIdx}">
 									<div class="box">
 										<span class="reserv_info">${reservation.reserDate} ${reservation.reserParty}인</span>
-										<button class="btn" id="reserv_ok" name="${reservation.reserIdx}" data-id="${reservation.memberId}">
+										<button class="btn" id="reserv_ok" name="${reservation.reserIdx}"
+										 	data-id="${reservation.memberId}" data-phone="${reservation.reserPhone}"
+										 	data-date="${reservation.reserDate}">
 											예약 승인
 										</button>
 									</div>
@@ -55,7 +48,8 @@
 										<span class="reserv_info">
 											${reservation.reserName} ${reservation.reserPhone}
 										</span>
-										<button class="btn" id="reserv_not" name="${reservation.reserIdx}" data-id="${reservation.memberId}">
+										<button class="btn" id="reserv_not" name="${reservation.reserIdx}" 
+											data-id="${reservation.memberId}" data-phone="${reservation.reserPhone}">
 											예약 거부
 										</button>
 									</div>
