@@ -52,12 +52,6 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	
 
-	//예약 취소
-	@Override
-	public int cancelRes(String reserIdx) {
-		return resRepository.cancelRes(reserIdx);
-	}
-
 	//예약 요청 리스트
 	@Override
 	public List<Reservation> selectResRequeList(String shopIdx) {
