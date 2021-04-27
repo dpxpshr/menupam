@@ -47,6 +47,17 @@ public class ReservationServiceImpl implements ReservationService{
 	//예약 취소
 	@Override
 	public int cancelRes(String reserIdx) {
+		
+		Reservation reservation = resRepository.selectReservationByReserIdx(reserIdx);
+		Shop shop = resRepository.selectShopByShopIdx(reservation.getShopIdx());
+		
+		
+		
+		notificationRepository.insertNotification(reservation.getMemberId(),
+													shop.getShopName()+" 예약 취소 되었습니다.",
+													"/member/mypage");
+		
+		
 		return resRepository.cancelRes(reserIdx);
 	}
 	

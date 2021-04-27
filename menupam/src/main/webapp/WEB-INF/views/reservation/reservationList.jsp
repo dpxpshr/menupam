@@ -77,36 +77,16 @@
 				noRes();
 			}else{
 				for(let i=0; i<Object.keys(json).length; i++){
-					let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx, json[i].reserPhone, json[i].reserComment);
+					let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate,
+													json[i].reserIdx, json[i].reserPhone, json[i].reserComment,
+													json[i].memberId);
 					//let reserv_box = makeReservBox(json[i]);
 					document.querySelector(".wrap_box").appendChild(reserv_box);
 				}
 			}
 		})
 		
-		document.querySelector("#calendar").addEventListener("change", (e)=>{
-			// 캘린더에서 날짜 변경시 원래있던애들 삭제해준다 . 
-			let wrap_box = document.querySelector(".wrap_box");
-			while ( wrap_box.hasChildNodes() ) { 
-				wrap_box.removeChild( wrap_box.firstChild ); 
-			}
-			//또똑같이 비동기로 저거 가져와서 그려준다.
-			fetch("/reservation/getList?shopIdx=${shop.shopIdx}&reserDate="+e.target.value, {
-				method:"POST"
-			})
-			.then(response => response.json())
-			.then(json => {
-				if(Object.keys(json).length==0){
-					//예약없습니다 그려주면댐
-					noRes();
-				}else{
-					for(let i=0; i<Object.keys(json).length; i++){
-						let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate, json[i].reserIdx,json[i].reserPhone, json[i].reserComment);
-						document.querySelector(".wrap_box").appendChild(reserv_box);
-					}
-				}
-			})
-		})         	 
+		         	 
     });
 </script>
 </body>

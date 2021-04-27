@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -39,24 +40,26 @@ public class ReservationController {
 		return "reservation/reservationForm";	
 	} 
 	
-	//예약하기
-	@PostMapping("reserve") //[알림기능 해야함!]
-	public String reservationInsert(@SessionAttribute(name="userInfo", required = false) Member member, Reservation res, Model model) {
-
-		if(member != null) {
-			res.setMemberId(member.getMemberId());
+	// 예약하기
+	@PostMapping("reserve") // [알림기능 해야함!]
+	@ResponseBody
+	public String reservationInsert(@SessionAttribute(name = "userInfo", required = false) Member member,
+			@RequestBody Reservation res, Model model) {
+		System.out.println(res);
+		
+		if(member != null) { 
+			res.setMemberId(member.getMemberId()); 
 		}else {
-			res.setMemberId("notMember");
+			res.setMemberId("notMember"); 
+		} //2. 예약 신청 해주자 
+		 
+		
+		if(resService.insertRes(res)==1) {
+			return "success";
+		}else {
+			return "fail";
 		}
-		//2. 예약 신청 해주자  
-		resService.insertRes(res);
-		
-		//3. 어디로 갈지 지정해주자
-		model.addAttribute("msg", "예약이 요청되었습니다.");
-		model.addAttribute("url", "/index"); //-> [임시] 수정 해야함 원래 보던 매장 페이지로 이동해야 함
-		
-		return "common/result";	
-	} 
+	}
 	
 	//예약리스트(사장) -> 사장님이 승인한 예약들을 보는곳 
 	@GetMapping("list")
@@ -122,7 +125,7 @@ public class ReservationController {
 	@PostMapping("cancelRes")
 	@ResponseBody
 	public String cancelRes(String reserIdx) throws Exception {
-		System.out.println(reserIdx);
+		//System.out.println(reserIdx);
 		int res = resService.cancelRes(reserIdx);
 		if(res==1) {
 			return "success";

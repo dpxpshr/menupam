@@ -54,7 +54,7 @@ public class NotificationController {
 		
 		System.out.println(phone);
 		System.out.println(content);
-		sms.sendSMS(phone, content);
+		//sms.sendSMS(phone, content);
 		
 		return "success";
 	}

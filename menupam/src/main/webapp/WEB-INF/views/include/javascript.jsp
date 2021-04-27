@@ -179,12 +179,32 @@ window.onload = function(){
 	//==============[예약 버튼 누르면 알림 전송 & DB에 데이터 전송]==============
 	if(document.querySelector("#reserBtn")!=null){
 		document.querySelector("#reserBtn").addEventListener("click",(e)=>{
-			e.preventDefault();
 			//fetch로 비동기 통신 하도록  
+			let params = {};
+			params.shopIdx = e.target.name;
+			params.reserDate = document.querySelector('#calendar').value;
+			params.reserName = document.querySelector('#name').value;
+			params.reserPhone = document.querySelector('#phone').value;
+			params.reserParty = document.querySelector('#search_sel').value;
+			params.reserComment = document.querySelector('#comment').value;
 			
-			document.querySelector("#reserForm").submit();
+			let headerObj = new Headers();
+			headerObj.append("content-type", "application/json");
 			
-			sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/reque?shopIdx=${shop.shopIdx}");
+			fetch("/reservation/reserve",{ //넘어가는 데이터 - 
+				method:"POST",
+				headers : headerObj,
+				body: JSON.stringify(params)
+			})
+			.then(response => response.text())
+			.then(text=>{
+				if(text=='success'){
+					sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/reque?shopIdx=${shop.shopIdx}");
+					location.href="/index";
+				}else if(text=='fail'){
+					window.alert("예약 도중 오류가 발생하였습니다. 다시 시도해주세요.");
+				}
+			})
 		})		
 	}
 	
@@ -269,6 +289,116 @@ window.onload = function(){
             })
         })
 	}
+	
+	if(document.querySelector("#calendar") != null){
+		document.querySelector("#calendar").addEventListener("change", (e)=>{
+			// 캘린더에서 날짜 변경시 원래있던애들 삭제해준다 . 
+			let wrap_box = document.querySelector(".wrap_box");
+			while ( wrap_box.hasChildNodes() ) { 
+				wrap_box.removeChild( wrap_box.firstChild ); 
+			}
+			//또똑같이 비동기로 저거 가져와서 그려준다.
+			fetch("/reservation/getList?shopIdx=${shop.shopIdx}&reserDate="+e.target.value, {
+				method:"POST"
+			})
+			.then(response => response.json())
+			.then(json => {
+				if(Object.keys(json).length==0){
+					//예약없습니다 그려주면댐
+					noRes();
+				}else{
+					for(let i=0; i<Object.keys(json).length; i++){
+						let reserv_box = makeReservBox(json[i].reserName, json[i].reserParty, json[i].reserDate,
+														json[i].reserIdx,json[i].reserPhone, json[i].reserComment,
+														json[i].memberId);
+						document.querySelector(".wrap_box").appendChild(reserv_box);
+					}
+				}
+			})
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//==============[reservationList.jsp 에서 예약 내역 생성하는 메서드]==============
+	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment, memberId) => {
+	//let makeReservBox = (json) => {
+		let reserv_box = document.createElement("div");
+		reserv_box.className = "reserv_box";
+		reserv_box.id = reserIdx;
+		let box = document.createElement("div");
+		box.className = "box";
+		let reserv_info = document.createElement("span");
+		let reserv_info2 = document.createElement("span");
+		reserv_info.className = "reserv_info";
+		let infoStr = reserName+"  "+reserParty+"인 "+reserDate.slice(-5);
+		reserv_info.innerHTML = infoStr;
+		let infoStr2 = reserPhone;
+		reserv_info2.className = "reserv_info";
+		reserv_info2.innerHTML = infoStr2;
+	
+		// <button class="btn" id="cancel_reserv"
+		// 								name="${reservation.reserIdx}">예약 취소</button>
+		let cancel_reserv = document.createElement("button");
+		cancel_reserv.className = "btn";
+		cancel_reserv.id = "cancel_reserv";
+		cancel_reserv.name = reserIdx;
+		cancel_reserv.innerHTML = "예약 취소";
+		cancel_reserv.addEventListener("click", (event)=>{
+			fetch("/reservation/cancelRes?reserIdx="+reserIdx,{
+				method:"POST"
+			})
+			.then(response => response.text())
+			.then(text => {
+				if(text=="success"){
+					let removeTarget = document.querySelector("#"+reserIdx);
+					removeTarget.parentNode.removeChild(removeTarget);
+					//취소된 친구 아이디, 
+					sendNotification(memberId, "test","test");
+					
+					let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 가게 사정으로 인해 취소 되었습니다.\n";
+					// 문자도 보내주자 
+					fetch("/notification/sms?phone="+reserPhone+"&content="+encodeURI(content,"UTF-8"),{
+	                	method:"POST"
+	              	})
+					.then(response => response.text())
+					.then(text => {
+						
+					})
+				}else if(text=="fail"){
+					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
+				} 
+			}) 
+		})
+		//1. 매개변수로 버튼(cancel_reserv)를 받아옴
+		//2. 그 받아온 애에다가 eventListener 걸어줌
+		//3. return cancel_reserv 해줌
+	
+		//<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>\
+		let comment = document.createElement("p");
+		comment.className = "fontXSmall";
+		comment.innerHTML = "요청 사항 : "+reserComment;
+	
+		box.appendChild(reserv_info);
+		box.appendChild(reserv_info2);
+		box.appendChild(cancel_reserv);
+	
+		reserv_box.appendChild(box);
+		reserv_box.appendChild(comment);
+		
+		return reserv_box;
+	}
 }
 
 
@@ -323,74 +453,7 @@ let deleteNotification = () => {
 	} 
 	
 	
-	//==============[reservationList.jsp 에서 예약 내역 생성하는 메서드]==============
-	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment) => {
-	//let makeReservBox = (json) => {
-		let reserv_box = document.createElement("div");
-		reserv_box.className = "reserv_box";
-		reserv_box.id = reserIdx;
-		let box = document.createElement("div");
-		box.className = "box";
-		let reserv_info = document.createElement("span");
-		let reserv_info2 = document.createElement("span");
-		reserv_info.className = "reserv_info";
-		let infoStr = reserName+"  "+reserParty+"인 "+reserDate.slice(-5);
-		reserv_info.innerHTML = infoStr;
-		let infoStr2 = reserPhone;
-		reserv_info2.className = "reserv_info";
-		reserv_info2.innerHTML = infoStr2;
 	
-		// <button class="btn" id="cancel_reserv"
-		// 								name="${reservation.reserIdx}">예약 취소</button>
-		let cancel_reserv = document.createElement("button");
-		cancel_reserv.className = "btn";
-		cancel_reserv.id = "cancel_reserv";
-		cancel_reserv.name = reserIdx;
-		cancel_reserv.innerHTML = "예약 취소";
-		cancel_reserv.addEventListener("click", (event)=>{
-			fetch("/reservation/cancelRes?reserIdx="+reserIdx,{
-				method:"POST"
-			})
-			.then(response => response.text())
-			.then(text => {
-				if(text=="success"){
-					let removeTarget = document.querySelector("#"+reserIdx);
-					removeTarget.parentNode.removeChild(removeTarget);
-					//취소된 친구 아이디, 
-					sendNotification("test","test","test");
-					
-					let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 가게 사정으로 인해 취소 되었습니다.\n";
-					// 문자도 보내주자 
-					fetch("/notification/sms?phone="+reserPhone+"&content="+encodeURI(content,"UTF-8"),{
-	                	method:"POST"
-	              	})
-					.then(response => response.text())
-					.then(text => {
-						
-					})
-				}else if(text=="fail"){
-					window.alert("예약 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
-				} 
-			}) 
-		})
-		//1. 매개변수로 버튼(cancel_reserv)를 받아옴
-		//2. 그 받아온 애에다가 eventListener 걸어줌
-		//3. return cancel_reserv 해줌
-	
-		//<p class="fontXSmall">요청사항 : ${reservation.reserComment}</p>\
-		let comment = document.createElement("p");
-		comment.className = "fontXSmall";
-		comment.innerHTML = "요청 사항 : "+reserComment;
-	
-		box.appendChild(reserv_info);
-		box.appendChild(reserv_info2);
-		box.appendChild(cancel_reserv);
-	
-		reserv_box.appendChild(box);
-		reserv_box.appendChild(comment);
-		
-		return reserv_box;
-	}
 	
 	//==============[예약 리스트가 없을때 '예약이 없습니다' 그리는 메서드]==============
 	let noRes = ()=>{

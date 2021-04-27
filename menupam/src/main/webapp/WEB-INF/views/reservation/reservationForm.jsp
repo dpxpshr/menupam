@@ -16,7 +16,7 @@
 			<!--여기서 부터 코드 작성 "-->
 			<div class="body">
 				<div class=reservation_info>
-					<form:form modelAttribute="reservation" action="${context}/reservation/reserve" method="POST" id="reserForm"><br>
+					<%-- <form:form modelAttribute="reservation" action="${context}/reservation/reserve" method="POST" id="reserForm"><br> --%>
 						<div class="fontBox">
 							<p class="fontMedium" id="title">예약</p>
 						</div><br>
@@ -40,7 +40,7 @@
 							<div class="imgBox">
 								<div class="imgsmall">
 									<input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력해주세요" value="${sessionScope.userInfo.memberName}"><br><br>
-									<input type="text" class="inputLarge" name="reserPhone" value="${sessionScope.userInfo.memberPhone}" placeholder="전화번호를 입력해주세요">
+									<input type="text" class="inputLarge" name="reserPhone" id="phone" value="${sessionScope.userInfo.memberPhone}" placeholder="전화번호를 입력해주세요">
 								</div><br>
 								<div id="search_bar">
 									<p class="fontLarge" class="inputLarge">예약 인원 
@@ -59,14 +59,14 @@
 							</div><br>
 							<div class="phone_num">
 								<p class="fontLarge">요청사항</p><br>
-								<input type="text" class="inputLarge" name="reserComment" placeholder="요청사항을 입력해주세요">
+								<input type="text" class="inputLarge" id="comment" name="reserComment" placeholder="요청사항을 입력해주세요">
 							</div>
 							<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
 							<div class="btnBox"><br>
-								<button class="btnLarge" id="reserBtn">예약하기</button><br>
+								<button class="btnLarge" id="reserBtn" name="${shop.shopIdx}">예약하기</button><br>
 							</div>
 						</div>
-					</form:form>
+					<%-- </form:form> --%>
 				</div>
 			</div> <!-- body -->
 		</div> 
