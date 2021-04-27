@@ -33,14 +33,14 @@ document.querySelectorAll(".menuCancel").forEach((e)=>{
 			let menuOrders = {}
 			menuOrders.orderMenuName = menuName;
 			
-			let xhr = new XMLHttpRequest();
-			xhr.open("post", context + "/cancelMenu");
-			xhr.setRequestHeader("content-type", "application/json");
-			xhr.send(JSON.stringify(menuOrders));
+			let xhr2 = new XMLHttpRequest();
+			xhr2.open("post", context + "/cancelMenu");
+			xhr2.setRequestHeader("content-type", "application/json");
+			xhr2.send(JSON.stringify(menuOrders));
 			
-			xhr.onreadystatechange = () =>{
-				if(xhr.status == 200){
-					if(xhr.responseText == "cancelSuccess"){
+			xhr2.onreadystatechange = () =>{
+				if(xhr2.status == 200){
+					if(xhr2.responseText == "cancelSuccess"){
 						location.href = context + "/tableDetail";
 					}
 				}else{
@@ -67,28 +67,25 @@ $(".tableEmpty").addEventListener("click",()=>{
 		let tableJson = {}
 		tableJson.orderTableNum = tableNum;
 		
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", context + "/tableNum");
-		xhr.setRequestHeader("content-type", "application/json");
-		xhr.send(JSON.stringify(tableJson));
-		
-		xhr.onreadystatechange = () =>{
-			if(xhr.status == 200){
-				if(xhr.responseText == "tableNumSuccess"){
-					alert(tableNum + "번 테이블 자리를 비웠습니다.");
-					location.href = context + "/shopManage";
-				}
-				else if(xhr.responseText == "fail"){
-					alert("잘못된 정보 입니다.");
-					location.href = context + "/shopManage";
-				}
-			}else{
-					error.alertMessage();
+		fetch(context+"/tableNum",{
+			method : "post",
+			headers : {"Content-Type": "application/json"},
+			body : JSON.stringify(tableJson)
+		}).then(response =>{
+			if(response.ok){
+				return response.text();
 			}
-		}
+		}).then(text =>{
+			if(text == "tableNumSuccess"){
+				alert(tableNum + "번 테이블 자리를 비웠습니다.");
+				location.href = context + "/shopManage";
+			}
+			else if(text == "fail"){
+				alert("잘못된 정보 입니다.");
+				location.href = context + "/shopManage";				
+			}
+		})
 	}
 	
-	
-	
-})
+});
 
