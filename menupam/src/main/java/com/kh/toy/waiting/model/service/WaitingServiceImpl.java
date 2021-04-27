@@ -19,8 +19,8 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public List<Waiting> selectWaitingListByDate(Date waitRegDate) {
-		return waitingRepository.selectWaitingListByDate(waitRegDate);
+	public List<Waiting> selectWaitingList(String shopIdx) {
+		return waitingRepository.selectWaitingList(shopIdx);
 	}
 
 	@Override

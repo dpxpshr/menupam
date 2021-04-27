@@ -61,9 +61,11 @@
 	          <br>
 	          <div class="field space">
 	            <span class="fas fa-mobile-alt"> 연락처  </span>
+	            
 	            <input type="tel" class="input" id="phone" name="waitPhone" value="${sessionScope.userInfo.memberPhone}" required placeholder="-없이 입력" required="required"
 	            pattern="[0-9]{11}">
 	          </div>
+	          <input name=shopIdx value="${shop.shopIdx}" style="display: none">
             	<button class="btnMedium">대기 등록하기</button>
             </div>
             	</form:form>
@@ -75,7 +77,7 @@
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
+            <div><i class="far fa-clipboard"></i></div>
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 

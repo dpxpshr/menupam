@@ -8,7 +8,7 @@ import com.kh.toy.waiting.model.vo.Waiting;
 
 public interface WaitingService {
 
-	List<Waiting> selectWaitingListByDate(Date waitRegDate);
+	List<Waiting> selectWaitingList(String shopIdx);
 	int insertWaiting(Waiting waiting);
 	int updateArrived(String waitIdx);
 	int updateCancel(String waitIdx);

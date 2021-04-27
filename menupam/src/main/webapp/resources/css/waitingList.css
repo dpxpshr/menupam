@@ -52,3 +52,103 @@
 .space{
   margin-top: 10px;
 }
+
+    .body{
+    padding-top: 48px;
+}
+.content{
+    width: 90%;
+    height: 717px;
+    /* background-color: #F2F2F2; */
+    margin: auto;
+    border-radius: 10px;
+}
+
+.line{
+	height: 5px;
+	background-color: #F2BB13;
+}
+
+.wrap_shop{
+	padding-left: 10px;
+	font-size: 50px;
+	height: 60px;
+	display:flex;
+	justify-content: space-around;
+} 
+    
+.store{
+	margin-top: 10px;
+	text-align: justify;
+}
+    
+.shop{
+ 	display: inline-block;
+ 	padding-left: 10px;
+ 	font-size: 25px;
+ 	font-weight: lighter;
+ 	height: 100%;
+ }
+
+.shop>span{
+	height: 50%;
+	margin-top: 20px;
+	vertical-align: sub;
+}
+
+
+.wating_box{
+	width: 100%;
+	height: 60px;
+	display:block;
+	justify-content: space-around;
+	background-color: 	#FFFFE0;
+	margin-top: 10px;
+}
+
+.waiting_info{
+	display: inline-block;
+	width: 100%;
+	height: 40%;
+	text-align: center;
+	margin-top: 5px;
+}
+
+.wrap_btn{
+	display:inline-flex;
+	justify-content: space-around;
+	width: 100%;
+	height: 50%;
+}
+
+.btn{
+	width: 30%;
+	border: none;
+	color: white;
+}
+
+
+
+#send_msg{
+	background-color: #FFD700;
+}
+
+#send_msg:hover{
+	background-color: #FFFF00;
+}
+
+#arrived{
+	background-color: #FFDAB9;
+}
+
+#arrived:hover{
+	background-color: 		#FFEFD5;
+}
+
+#cancel_wait{
+	background-color: 	#BDB76B;
+}
+
+#cancel_wait:hover{
+	background-color: 	#F0E68C;
+}

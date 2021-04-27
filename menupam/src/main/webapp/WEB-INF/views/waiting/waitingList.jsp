@@ -9,7 +9,6 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/waitingList.css'>
-    <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 
 </head>
@@ -48,15 +47,14 @@
 	                    <c:if test="${empty requestScope.waitList}">
 				            <p class="fontXSmall">대기자가 없습니다.</p> 
 				        </c:if> 
-	                    <div style="display: none" name="${waiting.waitRegDate}">getToday()</div>
 	                    <div class="wrap_box">
 	                    <c:forEach var="waiting" items="${waitList}">
-	                    	<div class="wating_box">
+	                    	<div class="wating_box" id="${waiting.waitIdx}">
 	                    		<span class="waiting_info">${waiting.waitParty}인 ${waiting.waitPhone}</span>
 	                    		<div class="wrap_btn">
 	                    			<button class="btn" id="send_msg" name="${waiting.waitIdx}">문자 전송</button>
-	                    			<button class="btn" id="arrived" name="${waiting.waitIdx}">문자 전송</button>
-	                    			<button class="btn" id="cancel_wait" name="${waiting.waitIdx}">문자 전송</button>
+	                    			<button class="btn" id="arrived" name="${waiting.waitIdx}">손님 도착</button>
+	                    			<button class="btn" id="cancel_wait" name="${waiting.waitIdx}">대기 취소</button>
 	                    		</div>
 	                    	</div>
 	                    	</c:forEach>
@@ -99,36 +97,49 @@
       	showClock();         	 
       });
       
-//////////////// 오늘 날짜 -> waitRegDate///////////////
-      let getToday = () => {
-  		//2021-02-10T09:00
-  		let today = new Date();   
-  		let year = today.getFullYear(); // 년도
-  		let month = today.getMonth() + 1;  // 월
-  		if(month<10){
-  			month = '0'+month;
-  		}
-  		let date = today.getDate();  // 날짜
-  		return year+'-'+month+'-'+date;
-  	}
+      document.querySelectorAll("#arrived").forEach((e)=>{
+			e.addEventListener("click", (event)=>{
+				
+				console.log(document.querySelector("#"+waitIdx));
+				
+				fetch("/waiting/arrived?waitIdx="+e.name,{
+					method:"POST"
+				})
+				.then(response => response.text())
+				.then(text => {
+					if(text=="success"){
+						let reserIdx = e.name;
+						let removeTarget = document.querySelector("#"+waitIdx);
+						removeTarget.parentNode.removeChild(removeTarget);
+			       }else if(text=="fail"){
+			          window.alert("손님도착 처리 도중 오류가 발생했습니다. 다시 시도해주세요");
+			       }
+			    })
+			    
+			 })
+			})     
+			
+	document.querySelectorAll("#cancel_wait").forEach((e)=>{
+			e.addEventListener("click", (event)=>{
+				fetch("/waiting/cancelWait?waitIdx="+e.name,{
+					method:"POST"
+				})
+				.then(response => response.text())
+				.then(text => {
+					if(text=="success"){
+						let reserIdx = e.name;
+						let removeTarget = document.querySelector("#"+waitIdx);
+						removeTarget.parentNode.removeChild(removeTarget);
+			       }else if(text=="fail"){
+			          window.alert("대기 취소 도중 오류가 발생했습니다. 다시 시도해주세요");
+			       }
+			    })
+			    
+			 })
+			})  
       
-     
-    $(document).ready(function(){
-    	$("#send_msg").click(function(){
-    		document.form.action = "${context}/waiting/sendMsg";
-    	});
-    	
-    	$("#arrived").click(function(){
-    		document.form.action = "${context}/waiting/arrived";
-    	});
-    	
-    	$("#cancel_wait").click(function(){
-    		document.form.action = "${context}/waiting/cancelWait";
-    	});
-    	
-    });
-    
-    
+      
+      
     </script>
 
 </body>
