@@ -106,6 +106,7 @@ window.onload = function(){
 			}else{
 				console.log(json);
 				let notificationCnt = 0;
+				console.log(Object.keys(json).length);
 				for(let i=1; i<=Object.keys(json).length; i++){
 					if(json[i].notificationCheck == '0'){
 						notificationCnt++;
@@ -114,7 +115,7 @@ window.onload = function(){
 						let regDate = json[i].notificationRegDate.substring(2,10);
 						let notification = makeNotificationDIV(content,link,regDate);
 						document.querySelector(".notifications").appendChild(notification);
-					}else if(json[i].notificationCheck == '1'){
+					}else{
 						let content = json[i].notificationContent;
 						let link = json[i].notificationLink;
 						let regDate = json[i].notificationRegDate.substring(2,10);
@@ -179,8 +180,11 @@ window.onload = function(){
 	if(document.querySelector("#reserBtn")!=null){
 		document.querySelector("#reserBtn").addEventListener("click",(e)=>{
 			e.preventDefault();
-			sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/reque?shopIdx=${shop.shopIdx}");
+			//fetch로 비동기 통신 하도록  
+			
 			document.querySelector("#reserForm").submit();
+			
+			sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/reque?shopIdx=${shop.shopIdx}");
 		})		
 	}
 	
