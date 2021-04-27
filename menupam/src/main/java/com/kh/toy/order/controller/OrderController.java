@@ -246,7 +246,7 @@ public class OrderController {
 		//클라이언트에서 결제가 끝나면 결제완료 요청을 한다.
 		//서버에서 해당 tid에 대해 주문 조회를 하고, status가 'SUCCESS_PAYMENT'라면 
 		//결제완료로 판단하고 주문 정보를 정리한다.
-		
+		////////////////////////
 		/////////////
 		
 		if(res && orderService.insertPayment(order,payType,shopIdx)) { //결제 성공시 결제데이터 등록 진행
