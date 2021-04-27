@@ -60,11 +60,9 @@
 <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 <script type="text/javascript">
 
-
-	
 	window.addEventListener('load', function() {
-		document.querySelector("#calendar").value = getToday();	
-		let today = getToday();
+		document.querySelector("#calendar").value = getTodayforList();	
+		let today = getTodayforList();
 		
 		//1. 저페이지를 로드하면 오늘날짜가 들어가자나요
 		//2. 오늘날짜 데이터를 비동기로 받아옴 그리고 뷰에 그려줌(JS)

@@ -5,11 +5,12 @@
 <script type="text/javascript">
 
 window.onload = function(){
-	//우측 상단 알림벨 클릭 시 알림창 open/close 작업
-	let open = false;
-	let bell = document.querySelector(".bell")
+	
 	let notifications = document.querySelector(".notifications")
 	
+	//==============[우측 상단 bell클릭시 알림창 열고 닫는 메서드]==============
+	let open = false;
+	let bell = document.querySelector(".bell")
 	if(bell!=null){
 		bell.addEventListener("click",(e)=>{
 		    if(open){
@@ -28,7 +29,7 @@ window.onload = function(){
 	}
 
 
-    //소켓 관련 JS
+    //==============[소켓 기본 설정 JS]==============
     let socket = null;
     
     function connectWs(){
@@ -43,42 +44,31 @@ window.onload = function(){
 			console.log("info : sock Connection Close 입니다");
 		}
 
-		// [메시지가 오는 메서드]
+		//==============[알림 메시지 도착]==============
 		sock.onmessage = function(event){
-			console.log("비동기 알림 메시지 도착");
+			console.log("알림 메시지 도착");
 			let data = event.data;
-			
-			// 1. 혜령
-			// 2. 성욱
-			// 3. 승현
+			//[소리 재생(필요없음)]
 			let alarm = new Audio();
 			alarm.src = '../../../resources/sound/ding-dong.wav';
 			alarm.play();
-			realDeleteNotification();
+			//[원래 있던 알림들을 다 삭제 한다]
+			deleteNotification();
+			//[DB가 변동 되었으니 다시 그려준다]
 			getNotification('${sessionScope.userInfo.memberId}');
-						
-/* 			
-			//appendNotification()
-			console.log(data);
-			//1. 저 벨 위에 숫자를 가져와서 ++해준다.
-			//2. notification을 하나 만들어서 맨위에 넣어준다.
-			appendNotification */
-			
-			//소리나게 띵동
-
 		}		
     }
     
     connectWs();
 
-	// [메시지 보내는 메서드]
+  	//==============[echoHandler로 메시지 보내는 메서드]==============
 	function sendNotification(receiveId, content, link){
 		if(socket){
 			socket.send(receiveId+","+content+","+link);
 		}
 	}
 	
-	//[알림 Div 만드는 메서드]
+	//==============[내용,링크,등록일 으로 알림div 만들어 반환하는 메서드]==============
 	let makeNotificationDIV = (content, link, regDate) => {
 		let notification = document.createElement("div");
 		notification.className = 'notification';
@@ -104,7 +94,7 @@ window.onload = function(){
 		return notification;
 	}
 	
-	//[비동기로 알림 내역 가져오는 메서드]
+	//==============[DB에 저장된 알림 가져와서 알림창에 그려주는 메서드]==============
 	let getNotification = (memberId) => {
 		fetch("/notification/notifications?memberId="+memberId,{
 			method:"POST"
@@ -134,7 +124,7 @@ window.onload = function(){
 					}
 				}
 				
-				if(notificationCnt=='0'){
+				if(notificationCnt==0){
 					document.querySelector(".notificationCnt").style.display = 'none';
 				}else{
 					document.querySelector(".notificationCnt").style.display = 'block';
@@ -159,14 +149,14 @@ window.onload = function(){
 	}
 	
 
-	//[비동기로 알림 내역 가져오는 메서드]
+	//==============[실행부(DB에 저장된 알림 가져와서 알림창에 그려주는 메서드)]==============
 	if(bell!=null){
 		getNotification('${sessionScope.userInfo.memberId}');	 	
 	}
 	
 		
 	
-
+	//==============[오늘 날짜 반환하는 메서드]==============
 	let getToday = () => {
 		//2021-02-10T09:00
 		let today = new Date();   
@@ -180,22 +170,36 @@ window.onload = function(){
 		return year+'-'+month+'-'+date+'T09:00';
 	}
 
+	//==============[캘린더 최소 날짜를 오늘로 지정]==============
 	if(document.querySelector("#calendar")!=null){
 		document.querySelector("#calendar").min = getToday();	
 	}
 	
+	//==============[예약 버튼 누르면 알림 전송 & DB에 데이터 전송]==============
 	if(document.querySelector("#reserBtn")!=null){
 		document.querySelector("#reserBtn").addEventListener("click",(e)=>{
-			//[알림파트]
-			//1. 예약버튼 누름 -> 원래 이벤트 잠시 멈춤
-			//1-1. 알림을 DB에 저장해주기 ->이거는 service에서 같이 해줬다
-			//1-2. 알림을 sendNotification 메서드를 통해 보내준다.
 			e.preventDefault();
 			sendNotification("${shop.memberId}", "${shop.shopName} 예약이 있습니다!", "/reservation/reque?shopIdx=${shop.shopIdx}");
 			document.querySelector("#reserForm").submit();
 		})		
 	}
 	
+	//==============[DB에서 나온 date를 (4/30 오후 3:00)로 바꾸는 메서드]==============
+	let getDate = (dbDate) => {
+		let date = dbDate.substring(5,7)+"/"+dbDate.substring(8,10);
+		let hour = Number(dbDate.substring(11,13));
+		let korean = null;
+		if(hour<12){
+			korean = "오전"
+		}else{
+			korean = "오후"
+			hour = hour-12;
+		}
+		let time = korean+" "+hour+":"+dbDate.substring(14,16);
+		return date+" "+time;
+	}
+	
+	//==============[예약 승인 누르면 알림 전송 & DB에 데이터 전송]==============
 	if(document.querySelector("#reserv_ok") != null){
 		document.querySelectorAll("#reserv_ok").forEach((e)=>{
 	        e.addEventListener("click", (event)=>{
@@ -212,25 +216,24 @@ window.onload = function(){
 						if(e.dataset.id != 'notMember'){
 							//회원이 이니까 예약완료라고 알림 보내주자
 							sendNotification(e.dataset.id, '${shop.shopName} 예약이 완료 되었습니다!', "/member/mypage");
-							let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 정상적으로 완료 되었습니다.\n"+e.dataset.date;
-							// 문자도 보내주자 
+							// 문자도 보내주자
+							let date = getDate(e.dataset.date);
+							let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 정상적으로 완료 되었습니다.\n"+date;
 							fetch("/notification/sms?phone="+e.dataset.phone+"&content="+encodeURI(content,"UTF-8"),{
 			                	method:"POST"
 			              	})
 							.then(response => response.text())
-							.then(text => {
-								
-							})
+							.then(text => {})
 						}
 	              }else if(text=="fail"){
 	                 window.alert("승인 도중 오류가 발생했습니다. 다시 시도해주세요");
 	              }
 	           })
 	        })
-	     })    
+	    })    
 	}
 	
-	
+	//==============[예약 거절 누르면 알림 전송 & DB에 데이터 전송]==============
 	if(document.querySelector("#reserv_not") != null){
 	    document.querySelectorAll("#reserv_not").forEach((e)=>{
             e.addEventListener("click", (event)=>{
@@ -247,27 +250,25 @@ window.onload = function(){
 						if(e.dataset.id != 'notMember'){
 							//회원이 이니까 예약완료라고 알림 보내주자
 							sendNotification(e.dataset.id, '${shop.shopName} 예약이 거부 되었습니다!', "/member/mypage");
-							let content = "[메뉴팜] ${shop.shopName} 예약 알림\n 예약이 가게 사정으로 인해 거부 되었습니다.\n";
+							let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 가게 사정으로 인해 거부 되었습니다.\n";
 							// 문자도 보내주자 
 							fetch("/notification/sms?phone="+e.dataset.phone+"&content="+encodeURI(content,"UTF-8"),{
 			                	method:"POST"
 			              	})
 							.then(response => response.text())
-							.then(text => {
-								
-							})
+							.then(text => {})
 						}
                   }else if(text=="fail"){
                      window.alert("승인 거부 도중 오류가 발생했습니다. 다시 시도해주세요");
                   }
                })
             })
-         })
+        })
 	}
 }
 
 
-//[알림 모두 읽음 처리]
+//==============[알림 모두 읽음 DB Update & 모두 회색으로 변경]==============
 let allReadNotification = (memberId) => {
 	fetch("/notification/allRead?memberId="+memberId,{
 		method:"POST"
@@ -275,20 +276,15 @@ let allReadNotification = (memberId) => {
 	.then(response => response.text())
 	.then(text => {
 		if(text=='success'){
-/* 			document.querySelectorAll(".notification").forEach((e)=>{
-				e.parentNode.removeChild(e);
-				document.querySelector(".notificationCnt").innerHTML = "";
-				document.querySelector(".notificationCnt").style.display = 'none';
-			}) */
-			deleteNotification();
+			grayNotification();
 		}else if(text=='fail'){
 			//여기도 예외처리 해야함
 		}
 	})
 }	
 
-
-let deleteNotification = () => {
+//==============[알림 들을 회색으로 변경하는 메서드]==============
+let grayNotification = () => {
 	document.querySelectorAll(".notification").forEach((e)=>{
 		//e.parentNode.removeChild(e);
 		e.style.opacity = '0.6';
@@ -298,8 +294,8 @@ let deleteNotification = () => {
 }
 
 
-
-let realDeleteNotification = () => {
+//==============[알림 모두 삭제하는 메서드]==============
+let deleteNotification = () => {
 	document.querySelectorAll(".notification").forEach((e)=>{
 		e.parentNode.removeChild(e);
 		//e.style.opacity = '0.6';
@@ -309,7 +305,7 @@ let realDeleteNotification = () => {
 }
 
 //===============================================================절취선===============================================================
-	let getToday = () => {
+ 	let getTodayforList = () => {
 		//2021-02-10T09:00
 		let today = new Date();   
 		let year = today.getFullYear(); // 년도
@@ -320,8 +316,10 @@ let realDeleteNotification = () => {
 		let date = today.getDate();  // 날짜
 		let day = today.getDay();  // 요일
 		return year+'-'+month+'-'+date;
-	}
+	} 
 	
+	
+	//==============[reservationList.jsp 에서 예약 내역 생성하는 메서드]==============
 	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment) => {
 	//let makeReservBox = (json) => {
 		let reserv_box = document.createElement("div");
@@ -357,7 +355,7 @@ let realDeleteNotification = () => {
 					//취소된 친구 아이디, 
 					sendNotification("test","test","test");
 					
-					let content = "[메뉴팜] ${shop.shopName} 예약 알림\n 예약이 가게 사정으로 인해 취소 되었습니다.\n";
+					let content = "[메뉴팜] ${shop.shopName} 예약 알림\n예약이 가게 사정으로 인해 취소 되었습니다.\n";
 					// 문자도 보내주자 
 					fetch("/notification/sms?phone="+reserPhone+"&content="+encodeURI(content,"UTF-8"),{
 	                	method:"POST"
@@ -390,14 +388,12 @@ let realDeleteNotification = () => {
 		return reserv_box;
 	}
 	
-	// 예약리스트가 없을때
+	//==============[예약 리스트가 없을때 '예약이 없습니다' 그리는 메서드]==============
 	let noRes = ()=>{
 		let msg = document.createElement("p");
 		msg.className = "fontXSmall";
 		msg.innerHTML = "예약이 없습니다."
-		
 		document.querySelector(".wrap_box").appendChild(msg);
 	}
 
-//===============================================================절취선===============================================================
 </script>
