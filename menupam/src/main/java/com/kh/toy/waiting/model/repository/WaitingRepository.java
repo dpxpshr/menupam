@@ -26,9 +26,6 @@ public interface WaitingRepository {
 			+ " values('b'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty})")
 	int insertWaiting(Waiting waiting);
 	
-	@Delete("delete from tb_waiting where wait_idx = #{waitIdx}")
-	boolean deleteWaiting(String waitIdx);
-	
 	@Update("update tb_waiting set wait_state = 'arrived' where wait_idx = #{waitIdx}")
 	int updateArrived(String waitIdx);
 	

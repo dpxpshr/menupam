@@ -23,6 +23,7 @@
                 <i class="far fa-clipboard"></i>
             </div>
         </div>
+    </div>
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
@@ -34,32 +35,30 @@
 	                    <div class="wrap_shop">
 							<i class="fas fa-store store"></i>
 	                    	<div class="shop">
-								<span id="shop_info">abcdef123</span><br> <!--매장 인덱스 -->
-								<span id="shop_info">나이스 닭다리</span> <!-- 매장 이름 -->
+								<span id="shop_info">${shop.shopIdx}</span><br> <!--매장 인덱스 -->
+								<span id="shop_info">${shop.shopName}</span> <!-- 매장 이름 -->
 	                    	</div>
 	                    </div>
 	                    <hr color="#F2BB13">
 	                    
 	                    <div class="time">
-	                    	<p class="fontXSmall">현재시간 : 2021.04.11 16:25 </p>
+	                    	<div id="divClock"></div>
 	                    </div>
 	                    
 	                    <c:if test="${empty requestScope.waitList}">
 				            <p class="fontXSmall">대기자가 없습니다.</p> 
 				        </c:if> 
-	                    
+	                    <div style="display: none" name="${waiting.waitRegDate}">getToday()</div>
 	                    <div class="wrap_box">
-	                    <c:forEach var="waiting" items="${waitList}" varStatus="status">
-	                    	<form name="form" method="POST" >
+	                    <c:forEach var="waiting" items="${waitList}">
 	                    	<div class="wating_box">
 	                    		<span class="waiting_info">${waiting.waitParty}인 ${waiting.waitPhone}</span>
 	                    		<div class="wrap_btn">
-	                    			<button class="btn" id="send_msg">문자 전송</button>
-	                    			<button class="btn" id="arrived">문자 전송</button>
-	                    			<button class="btn" id="cancel_wait">문자 전송</button>
+	                    			<button class="btn" id="send_msg" name="${waiting.waitIdx}">문자 전송</button>
+	                    			<button class="btn" id="arrived" name="${waiting.waitIdx}">문자 전송</button>
+	                    			<button class="btn" id="cancel_wait" name="${waiting.waitIdx}">문자 전송</button>
 	                    		</div>
 	                    	</div>
-	                    	</form>
 	                    	</c:forEach>
 	                    
 	                    
@@ -79,6 +78,41 @@
         </div> 
     </div> 
      <script type="text/javascript">
+     // 현재 시간
+     function showClock(){
+		   var date = new Date();
+		   var divClock = document.getElementById("divClock");
+		   if(date.getHours() > 12){
+		      var msg = date.getFullYear() + "." + (date.getMonth()+1) + "." + date.getDate() + " 오후 " + (date.getHours()-12)+"시";
+		   }
+		   else{
+		      var msg = "현재 시간 : 오전 " + date.getHours()+"시";
+		   }
+		   msg+=date.getMinutes()+"분";
+		   msg+=date.getSeconds()+"초";
+		   
+		   divClock.innerText = msg;
+		   setTimeout(showClock,1000);
+		}
+
+      window.addEventListener('load', function() {
+      	showClock();         	 
+      });
+      
+//////////////// 오늘 날짜 -> waitRegDate///////////////
+      let getToday = () => {
+  		//2021-02-10T09:00
+  		let today = new Date();   
+  		let year = today.getFullYear(); // 년도
+  		let month = today.getMonth() + 1;  // 월
+  		if(month<10){
+  			month = '0'+month;
+  		}
+  		let date = today.getDate();  // 날짜
+  		return year+'-'+month+'-'+date;
+  	}
+      
+     
     $(document).ready(function(){
     	$("#send_msg").click(function(){
     		document.form.action = "${context}/waiting/sendMsg";

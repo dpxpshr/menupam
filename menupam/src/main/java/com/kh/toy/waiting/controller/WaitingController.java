@@ -40,9 +40,9 @@ public class WaitingController {
 		
 		if(member != null) {
 			waiting.setWaitPhone(member.getMemberPhone());
-		}else {
-			waiting.setWaitPhone("");
-		}
+		}else //{ //비회원 대기 등록시 핸드폰 번호 입력 - 이것때문에 db에 insert안되는듯?
+			//waiting.setWaitPhone("");
+		//}
 		waitingService.insertWaiting(waiting);
 		model.addAttribute("msg", "대기에 등록되었습니다.");
 		model.addAttribute("url", "/index");
@@ -52,8 +52,9 @@ public class WaitingController {
 	@GetMapping("list")
 	public String waitingList(Date waitRegDate, Model model, HttpServletRequest request, String shopIdx) {
 		//session 사장 & 해당 매장
-		//날짜 그날 날짜로 자동 설정어떻게..
-		//waitRegDate = "21/04/20";
+		//날짜 그날 날짜로 자동 설정어떻게.. (지금 jsp에 
+		//waitRegDate = "21-04-27";
+		
 		model.addAttribute("shop", waitingService.selectShopByShopIdx(shopIdx));
 		List<Waiting> waitList = waitingService.selectWaitingListByDate(waitRegDate);
 		model.addAttribute("waitList", waitList);

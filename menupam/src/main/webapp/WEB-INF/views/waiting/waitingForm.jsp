@@ -9,7 +9,6 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../resources/css/waitForm.css'>
-    <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -62,7 +61,7 @@
 	          <br>
 	          <div class="field space">
 	            <span class="fas fa-mobile-alt"> 연락처  </span>
-	            <input type="tel" class="input" id="Phone" name="waitPhone" value="${sessionScope.userInfo.memberPhone}" required placeholder="전화번호" required="required"
+	            <input type="tel" class="input" id="phone" name="waitPhone" value="${sessionScope.userInfo.memberPhone}" required placeholder="-없이 입력" required="required"
 	            pattern="[0-9]{11}">
 	          </div>
             	<button class="btnMedium">대기 등록하기</button>

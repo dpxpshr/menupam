@@ -10,7 +10,6 @@ public interface WaitingService {
 
 	List<Waiting> selectWaitingListByDate(Date waitRegDate);
 	int insertWaiting(Waiting waiting);
-	boolean deleteWaiting(String waitIdx);
 	int updateArrived(String waitIdx);
 	int updateCancel(String waitIdx);
 	Shop selectShopByShopIdx(String shopIdx);

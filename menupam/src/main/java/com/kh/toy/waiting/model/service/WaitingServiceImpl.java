@@ -29,12 +29,6 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public boolean deleteWaiting(String waitIdx) {
-		
-		return waitingRepository.deleteWaiting(waitIdx);
-	}
-
-	@Override
 	public int updateArrived(String waitIdx) {
 		return waitingRepository.updateArrived(waitIdx);
 	}
