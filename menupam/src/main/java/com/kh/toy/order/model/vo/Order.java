@@ -11,6 +11,7 @@ public class Order {
 	private String memberId;
 	private String shopIdx;
 	private String orderTableNum;
+	private String orderTitle;
 	public String getOrderIdx() {
 		return orderIdx;
 	}
@@ -60,6 +61,12 @@ public class Order {
 		this.orderTableNum = orderTableNum;
 	}
 	
+	public String getOrderTitle() {
+		return orderTitle;
+	}
+	public void setOrderTitle(String orderTitle) {
+		this.orderTitle = orderTitle;
+	}
 	@Override
 	public String toString() {
 		return "Order [orderIdx=" + orderIdx + ", orderPrice=" + orderPrice + ", orderDate=" + orderDate

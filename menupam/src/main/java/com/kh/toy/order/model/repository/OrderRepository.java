@@ -47,8 +47,8 @@ public interface OrderRepository {
 	Menu searchMenuByMenuIdx(String menuIdx);
 
 	//새로운 Order(주문) 등록
-	@Insert("insert into tb_order(order_idx,order_price,order_pack_state,order_pay_state,member_id,shop_idx,order_table_num)"
-			+ " values(sc_order_idx.nextval,#{orderPrice},#{packState},'N',#{memberId},#{shopIdx},#{tableNum,jdbcType=VARCHAR})")
+	@Insert("insert into tb_order(order_idx,order_price,order_pack_state,order_pay_state,member_id,shop_idx,order_table_num,order_title)"
+			+ " values(sc_order_idx.nextval,#{orderPrice},#{packState},'N',#{memberId},#{shopIdx},#{tableNum,jdbcType=VARCHAR},#{orderTitle})")
 	void createNewOrder(Map<String,String> commandMap);
 
 	//Order에 종속되는 menu_ordering 데이터 등록
@@ -80,4 +80,7 @@ public interface OrderRepository {
 	//결제한 주문의 결제상태를 'Y'로 변경
 	@Update("update tb_order set order_pay_state = 'Y' where order_idx = #{orderIdx}")
 	boolean updateOrderPayState(String orderIdx);
+
+	@Select("select tb_shop.shop_name,tb_order.order_date from tb_order left join tb_shop on(tb_order.shop_idx = tb_shop.shop_idx) where tb_order.member_id = #{memberId} and tb_order.order_pay_state = 'Y' order by tb_order.order_date desc")
+	List<Map<String,Object>> selectOrderByMemberId(String memberId);
 }

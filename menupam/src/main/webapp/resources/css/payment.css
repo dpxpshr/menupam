@@ -64,11 +64,11 @@ body {
 	margin : 10px 0 20px 0;
 }
 
-#paymentBox{
+.paymentBox{
 	padding : 5px 30px 0px 10px;
 }
 
-#paymentBox>img{
+.paymentBox>img{
 	width: 46px;
 	height: 18px;
 }

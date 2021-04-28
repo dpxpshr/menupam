@@ -8,7 +8,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
-    <script src='main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/myOrders.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -24,38 +24,22 @@
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="btnBox">
-               
-                
-                
             </div>
             <br>
             <div class="fontBox">
-                <p class="fontLarge">나의 주문 내역</p>
+                <p class="fontLarge title">나의 결제 내역</p>
                       <br>
                 <div class="line"></div>
-          
-             
                 <br>
-                
-                <p class="fontMedium">매장명 2021-3-26   
-                <input type="button" value="리뷰 작성" class="btnSmall">
-                </p>
+                <c:forEach items="${orderlist}" var="map">
+                <div class="fontXSmall singleOrder">
+                <span class="orderTitleBox">${map.SHOP_NAME}</span>
+                <span> ${map['ORDER_DATE']}  <input type="button" value="리뷰 작성" class="btnSmall"></span>                
+                </div>
                 <br>
-                <p class="fontMedium">매장명 2021-3-25   
-                <input type="button" value="리뷰 작성" class="btnSmall">
-                </p>
-                <br>
-                <p class="fontMedium">매장명 2021-3-24   
-                <input type="button" value="리뷰 작성" class="btnSmall">
-                </p>
-                <br>
-                <p class="fontMedium">매장명 2021-3-23   
-                <input type="button" value="리뷰 작성" class="btnSmall">
-                </p>
+                </c:forEach>
             </div>
             <br>
-            
-            
         </div>
         <div class="footer">
             <div><i class="fas fa-search"></i></div>

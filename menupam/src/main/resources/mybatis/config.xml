@@ -27,6 +27,5 @@
 		<mapper resource="mybatis/mapper/memberMapper.xml"/>
 		<mapper resource="mybatis/mapper/reservationMapper.xml"/>
 		<mapper resource="mybatis/mapper/waitingMapper.xml"/>
-		<!--<mapper resource="mybatis/mapper/orderMapper.xml"/> -->
 	</mappers>
 </configuration>

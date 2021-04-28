@@ -1,1 +1,16 @@
 @charset "UTF-8";
+.title{
+	margin-left : 10px;
+}
+.singleOrder{
+	width:100%;
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.orderTitleBox{
+	margin-left:3px;
+}
+.btnSmall{
+	margin-left:5px;
+}

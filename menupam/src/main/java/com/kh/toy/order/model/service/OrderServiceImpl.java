@@ -75,6 +75,13 @@ public class OrderServiceImpl implements OrderService{
 			menus.put(menuData,count);
 			totalPrice += Integer.parseInt(menuData.getMenuPrice()) * count; //메뉴 가격 * 주문 수량을 메뉴마다 더하여 주문 총 가격 계산
 		}
+		//Order 제목 생성
+		String orderTitle = 
+				orderRepository.searchMenuByMenuIdx((String)ordering.get(0).get("menuIdx")).getMenuName();
+		if(ordering.size() != 1) {
+			orderTitle = orderTitle + " 외 " + (ordering.size()-1) + "개 메뉴";
+		}
+		
 		//Order 생성하고
 		{
 			Map<String,String> commandMap = new HashMap<>();
@@ -83,6 +90,7 @@ public class OrderServiceImpl implements OrderService{
 			commandMap.put("packState", packState);
 			commandMap.put("orderPrice", ""+totalPrice);
 			commandMap.put("tableNum", tableNum);
+			commandMap.put("orderTitle", orderTitle);
 			orderRepository.createNewOrder(commandMap);
 		}
 		//Order에 종속되는 menu-ordering을 각각 생성한다.
@@ -129,6 +137,11 @@ public class OrderServiceImpl implements OrderService{
 		commandMap.put("shopIdx", shopIdx);
 		commandMap.put("orderIdx", order.getOrderIdx());
 		return orderRepository.insertPayment(commandMap) && orderRepository.updateOrderPayState(order.getOrderIdx());
+	}
+
+	@Override
+	public List<Map<String,Object>> selectOrderByMemberId(String memberId) {
+		return orderRepository.selectOrderByMemberId(memberId);
 	}
 
 }

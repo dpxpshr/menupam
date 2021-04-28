@@ -36,8 +36,8 @@
             		<div id="checkBox"><input type="checkbox" id="check_pack"> 포장 주문</div> <!-- shop의 정보를 읽고, 활성화 or 비활성화 -->
             	</c:if>
             	<p>결제 정보</p>
-            	<div  id="paymentBox" ><input type="radio" name="pay_method" id="radio_direct" checked="checked"> 매장 직접 결제</div>
-            	<div id="paymentBox" ><input type="radio" name="pay_mehtod" id="radio_kakao"><img src="../../resources/images/카카오페이.png"> 카카오페이 결제</a>
+            	<div class="paymentBox"><input type="radio" name="pay_method" id="radio_direct" checked="checked"> 매장 직접 결제</div>
+            	<div class="paymentBox"><input type="radio" name="pay_method" id="radio_kakao"><img src="../../resources/images/카카오페이.png"> 카카오페이 결제</a>
             	<div class="paymentList">
             		<c:forEach items="${orderMenu}" var="menu">
 	            		<div class="money"> 
@@ -66,7 +66,7 @@
     <script type="text/javascript">
     	let discard = ()=>{
     		if (confirm("정말 주문을 취소하시겠습니까?")) {
-    			location.href="/order/discard?orderIdx=${order.orderIdx}";
+    			location.href="/order/discard?shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}";
 			}
     	}
     	let pay = ()=>{
@@ -74,27 +74,8 @@
     			if(document.querySelector("#radio_direct").checked){ //직접 결제 진행
     				location.href="/order/pay?payType=일반&shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}";
     			}else if(document.querySelector("#radio_kakao").checked){ //여기서 카카오페이 결제 진행
-    				let url = "https://kapi.kakao.com/v1/payment/ready";
-    				let header = new Headers();
-    				header.append("Authorization","KakaoAK 391cbc9b669382620463a8b72d1632c0");
-    				header.append("Content-type","application/x-www-form-urlencoded;charset=utf-8");
-    				let body = {
-    					cid : "TC0ONETIME", //카카오페이 테스트 가맹점 코드
-    					partner_order_id : "${order.orderIdx}", 
-    					partner_user_id : "${userInfo.memberId}",
-    					item_name : "${shop.shopName} 주문",
-    					quantity : 1,
-    					total_amount : "${order.orderPrice}",
-    					tax_free_amount : 0,
-    					approval_url : "결제 성공시 보낼 url",
-    					cancel_url : "결제 취소시 보낼 url",
-    					fail_url : "결제 실패시 보낼 url"
-    				};
+    				window.open("/order/pay?payType=카카오&shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}");
     				
-    				//fetch로 카카오 결제준비 요청후 받아온 url로 카카오 결제 진행
-    				fetch(url,{method : "post", headers : header})
-    				
-    				//결제 끝나고 서버에 결제확인 요청
     			}	
     		}
     	}

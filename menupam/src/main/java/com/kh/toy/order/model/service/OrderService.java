@@ -21,4 +21,5 @@ public interface OrderService {
 	boolean discardOrder(String orderIdx, String memberId);
 	Order checkOrderInfo(String orderIdx, String shopIdx, String memberId);
 	boolean insertPayment(Order order, String payType, String shopIdx);
+	List<Map<String,Object>> selectOrderByMemberId(String memberId);
 }

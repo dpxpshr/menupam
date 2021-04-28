@@ -1,12 +1,23 @@
 package com.kh.toy.order.controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -169,7 +180,7 @@ public class OrderController {
 		
 		//payment에 파라미터 없이 접근하면 shoplist로 보낸다.
 		if(shopIdx == null) {
-			return "redirect:/order/shoplist";
+			return "redirect:/order/menuview?shopIdx="+shopIdx;
 		}
 		
 		//만약 사용자가 결제하지 않은 주문이 남아있다면, 세션 장바구니를 제거하고 바로 남은 주문 정보를 불러온다.
@@ -204,7 +215,7 @@ public class OrderController {
 	
 	//DB에 저장된 주문정보를 결제하지 않고 취소요청
 	@GetMapping("discard")
-	public String discard(String orderIdx,HttpSession session,Model model) {
+	public String discard(String shopIdx,String orderIdx,HttpSession session,Model model) {
 		if(orderIdx == null) {
 			model.addAttribute("msg",ErrorCode.AUTH01);
 			return "/common/result";
@@ -215,7 +226,7 @@ public class OrderController {
 		
 		if(orderService.discardOrder(orderIdx,userInfo.getMemberId())) {
 			model.addAttribute("msg","주문을 취소하였습니다.");
-			model.addAttribute("url","/order/shoplist");
+			model.addAttribute("url","/order/menuview?shopIdx="+shopIdx);
 			return "/common/result";
 		};
 		model.addAttribute("msg","취소할 주문이 없습니다.");
@@ -231,27 +242,25 @@ public class OrderController {
 		Order order = orderService.checkOrderInfo(orderIdx,shopIdx,userInfo.getMemberId());
 		if(order == null) {
 			model.addAttribute("msg","잘못된 결제정보입니다.");
-			model.addAttribute("url","/order/shoplist");
+			model.addAttribute("url","/order/menuview?shopIdx="+shopIdx);
 			return "/common/result";
 		}
-		boolean res = true;
+		boolean res = false;
+		if(payType.equals("일반")) {
+			//매장 직접결제 동작
+			res = true;
+		}else if(payType.equals("카카오")) {
+			//카카오페이 결제 동작시 redirect->approve에서 받기
+			Map<String,String> kakaoReady = kakaoPayReady(shopIdx,orderIdx,userInfo.getMemberId(),order.getOrderTitle(),order.getOrderPrice(),model);
+			session.setAttribute("payOrder", order);
+			session.setAttribute("payId", kakaoReady.get("tid"));
+			return "redirect:"+kakaoReady.get("clientUrl");
+		}
 		
-		////////////
-		//직접결제 동작
-		
-		
-		//카카오페이 동작
-		//클라이언트에서 카카오페이 결제준비 요청을 하고, 응답받은 tid를 서버로 넘긴다.
-		//클라이언트가 결제준비에서 응답받은 URL을 통해 결제를 진행한다.
-		//클라이언트에서 결제가 끝나면 결제완료 요청을 한다.
-		//서버에서 해당 tid에 대해 주문 조회를 하고, status가 'SUCCESS_PAYMENT'라면 
-		//결제완료로 판단하고 주문 정보를 정리한다.
-		////////////////////////
-		/////////////
-		
-		if(res && orderService.insertPayment(order,payType,shopIdx)) { //결제 성공시 결제데이터 등록 진행
+
+		if(res && orderService.insertPayment(order,payType,shopIdx)) { //일반결제 성공시 결제데이터 등록 진행
 			model.addAttribute("msg","결제가 완료되었습니다.");
-			model.addAttribute("url","/order/payment?shopIdx="+shopIdx);
+			model.addAttribute("url","/order/myorders");
 			return "/common/result";
 		}
 		
@@ -263,7 +272,125 @@ public class OrderController {
 	
 	//결제내역 화면
 	@GetMapping("myorders")
-	public String myOrders() {
+	public String myOrders(HttpSession session,Model model) {
+		//Member userInfo = (Member)session.getAttribute("userInfo");
+		Member userInfo = new Member();
+		userInfo.setMemberId("OrderTest");
+		List<Map<String,Object>> orderlist = orderService.selectOrderByMemberId(userInfo.getMemberId());
+		for(int i=0; i < orderlist.size(); i++) {
+			Map<String,Object> order = orderlist.get(i);
+			String date = order.get("ORDER_DATE").toString();
+			order.put("ORDER_DATE", date.substring(0,16));
+			orderlist.set(i, order);
+		}
+		System.out.println(orderlist);
+		model.addAttribute("orderlist",orderlist);
 		return "order/myOrders";
+	}
+	
+	
+	@GetMapping("approve")
+	public String kakaoApprove(String pg_token,HttpSession session,Model model) {
+		//카카오 결제 완료 후 접근
+		Order payOrder = (Order)session.getAttribute("payOrder");
+		String tid = (String)session.getAttribute("payId");
+		//Member userInfo = (Member)session.getAttribute("userInfo");
+		Member userInfo = new Member();
+		userInfo.setMemberId("OrderTest");
+		System.out.println(pg_token);
+		if(kakaoPayApprove(pg_token,payOrder,tid,userInfo)) {
+			orderService.insertPayment(payOrder,"카카오",payOrder.getShopIdx());
+			session.removeAttribute("payOrder");
+			session.removeAttribute("payId");
+			model.addAttribute("msg","결제가 완료되었습니다.");
+			model.addAttribute("url","/order/myorders");
+			return "common/result";
+		};
+		model.addAttribute("msg","결제 중 오류가 발생했습니다.");
+		model.addAttribute("url","/order/shoplist");		
+		return "common/result";
+		
+	}
+	
+	//카카오 결제준비 통신을 진행
+	private Map<String,String> kakaoPayReady(String shopIdx,String orderIdx,String memberId,String orderTitle,String orderPrice,Model model) {
+		Map<String,String> result = new HashMap<>();
+		try {
+			String body = "cid=TC0ONETIME&partner_order_id="+orderIdx+"&partner_user_id="+memberId+"&item_name="+orderTitle+"&quantity=1&total_amount="+orderPrice+"&tax_free_amount=0"
+					+ "&approval_url=http://localhost:9090/order/approve&cancel_url=http://localhost:9090/result&fail_url=http://localhost:9090/result";
+			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(5000);
+			conn.setRequestProperty("Authorization", "KakaoAK 391cbc9b669382620463a8b72d1632c0");
+			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			conn.setDoOutput(true);
+			DataOutputStream output = new DataOutputStream(conn.getOutputStream());
+			output.writeBytes(body);
+			output.flush();
+			output.close();
+			conn.connect();
+			if(conn.getResponseCode() == 200) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				StringBuffer stringBuffer = new StringBuffer();
+				String newLine;
+				while((newLine = reader.readLine()) != null) {
+					stringBuffer.append(newLine);
+				}
+				reader.close();
+				JSONParser parser = new JSONParser();
+				JSONObject response = (JSONObject)parser.parse(stringBuffer.toString());
+				result.put("tid", (String)response.get("tid"));
+				result.put("clientUrl", (String)response.get("next_redirect_pc_url"));
+			}else {
+				model.addAttribute("msg","카카오 결제준비에 실패하였습니다.");
+			}
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//카카오 결제승인 통신을 진행
+	private boolean kakaoPayApprove(String pgToken,Order payOrder,String tid,Member userInfo) {
+		boolean res = false;
+		try {
+			URL url = new URL("https://kapi.kakao.com/v1/payment/approve");
+			String body = "cid=TC0ONETIME&tid="+tid+"&partner_order_id="+payOrder.getOrderIdx()
+							+"&partner_user_id="+userInfo.getMemberId()+"&pg_token="+pgToken;
+			HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(5000);
+			conn.setRequestProperty("Authorization", "KakaoAK 391cbc9b669382620463a8b72d1632c0");
+			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			conn.setDoOutput(true);
+			DataOutputStream output = new DataOutputStream(conn.getOutputStream());
+			output.writeBytes(body);
+			output.flush();
+			output.close();
+			conn.connect();
+			System.out.println(pgToken);
+			System.out.println("결제승인 응답중");
+			if(conn.getResponseCode() == 200) {
+				System.out.println("모듈 : 결제 성공");
+				res = true;
+			}else {
+				System.out.println("코드 : " + conn.getResponseCode());
+				System.out.println("메시지 : " + conn.getResponseMessage());
+				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+				StringBuffer stringBuffer = new StringBuffer();
+				String newLine;
+				while((newLine = reader.readLine()) != null) {
+					stringBuffer.append(newLine);
+				}
+				System.out.println(stringBuffer.toString());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 }
