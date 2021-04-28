@@ -47,7 +47,7 @@ body {
 
 .main{
     background-color: white;
-    min-height: 900px;
+    min-height: 1300px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -64,7 +64,7 @@ body {
 
 /* 매장 검색 목록 */
 .shopList{
-	height: 34vh;
+	min-height: 34vh;
 	margin-left: 10px;
 }
 

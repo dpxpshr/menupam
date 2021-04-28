@@ -52,6 +52,7 @@
         </footer> 
     </div>
     <script type="text/javascript">
+    	var map; // 지도 전역변수
 	     //현재 좌표값을 구하는 함수, 가장 먼저 수행되어야 함.
 	     let latlng = ()=>{ 
 				return new Promise((resolve,reject)=>{
@@ -70,15 +71,15 @@
 			}
 	     //현재 좌표값을 가지고 현재 위치를 지도에 표시한다.
 	     // *** 원활한 테스트를 위해 지도기능 주석처리
-// 		 (async function drawAndSearch(){
-// 			let coords = await latlng(); //현재 좌표값이 구해지면 진행
-// 			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-// 			var options = { //지도를 생성할 때 필요한 기본 옵션
-// 				center: new kakao.maps.LatLng(coords.latitude,coords.longitude), //지도의 중심좌표
-// 				level: 3 //지도의 레벨(확대, 축소 정도)
-// 			};
-// 			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-// 		})();
+		 (async function drawAndSearch(){
+			let coords = await latlng(); //현재 좌표값이 구해지면 진행
+			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+			var options = { //지도를 생성할 때 필요한 기본 옵션
+				center: new kakao.maps.LatLng(coords.latitude,coords.longitude), //지도의 중심좌표
+				level: 3 //지도의 레벨(확대, 축소 정도)
+			};
+			map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+		})();
 
 	     	//현재 좌표값으로 주소 이름을 얻고 input 태그에 저장
 			(async function getLocationAndSave(){
@@ -124,7 +125,6 @@
 			});
 			//받은 데이터를 리스트에 뿌려주는 함수
 			let drawList = (data)=>{
-				console.log("리스트 새로 그리기");
 				let list = document.querySelector("#list_body");
 				while(list.hasChildNodes()){
 					list.removeChild(list.firstChild);
@@ -147,6 +147,10 @@
 					row.append(image);
 					row.append(name);
 					row.append(address);
+					console.dir(shop);
+					if(shop.shopLongitudeX && shop.shopLatitudeY){
+						drawMarker(shop.shopName,shop.shopLongitudeX,shop.shopLatitudeY);
+					}
 					
 					row.addEventListener('click',()=>{
 						location.href="/order/menuview?shopIdx="+shop.shopIdx;
@@ -154,7 +158,12 @@
 					list.append(row);
 				});
 			}
-	    
+	    	let drawMarker = (title,x,y)=>{
+	    		var marker = new kakao.maps.Marker({
+	    			position : new kakao.maps.LatLng(x,y)
+	    		});
+	    		marker.setMap(map);
+	    	}
     </script> 
 </body>
 </html>

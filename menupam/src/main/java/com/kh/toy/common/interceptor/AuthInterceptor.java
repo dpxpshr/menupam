@@ -40,6 +40,26 @@ public class AuthInterceptor implements HandlerInterceptor{
 								throw new ToAlertException(ErrorCode.AUTH01);
 					break;
 				}
+				break;
+			case "order" :
+				switch(uriArr[2]) {
+				case "payment" : if(session.getAttribute("userInfo") == null)
+					throw new ToAlertException(ErrorCode.ORDER_TO_LOGIN);
+				break;
+				case "pay" : if(session.getAttribute("userInfo") == null)
+					throw new ToAlertException(ErrorCode.AUTH01);
+				break;
+				case "myorders" : if(session.getAttribute("userInfo") == null)
+					throw new ToAlertException(ErrorCode.MYORDER_TO_LOGIN);
+				break;
+				case "approve" : if(session.getAttribute("userInfo") == null)
+					throw new ToAlertException(ErrorCode.AUTH01);
+				break;
+				case "discard" : if(session.getAttribute("userInfo") == null)
+					throw new ToAlertException(ErrorCode.AUTH01);
+				break;
+				}
+				break;
 			}
 		}
 		return true;

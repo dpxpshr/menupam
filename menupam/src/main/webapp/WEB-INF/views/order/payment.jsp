@@ -23,21 +23,14 @@
         <section class="main">
             <div class="paymentTop">${shop.shopName} 주문 정보</div>
             <div class="paymentInfo">
-            	
-            	<p>휴대폰 번호</p>
-            	<input type="text" placeholder="01011112222">
-            	
-            	<p>주문 요청 사항</p>
-            	<input type="text" placeholder="ex) 조금 매콤하게 부탁드립니다^_^">
-            	
-            	<p>주문 유형</p>
-            	<input type="text" placeholder="테이블 번호(QR코드 스켄시 자동 입력)">
             	<c:if test="${shop.shopPackAble == 'Y'}">
             		<div id="checkBox"><input type="checkbox" id="check_pack"> 포장 주문</div> <!-- shop의 정보를 읽고, 활성화 or 비활성화 -->
             	</c:if>
-            	<p>결제 정보</p>
+            	<p>결제 방법</p>
             	<div class="paymentBox"><input type="radio" name="pay_method" id="radio_direct" checked="checked"> 매장 직접 결제</div>
             	<div class="paymentBox"><input type="radio" name="pay_method" id="radio_kakao"><img src="../../resources/images/카카오페이.png"> 카카오페이 결제</a>
+            	<br><br><br>
+            	<p>결제 정보</p>
             	<div class="paymentList">
             		<c:forEach items="${orderMenu}" var="menu">
 	            		<div class="money"> 
@@ -63,6 +56,11 @@
             <div><i class="far fa-user"></i></div>
         </footer> 
     </div>
+    <c:if test="${changed != null}">
+	    <script type="text/javascript">
+	    	alert("아직 결제하지 않은 정보가 있어, 장바구니의 정보가 교체되었습니다.");
+	    </script>
+    </c:if>
     <script type="text/javascript">
     	let discard = ()=>{
     		if (confirm("정말 주문을 취소하시겠습니까?")) {
@@ -70,14 +68,11 @@
 			}
     	}
     	let pay = ()=>{
-    		if(confirm("결제하시겠습니까?")){ 
-    			if(document.querySelector("#radio_direct").checked){ //직접 결제 진행
-    				location.href="/order/pay?payType=일반&shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}";
-    			}else if(document.querySelector("#radio_kakao").checked){ //여기서 카카오페이 결제 진행
-    				window.open("/order/pay?payType=카카오&shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}");
-    				
-    			}	
-    		}
+   			if(document.querySelector("#radio_direct").checked && confirm("일반 결제로 결제하시겠습니까?")){ //직접 결제 진행
+   				location.href="/order/pay?payType=일반&shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}";
+   			}else if(document.querySelector("#radio_kakao").checked && confirm("카카오페이로 결제하시겠습니까?")){ //여기서 카카오페이 결제 진행
+   				window.open("/order/pay?payType=카카오&shopIdx=${shop.shopIdx}&orderIdx=${order.orderIdx}");	
+   			}	
     	}
     </script> 
 </body>

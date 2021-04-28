@@ -15,7 +15,9 @@ public enum ErrorCode {
 	MAIL01("이메일 발송 중 에러가 발생하였습니다."),
 	AUTH02("이미 만료된 인증입니다."),
 	HTTP01("HTTP 통신 중 에러가 발생하였습니다."),
-	CD_404("존재하지 않는 경로입니다.");
+	CD_404("존재하지 않는 경로입니다."),
+	ORDER_TO_LOGIN("주문하려면 로그인하셔야 합니다."),
+	MYORDER_TO_LOGIN("주문내역을 보려면 로그인하셔야 합니다.");
 
 	public String errMsg;
 	public String url = "/index";

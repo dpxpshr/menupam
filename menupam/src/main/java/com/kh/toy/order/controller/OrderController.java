@@ -172,12 +172,8 @@ public class OrderController {
 	@GetMapping("payment")
 	public String payment(String shopIdx,Model model,HttpSession session) {
 		//로그인한 사용자의 정보 읽기
-		//Member userInfo = (Member)session.getAttribute("userInfo");
-		
-		//----테스트를 위해 아이디를 'OrderTest'로 임의 등록
-		Member userInfo = new Member();
-		userInfo.setMemberId("OrderTest");
-		
+		Member userInfo = (Member)session.getAttribute("userInfo");
+
 		//payment에 파라미터 없이 접근하면 shoplist로 보낸다.
 		if(shopIdx == null) {
 			return "redirect:/order/menuview?shopIdx="+shopIdx;
@@ -201,6 +197,9 @@ public class OrderController {
 			
 			
 			orderService.registOrder(ordering,shopIdx,userInfo.getMemberId(),"N",(String)session.getAttribute("tableNum")); //포장여부는 default N으로 보내고 payment할때 수정, 세션의 값을 통해 DB에 Order, Menu_ordering 데이터 등록
+		}else {
+			//사용자가 결제하지 않은 주문이 있어 장바구니에 담았던 내용을 제거함을 사용자에게 알리기 위한 속성
+			model.addAttribute("changed","change");
 		}
 		session.removeAttribute("cartIdx");
 		session.removeAttribute("cart"); //DB에 모두 등록되었으므로 세션 데이터 제거
@@ -220,9 +219,7 @@ public class OrderController {
 			model.addAttribute("msg",ErrorCode.AUTH01);
 			return "/common/result";
 		}
-		//테스트를 위해 지정한 아이디
-		Member userInfo = new Member();
-		userInfo.setMemberId("OrderTest");
+		Member userInfo = (Member)session.getAttribute("userInfo");
 		
 		if(orderService.discardOrder(orderIdx,userInfo.getMemberId())) {
 			model.addAttribute("msg","주문을 취소하였습니다.");
@@ -233,11 +230,11 @@ public class OrderController {
 		return "/common/result";
 	}
 	
+	//payment 화면에서 결제하기를 눌렀을때 동작
 	@GetMapping("pay")
 	public String pay(String payType, String shopIdx, String orderIdx, HttpSession session, Model model) {
 		//사용자가 등록된 order의 데이터를 확인하고 결제/결제확인 버튼을 클릭, 결제 데이터를 등록하는 절차
-		Member userInfo = new Member();
-		userInfo.setMemberId("OrderTest");
+		Member userInfo = (Member)session.getAttribute("userInfo");
 		//세션의 사용자 정보와 orderIdx, shopIdx 정보가 일치하는지 체크하고 진행
 		Order order = orderService.checkOrderInfo(orderIdx,shopIdx,userInfo.getMemberId());
 		if(order == null) {
@@ -247,7 +244,7 @@ public class OrderController {
 		}
 		boolean res = false;
 		if(payType.equals("일반")) {
-			//매장 직접결제 동작
+			//매장 직접결제 동작 ?? 바로승인 또는 매장에서 승인받는 동작 필요할듯?
 			res = true;
 		}else if(payType.equals("카카오")) {
 			//카카오페이 결제 동작시 redirect->approve에서 받기
@@ -273,9 +270,7 @@ public class OrderController {
 	//결제내역 화면
 	@GetMapping("myorders")
 	public String myOrders(HttpSession session,Model model) {
-		//Member userInfo = (Member)session.getAttribute("userInfo");
-		Member userInfo = new Member();
-		userInfo.setMemberId("OrderTest");
+		Member userInfo = (Member)session.getAttribute("userInfo");
 		List<Map<String,Object>> orderlist = orderService.selectOrderByMemberId(userInfo.getMemberId());
 		for(int i=0; i < orderlist.size(); i++) {
 			Map<String,Object> order = orderlist.get(i);
@@ -288,15 +283,13 @@ public class OrderController {
 		return "order/myOrders";
 	}
 	
-	
+	//카카오페이 결제완료 후 승인처리받는 과정
 	@GetMapping("approve")
 	public String kakaoApprove(String pg_token,HttpSession session,Model model) {
 		//카카오 결제 완료 후 접근
 		Order payOrder = (Order)session.getAttribute("payOrder");
 		String tid = (String)session.getAttribute("payId");
-		//Member userInfo = (Member)session.getAttribute("userInfo");
-		Member userInfo = new Member();
-		userInfo.setMemberId("OrderTest");
+		Member userInfo = (Member)session.getAttribute("userInfo");
 		System.out.println(pg_token);
 		if(kakaoPayApprove(pg_token,payOrder,tid,userInfo)) {
 			orderService.insertPayment(payOrder,"카카오",payOrder.getShopIdx());
