@@ -23,7 +23,7 @@
         </div>
         
 
-        <form:form modelAttribute="shop" action="${context}/shop/shopInfo" method="post">
+        <form:form modelAttribute="shop" action="${context}/shop/shopInfo" id="registShop" method="post">
         	<div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
@@ -41,12 +41,14 @@
                     <form:errors path="shopBln" cssClass="valid_info"/>
                     <br><br>
                     <p class="fontSmall">매장 위치</p><br>
-                    <!-- 나중에 바뀔수도 있음 생각중 -->
                     <input type="text" name="shopAddress" id="inputPost" >
                     <button class="addressSearch" type="button" onclick="kakaoAddress()">주소 찾기</button><br><br>
                    	<input type="text" name="shopAddress" id="inputAddress"><br><br>
-                    <input type="text" name="detailedAddress" id="inputAddressDetail" placeholder="상세 주소를 입력해 주세요" ><br><br>
-                    
+                   	<input type="text" name="detailedAddress" id="inputAddressDetail" placeholder="상세 주소를 입력해 주세요" ><br><br>
+                   	 <!-- 카카오 주소 API X,Y 좌표를 받기 위한 입력된 주소 받기 -->
+                   	<input type="hidden" name="shopLongitudeX" id="shopX">
+                   	<input type="hidden" name="shopLatitudeY" id="shopY">
+                  
                     <p class="fontSmall">매장 전화 번호</p><br>
                     <input type="text" name="shopTell" class="inputLarge" placeholder="  전화번호를 입력하세요 (-빼고 입력)" ><br><br>
                     <form:errors path="shopTell" cssClass="valid_info"/>
@@ -67,7 +69,8 @@
                     </select>
                     <br><br>
                     <label>
-                    	<input type="checkbox" name="checkPackAble"> 포장 가능 여부
+                    	<input type="checkbox" name="checkPackAble" id="packAble"> 
+                    	<label for="packAble"><em></em>포장 가능 여부</label>
                     	<input type="hidden" name="shopPackAble">
                     </label>
                     <br><br>
@@ -100,12 +103,12 @@
           			<label for="chkbox3" class="fontXSmall confirmText"><em></em>개인정보 제 3자 제공 및 위탁사항 이용약관</label>
           			<br><br><br>
           			
-                    <input type="submit" value="등록하기" class="btnXLarge">
+                    <input type="button" value="등록하기" class="btnXLarge">
                 </div>
               </div>
             </div>
         </form:form>
-        
+       
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
@@ -118,6 +121,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="/resources/js/shop/kakaoAddress.js"></script>
     <script src="/resources/js/shop/shopRegister.js"></script>
+    <script src="/resources/js/shop/kakaoMapAPI.js"></script>
     	
    
 </body>

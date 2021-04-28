@@ -159,17 +159,6 @@ public class ShopServiceImpl implements ShopSerivce{
 	}
 
 	@Override
-	public int updateMenuNameList(String orderIdx, String menuName) {
-		
-		MenuOrdering mo = new MenuOrdering();
-		
-		mo.setOrderIdx(orderIdx);
-		mo.setOrderMenuList(menuName);
-		
-		return shopRepository.updateMenuNameList(mo);
-	}
-
-	@Override
 	public Order selectOrderAndTableNum(String orderTableNum) {
 		return shopRepository.selectOrderAndTableNum(orderTableNum);
 	}
