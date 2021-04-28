@@ -58,7 +58,7 @@ public class ShopController {
 	public String shopInfo(@RequestParam(name = "shopPackAble", defaultValue = "N") String shopPackAble
 						,@Valid Shop shop
 						,Errors error
-						,@RequestParam(name="detailedAddress") String detailedAddress
+						,@RequestParam(name="detailedAddress") String detailedAddress					
 						,@SessionAttribute("userInfo") Member userInfo
 						,Model model) {
 		
@@ -71,15 +71,19 @@ public class ShopController {
 			shop.setShopPackAble(shopPackAble);
 		}
 		
-		shop.setMemberId("mapTest");
-		shopService.insertShop(shop); // kakaomap에서 확인 하기 위한 용도
-	
-		shop.setMemberId(userInfo.getMemberId());
-		shop.setShopAddress(shop.getShopAddress() + "," + detailedAddress);
-		shopService.insertShop(shop); // 실제로 사용할 매장정보 kakaomap 데이터 + 입력 데이터 DB저장
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		if(shopInfo.getMemberId() == null) {
+			shop.setMemberId(userInfo.getMemberId());
+			shop.setShopAddress(shop.getShopAddress() + "," + detailedAddress);
+			System.out.println(shop);
+			shopService.insertShop(shop);
 			
-		model.addAttribute("msg", "매장등록이 완료 되었습니다.");
-		model.addAttribute("url", "/index");
+			model.addAttribute("msg", "매장등록이 완료 되었습니다.");
+			model.addAttribute("url", "/shop/menuManage");
+		}else {
+			model.addAttribute("msg", "점주님 매장은 한개만 등록이 가능합니다.");
+			model.addAttribute("url", "/index");
+		}
 		
 		return "common/result";
 	}
@@ -267,19 +271,8 @@ public class ShopController {
 		
 		for (Order order : orderList) {
 			if(order.getOrderTableNum() != null) {
-				
 				menuOrders = shopService.selectMenuOrderList(order.getOrderTableNum());
-				
-				// 메뉴 주문 들어온 정보를 김치볶음밥 외 3개 세팅
-				menuName = menuOrders.size() > 1 
-						? menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values()) // 메뉴이름
-								+ " 외 " + (menuOrders.size()-1) + "개" 
-								: (String) menuOrders.get(0).getOrDefault("ORDER_MENU_NAME", menuOrders.get(0).values());
-				
-				shopService.updateMenuNameList(order.getOrderIdx(), menuName);
-				
 				menuOrderListList.add(menuOrders); 
-				
 			}
 		}
 		

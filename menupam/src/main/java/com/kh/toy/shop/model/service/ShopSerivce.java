@@ -32,7 +32,6 @@ public interface ShopSerivce {
 	List<Map<String,Object>> selectMenuOrderList(String orderTableNum);
 	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
 	List<Order> selectOrderList();
-	int updateMenuNameList(String orderIdx, String menuName);
 	Order selectOrderAndTableNum(String orderTableNum);
 	void updateOrderTableNum(Order order);
 }

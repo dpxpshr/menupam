@@ -73,7 +73,7 @@
               		 			 	<a href="${context}/shop/tableDetail?orderTableNum=${i}">
               		 			 	<div class="table eating">                 	
               		 					<p class="fontXSmall"><c:out value="${i}번"/></p> 
-              		 					<p class="fontXXSmall">${list[0].ORDER_MENU_LIST}</p> 			
+              		 					<p class="fontXXSmall">${list[0].ORDER_TITLE}</p> 			
               		 				</div></a>               		 				
               		 		 	</c:if>                    		 		 	              		 		                 			
 		                    </c:forEach>

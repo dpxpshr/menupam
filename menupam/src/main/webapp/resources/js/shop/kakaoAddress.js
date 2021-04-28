@@ -35,7 +35,7 @@ let kakaoAddress = () => {
 	            }
 	            // 조합된 참고항목을 해당 필드에 넣는다.
 	            document.getElementById("inputAddress").value = addr += extraAddr;
-	        
+			
 	        } else {
 	            document.getElementById("inputAddress").value = addr += '';
 	        }

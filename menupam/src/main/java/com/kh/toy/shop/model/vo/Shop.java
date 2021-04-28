@@ -16,6 +16,8 @@ public class Shop {
 	private Date shopLeaveDate; //매장 해지일
 	private String shopTell; //매장 전화번호
 	private String memberId; //회원 아이디
+	private String shopLongitudeX; // 위도
+	private String shopLatitudeY; // 경도
 	
 	public String getShopIdx() {
 		return shopIdx;
@@ -112,14 +114,32 @@ public class Shop {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+	
+	public String getShopLongitudeX() {
+		return shopLongitudeX;
+	}
+
+	public void setShopLongitudeX(String shopLongitudeX) {
+		this.shopLongitudeX = shopLongitudeX;
+	}
+
+	public String getShopLatitudeY() {
+		return shopLatitudeY;
+	}
+
+	public void setShopLatitudeY(String shopLatitudeY) {
+		this.shopLatitudeY = shopLatitudeY;
+	}
 
 	@Override
 	public String toString() {
 		return "Shop [shopIdx=" + shopIdx + ", shopName=" + shopName + ", shopAddress=" + shopAddress + ", shopType="
 				+ shopType + ", shopBln=" + shopBln + ", shopPackAble=" + shopPackAble + ", shopRating=" + shopRating
 				+ ", shopTableCount=" + shopTableCount + ", shopRegDate=" + shopRegDate + ", shopLeaveDate="
-				+ shopLeaveDate + ", shopTell=" + shopTell + ", memberId=" + memberId + "]";
+				+ shopLeaveDate + ", shopTell=" + shopTell + ", memberId=" + memberId + ", shopLongitudeX="
+				+ shopLongitudeX + ", shopLatitudeY=" + shopLatitudeY + "]";
 	}
+
 	
 	
 }

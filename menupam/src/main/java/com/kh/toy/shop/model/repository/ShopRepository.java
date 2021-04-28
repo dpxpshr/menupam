@@ -27,9 +27,9 @@ public interface ShopRepository {
 	int selectShopbyBin(String shopBln);
 	
 	@Insert("insert into tb_shop(shop_idx,shop_name,shop_address,shop_type,shop_bln,shop_pack_able,shop_rating,"
-			+ "shop_table_count,shop_tell, member_id)"
+			+ "shop_table_count,shop_tell,shop_longitude_x,shop_latitude_y ,member_id)"
 			+ " values('S'||sc_shop_idx.nextval,#{shopName},#{shopAddress},#{shopType},#{shopBln},#{shopPackAble},#{shopRating},"
-			+ "#{shopTableCount},#{shopTell},#{memberId})")
+			+ "#{shopTableCount},#{shopTell},#{shopLongitudeX},#{shopLatitudeY},#{memberId})")
 	int insertShop(Shop shop);
 	
 	int updateShop(Shop shop);
@@ -71,8 +71,6 @@ public interface ShopRepository {
 	
 	@Select("select * from tb_order")
 	List<Order> selectOrderList();
-	
-	int updateMenuNameList(MenuOrdering menuOrdering);
 	
 	@Select("select * from tb_order where order_table_num = #{orderTableNum}")
 	Order selectOrderAndTableNum(String orderTableNum);
