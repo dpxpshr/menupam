@@ -23,7 +23,8 @@
         </div>
         
 
-        <form:form modelAttribute="shop" action="${context}/shop/shopInfo" id="registShop" method="post">
+        <form:form modelAttribute="shop" 
+        	action="${context}/shop/shopInfo" id="registShop" method="post" enctype="multipart/form-data">
         	<div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
@@ -72,8 +73,14 @@
                     	<input type="checkbox" name="checkPackAble" id="packAble"> 
                     	<label for="packAble"><em></em>포장 가능 여부</label>
                     	<input type="hidden" name="shopPackAble">
-                    </label>
+                    </label> 
                     <br><br>
+                    <p class="fontSmall">매장 로고 사진</p><br><br>
+                    <label class="input-file-button"  for="input-file" >
+                        업로드
+                    </label>
+                    <input type="file" name="file" id="input-file" style="display:none" />
+                    <br><br><br>
                     <p class="fontSmall">테이블 수</p><br>
                     <select name="shopTableCount" class="inputMedium">
                         <option value="0">테이블 수 선택</option>
@@ -101,7 +108,7 @@
           			<label for="chkbox2" class="fontXSmall confirmText"><em></em>개인회원 약관에 동의</label><br><br>
           			<input type="checkbox" id="chkbox3" class="check">
           			<label for="chkbox3" class="fontXSmall confirmText"><em></em>개인정보 제 3자 제공 및 위탁사항 이용약관</label>
-          			<br><br><br>
+          			<br><br><br><br><br>
           			
                     <input type="button" value="등록하기" class="btnXLarge">
                 </div>

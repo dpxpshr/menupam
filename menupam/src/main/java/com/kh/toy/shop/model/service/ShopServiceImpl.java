@@ -28,11 +28,6 @@ public class ShopServiceImpl implements ShopSerivce{
 		this.shopRepository = shopRepository; 
 	}
 	
-	@Override 
-	public int insertShop(Shop shop) {
-		return shopRepository.insertShop(shop); 
-	}
-
 	@Override
 	public int updateShop(Shop shop) {
 		return shopRepository.updateShop(shop);
@@ -141,8 +136,6 @@ public class ShopServiceImpl implements ShopSerivce{
 		return commandMap;
 	}
 
-	
-
 	@Override
 	public List<Map<String,Object>> selectMenuOrderList(String orderTableNum) {		
 		return shopRepository.selectMenuOrderList(orderTableNum);
@@ -169,6 +162,34 @@ public class ShopServiceImpl implements ShopSerivce{
 		order.setOrderTableNum("0");
 		
 		shopRepository.updateOrderTableNum(order);
+	}
+
+	@Override
+	public void shopLogoUpload(MultipartFile file, Shop shop, String uploadPath) {
+		PhotoUtil photoUtil = new PhotoUtil();
+		String type = FilenameUtils.getExtension(file.getOriginalFilename());
+		String route = "/resources/shoplogo/";
+		
+		try {
+
+			MenupamFile fileInfo = photoUtil.photoUpload(file, uploadPath, type, route);
+			
+			if(fileInfo.getFileOriginName() == null) {
+				shop.setFileIdx("");
+				shopRepository.insertShop(shop);
+			}else {
+				fileInfo.setFileType(type);
+				shopRepository.insertFile(fileInfo);
+				String fileIdx = shopRepository.selectFileIdx(fileInfo.getFileRename());
+				shop.setFileIdx(fileIdx);
+				shopRepository.insertShop(shop);
+				
+			}
+		
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
 	}	
 
 }

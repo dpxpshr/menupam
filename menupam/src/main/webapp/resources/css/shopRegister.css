@@ -4,7 +4,7 @@
 }
 .content{
     width: 90%;
-    height: 1000px;
+    height: 1100px;
     /* background-color: #F2F2F2; */
     margin: auto;
     border-radius: 10px;
@@ -86,3 +86,13 @@ input[type="checkbox"]:checked + label em {
 	font-size: 15px;
 	text-align: center;
 }
+
+/* 파일업로드 버튼 */
+.input-file-button{
+    padding: 6px 25px;
+    background-color:#F28C0F;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
