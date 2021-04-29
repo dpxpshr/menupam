@@ -149,7 +149,7 @@
 					row.append(address);
 					console.dir(shop);
 					if(shop.shopLongitudeX && shop.shopLatitudeY){
-						drawMarker(shop.shopName,shop.shopLongitudeX,shop.shopLatitudeY);
+						drawMarker(shop.shopName,shop.shopLongitudeX,shop.shopLatitudeY,shop.shopIdx);
 					}
 					
 					row.addEventListener('click',()=>{
@@ -158,11 +158,18 @@
 					list.append(row);
 				});
 			}
-	    	let drawMarker = (title,x,y)=>{
+	    	let drawMarker = (title,y,x,idx)=>{
 	    		var marker = new kakao.maps.Marker({
 	    			position : new kakao.maps.LatLng(x,y)
 	    		});
 	    		marker.setMap(map);
+	    		var iwContent = '<div style="padding:5px;">'+title+'</div>';
+	    		var infowindow = new kakao.maps.InfoWindow({ content : iwContent });
+	    		infowindow.open(map,marker);
+	    		
+	    		kakao.maps.event.addListener(marker,'click',()=>{
+	    			location.href = "/order/menuview?shopIdx="+idx;
+	    		})
 	    	}
     </script> 
 </body>
