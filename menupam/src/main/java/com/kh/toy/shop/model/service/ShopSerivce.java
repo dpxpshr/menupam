@@ -3,6 +3,8 @@ package com.kh.toy.shop.model.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.order.model.vo.Order;
@@ -14,7 +16,6 @@ import com.kh.toy.shop.model.vo.Shop;
 public interface ShopSerivce {
 	
 	//////매장 테이블 //////
-	int insertShop(Shop shop);
 	int updateShop(Shop shop);
 	Shop selectShopInfo(String userId);
 	void ShopInfoModify(Shop shop, String userId);
@@ -34,4 +35,5 @@ public interface ShopSerivce {
 	List<Order> selectOrderList();
 	Order selectOrderAndTableNum(String orderTableNum);
 	void updateOrderTableNum(Order order);
+	void shopLogoUpload(MultipartFile file, Shop shop, String uploadPath);
 }

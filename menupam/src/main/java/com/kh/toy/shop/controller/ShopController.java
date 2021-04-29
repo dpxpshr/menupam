@@ -1,6 +1,7 @@
 package com.kh.toy.shop.controller;
 
 import java.io.File;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,9 +59,15 @@ public class ShopController {
 	public String shopInfo(@RequestParam(name = "shopPackAble", defaultValue = "N") String shopPackAble
 						,@Valid Shop shop
 						,Errors error
-						,@RequestParam(name="detailedAddress") String detailedAddress					
+						,@RequestParam(name="detailedAddress") String detailedAddress
+						,@RequestParam MultipartFile file
 						,@SessionAttribute("userInfo") Member userInfo
-						,Model model) {
+						,Model model
+						,HttpServletRequest request) {
+		
+		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
+				+ File.separator + "shoplogo" + File.separator;
+		
 		
 		if(error.hasErrors()) {
 			return "shop/shopRegister";
@@ -72,11 +79,10 @@ public class ShopController {
 		}
 		
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		if(shopInfo.getMemberId() == null) {
+		if(shopInfo == null) {
 			shop.setMemberId(userInfo.getMemberId());
 			shop.setShopAddress(shop.getShopAddress() + "," + detailedAddress);
-			System.out.println(shop);
-			shopService.insertShop(shop);
+			shopService.shopLogoUpload(file, shop, uploadPath);
 			
 			model.addAttribute("msg", "매장등록이 완료 되었습니다.");
 			model.addAttribute("url", "/shop/menuManage");
@@ -283,7 +289,6 @@ public class ShopController {
 		for (int i = 0; i < tableArr.length; i++) {
 			tableArr[i] = i+1;
 		}
-		
 		
 		model.addAttribute("tableArr", tableArr);
 		model.addAttribute("shop", shopInfo);

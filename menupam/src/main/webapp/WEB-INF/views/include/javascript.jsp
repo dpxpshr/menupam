@@ -461,4 +461,40 @@ let deleteNotification = () => {
 		document.querySelector(".wrap_box").appendChild(msg);
 	}
 
+	
+	
+	//=======================대기 등록 버튼 누르면 사장에게 알림=========
+	if(document.querySelector("#waitBtn")!=null){
+		document.querySelector("#waitBtn").addEventListener("click",(e)=>{
+			
+			console.log(e.target.name);
+			 let params = {};
+			params.shopIdx = e.target.name;
+			params.waitParty = document.querySelector('#waitParty').value;
+			params.waitPhone = document.querySelector('#phone').value;
+			
+			let headerObj = new Headers();
+			headerObj.append("content-type", "application/json");
+			
+			fetch("/waiting/registerWait",{  
+				method:"POST",
+				headers : headerObj,
+				body: JSON.stringify(params)
+			})
+			.then(response => response.text())
+			.then(text=>{
+				if(text=='success'){
+					sendNotification("${shop.memberId}", "${shop.shopName} 새로운 대기손님이 있습니다!", "/waiting/list?shopIdx=${shop.shopIdx}");
+					location.href="/index";
+				}else if(text=='fail'){
+					window.alert("대기 등록 도중 오류가 발생하였습니다. 다시 시도해주세요.");
+				}
+			}) 
+			
+		})		 
+	}
+	
+	
+	
+	
 </script>

@@ -16,4 +16,5 @@ public interface WaitingService {
 	int waitCount(String shopIdx);	
 	Waiting getWaiting(String waitIdx);
 	int updateWaitSmsTime(String waitIdx);
+	void waitTenMinutes(String waitIdx);
 }

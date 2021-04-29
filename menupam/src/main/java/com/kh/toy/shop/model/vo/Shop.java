@@ -19,6 +19,7 @@ public class Shop {
 	private String shopLongitudeX; // 위도
 	private String shopLatitudeY; // 경도
 	private String fileIdx; //파일 인덱스
+
 	
 
 	public String getShopIdx() {
@@ -152,6 +153,5 @@ public class Shop {
 
 
 
-	
 	
 }

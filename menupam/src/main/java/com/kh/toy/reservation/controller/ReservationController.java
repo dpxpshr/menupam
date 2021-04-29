@@ -28,9 +28,6 @@ public class ReservationController {
 	public ReservationController(ReservationService resService) {
 		this.resService = resService;
 	}
-	//예약하기버튼 -> 예약리스트테이블등록 + 사장한테 알려줘 shopMange 예약승인요청알림 -> 사장승인 
-		//-> 예약테이블 reser_state 승인?으로변경-> 손님핸드폰(?)메일?로알림 아마 메일
-		
 	
 	@GetMapping("form")
 	public String reservationForm(String shopIdx, Model model) { 
@@ -45,15 +42,13 @@ public class ReservationController {
 	@ResponseBody
 	public String reservationInsert(@SessionAttribute(name = "userInfo", required = false) Member member,
 			@RequestBody Reservation res, Model model) {
-		System.out.println(res);
 		
 		if(member != null) { 
 			res.setMemberId(member.getMemberId()); 
 		}else {
 			res.setMemberId("notMember"); 
-		} //2. 예약 신청 해주자 
-		 
-		
+		} 
+		//2. 예약 신청 해주자 
 		if(resService.insertRes(res)==1) {
 			return "success";
 		}else {
@@ -75,6 +70,13 @@ public class ReservationController {
 			model.addAttribute("url", "/index");
 			return "common/result";
 		}
+	}
+	
+	@PostMapping("getList")
+	@ResponseBody
+	public Map<Integer, Reservation> getReservationList(String shopIdx, String reserDate) {
+		Map<Integer, Reservation> resMap = resService.getResMap(shopIdx, reserDate);
+		return resMap;
 	}
 	
 	//예약승인 화면(사장)
@@ -121,7 +123,7 @@ public class ReservationController {
 		}
 	}
 	
-	//예약 취소(사장) - 손님도 필요? -> 손님한테 알림
+	//예약 취소(사장) -> 손님한테 알림
 	@PostMapping("cancelRes")
 	@ResponseBody
 	public String cancelRes(String reserIdx) throws Exception {
@@ -134,12 +136,7 @@ public class ReservationController {
 		}
 	}
 		
-	@PostMapping("getList")
-	@ResponseBody
-	public Map<Integer, Reservation> getReservationList(String shopIdx, String reserDate) {
-		Map<Integer, Reservation> resMap = resService.getResMap(shopIdx, reserDate);
-		return resMap;
-	}
+	
 	
 	//(사장)usertype이 사장이고, 취소버튼 누르면 delete ->리스트에서 삭제 -> 손님 문자
 
