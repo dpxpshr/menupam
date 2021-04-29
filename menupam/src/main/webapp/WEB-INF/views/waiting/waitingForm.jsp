@@ -31,11 +31,11 @@
 							<hr color="#F2BB13">
 						</div>
 		                <div class="imgLarge">
-		                    <img src="../../resources/images/sample.PNG" alt=""> <!-- 사진주소를어떻게.. -->
+		                    <img src="${shop.fileIdx}" alt=""> <!-- 사진주소를어떻게.. -->
 		                </div>
 		                <div class="text_box">
 		                	<p class="fontSmall">현재 대기인원 수 : ${waitCount}명</p><br>
-							<p class="fontSmall">예상 대기시간 : (00시간) 00분</p>
+							<p class="fontSmall">예상 대기시간 : ${estimatedTime}분</p>
 						</div><br><br>
 						<div class="wrap_field">
 							<div class="field">
@@ -48,6 +48,8 @@
 			            		required placeholder="-없이 입력" required="required" pattern="[0-9]{11}">
 			          		</div>
 			          		<input name=shopIdx value="${shop.shopIdx}" style="display: none">
+			          		<input name=waitCount value="${waitCount}" style="display: none">
+			          		<input name=estimatedTime value="${estimatedTime}" style="display: none">
 		            		<button class="btnMedium">대기 등록하기</button>
 		            	</div>
 		            </form:form>

@@ -38,7 +38,18 @@
 		                    	<div class="wating_box" id="${waiting.waitIdx}">
 		                    		<span class="waiting_info">${waiting.waitParty}인 ${waiting.waitPhone}</span>
 		                    		<div class="wrap_btn">
-		                    			<button class="btn" id="send_msg" name="${waiting.waitIdx}">문자 전송</button>
+		                    			<!-- 만약 waiting.waitSmstime == null -->
+		                    			<c:choose>
+		                    				<c:when test="${empty waiting.waitSmsTime}">
+		                    					<button class="btn" id="send_msg" name="${waiting.waitIdx}">문자 전송</button>	
+		                    				</c:when>
+		                    				<c:otherwise>
+        										<button class="btn" id="waitSmsTime" name="${waiting.waitSmsTime}">임시</button>
+    										</c:otherwise>
+		                    			</c:choose>
+		                    				
+		                    			<!-- 그렇지 않다면 버튼을 그리는게 아니라 그 시간을 계산해서 쭈루루 보여주기  -->
+		                    			
 		                    			<button class="btn" id="arrived" name="${waiting.waitIdx}">손님 도착</button>
 		                    			<button class="btn" id="cancel_wait" name="${waiting.waitIdx}">대기 취소</button>
 		                    		</div>
@@ -75,15 +86,41 @@
 		 divClock.innerText = msg;
 		 setTimeout(showClock,1000);
 	}
+	
+	let changeTime = () => {
+		let date = new Date();
+		console.log(date);
+		setTimeout(changeTime,1000);
+	}
 
     window.addEventListener('load', function() {
-    	showClock();         	 
+    	showClock();   
+		changeTime();      	 
     });
+
+    document.querySelectorAll("waitSmsTime").forEach((e)=>{
+		
+	})
+    
       
+    document.querySelectorAll("#send_msg").forEach((e)=>{
+		e.addEventListener("click", (event)=>{
+			fetch("/waiting/sendMsg?waitIdx="+e.name,{
+				method:"POST"
+			})
+			.then(response => response.text())
+			.then(text => {
+				if(text=="success"){
+					location.reload();
+		        }else if(text=="fail"){
+		        	window.alert("문자 전송 도중 오류가 발생했습니다. 다시 시도해주세요");
+		        }
+		    })
+		})
+	})
+    
     document.querySelectorAll("#arrived").forEach((e)=>{
 		e.addEventListener("click", (event)=>{
-			//console.log(document.querySelector("#"+waitIdx));
-			//console.log(e.name);
 			fetch("/waiting/arrived?waitIdx="+e.name,{
 				method:"POST"
 			})
@@ -92,7 +129,6 @@
 				if(text=="success"){
 					let waitIdx = e.name;
 					let removeTarget = document.querySelector("#"+waitIdx);
-					console.dir(removeTarget); //div#b47.waiting_box
 					removeTarget.parentNode.removeChild(removeTarget);
 		       }else if(text=="fail"){
 		          window.alert("손님도착 처리 도중 오류가 발생했습니다. 다시 시도해주세요");

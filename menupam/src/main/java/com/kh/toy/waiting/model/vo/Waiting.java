@@ -9,37 +9,25 @@ public class Waiting {
 	private String waitPhone;
 	private int waitParty;
 	private String waitState;
-	private String waitTime;
+	private Date waitSmsTime;
 	private Date waitRegDate;
 	
 	public Waiting() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public Waiting(String waitIdx, String shopIdx,String waitPhone, int waitParty, String waitState, String waitTime,
+	public Waiting(String waitIdx, String shopIdx, String waitPhone, int waitParty, String waitState, Date waitSmsTime,
 			Date waitRegDate) {
-		super();
+
 		this.waitIdx = waitIdx;
 		this.shopIdx = shopIdx;
 		this.waitPhone = waitPhone;
 		this.waitParty = waitParty;
 		this.waitState = waitState;
-		this.waitTime = waitTime;
+		this.waitSmsTime = waitSmsTime;
 		this.waitRegDate = waitRegDate;
+		
 	}
-
-
-
-	public String getShopIdx() {
-		return shopIdx;
-	}
-
-
-	public void setShopIdx(String shopIdx) {
-		this.shopIdx = shopIdx;
-	}
-
 
 	public String getWaitIdx() {
 		return waitIdx;
@@ -47,6 +35,14 @@ public class Waiting {
 
 	public void setWaitIdx(String waitIdx) {
 		this.waitIdx = waitIdx;
+	}
+
+	public String getShopIdx() {
+		return shopIdx;
+	}
+
+	public void setShopIdx(String shopIdx) {
+		this.shopIdx = shopIdx;
 	}
 
 	public String getWaitPhone() {
@@ -73,12 +69,12 @@ public class Waiting {
 		this.waitState = waitState;
 	}
 
-	public String getWaitTime() {
-		return waitTime;
+	public Date getWaitSmsTime() {
+		return waitSmsTime;
 	}
 
-	public void setWaitTime(String waitTime) {
-		this.waitTime = waitTime;
+	public void setWaitSmsTime(Date waitSmsTime) {
+		this.waitSmsTime = waitSmsTime;
 	}
 
 	public Date getWaitRegDate() {
@@ -89,15 +85,12 @@ public class Waiting {
 		this.waitRegDate = waitRegDate;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Waiting [waitIdx=" + waitIdx + ", shopIdx=" + shopIdx + ", waitPhone=" + waitPhone + ", waitParty="
-				+ waitParty + ", waitState=" + waitState + ", waitTime=" + waitTime + ", waitRegDate=" + waitRegDate
-				+ "]";
+				+ waitParty + ", waitState=" + waitState + ", waitSmsTime=" + waitSmsTime + ", waitRegDate="
+				+ waitRegDate + "]";
 	}
-
-	
 	
 	
 }

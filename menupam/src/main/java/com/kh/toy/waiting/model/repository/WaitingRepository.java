@@ -21,7 +21,7 @@ public interface WaitingRepository {
 	//@Insert("insert into tb_waiting(wait_idx, shop_idx, wait_phone, wait_party, wait_time) "
 	//		+ " values('b'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty}, #{waitTime})")
 	@Insert("insert into tb_waiting(wait_idx, shop_idx, wait_phone, wait_party) "
-			+ " values('w'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty})")
+			+ " values('W'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty})")
 	int insertWaiting(Waiting waiting);
 	
 	@Update("update tb_waiting set wait_state = '도착' where wait_idx = #{waitIdx}")
@@ -37,5 +37,14 @@ public interface WaitingRepository {
 	//대기 인원수
 	@Select("select count(*) from tb_waiting where shop_idx = #{shopIdx} and wait_state ='대기중'")
 	int waitCount(String shopIdx);
+	
+	//waitIdx로 waiting을 가져오는 메서드
+	@Select("SELECT * FROM TB_WAITING WHERE WAIT_IDX = #{waitIdx}")
+	Waiting selectWaitingByWaitIdx(String waitIdx);
+	
+	@Update("UPDATE TB_WAITING SET WAIT_SMS_TIME = SYSDATE WHERE WAIT_IDX = #{waitIdx}")
+	int updateWaitSmsTime(String waitIdx);
+	
+	
 	
 }
