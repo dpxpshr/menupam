@@ -15,14 +15,12 @@ window.onload = function(){
 		bell.addEventListener("click",(e)=>{
 		    if(open){
 		        //open O
-		        notifications.style.display = "none";
-		        console.log("닫힘");
-		        allReadNotification('${sessionScope.userInfo.memberId}');
+		        notifications.style.display = "none";    
 		        open = false;
 		    }else{
 		        //open X
 		        notifications.style.display = "block";
-		        console.log("열림");
+		        allReadNotification('${sessionScope.userInfo.memberId}');
 		        open = true;
 		    }
 		})	

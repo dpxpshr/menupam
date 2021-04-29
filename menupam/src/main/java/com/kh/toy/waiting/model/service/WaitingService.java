@@ -14,4 +14,6 @@ public interface WaitingService {
 	int updateCancel(String waitIdx);
 	Shop selectShopByShopIdx(String shopIdx);
 	int waitCount(String shopIdx);	
+	Waiting getWaiting(String waitIdx);
+	int updateWaitSmsTime(String waitIdx);
 }

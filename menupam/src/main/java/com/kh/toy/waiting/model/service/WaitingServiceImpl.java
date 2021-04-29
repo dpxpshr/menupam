@@ -47,4 +47,14 @@ public class WaitingServiceImpl implements WaitingService {
 	public int waitCount(String shopIdx) {
 		return waitingRepository.waitCount(shopIdx);
 	}
+
+	@Override
+	public Waiting getWaiting(String waitIdx) {
+		return waitingRepository.selectWaitingByWaitIdx(waitIdx);
+	}
+
+	@Override
+	public int updateWaitSmsTime(String waitIdx) {
+		return waitingRepository.updateWaitSmsTime(waitIdx);
+	}
 }

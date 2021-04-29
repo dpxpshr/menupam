@@ -1,64 +1,16 @@
-@charset "UTF-8";
-
- .main{
-	margin: 10px;
-}
-
 .body{
     padding-top: 48px;
-}
-
-.btnBox{
-	position: absolute;
-	left:10px;
-} 
-
-.line{
-	height: 5px;
-	background-color: #F2BB13;
-}
-
-
-
-.wrap_shop{
-	padding-left: 10px;
-	font-size: 50px;
-	height: 60px;
-	display:flex;
-	justify-content: space-around;
-} 
-    
-.store{
-	margin-top: 10px;
-	text-align: justify;
-}
-    
-.shop{
- 	display: flex;
- 	padding-left: 10px;
- 	font-size: 25px;
- 	font-weight: lighter;
- 	height: 100%;
- }
-
-.shop>span{
-	height: 50%;
-	margin-top: 20px;
-	vertical-align: sub;
-}
-
-
-
-/* .body{
-    padding-top: 48px;
+    overflow: hidden;
 }
 .content{
     width: 90%;
-    height: 900px;
-    background-color: #F2F2F2;
+    /* height: 900px; */
+    /* background-color: #F2F2F2; */
     margin: auto;
     border-radius: 10px;
     margin-bottom: 100px;
+    min-height: 720px;
+    overflow: hidden;
 }
 
 form{
@@ -102,5 +54,4 @@ form{
     margin-top: 10px;
     margin-bottom: 20px;
 }
- */
 
