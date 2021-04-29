@@ -16,7 +16,7 @@
             <!--여기서 부터 코드 작성-->
             <div class="body">
 				<div class="content_wrapper">
-		            <form:form modelAttribute="waiting" action="${context}/waiting/registerWait" method="POST">
+		            <%-- <form:form modelAttribute="waiting" action="${context}/waiting/registerWait" method="POST"> --%>
 		                <div class="textBox">
 							<p class="fontMedium" id="title">대기</p>
 						</div><br>
@@ -40,7 +40,7 @@
 						<div class="wrap_field">
 							<div class="field">
 			            		<span class="fas fa-ghost"> 인원수 </span>
-			            		<input type="number" class="input party" id="name" name="waitParty" required="required">
+			            		<input type="number" class="input party" id="waitParty" name="waitParty" required="required">
 			          		</div><br>
 			          		<div class="field space">
 			            		<span class="fas fa-mobile-alt"> 연락처  </span>
@@ -50,9 +50,9 @@
 			          		<input name=shopIdx value="${shop.shopIdx}" style="display: none">
 			          		<input name=waitCount value="${waitCount}" style="display: none">
 			          		<input name=estimatedTime value="${estimatedTime}" style="display: none">
-		            		<button class="btnMedium">대기 등록하기</button>
+		            		<button class="btnMedium" id="waitBtn" name="${shop.shopIdx}">대기 등록하기</button>
 		            	</div>
-		            </form:form>
+		           <%--  </form:form> --%>
 	            </div>
             </div>
         </div>

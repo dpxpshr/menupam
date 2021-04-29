@@ -5,12 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,12 +24,10 @@ import com.kh.toy.waiting.model.vo.Waiting;
 public class WaitingController {
 
 	private final WaitingService waitingService;
-	private final ReviewService reviewService; 
 	SMS sms = new SMS();
 	
-	public WaitingController(WaitingService waitingService, ReviewService reviewService) {
+	public WaitingController(WaitingService waitingService) {
 			this.waitingService = waitingService;
-			this.reviewService = reviewService;
 	}
 	
 	@GetMapping("form")
@@ -52,23 +49,25 @@ public class WaitingController {
 	
 	//대기열 등록
 	@PostMapping("registerWait")
-	public String registeWait(Waiting waiting, Model model, String waitCount, String estimatedTime) {
+	@ResponseBody
+	public String registeWait(@RequestBody Waiting waiting, Model model, String waitCount, String estimatedTime) {
 		
 		Shop shop = waitingService.selectShopByShopIdx(waiting.getShopIdx());
 		if(waitingService.insertWaiting(waiting)==1) {
 			//문자 보내주자
 			String content = "[메뉴팜] "+shop.getShopName()+" 대기 등록 완료\n예상 대기 시간 : "+estimatedTime+"분\n"
-					+ "내 앞 대기팀 : "+waitCount+"팀"; ;
+					+ "내 앞 대기팀 : "+waitCount+"팀";
 			//sms.sendSMS(waiting.getWaitPhone(), content);
-		}; 
-		model.addAttribute("msg","대기에 등록되었습니다."); 
-		model.addAttribute("url", "/index");
+					
+				//javascript.jsp sendNotification이 안됨
+		return "success";		
+	}else {
+		return "fail";
+	}
+								
+			
 		
-		return "common/result";	
 	} 
-	
-	
-	
 	
 	
 	
