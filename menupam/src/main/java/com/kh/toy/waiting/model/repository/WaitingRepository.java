@@ -21,7 +21,7 @@ public interface WaitingRepository {
 	//@Insert("insert into tb_waiting(wait_idx, shop_idx, wait_phone, wait_party, wait_time) "
 	//		+ " values('b'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty}, #{waitTime})")
 	@Insert("insert into tb_waiting(wait_idx, shop_idx, wait_phone, wait_party) "
-			+ " values('b'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty})")
+			+ " values('w'||sc_wait_idx.nextval, #{shopIdx}, #{waitPhone}, #{waitParty})")
 	int insertWaiting(Waiting waiting);
 	
 	@Update("update tb_waiting set wait_state = '도착' where wait_idx = #{waitIdx}")

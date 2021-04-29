@@ -15,77 +15,47 @@
 		<div class="main">
 			<!--여기서 부터 코드 작성 "-->
 			<div class="body">
-				<div class=reservation_info>
-					<%-- <form:form modelAttribute="reservation" action="${context}/reservation/reserve" method="POST" id="reserForm"><br> --%>
-						<div class="fontBox">
-							<p class="fontMedium" id="title">예약</p>
-						</div><br>
-						<div class="line">
-
-						</div>
-						<div class="content">
-							<div class="wrap_shop">
-								<i class="fas fa-store store"></i>
-								<div class="shop">
-									<span id="shop_info">${shop.shopName}</span>
-									<!-- 매장 이름 -->
-								</div>
-							</div>
-							<br>
-							<div class="line">
-
-							</div><br>
-							<p class="fontMedium">방문 일자</p><br> 
-							<input type="datetime-local" class="inputLarge" id="calendar" step="1800" name="reserDate"><br><br>
-							<div class="imgBox">
-								<div class="imgsmall">
-									<input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력해주세요" value="${sessionScope.userInfo.memberName}"><br><br>
-									<input type="text" class="inputLarge" name="reserPhone" id="phone" value="${sessionScope.userInfo.memberPhone}" placeholder="전화번호를 입력해주세요">
-								</div><br>
-								<div id="search_bar">
-									<p class="fontLarge" class="inputLarge">예약 인원 
-										<select id="search_sel" name="reserParty">
-											<option value="1">1인 방문 ▼</option>
-											<option value="2">2인 방문</option>
-											<option value="3">3인 방문</option>
-											<option value="4">4인 방문</option>
-											<option value="5">5인 방문</option>
-											<option value="6">6인 방문</option>
-											<option value="7">7인 방문</option>
-											<option value="8">8인 방문</option>
-										</select>
-									</p>
-								</div>
-							</div><br>
-							<div class="phone_num">
-								<p class="fontLarge">요청사항</p><br>
-								<input type="text" class="inputLarge" id="comment" name="reserComment" placeholder="요청사항을 입력해주세요">
-							</div>
-							<input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
-							<div class="btnBox"><br>
-								<button class="btnLarge" id="reserBtn" name="${shop.shopIdx}">예약하기</button><br>
-							</div>
-						</div>
-					<%-- </form:form> --%>
-				</div>
+				<div class="content">
+                    <p class="fontSmall">${shop.shopName} 예약</p><br>
+                    <div class="line"></div><br>
+                    <form action="">
+                        <div>방문일자</div><br><br>
+                        <input type="datetime-local" class="inputLarge" id="calendar" step="1800" name="reserDate"><br><br><br>
+                        <div>예약자 성함</div><br><br>
+                        <input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력하세요" value="${sessionScope.userInfo.memberName}"><br><br><br>
+                        <div>예약자 전화 번호</div><br><br>
+                        <input type="tel" class="inputLarge" name="reserPhone" id="phone" placeholder="휴대폰 번호를 입력하세요 ( - 없이)" value="${sessionScope.userInfo.memberPhone}"><br><br><br>
+                        <div>예약 인원</div><br><br>
+                        <select id="search_sel" name="reserParty" class="inputLarge">
+                            <option value="1">1인 방문</option>
+                            <option value="2">2인 방문</option>
+                            <option value="3">3인 방문</option>
+                            <option value="4">4인 방문</option>
+                            <option value="5">5인 방문</option>
+                            <option value="6">6인 방문</option>
+                            <option value="7">7인 방문</option>
+                            <option value="8">8인 방문</option>
+                        </select><br><br><br>
+                        <div>요청 사항</div><br><br>
+                        <input type="text" class="inputLarge" id="comment" name="reserComment" placeholder="ex) 창가쪽 자리로 주세요"><br><br><br>
+                        <input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
+                        <label for="" style="margin-left: 10px;">
+                            <input type="checkbox">
+                            개인 정보 수집 및 이용에 동의 합니다.
+                        </label><br><br>
+                        <button class="btnLarge" id="reserBtn" name="${shop.shopIdx}" style="margin-left: 10px;">
+                            예약하기
+                        </button>
+                    </form>
+                </div>
 			</div> <!-- body -->
 		</div> 
 		<div class="footer">
-			<div>
-				<i class="fas fa-search"></i>
-			</div>
-			<div>
-				<i class="fas fa-qrcode"></i>
-			</div>
-			<div>
-				<i class="fas fa-home"></i>
-			</div>
-			<div>
-				<i class="far fa-clipboard"></i></i>
-			</div>
-			<div>
-				<i class="far fa-user"></i>
-			</div>
+            <div><i class="fas fa-search"></i></div>
+            <div><i class="fas fa-qrcode"></i></div>
+            <div><i class="fas fa-home"></i></div>
+            <div><i class="far fa-clipboard"></i></div>
+            <div><i class="far fa-user"></i></div>
 		</div>
 	</div>
 </body>

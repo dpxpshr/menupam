@@ -18,7 +18,9 @@ public class Shop {
 	private String memberId; //회원 아이디
 	private String shopLongitudeX; // 위도
 	private String shopLatitudeY; // 경도
+	private String fileIdx; //파일 인덱스
 	
+
 	public String getShopIdx() {
 		return shopIdx;
 	}
@@ -130,6 +132,14 @@ public class Shop {
 	public void setShopLatitudeY(String shopLatitudeY) {
 		this.shopLatitudeY = shopLatitudeY;
 	}
+	
+	public String getFileIdx() {
+		return fileIdx;
+	}
+
+	public void setFileIdx(String fileIdx) {
+		this.fileIdx = fileIdx;
+	}
 
 	@Override
 	public String toString() {
@@ -137,8 +147,10 @@ public class Shop {
 				+ shopType + ", shopBln=" + shopBln + ", shopPackAble=" + shopPackAble + ", shopRating=" + shopRating
 				+ ", shopTableCount=" + shopTableCount + ", shopRegDate=" + shopRegDate + ", shopLeaveDate="
 				+ shopLeaveDate + ", shopTell=" + shopTell + ", memberId=" + memberId + ", shopLongitudeX="
-				+ shopLongitudeX + ", shopLatitudeY=" + shopLatitudeY + "]";
+				+ shopLongitudeX + ", shopLatitudeY=" + shopLatitudeY + ", fileIdx=" + fileIdx + "]";
 	}
+
+
 
 	
 	

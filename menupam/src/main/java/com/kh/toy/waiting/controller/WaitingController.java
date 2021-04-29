@@ -29,23 +29,29 @@ public class WaitingController {
 	}
 	
 	@GetMapping("form")
-	public String waitingForm(String shopIdx, String fileIdx, Model model) throws IOException {
+	public String waitingForm(String shopIdx, Model model) throws IOException {
 		
-		//예상대기시간 tb_shop에 SHOP_TABLE_COUNT(테이블 수)
-		//테이블 수 * 15분?30분? no
-		//(대기팀 - 테이블수) * 15분 no
-		//
+
 		
-		//테이블 10개짜리 식당 꽉차서 대기팀 5팀 
-		//테이블 5개짜리 식당 대기팀 5팀 이거 두개대기시간이 다를텐데...
+//		한테이블 평균 식사 시간 : 50분
+//		   
+//		테이블 개수 : 10개
+//
+//		1번 
+//		5분
+//
+//		2번
+//		10분
+//
+//		3번
+//		15분
 		
-		// if there are 10 tables that seat two people in the restaurant and you estimate 
-		// that each couple takes 90 minutes to complete their meal then a table for two becomes 
-		// available every 90 minutes / 10 tables = every 9 minutes.
+		
 		
 		
 		//일단 reviewService꺼 가져옴
 		//model.addAttribute("savePath", reviewService.getSavePath(fileIdx)); //매장 사진
+		
 		model.addAttribute("shop", waitingService.selectShopByShopIdx(shopIdx)); //매장 이름 등등
 		model.addAttribute("waitCount", waitingService.waitCount(shopIdx)); //대기중인 팀
 		return "waiting/waitingForm";
@@ -53,7 +59,7 @@ public class WaitingController {
 	
 	
 	//대기열 등록
-	@PostMapping("registerWait")
+	@PostMapping("registerWait")//(가게 사장한테)알림 해주어야함
 	public String registeWait(Waiting waiting, Model model) {
 		
 		waitingService.insertWaiting(waiting); 
@@ -61,7 +67,13 @@ public class WaitingController {
 		model.addAttribute("url", "/index");
 		 
 		return "common/result";	
+		
 	} 
+	
+	
+	
+	
+	
 	
 	//사장님이 보는 대기리스트 (날짜는 상관없이 리스트 쭉 뽑고, 뭐 12시되면 or 마감하면 남은 대기자들 waitState를 대기취소 or 도착 or 삭제 일괄적으로)
 	@GetMapping("list")
