@@ -18,11 +18,8 @@ public class Shop {
 	private String memberId; //회원 아이디
 	private String shopLongitudeX; // 위도
 	private String shopLatitudeY; // 경도
-<<<<<<< HEAD
-	private String fileIdx; // 파일 인덱스
-=======
 	private String fileIdx; //파일 인덱스
->>>>>>> branch 'dev' of https://github.com/dpxpshr/menupam.git
+
 	
 
 	public String getShopIdx() {
