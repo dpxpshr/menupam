@@ -30,6 +30,12 @@ public interface WaitingRepository {
 	@Update("update tb_waiting set wait_state = '대기취소' where wait_idx = #{waitIdx}")
 	int updateCancel(String waitIdx);
 	
+	//idx로 shopName
 	@Select("select * from tb_shop where shop_idx = #{shopIdx}")
 	Shop selectShopByShopIdx(String shopIdx);
+	
+	//대기 인원수
+	@Select("select count(*) from tb_waiting where shop_idx = #{shopIdx} and wait_state ='대기중'")
+	int waitCount(String shopIdx);
+	
 }

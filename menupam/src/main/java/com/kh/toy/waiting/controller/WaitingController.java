@@ -1,5 +1,6 @@
 package com.kh.toy.waiting.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.toy.review.model.service.ReviewService;
 import com.kh.toy.waiting.model.service.WaitingService;
 import com.kh.toy.waiting.model.vo.Waiting;
 
@@ -19,16 +21,36 @@ import com.kh.toy.waiting.model.vo.Waiting;
 public class WaitingController {
 
 	private final WaitingService waitingService;
+	private final ReviewService reviewService; 
 	
-	public WaitingController(WaitingService waitingService) {
+	public WaitingController(WaitingService waitingService, ReviewService reviewService) {
 			this.waitingService = waitingService;
+			this.reviewService = reviewService;
 	}
 	
 	@GetMapping("form")
-	public String waitingForm(String shopIdx, Model model) {
-		model.addAttribute("shop", waitingService.selectShopByShopIdx(shopIdx));
+	public String waitingForm(String shopIdx, String fileIdx, Model model) throws IOException {
+		
+		//예상대기시간 tb_shop에 SHOP_TABLE_COUNT(테이블 수)
+		//테이블 수 * 15분?30분? no
+		//(대기팀 - 테이블수) * 15분 no
+		//
+		
+		//테이블 10개짜리 식당 꽉차서 대기팀 5팀 
+		//테이블 5개짜리 식당 대기팀 5팀 이거 두개대기시간이 다를텐데...
+		
+		// if there are 10 tables that seat two people in the restaurant and you estimate 
+		// that each couple takes 90 minutes to complete their meal then a table for two becomes 
+		// available every 90 minutes / 10 tables = every 9 minutes.
+		
+		
+		//일단 reviewService꺼 가져옴
+		//model.addAttribute("savePath", reviewService.getSavePath(fileIdx)); //매장 사진
+		model.addAttribute("shop", waitingService.selectShopByShopIdx(shopIdx)); //매장 이름 등등
+		model.addAttribute("waitCount", waitingService.waitCount(shopIdx)); //대기중인 팀
 		return "waiting/waitingForm";
 	}
+	
 	
 	//대기열 등록
 	@PostMapping("registerWait")

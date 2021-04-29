@@ -42,4 +42,9 @@ public class WaitingServiceImpl implements WaitingService {
 	public Shop selectShopByShopIdx(String shopIdx) {
 		return waitingRepository.selectShopByShopIdx(shopIdx);
 	}
+
+	@Override
+	public int waitCount(String shopIdx) {
+		return waitingRepository.waitCount(shopIdx);
+	}
 }

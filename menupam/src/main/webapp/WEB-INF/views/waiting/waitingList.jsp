@@ -100,16 +100,17 @@
       document.querySelectorAll("#arrived").forEach((e)=>{
 			e.addEventListener("click", (event)=>{
 				
-				console.log(document.querySelector("#"+waitIdx));
-				
+				//console.log(document.querySelector("#"+waitIdx));
+				//console.log(e.name);
 				fetch("/waiting/arrived?waitIdx="+e.name,{
 					method:"POST"
 				})
 				.then(response => response.text())
 				.then(text => {
 					if(text=="success"){
-						let reserIdx = e.name;
+						let waitIdx = e.name;
 						let removeTarget = document.querySelector("#"+waitIdx);
+						console.dir(removeTarget); //div#b47.waiting_box
 						removeTarget.parentNode.removeChild(removeTarget);
 			       }else if(text=="fail"){
 			          window.alert("손님도착 처리 도중 오류가 발생했습니다. 다시 시도해주세요");
@@ -127,7 +128,7 @@
 				.then(response => response.text())
 				.then(text => {
 					if(text=="success"){
-						let reserIdx = e.name;
+						let waitIdx = e.name;
 						let removeTarget = document.querySelector("#"+waitIdx);
 						removeTarget.parentNode.removeChild(removeTarget);
 			       }else if(text=="fail"){

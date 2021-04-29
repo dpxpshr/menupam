@@ -45,10 +45,10 @@
 						<hr color="#F2BB13">
 					</div>
                 <div class="imgLarge">
-                    <img src="../../resources/images/sample.PNG" alt="">
+                    <img src="../../resources/images/sample.PNG" alt=""> <!-- 사진주소를어떻게.. -->
                 </div>
                 <div class="text_box">
-                	<p class="fontSmall">현재 대기인원 수 : 00명</p>
+                	<p class="fontSmall">현재 대기인원 수 : ${waitCount}명</p>
                 	<br>
 					<p class="fontSmall">예상 대기시간 : (00시간) 00분</p>
 				</div>
