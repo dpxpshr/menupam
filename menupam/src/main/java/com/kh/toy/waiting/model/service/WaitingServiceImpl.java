@@ -3,6 +3,8 @@ package com.kh.toy.waiting.model.service;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import com.kh.toy.shop.model.vo.Shop;
@@ -10,6 +12,7 @@ import com.kh.toy.waiting.model.repository.WaitingRepository;
 import com.kh.toy.waiting.model.vo.Waiting;
 
 @Service
+@EnableAsync
 public class WaitingServiceImpl implements WaitingService {
 
 	private final WaitingRepository waitingRepository;
@@ -56,5 +59,33 @@ public class WaitingServiceImpl implements WaitingService {
 	@Override
 	public int updateWaitSmsTime(String waitIdx) {
 		return waitingRepository.updateWaitSmsTime(waitIdx);
+	}
+
+	@Override
+	@Async
+	public void waitTenMinutes(String waitIdx) {
+		try {
+			//Thread.sleep(600000);
+			Thread.sleep(10000); //10초
+			Waiting waiting = waitingRepository.selectWaitingByWaitIdx(waitIdx);
+			
+			if((waiting.getWaitState().equals("대기중")) && (waiting.getWaitSmsTime() != null)) {
+				//-> 10분도 지났고, 문자도 보냈도, 아직 오지도 않았다 
+				waitingRepository.updateCancel(waitIdx);
+				//문자도 보내주어야함
+				System.out.println("문자보냈음");
+				
+				//저 브라우저를 찾아내서 리로드시켜주는건데
+				
+				//JS에서 알림을 보냈지 [JAVA -> 할수 있으면 좋을거 같고] 
+				
+				
+			}else {
+				System.out.println("문자 안보냄");
+			}
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

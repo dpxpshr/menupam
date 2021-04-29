@@ -1,6 +1,7 @@
 package com.kh.toy.waiting.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Waiting {
 	
@@ -9,14 +10,15 @@ public class Waiting {
 	private String waitPhone;
 	private int waitParty;
 	private String waitState;
-	private Date waitSmsTime;
+	//private Date waitSmsTime;
+	private Timestamp waitSmsTime;
 	private Date waitRegDate;
 	
 	public Waiting() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Waiting(String waitIdx, String shopIdx, String waitPhone, int waitParty, String waitState, Date waitSmsTime,
+	public Waiting(String waitIdx, String shopIdx, String waitPhone, int waitParty, String waitState, Timestamp waitSmsTime,
 			Date waitRegDate) {
 
 		this.waitIdx = waitIdx;
@@ -69,11 +71,11 @@ public class Waiting {
 		this.waitState = waitState;
 	}
 
-	public Date getWaitSmsTime() {
+	public Timestamp getWaitSmsTime() {
 		return waitSmsTime;
 	}
 
-	public void setWaitSmsTime(Date waitSmsTime) {
+	public void setWaitSmsTime(Timestamp waitSmsTime) {
 		this.waitSmsTime = waitSmsTime;
 	}
 

@@ -152,3 +152,12 @@
 #cancel_wait:hover{
 	background-color: 	#F0E68C;
 }
+
+
+#waitSmsTime{
+	background-color: #FFD700;
+}
+
+#waitSmsTime:hover{
+	background-color: #FFFF00;
+}

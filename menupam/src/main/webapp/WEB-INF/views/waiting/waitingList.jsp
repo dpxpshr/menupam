@@ -44,7 +44,7 @@
 		                    					<button class="btn" id="send_msg" name="${waiting.waitIdx}">문자 전송</button>	
 		                    				</c:when>
 		                    				<c:otherwise>
-        										<button class="btn" id="waitSmsTime" name="${waiting.waitSmsTime}">임시</button>
+        										<button class="btn" id="waitSmsTime" name="${waiting.waitSmsTime}"></button>
     										</c:otherwise>
 		                    			</c:choose>
 		                    				
@@ -88,9 +88,29 @@
 	}
 	
 	let changeTime = () => {
-		let date = new Date();
-		console.log(date);
-		setTimeout(changeTime,1000);
+		
+		//console.log(date);
+		
+		document.querySelectorAll("#waitSmsTime").forEach((e)=>{
+			
+			let date = new Date();
+			let waitSmstime = new Date(e.name);
+			
+			waitSmstime.setHours(waitSmstime.getHours()+9);
+			date = date.getTime();
+			waitSmstime = waitSmstime.getTime();
+			
+			let gangyuk = date-waitSmstime;
+			
+			var hour = Math.floor((gangyuk % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			hour = hour*60;
+			var minute = Math.floor((gangyuk % (1000 * 60 * 60)) / (1000 * 60));
+			
+			e.innerHTML = (hour+minute)+"분 경과";
+			
+		})
+		
+		setTimeout(changeTime,60000);
 	}
 
     window.addEventListener('load', function() {
@@ -98,9 +118,7 @@
 		changeTime();      	 
     });
 
-    document.querySelectorAll("waitSmsTime").forEach((e)=>{
-		
-	})
+
     
       
     document.querySelectorAll("#send_msg").forEach((e)=>{
@@ -111,7 +129,10 @@
 			.then(response => response.text())
 			.then(text => {
 				if(text=="success"){
-					location.reload();
+					//console.log("test");
+					
+					
+					//location.reload();
 		        }else if(text=="fail"){
 		        	window.alert("문자 전송 도중 오류가 발생했습니다. 다시 시도해주세요");
 		        }

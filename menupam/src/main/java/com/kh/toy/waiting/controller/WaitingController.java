@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -97,7 +99,13 @@ public class WaitingController {
 			Shop shop = waitingService.selectShopByShopIdx(waiting.getShopIdx());
 			String content = "[메뉴팜] "+shop.getShopName()+" 입장 알림\n고객님 입장하실 순서 입니다.\n"
 					+ "매장 앞에서 대기해주세요"; ;		
-			sms.sendSMS(waiting.getWaitPhone(), content);
+			//sms.sendSMS(waiting.getWaitPhone(), content);
+			
+			
+			waitingService.waitTenMinutes(waitIdx);
+			// -----------@Async waitTenMinute() -------->-------->---------->-------->-------->-------->-------->------>
+			//            -------->-------->-------->-------->-------->-------->
+		
 			return "success";
 		}else {
 			return "fail";
@@ -128,5 +136,9 @@ public class WaitingController {
 			return "fail";
 		}
 	}
+	
+
+	
+
 	
 }
