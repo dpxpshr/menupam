@@ -47,8 +47,8 @@ public interface MemberRepository {
 			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertMember(Member member);
 	
-	@Insert("insert into tb_member(member_id,member_pw,member_name,member_phone,member_email,company_num,member_type)"
-			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail},#{companyNum},'MT10')")
+	@Insert("insert into tb_member(member_id,member_pw,member_name,member_phone,member_email,member_type)"
+			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail},'MT10')")
 	int insertCeo(Member member);
 
 	Member save(Member member);
@@ -72,11 +72,22 @@ public interface MemberRepository {
 
 	int adminModify(Member member);
 	
-	@Select ("select member_id from tb_member where member_email = #{memberEmail}")
-	Member findId(Member member);
-
+	@Select ("select * from tb_member where member_email = #{memberEmail}")
+	Member findId(String email);
+	@Select("select * from tb_member where member_id = #{memberId}")
+	Member findPw(String memberId);
+	
+	int updatePw(Member member);
+	
 	int leaveMember(Member member);
 	
 	int restoreMember(Member member);
+	
+	int modifyPw(Member member);
+	
+
+	
+	Map<String,Object> selectShop(String memberId);
+	Map<String,Object> selectWaiting(String memberId);
 	
 }

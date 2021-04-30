@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
+
 import com.kh.toy.shop.model.vo.Shop;
 
 public interface MemberService {
@@ -45,10 +46,21 @@ public interface MemberService {
 
 	int adminMemberModify(Member member);
 	
-	Member findId(Member member,String email);
+	Member findId(String email);
 	
 	int leaveMember(Member member);
 	
 	int restoreMember(Member member);
+	
+	
+	
+	
+	Map<String,Object> selectshop(String memberId);
+	Map<String,Object> selectwaiting(String memberId);
 
+	Member findPw(String memberId);
+	void updatePw(Member member,String memberPw);
+	
+	void modifyPw(Member member, String Pw);
+	
 }

@@ -30,35 +30,13 @@
 	        			<header>메뉴팜</header>
 	        			<div class="loginInline"></div>
 	        			<div class="field">
-	            			<span class="fa fa-user"></span>
-	            			<input type="text" class="id" id="id" name="memberId" required placeholder="아이디">
-	          			</div>
-						<div class="field space">
-	            			<span class="fa fa-lock"></span>
-	            			<input type="password" class="pass-key" id="pw" name="memberPw" required placeholder="비밀번호">
-	            			<span class="show">SHOW</span>
-	          			</div>
-	          			<span class='valid_info'></span>
-						<div class="pass">
-	            			<a></a>
-	          			</div>
-	         			<br>
-						<div class="btnBox">
-							<div class="btn">
-								<button class="loginBtn fitImg" onclick="login()">LOGIN</button>
-							</div>
-							<div class="btn" onclick="kakaoLogin()">
-								<img alt="" src="../../../resources/images/kakaoBtn.png" class="fitImg">
-							</div>
-							<div class="btn" onclick="naverLogin()">
-								<img alt="" src="../../../resources/images/naverBtn.PNG" class="fitImg">
-							</div>
-						</div>
-						<div class="signup"><a href="${context}/member/findIdForm">아이디 찾기</a> | <a href="${context}/member/findPwForm">비밀번호 찾기</a> | 
-							<a href="/member/join">회원가입</a>
-							<br>
-							<a href="/member/ceojoin">사장님회원가입</a>
-	        			</div>
+	        			 <form action="${context}/member/findId" method="post">
+						<label>이메일</label> <input type="text" id="memberEmail" name="email" style="background-color: orange; text-align: center;" >
+						<button type="submit">찾기</button>
+						 </form>
+	            	
+	            		</div>
+						
 	          		</div>
 				</div>
 			</div>

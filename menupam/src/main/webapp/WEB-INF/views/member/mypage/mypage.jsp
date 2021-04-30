@@ -36,6 +36,7 @@
 		<div class="main">
 			<!--여기서 부터 코드 작성-->
 				<div class="body">
+					<form name="form" method="post">
 					<div class="content">
 						<p class="fontMedium" id="title">마이페이지</p>
 						<br>
@@ -51,13 +52,14 @@
 								</a>
 							</div>
 						</div>
+						
 						<div class="manageBtn">
 							<div class="manageBtnIcon">
 								<i class="fas fa-hand-holding-usd"></i>
 							</div>
 							<div class="manageBtnText">이용 내역</div>
 						</div>
-						<div class="manageBtn">
+							<div class="manageBtn">
 							<a href="${context}/member/mypage/reservation">
 								<div class="manageBtnIcon">
 									<i class="far fa-calendar-check"></i>
@@ -66,7 +68,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="manageBtn">
+				<div class="manageBtn">
 						<a href="${context}/member/mypage/waiting">
 							<div class="manageBtnIcon">
 								<i class="fas fa-user-friends"></i>
@@ -77,9 +79,8 @@
 				</div>
 				<div class="manageBtn"></div>
 				<div class="manageBtn"></div>
+	
 		</div>
-		<br>
-
 
 		<div>
 			<div class="wrap_user">
@@ -137,30 +138,46 @@
 						<i class="far fa-envelope"></i>
 					</div>
 					<span id="user_info">${sessionScope.userInfo.memberEmail}</span>
-
+					<br>
+					
 				</div>
-
+				<br>
+				<div class="info"> 
+				<i class="fas fa-key" style="margin-left:15px; "></i>
+				<input style="margin-left:15px; height: 30px;" type="tel" id="Pw" name="Pw"> 
+				<input type="submit" value="수정" id="modifyPw" class="btnSmall">
+				</div>
+				
 				<div class="info">
 					<div class="icon">
 						<i class="fas fa-mobile-alt"></i>
 					</div>
 					<!-- 1 -->
-					<form action="${context}/member/modify" method="post">
-						<input type="tel" id="phone" name="phone" required="required" value="${sessionScope.userInfo.memberPhone}"> 
-						<input type="submit" value="수정">
-					</form>
-					<br>
+						
+						<input style="margin-left:20px;" type="tel" id="phone" name="phone" required="required" value="${sessionScope.userInfo.memberPhone}"> 
+						<input type="submit" value="수정" id="modify" class="btnSmall">
+						
+						
 					
-					<br>
+				
 				</div>
+				
 				<c:if test="${sessionScope.userInfo.memberName=='관리자'}">
 						<div><a href="${context}/member/adminList"> 회원 관리[관리자전용]</a></div>
 					</c:if>
 				</div>
+				<c:if test="${sessionScope.userInfo.memberType=='MT10'}">
+					<input type="button" class="btnMedium" onclick="handleOnClick()"
+					value="매장등록"/>
+					<div id='result'/>
+				</c:if>
+				
 			</div>
 		</div>
 	</div>
+	
 	</div>
+</form>
 	<div class="footer">
 		<div>
 			<i class="fas fa-search"></i>
@@ -184,8 +201,40 @@
  -->
 	<script type="text/javascript">
  	<!-- 버튼 실행 $document 넣기 -->
+	 $(document).ready(function(){
+	    	$("#reserbtn").click(function(){
+	    		document.form.action = "${context}/member/reservation";
+	    	});	
+	    	$("#waitbtn").click(function(){
+	    		document.form.action = "${context}/member/waiting";
+	    	});	
+	    	$("#mypagebtn").click(function(){
+	    		document.form.action = "${context}/member/mypage";
+	    	});	
+	    	
+	    	$("#modify").click(function(){
+	    		document.form.action = "${context}/member/modify";
+	    	});	
+	    	$("#modifyPw").click(function(){
+	    		document.form.action = "${context}/member/modifyPw";
+	    	});	
+	    	
+	    });
+	
  	
  	
+	    	
+ function handleOnClick() {
+	 let like = confirm("매장등록을 하시겠습니까?");
+	 document.getElementById('result').innerText = like;
+	 
+	 if(like == true){
+		 location = "${context}/shop/shopRegister";
+	 }else{
+		 location = "${context}/member/mypage";
+	 }
+ }
+ 
 			
 			
  
@@ -215,8 +264,7 @@
  	});
  				
  
- 	
- 	
+ 
  	
  	
  </script>

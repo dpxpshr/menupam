@@ -30,6 +30,8 @@ import com.kh.toy.common.util.naver.NaverUtil;
 import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
+import com.kh.toy.reservation.model.vo.Reservation;
+import com.kh.toy.shop.model.vo.Shop;
 
 
 @Service
@@ -86,12 +88,13 @@ public class MemberServiceImpl implements MemberService {
 
 		mailSender.send(persistUser.getMemberEmail(), "회원 가입을 축하합니다.", response.getBody());
 	}
-
+	//회원가입
 	@Override
 	public int insertMember(Member member) {
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
 		return memberRepository.insertMember(member);
 	}
+	//점주 회원가입
 	@Override
 	public int insertCeo(Member member) {
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
@@ -115,12 +118,12 @@ public class MemberServiceImpl implements MemberService {
 
 		Paging paging = Paging.builder().cuurentPage(page).blockCnt(5).cntPerPage(10).type("member")
 				.total(memberRepository.selectContentCnt()).sort("member_name").direction("desc").build();
-
+		
 		Map<String, Object> commandMap = new HashMap<String, Object>();
 		commandMap.put("paging", paging);
 		commandMap.put("selectMemberList", memberRepository.selectMemberList(paging));
 		System.out.println("커맨드맵?" + commandMap);
-
+	
 		return commandMap;
 
 	}
@@ -192,14 +195,24 @@ public class MemberServiceImpl implements MemberService {
 	
 	//X
 	@Override
-	public Member findId(Member member,String email) {
+	public Member findId(String email) {
 		
 		System.out.println("서비스impl 이메일" +email);
-		System.out.println("서비스impl 멤버 " +member);
-		member.setMemberEmail(email);
 		
-		return memberRepository.findId(member);
+		//이메일 정보 -> 멤버ID 조회 
+		return memberRepository.findId(email);
 	}
+	
+	@Override
+	public Member findPw(String memberId) {
+		
+		System.out.println("서비스impl userId"  + memberId );
+		
+		
+		return memberRepository.findPw(memberId);
+	}
+	
+	
 	
 	@Override
 	public int restoreMember(Member member) {
@@ -208,8 +221,44 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.restoreMember(member);
 	}
 
+
+	
+	@Override
+	public Map<String, Object> selectshop(String memberId) {
+		
+		 
+		
+		
+		Map<String,Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("shopst", memberRepository.selectShop(memberId));
+		
+		
+		//List<Reservation> resList = memberRepository.selectReservation(memberId);
+		//List<Shop> shopList = new ArrayList<Shop>();
+		
+		// 1. 가게이름 : 롯데리아 2. 가게이름 : 맥도날드 3. 버거
+		// for (Reservation reservation : resList) {
+		//	String shopIdx = reservation.getShopIdx();
+		//	shopList.add(memberRepository.selectShop(shopIdx));
+		//}
+		
+		//1. 게이름, 가게 전화번호, 예약 시간
+		// resList, shopList 완성 -> 가게이름, 가게 전화번호, 예약 시간 ~~~~~
+		
+		
+		return commandMap;
+	}
 	
 	
+	
+	@Override
+	public Map<String, Object> selectwaiting(String memberId) {
+		
+		Map<String,Object> commandMap = new HashMap<String,Object>();
+		commandMap.put("waitingst", memberRepository.selectWaiting(memberId));
+		
+		return commandMap;
+	}
 
 
 	
@@ -229,6 +278,31 @@ public class MemberServiceImpl implements MemberService {
 		Map<String, String> profile = naverUtil.getProfileMap(tokenMap.get("token_type"), tokenMap.get("access_token"));
 		return profile;
 	}
+
+	@Override
+	public void updatePw(Member member,String memberPw) {
+		
+		member.setMemberPw(memberPw);
+		memberRepository.updatePw(member);
+		
+		
+	}
+
+	@Override
+	public void modifyPw(Member member, String Pw) {
+		
+		
+		
+		member.setMemberPw(Pw);
+		 memberRepository.modifyPw(member);
+	}
+	
+	
+
+	
+
+
+
 
 	
 

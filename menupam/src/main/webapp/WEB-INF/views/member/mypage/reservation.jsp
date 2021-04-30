@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="/WEB-INF/views/include/head.jsp"%>
+    
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +13,10 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/shopModify.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/waiting.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservation.css'>
     <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
-
+	
 </head>
 <body>
     <div class="wrapper">
@@ -43,12 +45,12 @@
                             <div class="manageBtnIcon"><i class="fas fa-hand-holding-usd"></i></div>
                             <div class="manageBtnText">이용 내역</div>
                         </div>
-                        <div class="manageBtn">
+                        <div class="manageBtn border">
                         	<a href="${context}/member/mypage/reservation">
                             <div class="manageBtnIcon"><i class="far fa-calendar-check"></i></div>
                             <div class="manageBtnText">예약 현황</a></div>
                         </div>
-                        <div class="manageBtn border">
+                        <div class="manageBtn">
                        		 <a href="${context}/member/mypage/waiting">
                             <div class="manageBtnIcon"><i class="fas fa-user-friends"></i></div>
                             <div class="manageBtnText">대기 현황</a></div>
@@ -57,14 +59,14 @@
                         <div class="manageBtn"></div>
                     </div>
                     <br>
-                    <!--           WAIT_ID : 대기열 아이디 (매장번호+W+시퀀스)
-SHOP_ID : 매장 아이디
-WAIT_PHONE : 대기자 휴대폰 번호
-WAIT_NO : 대기 번호 (1,2,3 이런식으로...)
-WAIT_PARTY : 일행수
-WAIT_STATE : 결과?(식사하고갔는지, 취소했는지, 아직 대기중인지)
-WAIT_TIME : 예상 대기 시간
-WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
+                    <!-- SHOP_ID  : (매장 ID)
+						RESER_IDX( INDEX )  : 예약 순번(해당 매장에서)
+						USER_ID : 유저 ID
+						RESER_DATE  : 예약 일시 (방문할 시각)
+						RESER_REG_DATE  : 예약 요청한 일자
+						RESER_STATE  : 매장 확인 여부/결과 (승인대기/승인됨/완료)
+						RESER_COMMENT  : 예약시 요청사항
+						RESER_PARTY : 예약인원수 -->
                     
                     <div>
 	                    <div class="wrap_user">
@@ -75,40 +77,42 @@ WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
 	                    	</div>
 	                    </div>
 	                    <hr color="#F2BB13">
+	                      <c:if test="${not empty shopst}">
 	                    <div class="wrap_info">
-	                   
-	                    <c:if test="${not empty waitingst}">
 	                    	<div class="info">
 		                    	<div class="icon"><i class="fas fa-store"></i></div>
-		                    	<span id="waiting_info">가게 이름 : ${waitingst.SHOP_NAME} </span>
+		                    	<span id="reserv_info">가게 이름 : ${shopst.SHOP_NAME}</span>
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-phone-volume"></i></div>
-		                    	<span id="waiting_info">매장 전화번호 :${waitingst.SHOP_TELL} </span>
+		                    	<span id="reserv_info">매장 전화번호 : ${shopst.SHOP_TELL}</span>
 		                    </div>
-		                    
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-list-ol"></i></div>
-		                    	<span id="waiting_info">대기 번호 : ${waitingst.WAIT_IDX} </span>
+		                    	<span id="reserv_info">예약 번호 :${shopst.RESER_IDX}  </span>
 		                    </div>
 		                    <div class="info">
-		                    	<div class="icon"><i class="fas fa-hourglass-half"></i></div>
-		                    	<span id="waiting_info">대기 등록 시간 :${waitingst.WAIT_REG_DATE} </span>
+		                    	<div class="icon"><i class="far fa-clock"></i></div>
+		                    	<span id="reserv_info">예약 일시 : ${shopst.RESER_DATE} </span>
 		                    </div>
-		                  
 		                    <div class="info">
+		                    	<div class="icon"><i class="fas fa-users"></i></div>
+		                    	<span id="reserv_info">예약 인원 수 : ${shopst.RESER_PARTY} </span>
+		                    </div>
+		                    <div class="info">
+		                    	<div class="icon"><i class="fas fa-comment-dots"></i></div>
+		                    	<span id="reserv_info">예약시 요청 사항 :${shopst.RESER_COMMENT} </span>
+		                    </div>
+		                   <div class="info">
 		                    	<div class="icon"><i class="fas fa-clipboard-check"></i></div>
-		                    	<span id="waiting_info">대기 상태 :${waitingst.WAIT_STATE} </span>
+		                    	<span id="reserv_info">예약 상태 :${shopst.RESER_STATE} </span>
 		                    </div>
-		                    </c:if>
-		                   <c:if test="${empty waitingst}">
-		                    	<h2>대기중인 주문이 없습니다.</h2>
-		                    </c:if>
-		                    
 		                   
 	                    </div>
-	                    </div>
-	                    
+	                    </c:if>
+	                     <c:if test="${empty shopst}">
+		                    	<h2>예약중인 주문이 없습니다.</h2>
+		                    </c:if>
                     
                 </div>
             </div>

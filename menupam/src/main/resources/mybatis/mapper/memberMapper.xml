@@ -35,7 +35,11 @@
 		set member_phone = #{memberPhone}
 		where member_id = #{memberId}
 	</update>
-	
+	<update id="updatePw">
+	update tb_member
+	set member_pw = #{memberPw}
+	where member_id = #{memberId}
+	</update>
 	<!-- ㅇㅋ -->
 	<update id="adminModify">
 		update tb_member
@@ -60,7 +64,28 @@
 		where member_id = #{memberId}
 	</update>
 	
+	<select id="selectShop" resultType="map">
+	select tb_shop.shop_name, tb_shop.shop_tell, tb_reservation.reser_idx, 
+	tb_reservation.reser_date , tb_reservation.reser_party,
+	 tb_reservation.reser_comment,tb_reservation.reser_state
+	from tb_shop 
+	left outer join tb_reservation using(shop_idx)
+	where tb_shop.member_id = #{memberId}
+	</select>
 	
+	<select id="selectWaiting" resultType="map">
+	select tb_shop.shop_name, tb_shop.shop_tell, tb_waiting.wait_reg_date, 
+	tb_waiting.wait_idx,tb_waiting.wait_state,tb_waiting.wait_party
+	from tb_shop 
+	left outer join tb_waiting using(shop_idx)
+	where tb_shop.member_id = #{memberId}
+	</select>
+	
+	<update id="modifyPw">
+	update tb_member
+	set member_pw = #{memberPw}
+	where member_id = #{memberId}
+	</update>
 	
 	
 </mapper>

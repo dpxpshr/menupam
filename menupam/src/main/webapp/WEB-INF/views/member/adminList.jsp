@@ -23,12 +23,13 @@ table{
     width:100%;
     height: 1000px;
 }
-table,td,th{
+th{
  
-
+font-size:30px;
 
 
 }
+
 
 div.paging{
 	margin-left: 40%;
