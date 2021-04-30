@@ -34,7 +34,7 @@
                     <br>
                     <div class="buttonBox">
                         <div class="manageBtn">
-                        <a href="${context}/member/mypage/mypage">
+                        <a href="${context}/member/mypage">
                             <div class="manageBtnIcon"><i class="fas fa-id-card"></i></div>
                             <div class="manageBtnText">계정 정보</a></div>
                         </div>

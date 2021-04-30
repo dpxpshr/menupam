@@ -25,7 +25,7 @@
 <body>
 	<div class="wrapper">
 		<div class="header">
-			<a href="${context}/member/logout"><span>logout</span></a>
+		
 			<div class="search">
 				<i class="fas fa-search"></i>
 			</div>
@@ -97,14 +97,38 @@
 			<hr color="#F2BB13">
 			<div class="wrap_type">
 				<div class="type">
-					<p>등급</p>
-					<div>${sessionScope.userInfo.memberType}</div>
+					
+					<!-- MT00이면 일반 MT10이면 사장으로 보이게 -->
+					<c:if test="${sessionScope.userInfo.memberType=='MT00'}">
+					<p>회원님</p>
+					<div>일반회원</div>
+					</c:if>
+					<c:if test="${sessionScope.userInfo.memberType=='MT10'}">
+					<p>점주</p>
+					<div>사장님</div>
+					</c:if>
+					<c:if test="${sessionScope.userInfo.memberType=='MT20'}">
+					<p>admin</p>
+					<div>관리자</div>
+					</c:if>
+				<%-- 	<c:if test="${'MT00' eq sessionScope.userInfo.memberType} ">
+						<div>일반</div>
+					</c:if>
+					<c:if test="${sessionScope.userInfo.memberType eq 'MT00'} ">
+					<div>일반</div>
+					</c:if>
+					<c:if test="${sessionScope.userInfo.memberType eq 'MT00'} ">
+						<div>일반</div>
+					</c:if>
+					아니? --%>
+					
 					<!-- or 사장님 -->
+					
 				</div>
 				<div class="point">
-					<p>적립포인트</p>
-					<div>00점</div>
-				</div>
+					<br>
+					<a href="${context}/member/logout"><p>로그아웃</p></a>
+					</div>
 			</div>
 			<hr color="#F2BB13">
 			<div class="wrap_info">
@@ -123,10 +147,15 @@
 					<!-- 1 -->
 					<form action="${context}/member/modify" method="post">
 						<input type="tel" id="phone" name="phone" required="required" value="${sessionScope.userInfo.memberPhone}"> 
-						<input type="submit" value="수정테스트">
+						<input type="submit" value="수정">
 					</form>
 					<br>
+					
+					<br>
 				</div>
+				<c:if test="${sessionScope.userInfo.memberName=='관리자'}">
+						<div><a href="${context}/member/adminList"> 회원 관리[관리자전용]</a></div>
+					</c:if>
 				</div>
 			</div>
 		</div>

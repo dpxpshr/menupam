@@ -25,16 +25,42 @@
 	</select> -->
 	
 	<!-- '%'||#%test#||'%' -->
+	<!-- 
 		<select id="memberView" resultType="member">
 		SELECT * FROM TB_MEMBER WHERE MEMBER_ID = #{memberId}
-		
-		</select>
+		</select> -->
 		
 	<update id="updateMember">
 		update tb_member
 		set member_phone = #{memberPhone}
 		where member_id = #{memberId}
 	</update>
+	
+	<!-- ㅇㅋ -->
+	<update id="adminModify">
+		update tb_member
+		set member_pw = #{memberPw}
+		,member_name = #{memberName}
+		,member_email = #{memberEmail}
+		,member_phone = #{memberPhone}
+		,member_type = #{memberType}
+		where member_id = #{memberId}
+	</update>
+	
+	
+	<update id="leaveMember">
+		update tb_member
+		set member_leave_date = sysdate
+		where member_id = #{memberId}
+	</update>
+	
+	<update id="restoreMember">
+		update tb_member
+		set member_leave_date = null
+		where member_id = #{memberId}
+	</update>
+	
+	
 	
 	
 </mapper>

@@ -28,7 +28,10 @@ public interface MemberRepository {
 
 	@Select("select * from tb_member where member_id = #{memberId}")
 	Member selectMemberById(String memberId);
-
+	
+	@Select("select * from tb_member where member_email = #{memberEmail}")
+	Member selectMemberEmail(String memberEmail);
+	
 	// @Select("select * from tb_member where member_id = #{memberId}") 뒤 and
 	// member_leave_date = null
 	@Select("select * from tb_member where member_id = #{memberId}")
@@ -43,6 +46,10 @@ public interface MemberRepository {
 	@Insert("insert into tb_member(member_id,member_pw,member_name,member_phone,member_email)"
 			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail})")
 	int insertMember(Member member);
+	
+	@Insert("insert into tb_member(member_id,member_pw,member_name,member_phone,member_email,company_num,member_type)"
+			+ " values(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail},#{companyNum},'MT10')")
+	int insertCeo(Member member);
 
 	Member save(Member member);
 
@@ -52,18 +59,24 @@ public interface MemberRepository {
 
 	List<Member> findAll(@Param("memberId") String memberId, @Param("memberName") String memberName);
 
-	@Update("update tb_member set member_phone = #{memberPhone} where member_id = #{memberId}")
-	int updateMemberTell(Member member);
+
 
 	// 4
 	int updateMember(Member member);
 
 	@Select("select * from tb_member where member_id = #{memberId}")
 	Member selectUserInfo(String memberId);
-
+	
+	@Select("select * from tb_member where member_id = #{memberId}")
 	Member memberView(String memberId);
 
-	@Select("select * from tb_shop where member_id = #{memberId}")
-	Shop selectShopInfo(String memberId);
+	int adminModify(Member member);
+	
+	@Select ("select member_id from tb_member where member_email = #{memberEmail}")
+	Member findId(Member member);
 
+	int leaveMember(Member member);
+	
+	int restoreMember(Member member);
+	
 }

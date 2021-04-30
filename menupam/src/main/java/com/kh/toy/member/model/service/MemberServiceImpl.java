@@ -60,11 +60,22 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectMemberById(String memberId) {
 		return memberRepository.selectMemberById(memberId);
 	}
+	
+	@Override
+	public Member selectMemberEmail(String memberEmail) {
+		System.out.println(memberEmail);
+		
+		return memberRepository.selectMemberEmail(memberEmail);
+	
+	}
+	
 
 	public void authenticateEmail(Member persistUser, String authPath) {
 
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
 		body.add("memberId", persistUser.getMemberId());
+		body.add("memberName", persistUser.getMemberName());
+		body.add("memberType", persistUser.getMemberType());
 		body.add("mail-template", "temp_join");
 		body.add("authPath", authPath);
 
@@ -80,6 +91,11 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member member) {
 		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
 		return memberRepository.insertMember(member);
+	}
+	@Override
+	public int insertCeo(Member member) {
+		member.setMemberPw(passwordEncoder.encode(member.getMemberPw()));
+		return memberRepository.insertCeo(member);
 	}
 
 	@Override
@@ -123,11 +139,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberlist;
 	}
 
-	@Override
-	public Member updateMemberTell(Member member) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public int updateMember(Member member) {
@@ -135,17 +147,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.updateMember(member);
 	}
 
-	/*
-	 * @Override public void Memberinfo(Member member, String memberId) {
-	 * member.setMemberId(memberId);
-	 * 
-	 * member.setMemberPhone(member.getMemberPhone());
-	 * 
-	 * memberRepository.updateMember(member);
-	 * 
-	 * 
-	 * }
-	 */
+	
 
 	@Override
 	public List<Member> findMember() {
@@ -161,7 +163,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member memberView(String memberId) {
+	public Member getMember(String memberId) {
 
 		return memberRepository.memberView(memberId);
 	}
@@ -174,6 +176,43 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.updateMember(member);
 
 	}
+	@Override
+	public int leaveMember(Member member) {
+		
+	return memberRepository.leaveMember(member);
+	}
+
+
+	@Override
+	public int adminMemberModify(Member member) {
+		
+		return memberRepository.adminModify(member);
+		
+	}
+	
+	//X
+	@Override
+	public Member findId(Member member,String email) {
+		
+		System.out.println("서비스impl 이메일" +email);
+		System.out.println("서비스impl 멤버 " +member);
+		member.setMemberEmail(email);
+		
+		return memberRepository.findId(member);
+	}
+	
+	@Override
+	public int restoreMember(Member member) {
+		
+		
+		return memberRepository.restoreMember(member);
+	}
+
+	
+	
+
+
+	
 
 	// ============================================소셜로그인============================================
 	@Override
@@ -190,6 +229,11 @@ public class MemberServiceImpl implements MemberService {
 		Map<String, String> profile = naverUtil.getProfileMap(tokenMap.get("token_type"), tokenMap.get("access_token"));
 		return profile;
 	}
+
+	
+
+	
+
 
 	
 

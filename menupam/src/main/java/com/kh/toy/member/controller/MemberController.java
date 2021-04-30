@@ -35,6 +35,8 @@ import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.member.validator.MemberValidator;
 import com.kh.toy.shop.model.vo.Shop;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 //1. 해당 클래스를 applicationContext에 빈으로 등록
 //2. Controller와 관련된 annotation을 사용할 수 있게 해준다.
 //	 @RequestMapping : 컨트롤러의 메서드와 매핑시킬 요청 url을 지정, http method 상관없음
@@ -82,36 +84,52 @@ public class MemberController {
 		webDataBinder.addValidators(memberValidator);
 	}
 
-	// view를 지정하는 방법
-	// 1. ModelAndView 객체를 만들어서 setViewName 메서드에 view 경로를 지정하고 객체를 리턴
-	// 2. view 경로를 반환
-	// 3. 아무것도 반환하지 않을 경우, 요청 url을 view 경로로 지정
+	
+	//==========================================================================================================
 	@GetMapping("join")
 	public void member() {
 	};
+
+	
+	//==========================================================================================================
+
+	@GetMapping("ceojoin")
+	public void ceomember(){
+		
+	};
+	//==========================================================================================================
 
 	@GetMapping("idcheck")
 	@ResponseBody
 	public String idcheck(String memberId) {
 		if (memberService.selectMemberById(memberId) != null) {
+			
 			return "fail";
 		}
 
 		return "success";
 	}
 
+	//==========================================================================================================
+
+	
+	//==========================================================================================================
+
 	@PostMapping("mailauth")
 	public String authenticateEmail(@Valid Member persistInfo, Errors error // 반드시 @Valid 변수 바로 뒤에 작성
 			, HttpSession session, Model model) {
 
 		if (error.hasErrors()) {
-			System.out.println(persistInfo);
+			System.out.println("persi : " + persistInfo);
 			System.out.println("===================================");
 			System.out.println("validator error" + error);
 
 			return "member/join";
 		}
-
+		
+		System.out.println("persi : " + persistInfo);
+		System.out.println("===================================");
+		
 		String authPath = UUID.randomUUID().toString();
 
 		// session에 persistInfo 저장
@@ -128,6 +146,11 @@ public class MemberController {
 		return "common/result";
 	}
 
+	//==========================================================================================================
+
+	
+	//==========================================================================================================
+
 	@GetMapping("joinimpl/{authPath}")
 	public String joinImpl(HttpSession session, @PathVariable String authPath,
 			@SessionAttribute("authPath") String sessionPath, @SessionAttribute("persistInfo") Member persistInfo,
@@ -143,6 +166,25 @@ public class MemberController {
 		session.removeAttribute("persistInfo");
 		return "common/result";
 	}
+	//==========================================================================================================
+	@GetMapping("ceojoinimpl/{authPath}")
+	public String ceojoinImpl(HttpSession session, @PathVariable String authPath,
+			@SessionAttribute("authPath") String sessionPath, @SessionAttribute("persistInfo") Member persistInfo,
+			Model model) {
+		logger.info("authPath : " + authPath);
+		
+		if (!authPath.equals(sessionPath)) {
+			throw new ToAlertException(ErrorCode.AUTH02);
+		}
+
+		memberService.insertCeo(persistInfo);
+		model.addAttribute("msg", "회원가입이 완료되었습니다.");
+		model.addAttribute("url", "/index");
+		session.removeAttribute("persistInfo");
+		return "common/result";
+	}
+	
+	//==========================================================================================================
 
 	@GetMapping("login")
 	public void login(HttpSession session) {
@@ -151,6 +193,11 @@ public class MemberController {
 		session.setAttribute("state", state);
 		
 	};
+	//==========================================================================================================
+
+	
+	
+	//==========================================================================================================
 
 	@PostMapping("loginimpl")
 	@ResponseBody
@@ -165,14 +212,18 @@ public class MemberController {
 		session.setAttribute("userInfo", userInfo);
 		return "success";
 	}
+	//==========================================================================================================
 
+	
+	
+	//로그아웃====================================================
 	@GetMapping("logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("userInfo");
 		// redirect 사용해보기
 		return "redirect:/index";
 	}
-
+//==========================================================================================================
 	// 마이페이지
 	@GetMapping("mypage")
 	public String myPage() {
@@ -188,6 +239,9 @@ public class MemberController {
 	@GetMapping("mypage/reservation")
 	public void reservation() {
 	};
+	//==========================================================================================================
+
+	//회원 목록==========================================================================================================
 
 	@GetMapping("adminList")
 	public String selectMemberList(@RequestParam(defaultValue = "1") int page, Model model) {
@@ -196,31 +250,11 @@ public class MemberController {
 
 		return "member/adminList";
 	};
+	//==========================================================================================================
 
-	// 휴대폰 번호 수정 기능
-
-	// 1.사용자가 자기 연락처를 다시적고 어떤 버튼을 누른다.
-	// 2. 다시적은 연락처 (ex.10321031) 버튼을 누르면 어디로보낼까
-	// localhost:9090/member/modify?memberid=kim1&memberPhone=0312032103
-	// 3. ~~~~
-	// 4. dao update
-
-	/*
-	 * @GetMapping("tellmodify") public String memberModify(String
-	 * memberPhone,String memberId, Member member ,Model model){
-	 * 
-	 * 
-	 * 
-	 * 
-	 * memberService.updateMember(member); //전화번호 수정
-	 * model.addAttribute(memberService.selectMemberById(member.getMemberId()));
-	 * model.addAttribute("membermodify",member);
-	 * 
-	 * 
-	 * return "member/mypage/mypage";
-	 * 
-	 * }
-	 */
+	
+	
+	// Xㄴ==========================================================================================================
 
 	@PostMapping("selectUserInfo")
 	@ResponseBody
@@ -233,44 +267,37 @@ public class MemberController {
 
 	}
 
-	@PostMapping("updateMember")
-	public String updateMember(String userMember, Member member, HttpSession session, Model model) {
+	//==========================================================================================================
 
-		int updatePhone = memberService.updateMember(member);
-
-		logger.info("update폰?" + updatePhone);
-
-		memberService.updateMember(member);
-
-		logger.info("updateMember??" + member);
-
-		return "redirect:/index";
-
-	}
-
-	/*
-	 * @GetMapping("adminmodify") public String modify(Member member,String
-	 * memberId) {
-	 * 
-	 * memberService.selectMemberById(memberId);
-	 * 
-	 * 
-	 * 
-	 * return "member/adminlist"; }
-	 */
+	
+	
+	//==========================================================================================================
 
 	// 회원 정보 상세 조회
-	@RequestMapping("memberview")
+	//@PostMapping("memberview")
+	@RequestMapping(value="detail", method = {RequestMethod.GET,RequestMethod.POST})
 	public String memberView(String memberId, Model model) {
+		
+		Member member = memberService.getMember(memberId);
+		
+		model.addAttribute("member", member);
 
-		model.addAttribute("member", memberService.memberView(memberId));
-
-		logger.info("memberview" + model);
-		// 로그
-
+		logger.info("model : " + model);
+		
+		logger.info("Id : " + memberId);
+		
+		logger.info("memberView" + member);
 		return "member/memberview";
 	}
+	
+	@GetMapping("detailview")
+	public String detailView() {
+		return "member/memberview";
+	}
+	//==========================================================================================================
 
+	//마이페이지 -> 사용자 번호 수정==========================================================================================================
+	
 	// 2
 	@PostMapping("modify")
 	public String modify(String phone, @SessionAttribute("userInfo") Member userInfo, Model model) {
@@ -279,5 +306,60 @@ public class MemberController {
 
 		return "member/mypage/mypage";
 	}
+	//==========================================================================================================
+	//관리자 회원상세 -> 정보 수정
+	@PostMapping("adminmodify")
+	public String adminModify(Member member,Model model) {
+		logger.info("모델 : " + model);
+		memberService.adminMemberModify(member);
+		logger.info("멤버 : " + member);
+		
+		return "member/memberview";
+	}
+	//==========================================================================================================
+	// ID
+	//@PostMapping("findid")
+	@RequestMapping(value="findIdForm", method = {RequestMethod.GET,RequestMethod.POST})
+	public String findIdForm() {
+		return "member/findIdForm";
+	}
+	
+	
+	
+	@RequestMapping(value = "findId", method = { RequestMethod.GET, RequestMethod.POST })
+	public String findId(String email, Member member, Model model) {
 
+		// model.addAttribute("memberId", memberService.findId(member, email));
+		System.out.println("컨트롤러 모델" + model);
+		System.out.println("컨트롤러 이메일 : " + email);
+
+		memberService.findId(member, email);
+
+		System.out.println("컨트롤러 member : " + member);
+
+		return "member/findId";
+	}
+
+	 //@PostMapping("memberLeave")
+	 @RequestMapping(value = "memberLeave", method = { RequestMethod.GET, RequestMethod.POST })
+	 public String leaveMember(Member member) {
+		 System.out.println("memberLeave 실행 : " + member);
+		
+		 memberService.leaveMember(member);
+		 
+		 
+		 return "member/memberview";
+		 
+		
+	 }
+	 
+	 @RequestMapping(value = "memberRestore", method = { RequestMethod.GET, RequestMethod.POST })
+	 public String restoreMember(Member member) {
+		 
+		 System.out.println("memberRestore 실행 : " + member);
+		 
+		 memberService.restoreMember(member);
+		 return "member/memberview";
+	 }
+	
 }

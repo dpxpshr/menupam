@@ -43,6 +43,7 @@
 	            <span class="fa fa-user"></span>
 	            <input type="text" class="id" id="id" name="memberId" required placeholder="아이디" required="required">
 	            <input type="button" id="id_btn" value="확인" onclick='idCheck()'>
+	           
 	            <span class="valid_info" id="id_check"></span>
 	          </div>
 	          <div class="field space">
@@ -64,7 +65,7 @@
 	          <div class="field space">
 	            <span class="fas fa-mobile-alt"></span>
 	            <input type="tel" class="name" id="Phone" name="memberPhone" required placeholder="전화번호" required="required">
-	            <button type="button" onclick="phoneAuth()">인증</button>
+	          
 	         	<form:errors path="tell" cssClass="valid_info"/>
 	          </div>
 	          

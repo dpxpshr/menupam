@@ -54,8 +54,10 @@
 								<img alt="" src="../../../resources/images/naverBtn.PNG" class="fitImg">
 							</div>
 						</div>
-						<div class="signup">아이디 찾기 | 비밀번호 찾기 | 
+						<div class="signup"><a href="${context}/member/findIdForm">아이디 찾기</a> | 비밀번호 찾기 | 
 							<a href="/member/join">회원가입</a>
+							<br>
+							<a href="/member/ceojoin">사장님회원가입</a>
 	        			</div>
 	          		</div>
 				</div>

@@ -11,10 +11,14 @@ import com.kh.toy.shop.model.vo.Shop;
 public interface MemberService {
 
 	Member selectMemberById(String MemberId);
+	
+	Member selectMemberEmail(String memberEmail);
 
 	void authenticateEmail(Member persistUser, String authPath);
 
 	int insertMember(Member member);
+	
+	int insertCeo(Member member);
 
 	Member authenticateUser(Member member);
 
@@ -26,11 +30,10 @@ public interface MemberService {
 
 	List<Member> findMember();
 
-	Member updateMemberTell(Member member);
 
 	int updateMember(Member member);
 
-	Member memberView(String memberId);
+	Member getMember(String memberId);
 
 	void MemberInfoModify(Member member, String phone);
 
@@ -39,5 +42,13 @@ public interface MemberService {
 	Map<String, Object> getKakaoMemberData(String code);
 	
 	Map<String, String> getNaverMemberData(String code, String state);
+
+	int adminMemberModify(Member member);
+	
+	Member findId(Member member,String email);
+	
+	int leaveMember(Member member);
+	
+	int restoreMember(Member member);
 
 }

@@ -37,6 +37,8 @@ public class Member {
 	private String memberEmail;
 	private Date memberRegDate;
 	private Date memberLeaveDate;
+	private String companyNum;
+	
 	
 	
 	
@@ -93,12 +95,20 @@ public class Member {
 		this.memberRegDate = memberRegDate;
 	}
 	
+	public String getCompanyNum() {
+		return companyNum;
+	}
+	public void setCompanyNum(String companyNum) {
+		this.companyNum = companyNum;
+	}
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberType=" + memberType + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
-				+ ", memberLeaveDate=" + memberLeaveDate + ", memberRegDate=" + memberRegDate + "]";
+				+ ", memberRegDate=" + memberRegDate + ", memberLeaveDate=" + memberLeaveDate + ", companyNum="
+				+ companyNum + "]";
 	}
 	
+
 
 }
