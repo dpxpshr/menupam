@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
+import com.kh.toy.notification.model.repository.NotificationRepository;
 import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.waiting.model.repository.WaitingRepository;
 import com.kh.toy.waiting.model.vo.Waiting;
@@ -16,9 +17,11 @@ import com.kh.toy.waiting.model.vo.Waiting;
 public class WaitingServiceImpl implements WaitingService {
 
 	private final WaitingRepository waitingRepository;
+	private final NotificationRepository notificationRepository;
 	
-	public WaitingServiceImpl(WaitingRepository waitingRepository) {
+	public WaitingServiceImpl(WaitingRepository waitingRepository, NotificationRepository notificationRepository) {
 		this.waitingRepository = waitingRepository;
+		this.notificationRepository = notificationRepository;
 	}
 
 	@Override
@@ -28,7 +31,14 @@ public class WaitingServiceImpl implements WaitingService {
 
 	@Override
 	public int insertWaiting(Waiting waiting) {
-		return waitingRepository.insertWaiting(waiting);
+		
+		if(waitingRepository.insertWaiting(waiting)==1) {
+			Shop shop = waitingRepository.selectShopByShopIdx(waiting.getShopIdx());
+			notificationRepository.insertNotification(shop.getMemberId(), shop.getShopName()+" 새로운 대기손님이 있습니다!", "/waiting/list?shopIdx="+shop.getShopIdx());
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 
 	@Override

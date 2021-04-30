@@ -35,13 +35,13 @@ public class EchoHandler extends TextWebSocketHandler{
 		userSessionMap.remove(session.getId());
 	}
 	
-	@Override
+	@Override //메시지가 도착하는곳
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		String msg = message.getPayload();
 		String[] strs = msg.split(",");
 		//String notificationType = strs[0];
-		String receiveId = strs[0];
+		String receiveId = strs[0]; //lee5031207
 		String content = strs[1];
 		String link = strs[2];
 		

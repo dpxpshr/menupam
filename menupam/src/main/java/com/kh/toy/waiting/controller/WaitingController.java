@@ -58,12 +58,12 @@ public class WaitingController {
 			String content = "[메뉴팜] "+shop.getShopName()+" 대기 등록 완료\n예상 대기 시간 : "+estimatedTime+"분\n"
 					+ "내 앞 대기팀 : "+waitCount+"팀";
 			//sms.sendSMS(waiting.getWaitPhone(), content);
-					
-				//javascript.jsp sendNotification이 안됨
-		return "success";		
-	}else {
-		return "fail";
-	}
+			//javascript.jsp sendNotification이 안됨
+			
+			return "success";		
+		}else {
+			return "fail";
+		}
 								
 			
 		
