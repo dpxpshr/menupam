@@ -10,16 +10,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/payment.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <header class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </header>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
         <section class="main">
             <div class="paymentTop">${shop.shopName} 주문 정보</div>
             <div class="paymentInfo">
@@ -48,14 +39,11 @@
         </section>
         <button class="discard" onclick="discard()">주문취소</button>
         <button class="payments" onclick="pay()">결제하기</button>
-        <footer class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></div>
-            <div><i class="far fa-user"></i></div>
-        </footer> 
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+        
+        
     </div>
+    <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
     <c:if test="${changed != null}">
 	    <script type="text/javascript">
 	    	alert("아직 결제하지 않은 정보가 있어, 장바구니의 정보가 교체되었습니다.");

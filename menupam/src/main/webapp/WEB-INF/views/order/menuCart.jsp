@@ -10,16 +10,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/menuCart.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <header class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </header>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
         <section class="main">
         	<!-- 사용자 session에 저장된 메뉴정보를 출력하고 수량추가 or 제거를 할 수 있는 화면-->
         	<!-- 
@@ -58,7 +49,7 @@
 
         <button class="menuOrder" onclick="payment()">주문하기</button>
         
-       
+       	<%@ include file="/WEB-INF/views/include/javascript.jsp" %>
         <script type="text/javascript">
         	document.querySelector(".shopName").addEventListener("click",()=>{
         		location.href="/order/menuview?shopIdx=${shop.shopIdx}"

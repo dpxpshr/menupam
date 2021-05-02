@@ -13,17 +13,8 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/login.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </div>
-        <div class="main">
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
+	<div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
 	        	<div class="bg-img">
@@ -39,27 +30,18 @@
 				</div>
 			</div>
         </div>
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
-            <div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
-       
-        </div> 
-    </div> 
-
+	<%@ include file="/WEB-INF/views/include/footer.jsp" %>
+<%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 <script type="text/javascript">
 let mypage = () => {
 	var memberIdinfo = '${sessionScope.userInfo.memberId}';
 	if(memberIdinfo != ''){
-	location.href = "${context}/member/mypage";
-		
+		location.href = "${context}/member/mypage";
 	}else{
 		location.href = "${context}/member/login";
 	}
-	
 }
+
 	let login = () => {
 		
 		const url = '/member/loginimpl';

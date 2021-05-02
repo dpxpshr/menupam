@@ -13,6 +13,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/login.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
 <body>
     <div class="wrapper">
         <div class="header">
@@ -45,17 +46,10 @@
 			</div>
         </div>
         </form>
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
-            <div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
-       
-        </div> 
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div> 
 
-
+<%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 <script type="text/javascript">
 /* $(document).ready(function(){
 	$("#pwbtn").click(function(){

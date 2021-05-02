@@ -13,16 +13,7 @@
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </div>
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
@@ -86,15 +77,9 @@
         </div>
        
         
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></div>
-            <div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
-        </div> 
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div> 
-    
+    <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
     <script src="/resources/js/shop/tableDetail.js"></script>
    
     

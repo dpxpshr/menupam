@@ -318,17 +318,6 @@ window.onload = function(){
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//==============[reservationList.jsp 에서 예약 내역 생성하는 메서드]==============
 	let makeReservBox = (reserName, reserParty, reserDate, reserIdx, reserPhone, reserComment, memberId) => {
 	//let makeReservBox = (json) => {

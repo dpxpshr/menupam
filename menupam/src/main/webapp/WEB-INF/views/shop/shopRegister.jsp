@@ -11,18 +11,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='/resources/css/shopRegister.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="search">
-                <i class="fas fa-search"></i>
-            </div>
-            <div class="notice">
-                <i class="far fa-clipboard"></i>
-            </div>
-        </div>
-        
-
+<%@ include file="/WEB-INF/views/include/notification.jsp" %>
         <form:form modelAttribute="shop" 
         	action="${context}/shop/shopInfo" id="registShop" method="post" enctype="multipart/form-data">
         	<div class="main">
@@ -116,13 +105,7 @@
             </div>
         </form:form>
        
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></div>
-            <div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
-        </div> 
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div> 
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -130,6 +113,6 @@
     <script src="/resources/js/shop/shopRegister.js"></script>
     <script src="/resources/js/shop/kakaoMapAPI.js"></script>
     	
-   
+<%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 </body>
 </html>

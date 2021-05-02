@@ -64,7 +64,7 @@
 	<select id="selectShop" resultType="map">
 	select tb_shop.shop_name, tb_shop.shop_tell, tb_reservation.reser_idx, 
 	tb_reservation.reser_date , tb_reservation.reser_party,
-	 tb_reservation.reser_comment,tb_reservation.reser_state
+	tb_reservation.reser_comment,tb_reservation.reser_state
 	from tb_shop 
 	left outer join tb_reservation using(shop_idx)
 	where tb_shop.member_id = #{memberId}

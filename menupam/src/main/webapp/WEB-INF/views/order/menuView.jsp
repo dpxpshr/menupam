@@ -10,7 +10,6 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/menuView.css'>
     <link rel="stylesheet" href="../../../resources/slick/slick.css">
 	<link rel="stylesheet" href="../../../resources/slick/slick-theme.css">
-    
 </head>
 <body>
     <div class="wrapper">
@@ -70,6 +69,7 @@
             <div><i class="far fa-user"></i></div>
         </footer> 
     </div>
+    <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
     <script type="text/javascript">
     	document.querySelector(".menuCart").addEventListener("click",()=>{
     		location.href="/order/menucart?shopIdx=${shop.shopIdx}";

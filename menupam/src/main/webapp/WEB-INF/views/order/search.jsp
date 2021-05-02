@@ -12,7 +12,6 @@
 </head>
 <body>
     <div class="wrapper">
-    	
         <header class="header">
         	<div class="search">
         		<i class="fas fa-search"></i>
@@ -24,8 +23,6 @@
             <div class="myPosition">
             	<a><span style="color:#F2BB13"><i class="fas fa-crosshairs"></i> 내 주변 검색 하기</span></a>
             </div>
-            
-            
         </section>
         <footer class="footer">
             <div><i class="fas fa-search"></i></div>
@@ -35,6 +32,7 @@
             <div><i class="far fa-user"></i></div>
         </footer> 
     </div> 
+    <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
 	<script type="text/javascript">
 			let latlng = ()=>{ //현재 좌표값을 먼저 구한다
 				return new Promise((resolve,reject)=>{

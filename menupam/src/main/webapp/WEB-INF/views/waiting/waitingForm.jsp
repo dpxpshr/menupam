@@ -56,13 +56,7 @@
 	            </div>
             </div>
         </div>
-        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></div>
-            <div><i class="far fa-user"></i></div>
-        </div> 
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div> 
 </body>
 <%@ include file="/WEB-INF/views/include/javascript.jsp" %>

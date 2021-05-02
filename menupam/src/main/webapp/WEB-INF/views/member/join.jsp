@@ -91,12 +91,12 @@
      
      
        <div class="footer">
-            <div><i class="fas fa-search"></i></div>
-            <div><i class="fas fa-qrcode"></i></div>
-            <div><i class="fas fa-home"></i></div>
-            <div><i class="far fa-clipboard"></i></i></div>
-            <div><i class="far fa-user"></i></div>
-        </div> 
+		    <div onclick="location.href='/order/shoplist'"><i class="fas fa-search"></i></div>
+		    <div onclick="location.href='/index'"><i class="fas fa-qrcode"></i></div>
+		    <div onclick="location.href='/index'"><i class="fas fa-home"></i></div>
+		    <div onclick="location.href='/index'"><i class="far fa-clipboard"></i></div>
+		    <div onclick="location.href='/member/login'"><i class="far fa-user"></i></div>
+		 </div>
        
     </div> 
 
