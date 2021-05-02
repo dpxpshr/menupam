@@ -134,7 +134,7 @@
 					row.className = "shopList_tr";
 					
 					let image = document.createElement("td");
-					image.className = "shopList_img"
+					image.className = "shopList_img" /* 사진 경로 작성 */
 					
 					let name = document.createElement("td");
 					name.className = "shopList_name";
