@@ -156,5 +156,6 @@ div.paging{
 	<c:if test="${sessionScope.userInfo.memberType!='MT20'}">
 	<h1>관리자 페이지는 관리자만 조회 가능합니다.</h1>
 	</c:if>
+	<a  href="${context}/member/mypage"><button  style="width:15%; height:50px; background-color:skyblue;margin-left:38%; margin-top:50px;">뒤로가기</button></a>
 </body>
 </html>

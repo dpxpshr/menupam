@@ -68,12 +68,24 @@
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
             <div><i class="far fa-clipboard"></i></i></div>
-            <div><i class="far fa-user"></i></div>
+            	<div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
         </div> 
     </div> 
 
 <script type="text/javascript">
 	
+	
+	
+let mypage = () => {
+	var memberIdinfo = '${sessionScope.userInfo.memberId}';
+	if(memberIdinfo != ''){
+	location.href = "${context}/member/mypage";
+		
+	}else{
+		location.href = "${context}/member/login";
+	}
+	
+}
 	let login = () => {
 		
 		const url = '/member/loginimpl';

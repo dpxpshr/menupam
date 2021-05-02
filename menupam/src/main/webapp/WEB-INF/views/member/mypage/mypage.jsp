@@ -44,7 +44,7 @@
 						<br>
 						<div class="buttonBox">
 							<div class="manageBtn  border">
-								<a href="${context}/member/mypage/mypage">
+								<a href="${context}/member/mypage">
 									<div class="manageBtnIcon">
 										<i class="fas fa-id-card"></i>
 									</div>

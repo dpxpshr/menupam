@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ include file="/WEB-INF/views/include/head.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
 	        			 <form action="${context}/member/findId" method="post">
 						<label style="margin-bottom:20px;">이메일</label>
 						 <input type="text" id="memberEmail" name="email" style="background-color:skyblue; text-align: center;" >
-						<button type="submit" style="margin-top:30px;">찾기</button>
+						<button class="btnLarge" type="submit" style="margin-top:30px;" value="찾기">찾기</button>
 						 </form>
 	            	
 	            		</div>

@@ -78,16 +78,16 @@
 	                    </div>
 	                    <hr color="#F2BB13">
 	                    <c:choose>
-	                      <c:when test="${not empty shopst && shopst.RESER_STATE != '예약취소'}">
+	                      <c:when test="${not empty shopst && shopst.RESER_STATE != '예약취소' && sessionScope.userInfo.memberType != 'MT10'}">
 	                      
 	                    <div class="wrap_info">
 	                    	<div class="info">
 		                    	<div class="icon"><i class="fas fa-store"></i></div>
-		                    	<span id="reserv_info">가게 이름 : ${shopst.SHOP_NAME}</span>
+		                    	<span id="reserv_info" style="font-size:17px;">가게 이름 : ${shopst.SHOP_NAME}</span>
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-phone-volume"></i></div>
-		                    	<span id="reserv_info">매장 전화번호 : ${shopst.SHOP_TELL}</span>
+		                    	<span id="reserv_info" style="font-size:16px;">매장 전화번호 : ${shopst.SHOP_TELL}</span>
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-list-ol"></i></div>
