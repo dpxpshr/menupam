@@ -6,10 +6,26 @@
 <head>
 <style type="text/css">
 table {
-	width: 70%;
+	width: 375px;
 	height: 300px;
 	margin: auto;
 	text-align: center;
+	margin-top : 20px;
+	
+}
+#form{
+	margin-top : 20px;
+}
+
+.wrapperM{
+max-width: 375px;
+    margin: 0 auto;
+    width: 375px;
+    position: relative;
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 0 20px rgb(0 0 0 / 5%);
+	
 }
 
 </style>
@@ -27,14 +43,14 @@ table {
 </head>
 <body>
 	<br>
-
+<div class="wrapperM">
 	<p class="fontMedium" id="title">회원상세</p>
 	<br>
 	<div class="line"></div>
 	<br>
 	<c:choose>
 		<c:when test="${sessionScope.userInfo.memberType=='MT20'}">
-			<form name="form" method="post">
+			<form id="form" name="form" method="post">
 				<table border="1">
 					<tr>
 						<td>ID</td>
@@ -87,8 +103,8 @@ table {
 						</c:if>
 					</tr>
 					<c:if test="${not empty member.memberLeaveDate}">
-						<td>회원 탈퇴일</td>
-						<td><input name="memberLeaveDate"
+						<td>탈퇴일</td>
+						<td><input name="memberLeaveDate" style="margin-left:40px; width:150px;"
 							value="${member.memberLeaveDate}"> <input type="submit"
 							class="btnsmall" value="복구"
 							id ="restorebtn">
@@ -98,12 +114,14 @@ table {
 					</c:if>
 
 
-
+			
 
 				</table>
+					<br><br><br><br>
 				<div class="line" id="Linediv">
 				<input id="upbtn" type="submit" value="정보 수정 완료"
 						class="btnLarge width100">
+						
 				</div>
 			</form>
 		</c:when>
@@ -115,7 +133,7 @@ table {
 		<h1>회원 상세 페이지는 관리자만 조회가 가능합니다.</h1>
 	</c:if>
 
-
+</div>
 	<script type="text/javascript">
 	/* 	$('#btn').('click',function(){
 		 	$('#linediv').load(location.href + '#linediv'); 

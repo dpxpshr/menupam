@@ -31,8 +31,9 @@
 	        			<div class="loginInline"></div>
 	        			<div class="field">
 	        			 <form action="${context}/member/findId" method="post">
-						<label>이메일</label> <input type="text" id="memberEmail" name="email" style="background-color: orange; text-align: center;" >
-						<button type="submit">찾기</button>
+						<label style="margin-bottom:20px;">이메일</label>
+						 <input type="text" id="memberEmail" name="email" style="background-color:skyblue; text-align: center;" >
+						<button type="submit" style="margin-top:30px;">찾기</button>
 						 </form>
 	            	
 	            		</div>

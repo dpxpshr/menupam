@@ -12,7 +12,9 @@ import org.apache.ibatis.annotations.Update;
 
 import com.kh.toy.common.util.paging.Paging;
 import com.kh.toy.member.model.vo.Member;
+import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.vo.Shop;
+import com.kh.toy.waiting.model.vo.Waiting;
 
 @Mapper
 public interface MemberRepository {
@@ -31,6 +33,9 @@ public interface MemberRepository {
 	
 	@Select("select * from tb_member where member_email = #{memberEmail}")
 	Member selectMemberEmail(String memberEmail);
+	
+	@Select("select NVL(COUNT(*),0) from tb_member where member_email = #{memberEmail}")
+	int selectMemberEmailCheck(String memberEmail);
 	
 	// @Select("select * from tb_member where member_id = #{memberId}") 뒤 and
 	// member_leave_date = null
@@ -73,7 +78,7 @@ public interface MemberRepository {
 	int adminModify(Member member);
 	
 	@Select ("select * from tb_member where member_email = #{memberEmail}")
-	Member findId(String email);
+	Member findId(String memberEmail);
 	@Select("select * from tb_member where member_id = #{memberId}")
 	Member findPw(String memberId);
 	
@@ -81,11 +86,23 @@ public interface MemberRepository {
 	
 	int leaveMember(Member member);
 	
+	int leaveUser(Member userInfo);
+	
 	int restoreMember(Member member);
 	
 	int modifyPw(Member member);
 	
-
+	int cancelReser(Member userInfo);
+	
+	@Select ("select * from tb_reservation where reser_idx = #{reserIdx}")
+	Reservation selectReser(String reserIdx);
+	@Select ("select * from tb_waiting where wait_idx = #{waitIdx}")
+	Waiting selectWait(String waitIdx);
+	@Select ("select * from tb_member where member_id = #{memberId}")
+	Member selectPw(String memberPw);
+	
+	int updateReser(Reservation reservation);
+	int updateWait(Waiting waiting);
 	
 	Map<String,Object> selectShop(String memberId);
 	Map<String,Object> selectWaiting(String memberId);

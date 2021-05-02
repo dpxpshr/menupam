@@ -12,7 +12,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/shopModify.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reservation.css'>
     <script src='main.js'></script>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
@@ -31,6 +30,7 @@
         <div class="main">
             <!--여기서 부터 코드 작성-->
             <div class="body">
+            <form name="form" method="post">
                 <div class="content">
                     <p class="fontMedium" id="title">마이페이지</p><br>
                     <div class="line"></div>
@@ -77,7 +77,9 @@
 	                    	</div>
 	                    </div>
 	                    <hr color="#F2BB13">
-	                      <c:if test="${not empty shopst}">
+	                    <c:choose>
+	                      <c:when test="${not empty shopst && shopst.RESER_STATE != '예약취소'}">
+	                      
 	                    <div class="wrap_info">
 	                    	<div class="info">
 		                    	<div class="icon"><i class="fas fa-store"></i></div>
@@ -89,11 +91,11 @@
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-list-ol"></i></div>
-		                    	<span id="reserv_info">예약 번호 :${shopst.RESER_IDX}  </span>
+		                    	<span class="reserv_num">예약 번호 :</span><span id="IdxNum">${shopst.RESER_IDX}</span>
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="far fa-clock"></i></div>
-		                    	<span id="reserv_info">예약 일시 : ${shopst.RESER_DATE} </span>
+		                    	<span id="reserv_info">예약 일시 : ${shopst.RESER_DATE}</span>
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-users"></i></div>
@@ -109,14 +111,19 @@
 		                    </div>
 		                   
 	                    </div>
-	                    </c:if>
-	                     <c:if test="${empty shopst}">
+	                     
+		                    	<input type="button" class="btnLarge" id="cancelReservation" value="예약 취소" >
+		                    
+	                    </c:when>
+	                     <c:otherwise>
 		                    	<h2>예약중인 주문이 없습니다.</h2>
-		                    </c:if>
-                    
+		                  </c:otherwise>
+		                 
+                    </c:choose>
                 </div>
             </div>
         </div>
+       </form>
         <div class="footer">
             <div><i class="fas fa-search"></i></div>
             <div><i class="fas fa-qrcode"></i></div>
@@ -125,6 +132,34 @@
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
-
+    <script type="text/javascript">
+    
+   /*  $(document).ready(function(){
+    	$("#reserbtn").click(function(){
+    		document.form.action = "${context}/member/reservation";
+    	});	
+    	$("#waitbtn").click(function(){
+    		document.form.action = "${context}/member/waiting";
+    	});	
+    	$("#mypagebtn").click(function(){
+    		document.form.action = "${context}/member/mypage";
+    	});	
+    	
+    	$("#modify").click(function(){
+    		document.form.action = "${context}/member/modify";
+    	});	
+    	$("#modifyPw").click(function(){
+    		document.form.action = "${context}/member/modifyPw";
+    	});	
+    	$("#userLeave").click(function(){
+    		document.form.action = "${context}/member/userLeave";
+    	});	
+    	$("#cancelReservation").click(function(){
+    		document.form.action = "${context}/member/cancelReservation";
+    	});
+    }); */
+   
+    </script>
+	<script src="/resources/js/member/reservation.js"></script>
 </body>
 </html>

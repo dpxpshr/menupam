@@ -32,6 +32,7 @@ import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.vo.Shop;
+import com.kh.toy.waiting.model.vo.Waiting;
 
 
 @Service
@@ -171,7 +172,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.memberView(memberId);
 	}
 
-	// 3
+	// 3 마이페이지 번호수정
 	@Override
 	public void MemberInfoModify(Member member, String phone) {
 
@@ -179,13 +180,20 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.updateMember(member);
 
 	}
+	//회원탈퇴 관리자
 	@Override
 	public int leaveMember(Member member) {
 		
 	return memberRepository.leaveMember(member);
 	}
-
-
+	//회원 탈퇴 마이페이지
+	@Override
+	public int leaveUser(Member userInfo) {
+		
+	return memberRepository.leaveUser(userInfo);
+	}
+	
+	//관리자 수정
 	@Override
 	public int adminMemberModify(Member member) {
 		
@@ -193,27 +201,27 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 	
-	//X
+	//id찾기
 	@Override
-	public Member findId(String email) {
+	public Member findId(String memberEmail) {
 		
-		System.out.println("서비스impl 이메일" +email);
+		System.out.println("서비스impl 이메일 : " +memberEmail);
 		
 		//이메일 정보 -> 멤버ID 조회 
-		return memberRepository.findId(email);
+		return memberRepository.findId(memberEmail);
 	}
-	
+	//pw찾기
 	@Override
 	public Member findPw(String memberId) {
 		
-		System.out.println("서비스impl userId"  + memberId );
+		System.out.println("서비스impl memberId : "  + memberId );
 		
 		
 		return memberRepository.findPw(memberId);
 	}
 	
 	
-	
+	//회원 복구
 	@Override
 	public int restoreMember(Member member) {
 		
@@ -222,7 +230,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	
+	//예약 현황
 	@Override
 	public Map<String, Object> selectshop(String memberId) {
 		
@@ -250,7 +258,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	
-	
+	//대기 현황
 	@Override
 	public Map<String, Object> selectwaiting(String memberId) {
 		
@@ -278,16 +286,18 @@ public class MemberServiceImpl implements MemberService {
 		Map<String, String> profile = naverUtil.getProfileMap(tokenMap.get("token_type"), tokenMap.get("access_token"));
 		return profile;
 	}
-
+	
+	
+	//패스워드 찾기
 	@Override
-	public void updatePw(Member member,String memberPw) {
+	public int updatePw(Member member ,String Pw) {
 		
-		member.setMemberPw(memberPw);
-		memberRepository.updatePw(member);
+		member.setMemberPw(Pw);
+		return memberRepository.updatePw(member);
 		
 		
 	}
-
+	//X
 	@Override
 	public void modifyPw(Member member, String Pw) {
 		
@@ -295,9 +305,65 @@ public class MemberServiceImpl implements MemberService {
 		
 		member.setMemberPw(Pw);
 		 memberRepository.modifyPw(member);
+		 
+	}
+	//이메일 체크
+	@Override
+	public int selectMemberEmailcheck(String memberEmail) {
+		
+		return memberRepository.selectMemberEmailCheck(memberEmail);
+	}
+	
+	//ㅊ
+	@Override
+	public int cancelReser(Member userInfo) {
+		
+		return memberRepository.cancelReser(userInfo);
+	}
+	//예약취소====================================================================================================================================
+	
+	@Override
+	public Reservation reserPass(String reserIdx) {
+		
+		// Reservation reservation을 매개변수로 받았었다 String reserIdx (O)
+		 
+		return memberRepository.selectReser(reserIdx);
+		
 	}
 	
 	
+	@Override
+	public int updateReser(Reservation reservation) {
+		//System.out.println("reservation" + reservation);
+		reservation.setReserState("예약취소");
+		
+		return memberRepository.updateReser(reservation);
+	}
+	//대기취소====================================================================================================================================
+	@Override
+	public Waiting selectWait(String waitIdx) {
+		System.out.println("waiting" + waitIdx);
+		
+		
+		return memberRepository.selectWait(waitIdx);
+	}
+	
+	@Override
+	public int updateWait(Waiting waiting) {
+		
+		//waiting DB에 넣을 값을 대기취소로 넣어줌
+		waiting.setWaitState("대기취소");
+		return memberRepository.updateWait(waiting);
+	}
+	
+	@Override
+	public Member selectPw(String memberId) {
+		System.out.println("memberId : " + memberId);
+		
+		
+		
+		return memberRepository.selectPw(memberId);
+	}
 
 	
 

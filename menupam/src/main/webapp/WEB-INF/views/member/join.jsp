@@ -56,11 +56,12 @@
 	            <span class="fas fa-unlock"></span>
 	            <input type="password" class="pw" id="pw2" name="pw2" required placeholder="PW 확인 영,특,숫포함 8글자이상" required="required">
 	          </div>
-	          <div class="field space">
+	            <div class="field space">
 	            <span class="far fa-envelope"></span>
-	            <input type="email" class="email" id="email" name="memberEmail" required placeholder="이메일 주소" required="required">
-	          	 
-	          	 <form:errors path="email" cssClass="valid_info"/>
+	            <input required oninput='emailCheckFlg()' style="width: 70%;" type="email" class="email" id="email" name="memberEmail" placeholder="이메일 주소">
+				<%--<input style="width: 10%;" type="button" id="email_btn" value="확인">--%>
+				  <span style="width: 20%; color: black;" class="valid_info" id="email_check">입력</span>
+	          	 <%--<form:errors path="email" cssClass="valid_info"/>--%>
 	          </div>
 	          <div class="field space">
 	            <span class="fas fa-mobile-alt"></span>
@@ -100,6 +101,40 @@
     </div> 
 
 <script type="text/javascript">
+
+
+var emailCheck = '0';
+function emailCheckFlg() {
+	let email = $('#email').val();
+	let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	$.ajax({
+		type:'GET',
+		data : {
+			email : email
+		},
+		url : "/member/emailCheck",
+		success : function(data) {
+			if($('#email').val()=="" && data=='0') {
+				email_check.innerHTML = '입력';
+				$("#email_check").css("color", "black");
+				emailCheck = 0;
+			} else if (data == '0') {
+				if(regExp.test(email)) {
+					email_check.innerHTML = '가능';
+					$("#email_check").css("color", "blue");
+					emailCheck = 1;
+				}else{
+					email_check.innerHTML = '불가';
+					$("#email_check").css("color", "red");
+				}
+			} else if (data <= 1) {
+				email_check.innerHTML = '중복';
+				$("#email_check").css("color", "red");
+				emailCheck = 0;
+			}
+		}
+	});
+}
    
 let idCheckFlg = false;
    let idCheck = () => {
@@ -145,7 +180,7 @@ let idCheckFlg = false;
 		   pw.value='';
 	   }
    });
-   
+  
    </script>
    
    

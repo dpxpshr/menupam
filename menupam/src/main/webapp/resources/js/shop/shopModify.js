@@ -6,6 +6,19 @@ function $(selector,text) {
 	return document.querySelector(selector);
 }
 
+
+
+
+let mypage = () => {
+	var memberIdinfo = '${sessionScope.userInfo.memberId}';
+	if(memberIdinfo != ''){
+	location.href = "${context}/member/mypage";
+		
+	}else{
+		location.href = "${context}/member/login";
+	}
+	
+}
 // 체크박스 전체 선택
 $('input[name="shopPackAble"]').addEventListener('click', (e)=>{
 	

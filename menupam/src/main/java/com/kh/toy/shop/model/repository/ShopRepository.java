@@ -65,7 +65,7 @@ public interface ShopRepository {
 	List<Menu> selectMenuList(String shopIdx);
 	
 	////// 메뉴 오더 //////
-	List<Map<String,Object>> selectMenuOrderList(String orderTableNum);
+	List<Map<String,Object>> selectMenuOrderList(Order order);
 	
 	int deleteSelectionMenuOrder(MenuOrdering menuOrdering);
 	

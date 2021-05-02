@@ -8,6 +8,17 @@ function $(selector,text) {
 	return document.querySelector(selector);
 } 
 
+
+let mypage = () => {
+	var memberIdinfo = '${sessionScope.userInfo.memberId}';
+	if(memberIdinfo != ''){
+	location.href = "${context}/member/mypage";
+		
+	}else{
+		location.href = "${context}/member/login";
+	}
+	
+}
 document.querySelectorAll(".menuCategory").forEach((e)=>{
     e.addEventListener("click", (event)=>{
         let menuItems = e.nextSibling.nextSibling;

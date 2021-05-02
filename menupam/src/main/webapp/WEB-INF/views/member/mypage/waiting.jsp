@@ -76,8 +76,8 @@ WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
 	                    </div>
 	                    <hr color="#F2BB13">
 	                    <div class="wrap_info">
-	                   
-	                    <c:if test="${not empty waitingst}">
+	                   <c:choose>
+	                    <c:when test="${waitingst.WAIT_STATE == '대기중'}">
 	                    	<div class="info">
 		                    	<div class="icon"><i class="fas fa-store"></i></div>
 		                    	<span id="waiting_info">가게 이름 : ${waitingst.SHOP_NAME} </span>
@@ -89,7 +89,7 @@ WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
 		                    
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-list-ol"></i></div>
-		                    	<span id="waiting_info">대기 번호 : ${waitingst.WAIT_IDX} </span>
+		                    	<span id="waiting_num">--   대기 번호 :</span> <span id="waitNum">${waitingst.WAIT_IDX}</span>
 		                    </div>
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-hourglass-half"></i></div>
@@ -99,12 +99,17 @@ WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
 		                    <div class="info">
 		                    	<div class="icon"><i class="fas fa-clipboard-check"></i></div>
 		                    	<span id="waiting_info">대기 상태 :${waitingst.WAIT_STATE} </span>
+		                   		
+		                   		
 		                    </div>
-		                    </c:if>
-		                   <c:if test="${empty waitingst}">
-		                    	<h2>대기중인 주문이 없습니다.</h2>
-		                    </c:if>
+		                    <br>
+		                    <input type="button" class="btnLarge" id="cancelReservation" value="대기 취소" >
 		                    
+		                    </c:when>
+		                   <c:otherwise>
+		                    	<h2>대기중인 주문이 없습니다.</h2>
+		                    </c:otherwise>
+		                    </c:choose>
 		                   
 	                    </div>
 	                    </div>
@@ -121,6 +126,6 @@ WAIT_REG_DATE : 대기열 등록 일자(시간?) -->
             <div><i class="far fa-user"></i></div>
         </div> 
     </div> 
-
+<script src="/resources/js/member/waiting.js"></script>
 </body>
 </html>

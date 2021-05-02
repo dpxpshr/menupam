@@ -34,8 +34,10 @@ import com.kh.toy.common.util.naver.NaverUtil;
 import com.kh.toy.member.model.service.MemberService;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.member.validator.MemberValidator;
+import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.service.ShopSerivce;
 import com.kh.toy.shop.model.vo.Shop;
+import com.kh.toy.waiting.model.vo.Waiting;
 
 import oracle.jdbc.proxy.annotation.Post;
 
@@ -94,13 +96,13 @@ public class MemberController {
 
 	
 	//==========================================================================================================
-
+	
 	@GetMapping("ceojoin")
 	public void ceomember(){
 		
 	};
 	//==========================================================================================================
-
+	//ID체크
 	@GetMapping("idcheck")
 	@ResponseBody
 	public String idcheck(String memberId) {
@@ -116,7 +118,7 @@ public class MemberController {
 
 	
 	//==========================================================================================================
-
+	//메일
 	@PostMapping("mailauth")
 	public String authenticateEmail(@Valid Member persistInfo, Errors error // 반드시 @Valid 변수 바로 뒤에 작성
 			, HttpSession session, Model model) {
@@ -152,7 +154,7 @@ public class MemberController {
 
 	
 	//==========================================================================================================
-
+	
 	@GetMapping("joinimpl/{authPath}")
 	public String joinImpl(HttpSession session, @PathVariable String authPath,
 			@SessionAttribute("authPath") String sessionPath, @SessionAttribute("persistInfo") Member persistInfo,
@@ -169,6 +171,7 @@ public class MemberController {
 		return "common/result";
 	}
 	//==========================================================================================================
+	//사장 회원가입
 	@GetMapping("ceojoinimpl/{authPath}")
 	public String ceojoinImpl(HttpSession session, @PathVariable String authPath,
 			@SessionAttribute("authPath") String sessionPath, @SessionAttribute("persistInfo") Member persistInfo,
@@ -187,7 +190,7 @@ public class MemberController {
 	}
 	
 	//==========================================================================================================
-
+	//로그인
 	@GetMapping("login")
 	public void login(HttpSession session) {
 		//Naver아이디로  로그인 사용
@@ -196,11 +199,17 @@ public class MemberController {
 		
 	};
 	//==========================================================================================================
+	//이메일 체크
+	@GetMapping("emailCheck")
+	@ResponseBody
+	public int emailCheck(String memberEmail, Model model) {
+		return memberService.selectMemberEmailcheck(memberEmail);
 
+	}
 	
 	
 	//==========================================================================================================
-
+	//로그인 
 	@PostMapping("loginimpl")
 	@ResponseBody
 	public String loginImpl(@RequestBody Member member, HttpSession session) {
@@ -226,18 +235,27 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("userInfo");
 		// redirect 사용해보기
-		return "redirect:/index";
+		return "redirect:/member/login";
 	}
 //==========================================================================================================
 	// 마이페이지
 	//@GetMapping("mypage")
 	@RequestMapping(value = "mypage", method = { RequestMethod.GET, RequestMethod.POST })
-	public String myPage() {
+	public String myPage(Model model,@SessionAttribute("userInfo") Member userInfo,HttpSession session) {
+		Map<String, Object> memberInfo = memberService.selectshop(userInfo.getMemberId());
+		  
+		  session.setAttribute("memberInfo", memberInfo);
+		  model.addAllAttributes(memberService.selectshop(userInfo.getMemberId()));
+		  model.addAttribute("member", memberInfo);
+		  
+	
+		  System.out.println("mbmerInfo : " + memberInfo);
 		return "member/mypage/mypage";
 	};
 
 	// 대기
-	@GetMapping("mypage/waiting")
+	@RequestMapping(value = "mypage/waiting", method = { RequestMethod.GET, RequestMethod.POST })
+	//@GetMapping("mypage/waiting")
 	public void waiting(@SessionAttribute("userInfo") Member userInfo
 			 ,HttpSession session,Model model) {
 		
@@ -254,7 +272,9 @@ public class MemberController {
 	};
 
 	// 예약확인
-	@GetMapping("mypage/reservation")
+	@RequestMapping(value = "mypage/reservation", method = { RequestMethod.GET, RequestMethod.POST })
+	
+	//@GetMapping("mypage/reservation")
 	public void reservation(@SessionAttribute("userInfo") Member userInfo
 			 ,HttpSession session,Model model) {
 		 Map<String, Object> memberInfo = memberService.selectshop(userInfo.getMemberId());
@@ -322,7 +342,7 @@ public class MemberController {
 		logger.info("memberView" + member);
 		return "member/memberview";
 	}
-	
+	// X
 	@GetMapping("detailview")
 	public String detailView() {
 		return "member/memberview";
@@ -354,13 +374,14 @@ public class MemberController {
 	//==========================================================================================================
 	// ID
 	//@PostMapping("findid")
+	//id찾기 폼
 	@RequestMapping(value="findIdForm", method = {RequestMethod.GET,RequestMethod.POST})
 	public String findIdForm() {
 		return "member/findIdForm";
 	}
 	
 	
-	
+	//id찾기 
 	@RequestMapping(value = "findId", method = {RequestMethod.GET, RequestMethod.POST})
 	public String findId(String email,Model model) {
 		
@@ -379,7 +400,7 @@ public class MemberController {
 
 		return "member/findId";
 	}
-
+	 //회원관리자 회원탈퇴
 	 //@PostMapping("memberLeave")
 	 @RequestMapping(value = "memberLeave", method = { RequestMethod.GET, RequestMethod.POST })
 	 public String leaveMember(Member member,Model model) {
@@ -392,7 +413,7 @@ public class MemberController {
 		 
 		
 	 }
-	 
+	 //회원관리자 회원복구
 	 @RequestMapping(value = "memberRestore", method = { RequestMethod.GET, RequestMethod.POST })
 	 public String restoreMember(Member member,Model model) {
 		 
@@ -440,37 +461,54 @@ public class MemberController {
 		 * 
 		 * }
 		 */
+	 //패스워드 찾기 폼
 	 @RequestMapping(value="findPwForm", method = {RequestMethod.GET,RequestMethod.POST})
 		public String findPwForm() {
 			return "member/findPwForm";
 		}
 	 
+	 //패스워드 찾기 
 	 @PostMapping("findPw")
-	 public String findPw(String memberId,Model model) {
+	 public String findPw(String memberEmail,Model model,String memberPw) {
 		 
-		 System.out.println("컨트롤러 호출");
-		 System.out.println( memberId +"유저 아이디");
-		 Member member = memberService.findPw(memberId);
+		 	
+		 	//System.out.println(memberEmail);
+		 	
+		 	Member member = memberService.findId(memberEmail);
 		 
-		 System.out.println("member 에 ?" + member);
-		 
-		 model.addAttribute("mem" ,member);
-		 
+		 	//System.out.println("컨트롤러 멤버" + member);
+			
+			  model.addAttribute("mem" ,member);
+			 
+				
 		 
 		 return "member/findPw";
 	 }
-	 @RequestMapping(value="updatePw", method = {RequestMethod.GET,RequestMethod.POST})
-	 //@PostMapping("updatePw")
-	 public String updatePw(Member member, Model model,String memberPw,String memberId) {
+	 //비밀번호 찾기 -> 변경 
+	 //@RequestMapping(value="updatePw", method = {RequestMethod.GET,RequestMethod.POST})
+	 @PostMapping("updatePw")
+	 public String updatePw(Member member, Model model,String Pw, String memberId ) {
 		 
-		 memberService.updatePw(member, memberPw);
+		 System.out.println("member 컨트롤러 : " + member); //1.All null 2. Pw not null 
 		 
-		 System.out.println(member);
-		 System.out.println(memberPw);
+		 Member memPw = memberService.selectPw(member.getMemberId()); 
+		 // Member memPw = memberService.selectPw(memberId);
+		 // memberService -> repository 셀렉트 = "select * from tb_member where member_id = #{memberId}" 
+		 // memberId로 tb_member 모든 정보를 호출 
+		 // jsp name=memberId 로 넘어온 스트링값 -> #{memberId} where 비교
+		 // == Member memPw = memberService.selectPw(member.getMemberId()); 
+		 // 똑같음 -/ getMemberPw()로 할 경우 Pw값으로 비교 할수 없어서 null  
+		 
+		 memberService.updatePw(member, Pw);
+		 
+		 System.out.println("member : " + memPw); // null
+		 
+		 System.out.println(Pw); //12312
 			
-		 return "member/login";
+			
+		 return "member/findPw";
 	 }
-	 //mypage modify
+	 //mypage 비밀번호 수정 
 	 @RequestMapping(value="modifyPw", method = {RequestMethod.GET,RequestMethod.POST})
 	public String modifyPw(String Pw,@SessionAttribute("userInfo") Member userInfo, Model model) {
 		 
@@ -483,6 +521,120 @@ public class MemberController {
 		 return "member/mypage/mypage";
 		
 	 }
+	 //마이페이지 회원탈퇴
+	 @RequestMapping(value = "userLeave", method = { RequestMethod.GET, RequestMethod.POST })
+	 public String leaveUser(@SessionAttribute("userInfo") Member userInfo,Model model,HttpSession session) {
+		 System.out.println("userLeave 실행 : " + userInfo);
+		
+		 memberService.leaveUser(userInfo);
+		 
+		 
+		 session.removeAttribute("userInfo");
+		
+			return "redirect:/index";
+		
+		 
+		
+	 }
 	 
+		
+		  @RequestMapping(value = "cancelReservation", method = { RequestMethod.GET,
+		  RequestMethod.POST }) public String cancelReservation(@SessionAttribute("userInfo") Member userInfo
+					 ,HttpSession session,Model model) {
+				/*
+				 * System.out.println("===========================================");
+				 * System.out.println("예약취소"); System.out.println("수정전 userInfo" + userInfo);
+				 */
+		  
+		  Map<String, Object> memberInfo = memberService.selectshop(userInfo.getMemberId());
+			
+			 session.setAttribute("memberInfo", memberInfo);
+			 model.addAllAttributes(memberService.selectshop(userInfo.getMemberId()));
+			 model.addAttribute("member", memberInfo);
+				/*
+				 * System.out.println("memberinfo : " +memberInfo); System.out.println("user : "
+				 * +userInfo); System.out.println("model : " +model);
+				 * System.out.println("mssstion : " +session);
+				 */
+			 memberService.cancelReser(userInfo);
+			 
+		  
+		  return "member/mypage/reservation"; 
+		  }
+		 
+		  
+		  @PostMapping("reserPass")
+		  @ResponseBody
+		  public String reserPass(@RequestBody Reservation reservation) {
+			  
+			  	
+			  
+			  Reservation reser = memberService.reserPass(reservation.getReserIdx());
+			  	
+			  if(reser != null) {
+				  memberService.updateReser(reser);
+					 
+				  //System.out.println("reserNum" + reservation);
+				  
+				  return "updateSuc";
+			  }
+			  
+				/* 
+				 * Reservation reser = memberService.reserPass(reservation);
+				 * = select * from tb_reservation
+					 where reser_Idx = 'reserIdx=R159, shopIdx=null, reserName=null, reserDate=null, reserRegDate=null, reserState=null, reserComment=null, reserParty=0, memberId=null, reserPhone=null';
+				 	필요한 정보 : 'R159' 결과 : reserIdx=R159, shopIdx=null, reserName=null, reserDate=null.....
+				 *  
+				 *  */
+			 System.out.println("reser" + reser);
+			 
+			  
+			  
+			  return "fail";
+  
+		  }
+		  
+		  @PostMapping("waitPass")
+		  @ResponseBody
+		  public String waitPass(@RequestBody Waiting waiting) {
+			  
+			  //wait -> waiting에 waitIdx =W99를 검색해 waiting 테이블 정보를 받아옴
+			  Waiting wait = memberService.selectWait(waiting.getWaitIdx());
+			  
+			  System.out.println("wait" + wait);
+			  // Waiting -> 현재 wait_idx W99 값 받아옴 
+			  System.out.println("wating num" + waiting);
+			  
+			  if(wait != null) {
+				  //waiting 테이블 정보를 업데이트 해줌
+				  memberService.updateWait(wait);
+				  System.out.println("========================================");
+				  System.out.println("wait : " +wait);
+				  return "waitSuc";
+			  }
+			  
+			  return "fail";
+		  
+		  
+		  }
+		  
+		  @PostMapping("shopIdx")
+		  public String shopIdx(Model model,@SessionAttribute("userInfo") Member userInfo,HttpSession session) {
+			  
+			  Map<String, Object> memberInfo = memberService.selectshop(userInfo.getMemberId());
+			  
+			  session.setAttribute("memberInfo", memberInfo);
+			  model.addAllAttributes(memberService.selectshop(userInfo.getMemberId()));
+			  model.addAttribute("member", memberInfo);
+			  
+		
+			  System.out.println("mbmerInfo : " + memberInfo);
+			  
+			  
+			  
+			  return "member/mypage/mypage";
+			  
+		  }
+		  
 	
 }

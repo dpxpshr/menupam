@@ -155,7 +155,7 @@
 					<!-- 1 -->
 						
 						<input style="margin-left:20px;" type="tel" id="phone" name="phone" required="required" value="${sessionScope.userInfo.memberPhone}"> 
-						<input type="submit" value="수정" id="modify" class="btnSmall">
+						<input type="submit" value="수정" id="modify" class="btnSmall"><br>
 						
 						
 					
@@ -166,12 +166,27 @@
 						<div><a href="${context}/member/adminList"> 회원 관리[관리자전용]</a></div>
 					</c:if>
 				</div>
-				<c:if test="${sessionScope.userInfo.memberType=='MT10'}">
-					<input type="button" class="btnMedium" onclick="handleOnClick()"
-					value="매장등록"/>
+				<c:if test="${sessionScope.userInfo.memberType=='MT10' && shopst.SHOP_NAME == null}">
+					<input type="button" class="btnLarge width100" onclick="handleOnClick()"
+					value="매장등록" style="margin-top:20px;"/>
 					<div id='result'/>
 				</c:if>
 				
+				<c:if test="${sessionScope.userInfo.memberType=='MT10' && shopst.SHOP_NAME != null} ">
+					<input type="button" class="btnLarge width100" onclick="handleOnClick()"
+					value="메뉴관리" style="margin-top:20px;"/>
+					<div id='result'/>
+				</c:if>
+				<br>
+				<div>
+				<c:if test="${shopst.SHOP_NAME != null}">
+				<input type="button" class="btnLarge width100" onclick="handleOnClick2()"
+					value="메뉴관리" style="margin-bottom:20px;"/>
+					<div id='result'/>
+				</c:if>
+				</div>
+				<input  type="submit" value="회원탈퇴" id="userLeave" class="btnLarge width100">
+			
 			</div>
 		</div>
 	</div>
@@ -194,6 +209,8 @@
 		<div>
 			<i class="far fa-user"></i>
 		</div>
+		
+		 
 	</div>
 	</div>
 
@@ -218,7 +235,15 @@
 	    	$("#modifyPw").click(function(){
 	    		document.form.action = "${context}/member/modifyPw";
 	    	});	
-	    	
+	    	$("#userLeave").click(function(){
+	    		document.form.action = "${context}/member/userLeave";
+	    	});	
+	    	$("#cancelReservation").click(function(){
+	    		document.form.action = "${context}/member/cancelReservation";
+	    	});
+	    	$("#shopIdx").click(function(){
+	    		document.form.action = "${context}/member/shopIdx";
+	    	});
 	    });
 	
  	
@@ -230,6 +255,16 @@
 	 
 	 if(like == true){
 		 location = "${context}/shop/shopRegister";
+	 }else{
+		 location = "${context}/member/mypage";
+	 }
+ }
+ function handleOnClick2() {
+	 let like = confirm("메뉴관리를 하시겠습니까?");
+	 document.getElementById('result').innerText = like;
+	 
+	 if(like == true){
+		 location = "${context}/shop/menuManage";
 	 }else{
 		 location = "${context}/member/mypage";
 	 }

@@ -85,7 +85,7 @@ public class ShopController {
 			shopService.shopLogoUpload(file, shop, uploadPath);
 			
 			model.addAttribute("msg", "매장등록이 완료 되었습니다.");
-			model.addAttribute("url", "/shop/menuManage");
+			model.addAttribute("url", "/index");
 		}else {
 			model.addAttribute("msg", "점주님 매장은 한개만 등록이 가능합니다.");
 			model.addAttribute("url", "/index");
@@ -217,7 +217,7 @@ public class ShopController {
 						,HttpSession session) {
 		
 		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
-		List<Map<String,Object>> menuOrders = shopService.selectMenuOrderList(orderTableNum);
+		List<Map<String,Object>> menuOrders = shopService.selectMenuOrderList(orderTableNum,shopInfo.getShopIdx());
 		int sum = 0;
 		int menuPrice = 0;
 		int menuCnt = 0 ;
@@ -277,8 +277,9 @@ public class ShopController {
 		
 		for (Order order : orderList) {
 			if(order.getOrderTableNum() != null) {
-				menuOrders = shopService.selectMenuOrderList(order.getOrderTableNum());
+				menuOrders = shopService.selectMenuOrderList(order.getOrderTableNum(), shopInfo.getShopIdx());
 				menuOrderListList.add(menuOrders); 
+				System.out.println("shopInfo : " + shopInfo);
 			}
 		}
 		

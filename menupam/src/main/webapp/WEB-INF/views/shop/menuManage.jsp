@@ -100,7 +100,7 @@
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
             <div><i class="far fa-clipboard"></i></div>
-            <div><i class="far fa-user"></i></div>
+            <div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
         </div> 
     </div> 
 
@@ -108,6 +108,17 @@
 
 </body>
 <script type="text/javascript">
+
+let mypage = () => {
+	var memberIdinfo = '${sessionScope.userInfo.memberId}';
+	if(memberIdinfo != ''){
+	location.href = "${context}/member/mypage";
+		
+	}else{
+		location.href = "${context}/member/login";
+	}
+	
+}
     document.querySelectorAll(".menuCategory").forEach((e)=>{
         e.addEventListener("click", (event)=>{
             let menuItems = e.nextSibling.nextSibling;

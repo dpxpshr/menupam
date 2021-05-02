@@ -6,14 +6,17 @@ import java.util.Map;
 
 import com.kh.toy.member.model.repository.MemberRepository;
 import com.kh.toy.member.model.vo.Member;
-
+import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.vo.Shop;
+import com.kh.toy.waiting.model.vo.Waiting;
 
 public interface MemberService {
 
 	Member selectMemberById(String MemberId);
 	
 	Member selectMemberEmail(String memberEmail);
+	
+	int selectMemberEmailcheck(String memberEmail);
 
 	void authenticateEmail(Member persistUser, String authPath);
 
@@ -46,10 +49,11 @@ public interface MemberService {
 
 	int adminMemberModify(Member member);
 	
-	Member findId(String email);
+	Member findId(String memberEmail);
 	
 	int leaveMember(Member member);
-	
+	int leaveUser(Member userInfo);
+	int cancelReser(Member userInfo);
 	int restoreMember(Member member);
 	
 	
@@ -59,8 +63,21 @@ public interface MemberService {
 	Map<String,Object> selectwaiting(String memberId);
 
 	Member findPw(String memberId);
-	void updatePw(Member member,String memberPw);
+	
+	int updatePw(Member member, String Pw);
 	
 	void modifyPw(Member member, String Pw);
+
+	Reservation reserPass(String reserIdx);
+	
+	int updateReser(Reservation reservation);
+
+	Waiting selectWait(String waitIdx);
+
+	int updateWait(Waiting waiting);
+	
+	Member selectPw(String memberPw);
+	
+	
 	
 }

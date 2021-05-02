@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.toy.member.model.repository.MemberRepository">
 		 
-
+	<!-- adminList 회원관리 리스트 -->
 	<select id="selectMemberList" resultType="member">
 		select *
 		from(
@@ -15,32 +15,23 @@
 		) where rnum between #{queryStart} and #{queryEnd}	
 	</select>
 
-	<select id="selectMemberAll" resultType="member">
-		SELECT * FROM TB_MEMBER
-	</select>
-
-	<!-- <select id="selectUserInfo" resultType="member" parameterType="string">
-		SELECT * FROM TB_MEMBER
-		WHERE MEMBER_ID = #{value}
-	</select> -->
 	
-	<!-- '%'||#%test#||'%' -->
-	<!-- 
-		<select id="memberView" resultType="member">
-		SELECT * FROM TB_MEMBER WHERE MEMBER_ID = #{memberId}
-		</select> -->
-		
+
+	
+	<!-- 마이페이지 폰 업데이트 -->
 	<update id="updateMember">
 		update tb_member
 		set member_phone = #{memberPhone}
 		where member_id = #{memberId}
 	</update>
+	<!-- 마이페이지 비번 업데이트 -->
 	<update id="updatePw">
 	update tb_member
 	set member_pw = #{memberPw}
 	where member_id = #{memberId}
 	</update>
 	<!-- ㅇㅋ -->
+	<!-- 관리자 회원정보 수정 -->
 	<update id="adminModify">
 		update tb_member
 		set member_pw = #{memberPw}
@@ -51,8 +42,14 @@
 		where member_id = #{memberId}
 	</update>
 	
-	
+	<!--  -->
 	<update id="leaveMember">
+		update tb_member
+		set member_leave_date = sysdate
+		where member_id = #{memberId}
+	</update>
+	
+	<update id="leaveUser">
 		update tb_member
 		set member_leave_date = sysdate
 		where member_id = #{memberId}
@@ -86,6 +83,26 @@
 	set member_pw = #{memberPw}
 	where member_id = #{memberId}
 	</update>
+	
+	<update id="cancelReser">
+	update tb_reservation
+	set reser_state = '예약취소'
+	where member_id = #{memberId}
+	
+	</update>
+	
+	<update id="updateReser">
+	update tb_reservation
+	set reser_state = #{reserState}
+	where reser_Idx = #{reserIdx}
+	</update>
+	
+	<update id="updateWait">
+	update tb_waiting
+	set wait_state = #{waitState}
+	where wait_idx = #{waitIdx}
+	</update>
+	
 	
 	
 </mapper>

@@ -83,7 +83,7 @@
             <div><i class="fas fa-qrcode"></i></div>
             <div><i class="fas fa-home"></i></div>
             <div><i class="far fa-clipboard"></i></div>
-            <div><i class="far fa-user"></i></div>
+            <div><a onclick="mypage()"><i class="far fa-user"></i></a></div>
         </div> 
     </div> 
     

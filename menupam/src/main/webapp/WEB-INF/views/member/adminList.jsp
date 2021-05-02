@@ -17,10 +17,11 @@
 	crossorigin="anonymous"></script>
 
 <style type="text/css">
-table{
+ table{
 	text-align: center;
 	
-    width:100%;
+    width:70%;
+    margin-left: 13%;
     height: 1000px;
 }
 th{
@@ -32,10 +33,57 @@ font-size:30px;
 
 
 div.paging{
-	margin-left: 40%;
+	margin-left: 42%;
 	color: orange;
-}
+} 
 
+/* .table {
+  table-layout:fixed;
+  width:100%;
+  text-align:center;
+}
+.table th { 
+  background:#ccc;
+}
+.table td, .table th {
+  padding:10px 20px;
+  border-top:1px solid #ccc;
+  word-break:break-all
+}
+@media screen and (max-width:768px) {
+  /*block*/
+  .table--block thead {
+    display:none;
+  }
+  .table--block tr {
+    display:block;
+    margin-bottom:10px;
+    border-top:none;
+  }
+  .table--block th, .table--block td {
+    display:block;
+    position:relative;
+    padding:10px 0;
+    padding-left:50%;
+    border-width:0 0 1px 0;
+  }
+
+  .table--block td:before {
+    display:block;
+    position:absolute;
+    left:0;
+    top:0;
+    width:50%;
+    padding:10px 0;
+    background:#ccc;
+  }
+  .table--block td:nth-child(1):before {content:'No';}
+  .table--block td:nth-child(2):before {content:'Name';}
+  .table--block td:nth-child(3):before {content:'Age';}
+  .table--block td:nth-child(4):before {content:'Job';}
+  .table--block td:nth-child(5):before {content:'Location';}
+}
+ */
 
 </style>
 
