@@ -41,6 +41,13 @@ public class AuthInterceptor implements HandlerInterceptor{
 					break;
 				}
 				break;
+			case "waiting":
+				switch (uriArr[2]) {
+				case "list" : if(session.getAttribute("userInfo") == null)
+								throw new ToAlertException(ErrorCode.AUTH01);
+				  	break;
+				}
+				break;
 			case "order" :
 				switch(uriArr[2]) {
 				case "payment" : if(session.getAttribute("userInfo") == null)

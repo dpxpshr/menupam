@@ -40,9 +40,10 @@
                         <input type="text" class="inputLarge" id="comment" name="reserComment" placeholder="ex) 창가쪽 자리로 주세요"><br><br><br>
                         <input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
                         <label for="" style="margin-left: 10px;">
-                            <input type="checkbox">
+                            <input type="checkbox" required>
                             개인 정보 수집 및 이용에 동의 합니다.
                         </label><br><br>
+                        <p class="fontXXSmall"> * 해당 점포로 부터 승인 문자 수신 시 예약이 완료됩니다.</p><br><br>
                         <button class="btnLarge" id="reserBtn" name="${shop.shopIdx}" style="margin-left: 10px;">
                             예약하기
                         </button>

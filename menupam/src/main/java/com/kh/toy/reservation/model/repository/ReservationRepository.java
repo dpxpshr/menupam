@@ -28,7 +28,7 @@ public interface ReservationRepository {
 	int insertRes(Reservation res);
 	
 	//예약요청리스트
-	@Select("SELECT * FROM TB_RESERVATION WHERE SHOP_IDX = #{shopIdx} AND RESER_STATE = '승인대기'")
+	@Select("SELECT * FROM TB_RESERVATION WHERE SHOP_IDX = #{shopIdx} AND RESER_STATE = '승인대기' ORDER BY RESER_REG_DATE")
 	List<Reservation> selectResRequeList(String shopIdx);
 	
 	@Update("update tb_reservation set reser_state = '승인완료' where reser_idx = #{reserIdx}")

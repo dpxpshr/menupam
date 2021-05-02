@@ -138,17 +138,4 @@ public class ReservationController {
 		
 	
 	
-	//(사장)usertype이 사장이고, 취소버튼 누르면 delete ->리스트에서 삭제 -> 손님 문자
-
-	//예약 검색(사장) - 일단 보류
-		
-	@PostMapping("searchByName")
-	public String searchByName(Reservation res, Member member) {
-		res.setReserName(member.getMemberName());
-		resService.searchByName(res, member);
-		
-		return null;
-	}
-
-	
 }

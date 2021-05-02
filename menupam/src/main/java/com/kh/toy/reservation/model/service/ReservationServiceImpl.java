@@ -23,11 +23,24 @@ public class ReservationServiceImpl implements ReservationService{
 		this.notificationRepository = notificationRepository;
 	}
 
-	//날짜별예약리스트 
+	//날짜별예약리스트 -- 이거 필요없는거 아님?
 	@Override
 	public List<Reservation> selectResListByDate(String reserDate) {
 		return null;
 		//return resRepository.selectResListByDate(reserDate);
+	}
+	
+	@Override
+	public Map<Integer, Reservation> getResMap(String shopIdx, String reserDate) {
+		//여기서 date를 DB형식에 맞게 들어갈 수 있게 만들어주고
+		Map<Integer, Reservation> resMap = new HashMap<Integer, Reservation>();
+		List<Reservation> resList = resRepository.selectResListByDate(shopIdx,reserDate);
+		
+		for(int i=0; i<resList.size(); i++) {
+			resMap.put(i, resList.get(i));
+		}
+		
+		return resMap;
 	}
 	
 	//예약 등록
@@ -51,12 +64,9 @@ public class ReservationServiceImpl implements ReservationService{
 		Reservation reservation = resRepository.selectReservationByReserIdx(reserIdx);
 		Shop shop = resRepository.selectShopByShopIdx(reservation.getShopIdx());
 		
-		
-		
 		notificationRepository.insertNotification(reservation.getMemberId(),
 													shop.getShopName()+" 예약 취소 되었습니다.",
 													"/member/mypage");
-		
 		
 		return resRepository.cancelRes(reserIdx);
 	}
@@ -100,28 +110,11 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<Reservation> searchByName(Reservation res, Member member) {
-		
-		return resRepository.searchByName(res, member);
-	}
-
-	@Override
 	public Shop selectShopByShopIdx(String shopIdx) {
 		return resRepository.selectShopByShopIdx(shopIdx);
 	}
 
-	@Override
-	public Map<Integer, Reservation> getResMap(String shopIdx, String reserDate) {
-		//여기서 date를 DB형식에 맞게 들어갈 수 있게 만들어주고
-		Map<Integer, Reservation> resMap = new HashMap<Integer, Reservation>();
-		List<Reservation> resList = resRepository.selectResListByDate(shopIdx,reserDate);
-		
-		for(int i=0; i<resList.size(); i++) {
-			resMap.put(i, resList.get(i));
-		}
-		
-		return resMap;
-	}
+	
 
 	
 	

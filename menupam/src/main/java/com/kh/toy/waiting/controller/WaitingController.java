@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kh.toy.common.sms.SMS;
+import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.review.model.service.ReviewService;
 import com.kh.toy.shop.model.vo.Shop;
 import com.kh.toy.waiting.model.service.WaitingService;
@@ -71,18 +73,25 @@ public class WaitingController {
 	
 	
 	
-	//사장님이 보는 대기리스트 (날짜는 상관없이 리스트 쭉 뽑고, 뭐 12시되면 or 마감하면 남은 대기자들 waitState를 대기취소 or 도착 or 삭제 일괄적으로)
+	//사장님이 보는 대기리스트 
 	@GetMapping("list")
-	public String waitingList(Model model, HttpServletRequest request, String shopIdx) {
+	public String waitingList(Model model, HttpServletRequest request, String shopIdx,
+						@SessionAttribute(name="userInfo", required = false) Member member) {
 		
-		//[할일]사장인지 아닌지 확인하기
-		List<Waiting> waitList = waitingService.selectWaitingList(shopIdx);
 		Shop shop = waitingService.selectShopByShopIdx(shopIdx);
+		if(shop.getMemberId().equals(member.getMemberId())) { //사장인지 아닌지 확인
+			List<Waiting> waitList = waitingService.selectWaitingList(shopIdx);
+			
+			model.addAttribute("shop", shop);
+			model.addAttribute("waitList", waitList);
+			
+			return "waiting/waitingList";
+		}else {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("url", "/index");
+			return "common/result";
+		}
 		
-		model.addAttribute("shop", shop);
-		model.addAttribute("waitList", waitList);
-		
-		return "waiting/waitingList";
 	}
 	
 	

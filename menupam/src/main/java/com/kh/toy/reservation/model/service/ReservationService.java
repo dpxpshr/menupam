@@ -11,12 +11,13 @@ public interface ReservationService {
 
 	//사장이 보는 예약 리스트
 	List<Reservation> selectResListByDate(String reserDate);
-	int insertRes(Reservation res);
-	List<Reservation> selectResRequeList(String shopIdx);
-	int updateStateApprove(String reserIdx);
-	int updateStateReject(String reserIdx);
-	int cancelRes(String reserIdx);
-	List<Reservation> searchByName(Reservation res, Member member);
-	Shop selectShopByShopIdx(String shopIdx);
 	Map<Integer, Reservation> getResMap(String shopIdx, String reserDate);
+	
+	int insertRes(Reservation res); //예약신청
+	List<Reservation> selectResRequeList(String shopIdx); //예약승인리스트
+	int updateStateApprove(String reserIdx); //승인
+	int updateStateReject(String reserIdx); //거부
+	int cancelRes(String reserIdx); //취소
+	Shop selectShopByShopIdx(String shopIdx);
+	
 }
