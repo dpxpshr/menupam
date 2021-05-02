@@ -129,7 +129,7 @@ div.paging{
 							<td>${member.memberLeaveDate}</td>
 
 							<td><a href="${context}/member/detail?memberId=${member.memberId}">
-							<input value="변경" class="btnSmall"></a></td>
+							<input value="변경" class="btnSmall" style="text-align:center;"></a></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -245,12 +245,14 @@ public class MemberController {
 		
 		// lee5031207로 로그인해서 mypage가면 에러남! 
 		
-		Map<String, Object> memberInfo = memberService.selectshop(userInfo.getMemberId());
-		session.setAttribute("memberInfo", memberInfo);
-		model.addAllAttributes(memberService.selectshop(userInfo.getMemberId()));
-		model.addAttribute("member", memberInfo);
-		System.out.println("mbmerInfo : " + memberInfo);
-		System.out.println(userInfo);
+		/*
+		 * Map<String, Object> memberInfo =
+		 * memberService.selectshop(userInfo.getMemberId());
+		 * session.setAttribute("memberInfo", memberInfo);
+		 * model.addAllAttributes(memberService.selectshop(userInfo.getMemberId()));
+		 * model.addAttribute("member", memberInfo); System.out.println("mbmerInfo : " +
+		 * memberInfo); System.out.println(userInfo);
+		 */
 		
 		return "member/mypage/mypage";
 	};
