@@ -42,7 +42,10 @@
                             <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
                             <div class="manageBtnText">매장 정보 수정</div>
                         </a>
-                        <div class="manageBtn"></div>
+                        <a class="manageBtn" href="${context}/shop/shopModify">
+                            <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
+                            <div class="manageBtnText">매장 정보 수정</div>
+                        </a>
                     </div>
                     <br>
                     <div class="waitReservationBox">

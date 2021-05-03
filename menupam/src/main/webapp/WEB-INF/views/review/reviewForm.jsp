@@ -16,7 +16,7 @@
             <!--여기서 부터 코드 작성-->
             <div class="body">
                 <div class="content">
-                    <p class="fontSmall">가게이름적는곳</p><br>
+                    <p class="fontSmall">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <form action="${context}/review/write" method="POST" enctype="multipart/form-data">
                         <label for="input-file" class="input-file-button">업로드</label>
@@ -32,6 +32,7 @@
                             </div>
                         </div>
                         <input type="text" name="reviewScore" id="reviewScore" value="1" style="display : none;"><br>
+                        <input type="text" name="shopIdx" id="reviewScore" value="${shop.shopIdx}"><br>
                         <input type="submit" value=" 리뷰 작성 완료" class="btnLarge width100">
                     </form>
                 </div>

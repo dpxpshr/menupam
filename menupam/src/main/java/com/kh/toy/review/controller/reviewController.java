@@ -36,7 +36,9 @@ public class reviewController {
 	}
 	
 	@GetMapping("form")
-	public String reviewForm() {
+	public String reviewForm(String shopIdx, Model model) {
+		Shop shop = reviewService.getShopInform(shopIdx);
+		model.addAttribute("shop", shop);
 		return "review/reviewForm";		
 	}
 	
@@ -73,8 +75,17 @@ public class reviewController {
 			@SessionAttribute(name="userInfo", required = false) Member member,
 			HttpServletRequest request) {
 
-		review.setMemberId("lee5031207"); //임시 
-		review.setShopIdx("test"); //임시
+		//review.setMemberId("lee5031207"); //임시 
+		//review.setShopIdx("test"); //임시
+		
+		//1. 민혁님 부분 사진 링크 어캐하나 -> 해결
+		
+		//2. 예약 대기 버튼
+		
+		//3. QR 전송 버튼
+		
+		
+		review.setMemberId(member.getMemberId());
 		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
 		String imgUploadPath = path + File.separator + "reviewPhoto" + File.separator;
 		System.out.println(imgUploadPath);

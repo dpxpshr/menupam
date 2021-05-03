@@ -15,7 +15,8 @@
 <body>
     <div class="wrapper">
         <header class="header">
-          <div><img src='../../../resources/images/배너1.png'></div> <!-- 사진 경로 작성 -->
+        		<!-- shop정보가 있으니 shop.fileIdx 활용해서 file정보도 가져온후 사진을 찍어주자  -->
+          <div><img src='${shopPhotoPath}'></div> <!-- 사진 경로 작성 -->
         </header>
         <section class="main">
         	<!-- 작성라인 -->
