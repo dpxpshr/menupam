@@ -16,8 +16,6 @@
     <div class="wrapper">
         <header class="header">
           <div><img src='../../../resources/images/배너1.png'></div> <!-- 사진 경로 작성 -->
-		  <div><img src='../../../resources/images/배너2.png'></div>
-		  <div><img src='../../../resources/images/배너3.png'></div>  
         </header>
         <section class="main">
         	<!-- 작성라인 -->
@@ -40,18 +38,18 @@
                  
                  <div class="menuItems">
                  	<c:forEach items="${category.value}" var="menu">
-                     <div class="menuItem" id="${menu.menuIdx}">
+                     <div class="menuItem" id="${menu.MENU_IDX}">
                          <div class="menuItemLeft">
-                             <div class="menuItemName">${menu.menuName}</div>
-                             <div class="menuItemPrice">${menu.menuPrice}원</div>
+                             <div class="menuItemName">${menu.MENU_NAME}</div>
+                             <div class="menuItemPrice">${menu.MENU_PRICE}원</div>
                          </div>
                          <div class="menuItemRight">
-                             <img src="../../../resources/images/${menu.menuPhoto}" alt=""><!-- 사진 경로 작성 -->
+                             <img src="${menu.FILE_SAVE_PATH}${menu.FILE_RENAME}.${menu.FILE_TYPE}" alt=""><!-- 사진 경로 작성 -->
                          </div>
                      </div>
                      <script type="text/javascript">
-                     	document.querySelector("#${menu.menuIdx}").addEventListener("click",()=>{
-                     		location.href="/order/menucart?shopIdx=${shop.shopIdx}&add=${menu.menuIdx}&tableNum=${tableNum}";
+                     	document.querySelector("#${menu.MENU_IDX}").addEventListener("click",()=>{
+                     		location.href="/order/menucart?shopIdx=${shop.shopIdx}&add=${menu.MENU_IDX}&tableNum=${tableNum}";
                      	})
                      </script>
                      </c:forEach>

@@ -35,8 +35,8 @@ public interface OrderRepository {
 	List<MenuCategory> searchMenuCategoryByShopIdx(String shopIdx);
 
 	//한 매장에 등록된 모든 메뉴 정보 읽어오기
-	@Select("select * from tb_menu where shop_idx = #{shopIdx}")
-	List<Menu> searchMenuByShopIdx(String shopIdx);
+	@Select("select menu_idx, menu_name, menu_price, file_rename, file_save_path, file_type, menu_category_name from tb_menu left outer join tb_file using(file_idx) where shop_idx = #{shopIdx}")
+	List<Map<String,String>> searchMenuByShopIdx(String shopIdx);
 
 	//메뉴가 지정한 매장에 있는지 확인하고 있으면 메뉴정보를 반환
 	@Select("select * from tb_menu where shop_idx = #{shopIdx} and menu_idx = #{menuIdx}")

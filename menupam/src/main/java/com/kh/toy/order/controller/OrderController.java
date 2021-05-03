@@ -47,7 +47,12 @@ public class OrderController {
 	@ResponseBody
 	public List<Shop> findShop(String keyword, @RequestParam(defaultValue = "") String location,
 					@RequestParam(defaultValue = "name") String type) {
-		List<Shop> result = orderService.searchShopbyName(keyword, location);
+		List<Shop> result = null;
+		if(type.equals("name")) {
+			result = orderService.searchShopbyName(keyword, location);
+		}else {
+			result = orderService.searchShopbyCategory(keyword, location);
+		}
 		return result;
 	}
 	
@@ -63,7 +68,7 @@ public class OrderController {
 	public String menuView(String shopIdx,@RequestParam(required= false) String tableNum, Model model) {	
 		Shop shopInfo = orderService.selectShopbyIdx(shopIdx);
 		model.addAttribute(shopInfo);
-		Map<String,List<Menu>> menulist = orderService.getMenulistByShopIdx(shopIdx);
+		Map<String,List<Map<String,String>>> menulist = orderService.getMenulistByShopIdx(shopIdx);
 		model.addAttribute("menulist",menulist);
 		model.addAttribute("tableNum",tableNum); //테이블 번호를 넣어주고 세션에 장바구니를 만들기 시작하면 테이블 번호를 세션에 기록한다.
 		return "order/menuView";

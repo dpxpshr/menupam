@@ -11,9 +11,9 @@ import com.kh.toy.shop.model.vo.Shop;
 public interface OrderService {
 	
 	List<Shop> searchShopbyName(String keyword, String location);
-	List<Shop> searchShopbyCategory(Map<String,String> commandMap);
+	List<Shop> searchShopbyCategory(String keyword, String location);
 	Shop selectShopbyIdx(String shopIdx);
-	Map<String, List<Menu>> getMenulistByShopIdx(String shopIdx);
+	Map<String, List<Map<String,String>>> getMenulistByShopIdx(String shopIdx);
 	Menu getMenuInShopIdx(String shopIdx, String menuIdx);
 	void registOrder(List<Map> ordering, String shopIdx, String memberId, String packState, String tableNum);
 	Order selectOrderByMemberIdAndShopIdx(String memberId, String shopIdx);
