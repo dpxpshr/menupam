@@ -2,6 +2,7 @@ package com.kh.toy.order.controller;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -27,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.toy.common.code.ErrorCode;
+import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.member.model.vo.Member;
 import com.kh.toy.order.model.service.OrderService;
 import com.kh.toy.order.model.vo.Order;
+import com.kh.toy.review.model.service.ReviewService;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.Shop;
 
@@ -38,9 +41,11 @@ import com.kh.toy.shop.model.vo.Shop;
 public class OrderController {
 	
 	private final OrderService orderService;
+	private final ReviewService reviewService; 
 	
-	public OrderController(OrderService orderService) {
+	public OrderController(OrderService orderService, ReviewService reviewService) {
 		this.orderService = orderService;
+		this.reviewService = reviewService;
 	}
 	//매장 검색기능(비동기)
 	@PostMapping("find")
@@ -65,8 +70,12 @@ public class OrderController {
 	//매장 화면(메뉴뷰) 요청시 메뉴 정보를 넣어서 출력
 	//테이블번호를 입력받을 수 있다.
 	@GetMapping("menuview")
-	public String menuView(String shopIdx,@RequestParam(required= false) String tableNum, Model model) {	
+	public String menuView(String shopIdx,@RequestParam(required= false) String tableNum, Model model) throws IOException {	
 		Shop shopInfo = orderService.selectShopbyIdx(shopIdx);
+		
+		String shopPhotoPath = reviewService.getSavePath(shopInfo.getFileIdx());
+		model.addAttribute("shopPhotoPath", shopPhotoPath);
+		
 		model.addAttribute(shopInfo);
 		Map<String,List<Map<String,String>>> menulist = orderService.getMenulistByShopIdx(shopIdx);
 		model.addAttribute("menulist",menulist);

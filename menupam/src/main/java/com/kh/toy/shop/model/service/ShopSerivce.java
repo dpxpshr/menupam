@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.toy.order.model.vo.Order;
+import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.MenuOrdering;
@@ -36,4 +37,7 @@ public interface ShopSerivce {
 	Order selectOrderAndTableNum(String orderTableNum);
 	void updateOrderTableNum(Order order);
 	void shopLogoUpload(MultipartFile file, Shop shop, String uploadPath);
+	
+	//////예약 현황 ////////
+	Map<String,Object> selectReservationList();
 }

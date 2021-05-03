@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.kh.toy.common.util.file.MenupamFile;
 import com.kh.toy.order.model.vo.Order;
+import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
 import com.kh.toy.shop.model.vo.MenuOrdering;
@@ -75,4 +76,8 @@ public interface ShopRepository {
 	@Select("select * from tb_order where order_table_num = #{orderTableNum}")
 	Order selectOrderAndTableNum(String orderTableNum);
 	void updateOrderTableNum(Order order);
+	
+	//////// 예약 현황 확인 //////////
+	@Select("select * from tb_reservation")
+	List<Reservation> selectReservationList();
 }	

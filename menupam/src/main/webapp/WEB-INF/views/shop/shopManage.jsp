@@ -42,15 +42,19 @@
                             <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
                             <div class="manageBtnText">매장 정보 수정</div>
                         </a>
-                        <div class="manageBtn"></div>
+                        <a class="manageBtn" href="${context}/shop/shopModify">
+                            <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
+                            <div class="manageBtnText">매장 정보 수정</div>
+                        </a>
                     </div>
                     <br>
                     <div class="waitReservationBox">
                         <div class="leftBox">
-                            <p class="fontXSmall">예약 승인 요청(5)</p>
+                            <p class="fontXSmall">예약 승인 요청(${reserCount})</p>
                         </div>
                         <div class="rightBox">
-                            <input type="button" value="예약 확인" class="btnSmall">
+                            <input type="button" onclick="location.href='${context}/reservation/reque?shopIdx=${shop.shopIdx}'"   
+                            value="예약 확인" class="btnSmall">
                         </div>
                     </div>
                     <br>
