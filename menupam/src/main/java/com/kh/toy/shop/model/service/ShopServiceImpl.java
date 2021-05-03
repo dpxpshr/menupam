@@ -95,7 +95,7 @@ public class ShopServiceImpl implements ShopSerivce{
 		
 		PhotoUtil photoUtil = new PhotoUtil();
 		String type = FilenameUtils.getExtension(file.getOriginalFilename());
-		String route = "/resources/images/";
+		String route = "/resources/menuImages/";
 		
 		menu.setMenuName(menu.getMenuName());
 		menu.setMenuPrice(menu.getMenuPrice());
