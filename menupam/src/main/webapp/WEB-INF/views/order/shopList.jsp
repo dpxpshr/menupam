@@ -133,7 +133,7 @@
 					
 					let image = document.createElement("td");
 					image.className = "shopList_img" /* 사진 X */
-					
+					image.src = "";
 					let name = document.createElement("td");
 					name.className = "shopList_name";
 					name.append(shop.shopName);

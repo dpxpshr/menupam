@@ -47,7 +47,12 @@ public class OrderController {
 	@ResponseBody
 	public List<Shop> findShop(String keyword, @RequestParam(defaultValue = "") String location,
 					@RequestParam(defaultValue = "name") String type) {
-		List<Shop> result = orderService.searchShopbyName(keyword, location);
+		List<Shop> result = null;
+		if(type.equals("name")) {
+			result = orderService.searchShopbyName(keyword, location);
+		}else {
+			result = orderService.searchShopbyCategory(keyword, location);
+		}
 		return result;
 	}
 	

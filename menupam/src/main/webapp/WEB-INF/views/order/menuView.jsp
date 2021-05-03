@@ -16,8 +16,6 @@
     <div class="wrapper">
         <header class="header">
           <div><img src='../../../resources/images/배너1.png'></div> <!-- 사진 경로 작성 -->
-		  <div><img src='../../../resources/images/배너2.png'></div>
-		  <div><img src='../../../resources/images/배너3.png'></div>  
         </header>
         <section class="main">
         	<!-- 작성라인 -->
