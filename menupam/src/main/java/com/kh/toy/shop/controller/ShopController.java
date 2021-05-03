@@ -144,7 +144,7 @@ public class ShopController {
 							,HttpSession session){
 		
 		String uploadPath = request.getSession().getServletContext().getRealPath("/").concat("resources")
-				+ File.separator + "images" + File.separator;
+				+ File.separator + "menuImages" + File.separator;
 	
 		if(menu.getMenuVegan() == null) {
 			menu.setMenuVegan(menuVegan);
