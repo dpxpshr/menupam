@@ -7,6 +7,7 @@
     <title>메뉴팜</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/menuView.css'>
     <link rel="stylesheet" href="../../../resources/slick/slick.css">
 	<link rel="stylesheet" href="../../../resources/slick/slick-theme.css">
@@ -50,7 +51,7 @@
                      </div>
                      <script type="text/javascript">
                      	document.querySelector("#${menu.menuIdx}").addEventListener("click",()=>{
-                     		location.href="/order/menucart?shopIdx=${shop.shopIdx}&add=${menu.menuIdx}";
+                     		location.href="/order/menucart?shopIdx=${shop.shopIdx}&add=${menu.menuIdx}&tableNum=${tableNum}";
                      	})
                      </script>
                      </c:forEach>
@@ -70,11 +71,20 @@
         </footer> 
     </div>
     <%@ include file="/WEB-INF/views/include/javascript.jsp" %>
-    <script type="text/javascript">
-    	document.querySelector(".menuCart").addEventListener("click",()=>{
-    		location.href="/order/menucart?shopIdx=${shop.shopIdx}";
-    	});
-    </script>
+    <c:if test="${tableNum == null}">
+	    <script type="text/javascript">
+	    	document.querySelector(".menuCart").addEventListener("click",()=>{
+	    		location.href="/order/menucart?shopIdx=${shop.shopIdx}";
+	    	});
+	    </script>
+    </c:if>
+    <c:if test="${tableNum != null}">
+    	<script type="text/javascript">
+	    	document.querySelector(".menuCart").addEventListener("click",()=>{
+	    		location.href="/order/menucart?shopIdx=${shop.shopIdx}&tableNum=${tableNum}";
+	    	});
+	    </script>
+    </c:if>
 	<script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-migrate-3.3.2.js" integrity="sha256-BDmtN+79VRrkfamzD16UnAoJP8zMitAz093tvZATdiE=" crossorigin="anonymous"></script>

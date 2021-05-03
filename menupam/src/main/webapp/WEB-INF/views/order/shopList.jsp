@@ -8,21 +8,19 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/search.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../../../resources/css/shopList.css'>
     <script src="https://kit.fontawesome.com/e5012d0871.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8741f560dfcb3473fb94dadb4c4b536c"></script>
 </head>
 <body>
     <div class="wrapper">
-        <header class="header">
-        	<div class="search">
+        <section class="main">
+ 			<div class="searchB">
         		<input id="location" style="display:none">
           		<input class="searchName" type="text" placeholder="검색어를 입력해주세요.">
           		<i class="fas fa-search" id="search_btn"></i>
         	</div>
-        </header>
-        
-        <section class="main">
         	<!-- 맵 설정 -->
             <div id="map"></div>
             <br>
@@ -134,7 +132,7 @@
 					row.className = "shopList_tr";
 					
 					let image = document.createElement("td");
-					image.className = "shopList_img" /* 사진 경로 작성 */
+					image.className = "shopList_img" /* 사진 X */
 					
 					let name = document.createElement("td");
 					name.className = "shopList_name";
