@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.toy.common.util.file.MenupamFile;
 import com.kh.toy.common.util.photo.PhotoUtil;
 import com.kh.toy.order.model.vo.Order;
+import com.kh.toy.reservation.model.vo.Reservation;
 import com.kh.toy.shop.model.repository.ShopRepository;
 import com.kh.toy.shop.model.vo.Menu;
 import com.kh.toy.shop.model.vo.MenuCategory;
@@ -195,6 +196,25 @@ public class ShopServiceImpl implements ShopSerivce{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public Map<String,Object> selectReservationList() {
+		
+		Map<String,Object> commandMap = new HashMap<String,Object>();
+		List<Reservation> reserList = shopRepository.selectReservationList();
+		int count = 0;
+		
+		for (Reservation rv : reserList) {
+			
+			if(rv.getReserState().equals("승인대기")) {
+				count++;
+			}
+		}
+		
+		commandMap.put("reserCount", count);
+		
+		return commandMap;
 	}	
 
 }

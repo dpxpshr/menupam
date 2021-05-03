@@ -279,7 +279,6 @@ public class ShopController {
 			if(order.getOrderTableNum() != null) {
 				menuOrders = shopService.selectMenuOrderList(order.getOrderTableNum(), shopInfo.getShopIdx());
 				menuOrderListList.add(menuOrders); 
-				System.out.println("shopInfo : " + shopInfo);
 			}
 		}
 		
@@ -291,9 +290,11 @@ public class ShopController {
 			tableArr[i] = i+1;
 		}
 		
+		
 		model.addAttribute("tableArr", tableArr);
 		model.addAttribute("shop", shopInfo);
 		model.addAttribute("menuOrderListList", menuOrderListList);
+		model.addAllAttributes(shopService.selectReservationList());
 	}
 	
 			
