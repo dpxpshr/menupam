@@ -168,7 +168,7 @@ public class ReviewServiceImpl implements ReviewService{
 		Member member = reviewRepository.selectMember(shop.getMemberId());
 		
 		//1.QR코드 저장
-		String URI = Code.SUNGUKIPDOMAIN+"/wait?shopIdx="+shopIdx;
+		String URI = Code.SUNGUKIPDOMAIN+"/waiting/form?shopIdx="+shopIdx;
 		String fileName = shopIdx+"WaitQR";
 		String filePath = path+"/QR/"+shopIdx+"/";
 		String text = "QR 인식 후 대기 신청을 해주세요";
@@ -193,7 +193,7 @@ public class ReviewServiceImpl implements ReviewService{
 		//1-2. fileName : 저장할 파일이름 shopIdx + t + tableNo
 		//1-3. filePath : 서버 내부의 resources/QR/table/
 		//1-4. text : QR코드 식별하기 위해 하단의 적을 text
-		QRMap.put("URI", Code.SUNGUKIPDOMAIN+"/order/menuView?shopIdx="+shopIdx+"&tableNo="+tableNo); 
+		QRMap.put("URI", Code.SUNGUKIPDOMAIN+"/order/menuview?shopIdx="+shopIdx+"&tableNo="+tableNo); 
 		QRMap.put("fileName", shopIdx + "T" + tableNo);
 		QRMap.put("filePath", path+"/QR/"+shopIdx+"/");
 		QRMap.put("text", shopName+"    "+tableNo+"번 테이블");

@@ -26,7 +26,7 @@
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
                         </a>
-                        <a class="manageBtn" href="${context}/shop/QRManage?shopIdx=${shop.shopIdx}">
+                        <a class="manageBtn" href="">
                             <div class="manageBtnIcon"><i class="fas fa-qrcode"></i></div>
                             <div class="manageBtnText">QR 관리</div>
                         </a>
@@ -50,36 +50,23 @@
                     <br>
                     <div class="waitReservationBox">
                         <div class="leftBox">
-                            <p class="fontXSmall">예약 승인 요청(${reserCount})</p>
+                            <p class="fontXSmall">대기 QR 발송</p>
                         </div>
                         <div class="rightBox">
-                            <input type="button" onclick="location.href='${context}/reservation/reque?shopIdx=${shop.shopIdx}'"   
-                            value="예약 확인" class="btnSmall">
+                            <input type="button" onclick="location.href='${context}/review/waitQRsend?shopIdx=${shopIdx}'"   
+                            value="대기" class="btnSmall">
                         </div>
                     </div>
-                    <br>
-                    <div class="tableBox">                        
-                    	<c:set var="tableArr" value="${fn:length(tableArr)}"/> 
-                    	<c:forEach var="i" begin="1" end="${tableArr}" step="1" >
-                    	<c:set var="flg" value="true"/>
-		                    <c:forEach items="${menuOrderListList}" var="list" > 
-              		 		 	<c:if test="${i == list[0].ORDER_TABLE_NUM}">
-              		 		 	<c:set var="flg" value="false"/>
-              		 			 	<a href="${context}/shop/tableDetail?orderTableNum=${i}">
-              		 			 	<div class="table eating">                 	
-              		 					<p class="fontXSmall"><c:out value="${i}번"/></p> 
-              		 					<p class="fontXXSmall">${list[0].ORDER_TITLE}</p> 			
-              		 				</div></a>               		 				
-              		 		 	</c:if>                    		 		 	              		 		                 			
-		                    </c:forEach>
-		                    	<c:if test="${flg}">
-	                    		<div class="table">                  	
-                       				<p class="fontXSmall"><c:out value="${i}번"/></p> 
-                      			</div>
-                      			</c:if>
-                    	</c:forEach>
+                    <div class="waitReservationBox">
+                        <div class="leftBox">
+                            <p class="fontXSmall">테이블 별 QR코드 발송</p>
+                        </div>
+                        <div class="rightBox">
+                            <input type="button" onclick="location.href='${context}/review/tableQRsend?shopIdx=${shopIdx}'"   
+                            value="테이블" class="btnSmall">
+                        </div>
                     </div>
-                    <br>
+                
                 </div>
             </div>
         </div>

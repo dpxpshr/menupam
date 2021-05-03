@@ -80,9 +80,9 @@ public class reviewController {
 		
 		//1. 민혁님 부분 사진 링크 어캐하나 -> 해결
 		
-		//2. 예약 대기 버튼
+		//2. 예약 대기 버튼 -> 성공
 		
-		//3. QR 전송 버튼
+		//3. QR 전송 버튼 -> 
 		
 		
 		review.setMemberId(member.getMemberId());
@@ -101,7 +101,7 @@ public class reviewController {
 	}
 	
 	@GetMapping("tableQRsend")
-	public String sendTableQR(String shopIdx, String tableNo, HttpServletRequest request) {
+	public String sendTableQR(String shopIdx, String tableNo, HttpServletRequest request, Model model) {
 		
 		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
 		
@@ -112,18 +112,20 @@ public class reviewController {
 			//지정한 테이블의 것만 보내준다
 			reviewService.sendTableQR(shopIdx, path, tableNo);
 		}
-		return "review/QRtest";
+		
+		model.addAttribute("shopIdx", shopIdx);
+		return "shop/QRManage";
 	}
 	
 	@GetMapping("waitQRsend")
-	public String sendWaitQR(String shopIdx, HttpServletRequest request) {
+	public String sendWaitQR(String shopIdx, HttpServletRequest request, Model model) {
 		
 		String path = request.getSession().getServletContext().getRealPath("/").concat("resources");
 		reviewService.sendWaitQR(shopIdx, path);
 		System.out.println(shopIdx);
 		
-		
-		return "review/QRtest";
+		model.addAttribute("shopIdx", shopIdx);
+		return "shop/QRManage";
 	}
 	
 	
