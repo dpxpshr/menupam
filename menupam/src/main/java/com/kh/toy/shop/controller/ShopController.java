@@ -95,7 +95,12 @@ public class ShopController {
 	}
 	
 	@GetMapping("shopModify")
-	public void shopModify() {}
+	public void shopModify(@SessionAttribute("userInfo") Member userInfo
+			,Model model) {
+		
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		model.addAttribute("shop", shopInfo);
+	}
 	
 	@PostMapping("Modify")
 	public String modify(Shop shop
@@ -104,6 +109,7 @@ public class ShopController {
 		
 		shopService.ShopInfoModify(shop, userInfo.getMemberId());
 		shopService.updateShop(shop);
+		
 		model.addAttribute("url", "/shop/shopModify"); //어디로 이동시킬지 말지 추후 예정
 		
 		return "common/result";
@@ -299,9 +305,12 @@ public class ShopController {
 	}
 	
 	@GetMapping("QRManage")
-	public String QRTest(String shopIdx, Model model) {
+	public String QRTest(@SessionAttribute("userInfo") Member userInfo
+			,Model model) {
 		
-		model.addAttribute("shopIdx", shopIdx);
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		
+		model.addAttribute("shop", shopInfo);
 		return "shop/QRManage";
 	}
 	

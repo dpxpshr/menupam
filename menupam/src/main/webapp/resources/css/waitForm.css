@@ -14,7 +14,14 @@
 
 .imgLarge{
 	padding-top:7vh;
+	margin-left:70px;
 }
+
+.wrap_field{
+	display : block;
+	text-align : center;
+}
+
 .text_box{
 	margin-top:5vh;
 	display:flex;

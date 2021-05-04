@@ -124,7 +124,7 @@
 			.then(text => {
 				if(text=="success"){
 					//console.log("test");
-					//location.reload();
+					location.reload();
 		        }else if(text=="fail"){
 		        	window.alert("문자 전송 도중 오류가 발생했습니다. 다시 시도해주세요");
 		        }

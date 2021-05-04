@@ -31,7 +31,7 @@
 							<hr color="#F2BB13">
 						</div>
 		                <div class="imgLarge">
-		                    <img src="${shop.fileIdx}" alt=""> <!-- 사진주소를어떻게.. -->
+		                    <img src="../../resources/images/bbq.png" alt=""> <!-- src="${shop.fileIdx}" -->
 		                </div>
 		                <div class="text_box">
 		                	<p class="fontSmall">현재 대기인원 수 : ${waitCount}명</p><br>

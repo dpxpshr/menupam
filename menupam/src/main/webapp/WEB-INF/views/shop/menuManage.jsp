@@ -21,13 +21,13 @@
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
                         </a>
-                        <a class="manageBtn">
-                            <div class="manageBtnIcon"><i class="fas fa-won-sign fontSmall"></i></div>
-                            <div class="manageBtnText">매출 관리</div>
+                       <a class="manageBtn" href="${context}/shop/QRManage?shopIdx=${shop.shopIdx}">
+                            <div class="manageBtnIcon"><i class="fas fa-qrcode"></i></div>
+                            <div class="manageBtnText">QR 관리</div>
                         </a>
-                        <a class="manageBtn">
+                        <a class="manageBtn" href="${context}/waiting/list?shopIdx=${shop.shopIdx}">
                             <div class="manageBtnIcon"><i class="fas fa-users fontSmall"></i></div>
-                            <div class="manageBtnText">직원 관리</div>
+                            <div class="manageBtnText">대기 관리</div>
                         </a>
                         <a class="manageBtn border" href="${context}/shop/menuManage">
                             <div class="manageBtnIcon"><i class="fas fa-utensils fontSmall"></i></div>
@@ -37,7 +37,10 @@
                             <div class="manageBtnIcon"><i class="fas fa-cog fontSmall"></i></div>
                             <div class="manageBtnText">매장 정보 수정</div>
                         </a>
-                        <div class="manageBtn"></div>
+                        <a class="manageBtn" href="${context}/reservation/list?shopIdx=${shop.shopIdx}">
+                            <div class="manageBtnIcon"><i class="fas fa-user-clock"></i></div>
+                            <div class="manageBtnText">예약 리스트</div>
+                        </a>
                     </div>
                     <br>
                     <div class="categoryModifyBox">
