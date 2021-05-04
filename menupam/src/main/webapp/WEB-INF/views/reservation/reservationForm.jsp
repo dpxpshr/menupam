@@ -20,13 +20,13 @@
                     <div class="line"></div><br>
                     <form action="">
                         <div>방문일자</div><br><br>
-                        <input type="datetime-local" class="inputLarge" id="calendar" step="1800" name="reserDate"><br><br><br>
+                        <input type="datetime-local" class="inputLarge" id="calendar" step="1800" name="reserDate" required="required"><br><br><br>
                         <div>예약자 성함</div><br><br>
-                        <input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력하세요" value="${sessionScope.userInfo.memberName}"><br><br><br>
+                        <input type="text" class="inputLarge" name="reserName" id="name" placeholder="성함을 입력하세요" value="${sessionScope.userInfo.memberName}" required="required"><br><br><br>
                         <div>예약자 전화 번호</div><br><br>
-                        <input type="tel" class="inputLarge" name="reserPhone" id="phone" placeholder="휴대폰 번호를 입력하세요 ( - 없이)" value="${sessionScope.userInfo.memberPhone}"><br><br><br>
+                        <input type="tel" class="inputLarge" name="reserPhone" id="phone" placeholder="휴대폰 번호를 입력하세요 ( - 없이)" value="${sessionScope.userInfo.memberPhone}" required="required"><br><br><br>
                         <div>예약 인원</div><br><br>
-                        <select id="search_sel" name="reserParty" class="inputLarge">
+                        <select id="search_sel" name="reserParty" class="inputLarge" required="required">
                             <option value="1">1인 방문</option>
                             <option value="2">2인 방문</option>
                             <option value="3">3인 방문</option>
@@ -40,7 +40,7 @@
                         <input type="text" class="inputLarge" id="comment" name="reserComment" placeholder="ex) 창가쪽 자리로 주세요"><br><br><br>
                         <input type="text" name="shopIdx" value="${shop.shopIdx}" style="display:none">
                         <label for="" style="margin-left: 10px;">
-                            <input type="checkbox" required>
+                            <input type="checkbox" required="required">
                             개인 정보 수집 및 이용에 동의 합니다.
                         </label><br><br>
                         <p class="fontXXSmall"> * 해당 점포로 부터 승인 문자 수신 시 예약이 완료됩니다.</p><br><br>

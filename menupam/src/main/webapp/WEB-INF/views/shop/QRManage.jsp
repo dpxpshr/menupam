@@ -26,7 +26,7 @@
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
                         </a>
-                        <a class="manageBtn" href="">
+                        <a class="manageBtn border" href="${context}/shop/QRManage?shopIdx=${shop.shopIdx}">
                             <div class="manageBtnIcon"><i class="fas fa-qrcode"></i></div>
                             <div class="manageBtnText">QR 관리</div>
                         </a>
