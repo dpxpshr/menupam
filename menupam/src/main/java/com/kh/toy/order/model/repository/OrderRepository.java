@@ -65,7 +65,7 @@ public interface OrderRepository {
 	List<MenuOrdering> selectMenuOrderingByOrderIdx(String orderIdx);
 	
 	//등록되어 있는 주문을 결제하지 않고 취소 (주문의 결제상태를 'D(Discard)'로 변경
-	@Update("update tb_order set order_pay_state = 'D' where order_idx = #{orderIdx} and member_id = #{memberId}")
+	@Update("update tb_order set order_pay_state = 'D', order_table_num = 0 where order_idx = #{orderIdx} and member_id = #{memberId}")
 	boolean updateOrderStateByOrderIdx(Map<String, String> commandMap);
 	
 	//결제 데이터가 정확한지 체크하고 결제할 주문을 반환

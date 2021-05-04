@@ -19,7 +19,7 @@
         		주문하기 클릭시 MenuIdx + 수량을 서버로 전송한다.
         	 -->
             <div class="cartTop">
-            	<div class="cartName">장바구니</div><a onclick="deleteAll()">전체삭제</a>
+            	<div class="cartName">장바구니</div><a onclick="deleteAll()" style="z-index:999">전체삭제</a>
 			</div>
             <div class="shopName">${shop.shopName}</div>
             <div class="List">주문내역</div>

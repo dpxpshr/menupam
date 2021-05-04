@@ -104,21 +104,39 @@
 				searchHeader.append("content-type","application/x-www-form-urlencoded");
 				
 				// *** 테스트를 위해 위치정보 제거
-				//fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword+"&location="+location})
-				fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword})
-				.then(response=>{
-					if(response.ok){
-						response.json().then(function(data) {
-							  if(data.length == 0){
-								  alert("검색 결과가 없습니다.");
-							  }else{
-								  drawList(data);
-							  }
-						})
-					}else{
-						alert("검색에 실패하였습니다.");
-					}
-				});
+				if(keyword == '!all'){
+					fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="})
+					.then(response=>{
+						if(response.ok){
+							response.json().then(function(data) {
+								  if(data.length == 0){
+									  alert("검색 결과가 없습니다.");
+								  }else{
+									  drawList(data);
+								  }
+							})
+						}else{
+							alert("검색에 실패하였습니다.");
+						}
+					});
+				}else{
+					fetch("/order/find",{method:"POST", headers:searchHeader, body:"keyword="+keyword+"&location="+location})
+					.then(response=>{
+						if(response.ok){
+							response.json().then(function(data) {
+								  if(data.length == 0){
+									  alert("검색 결과가 없습니다.");
+								  }else{
+									  drawList(data);
+								  }
+							})
+						}else{
+							alert("검색에 실패하였습니다.");
+						}
+					});
+				}
+				
+				
 				
 			});
 			//받은 데이터를 리스트에 뿌려주는 함수
