@@ -299,9 +299,12 @@ public class ShopController {
 	}
 	
 	@GetMapping("QRManage")
-	public String QRTest(String shopIdx, Model model) {
+	public String QRTest(@SessionAttribute("userInfo") Member userInfo
+			,Model model) {
 		
-		model.addAttribute("shopIdx", shopIdx);
+		Shop shopInfo = shopService.selectShopInfo(userInfo.getMemberId());
+		
+		model.addAttribute("shop", shopInfo);
 		return "shop/QRManage";
 	}
 	

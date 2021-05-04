@@ -22,7 +22,7 @@
                     <p class="fontSmall" id="title">${shop.shopName}</p><br>
                     <div class="line"></div><br>
                     <div class="buttonBox">
-                       <a class="manageBtn" href="${context}/shop/shopManage">
+                       <a class="manageBtn border" href="${context}/shop/shopManage">
                             <div class="manageBtnIcon"><i class="fas fa-check fontSmall"></i></div>
                             <div class="manageBtnText">매장 관리</div>
                         </a>
