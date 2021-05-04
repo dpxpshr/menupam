@@ -298,5 +298,12 @@ public class ShopController {
 		model.addAllAttributes(shopService.selectReservationList());
 	}
 	
+	@GetMapping("QRManage")
+	public String QRTest(String shopIdx, Model model) {
+		
+		model.addAttribute("shopIdx", shopIdx);
+		return "shop/QRManage";
+	}
+	
 			
 }
